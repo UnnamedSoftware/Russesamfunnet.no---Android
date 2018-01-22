@@ -1,16 +1,18 @@
 package com.unnamedsoftware.russesamfunnet;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.widget.Toolbar;
 
 /**
  * Created by Alexander Eilert Berg on 22.01.2018.
  */
 
-public class Scoreboard extends AppCompatActivity
+public class Scoreboard extends Activity
 {
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -18,15 +20,23 @@ public class Scoreboard extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        android.app.ActionBar backAction = getActionBar();
-        backAction.setDisplayHomeAsUpEnabled(true);
-
+        getActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-    public boolean onOptionsItemSelected(MenuItem item){
-        Intent intent = new Intent(getApplicationContext(), Feed.class);
-        startActivityForResult(intent, 0);
-        return true;
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId())
+        {
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
 
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
+
+
+
 }

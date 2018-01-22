@@ -3,4 +3,12 @@
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
 
+    <string name="scoreboard">Scoreboard</string>
+    <string name="profile">Bruker Profil</string>
+    <string name="knotList">Knute Liste</string>
+    <string name="settings">Instillinger</string>
+    <string name="logout">Log ut</string>
+
+
+
 </resources>

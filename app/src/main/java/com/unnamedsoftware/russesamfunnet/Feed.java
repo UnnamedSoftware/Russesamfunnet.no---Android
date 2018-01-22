@@ -1,5 +1,6 @@
 package com.unnamedsoftware.russesamfunnet;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.ListViewAutoScrollHelper;
@@ -36,10 +37,6 @@ public class Feed extends AppCompatActivity {
 
         addDrawerItems();
         setupDrawer();
-
-
-
-
     }
 
     /**
@@ -50,6 +47,8 @@ public class Feed extends AppCompatActivity {
         String[] optionsArray = {"Profil", "Scoreboard", "Knute liste", "Instillinger", "Logout"};
         drawerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, optionsArray);
         drawerList.setAdapter(drawerAdapter);
+
+
 
 
         drawerList.setOnItemClickListener(new AdapterView.OnItemClickListener()
@@ -100,11 +99,22 @@ public class Feed extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
-
-        if (drawerToggle.onOptionsItemSelected(item))
+        switch (item.getItemId())
         {
-            return true;
+            case R.id.scoreboard:
+                    Intent intent = new Intent(this,Scoreboard.class);
+                    this.startActivity(intent);
+                    break;
+
+
+
+
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
+
+
+
+        return true;
     }
 }
