@@ -34,7 +34,6 @@ public class Feed extends AppCompatActivity {
         drawerList = (ListView) findViewById(R.id.navList);
         activityTitle = getTitle().toString();
 
-
         addDrawerItems();
         setupDrawer();
 
@@ -108,6 +107,4 @@ public class Feed extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
-
 }
