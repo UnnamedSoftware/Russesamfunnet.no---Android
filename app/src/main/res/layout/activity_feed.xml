@@ -1,24 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.DrawerLayout
-    android:id="@+id/feedDrawerLayout"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/navigationDrawer"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <!-- Main content -->
-    <FrameLayout
-        android:id="@+id/feedContent"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </FrameLayout>
+        <!-- Main content -->
+        <FrameLayout
+            android:id="@+id/feedContent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </FrameLayout>
 
-    <!-- Navigation Drawer -->
-    <android.support.design.widget.NavigationView
-        android:id="@+id/navigationDrawer"
-        android:layout_width="wrap_content"
+        <!-- Navigation Drawer -->
+    <ListView
+        android:id="@+id/navList"
+        android:layout_width="200dp"
         android:layout_height="match_parent"
-        android:layout_gravity="start"
-        app:menu="@menu/navigationDrawer_items"/>
+        android:layout_gravity="left"
+        android:choiceMode="singleChoice"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="0dp"
+        android:background="@android:color/white"/>
 
     </android.support.v4.widget.DrawerLayout>
+
+
