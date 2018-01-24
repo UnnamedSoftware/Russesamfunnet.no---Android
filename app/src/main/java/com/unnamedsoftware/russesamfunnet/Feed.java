@@ -3,8 +3,6 @@ package com.unnamedsoftware.russesamfunnet;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -12,7 +10,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.view.View;
 
 
 
@@ -67,31 +64,21 @@ public class Feed extends AppCompatActivity {
 
     public void selectDrawerItem(MenuItem menuItem)
     {
-        Fragment fragment = null;
-        Class fragmentClass = null;
+        Intent intent;
         switch (menuItem.getItemId())
         {
             case R.id.profile:
-                fragmentClass = UserProfile.class;
+                intent = new Intent(this, UserProfile.class);
+                this.startActivity(intent);
                 break;
             case R.id.scoreboard:
-                fragmentClass = Scoreboard.class;
+                intent = new Intent(this, Scoreboard.class);
+                this.startActivity(intent);
                 break;
 
             default:
-                fragmentClass = Feed.class;
-        }
-        try
-        {
-            fragment = (Fragment) fragmentClass.newInstance();
-        } catch (Exception e)
-        {
-            e.printStackTrace();
-        }
 
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.feedContent, fragment).commit();
-
+        }
         menuItem.setChecked(true);
         setTitle(menuItem.getTitle());
         drawerLayout.closeDrawers();
@@ -104,19 +91,6 @@ public class Feed extends AppCompatActivity {
         if (drawerToggle.onOptionsItemSelected(item))
         {
             return true;
-        }
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                drawerLayout.openDrawer(GravityCompat.START);
-                return true;
-
-            case R.id.scoreboard:
-                Intent intent = new Intent(this, Scoreboard.class);
-                this.startActivity(intent);
-                break;
-
-            default:
-                return super.onOptionsItemSelected(item);
         }
         return super.onOptionsItemSelected(item);
     }
