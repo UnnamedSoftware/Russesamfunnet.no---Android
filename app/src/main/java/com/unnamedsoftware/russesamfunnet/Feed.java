@@ -2,83 +2,123 @@ package com.unnamedsoftware.russesamfunnet;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v4.widget.ListViewAutoScrollHelper;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 
-import java.util.List;
+
 
 public class Feed extends AppCompatActivity {
 
     private DrawerLayout drawerLayout;
-    private ListView drawerList;
-    private ArrayAdapter<String> drawerAdapter;
+    private Toolbar toolbar;
+    private NavigationView nav;
+
     private ActionBarDrawerToggle drawerToggle;
-    private String activityTitle;
+
+    /**
+     *  https://guides.codepath.com/android/fragment-navigation-drawer
+     *
+     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feed);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
-        drawerLayout = (DrawerLayout) findViewById(R.id.navigationDrawer);
-        drawerList = (ListView) findViewById(R.id.navList);
-        activityTitle = getTitle().toString();
+        drawerLayout = findViewById(R.id.navigationDrawer);
+        drawerToggle = setUpDrawerToggle();
 
-        addDrawerItems();
-        setupDrawer();
+        drawerLayout.addDrawerListener(drawerToggle);
+
+        nav = findViewById(R.id.navList);
+        setupDrawerContent(nav);
     }
 
-    /**
-     * Populates the navigation menu
-     */
-    private void addDrawerItems()
+    private ActionBarDrawerToggle setUpDrawerToggle()
     {
-        String[] optionsArray = {"Profil", "Scoreboard", "Knute liste", "Instillinger", "Logout"};
-        drawerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, optionsArray);
-        drawerList.setAdapter(drawerAdapter);
-
-
-
-
-        drawerList.setOnItemClickListener(new AdapterView.OnItemClickListener()
-        {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-            }
-        });
+        return new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close);
     }
 
-    private void setupDrawer()
+    private void setupDrawerContent(NavigationView nav)
     {
-        drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.drawer_open, R.string.drawer_close)
-        {
-            public void onDrawerOpened(View drawerView)
-            {
-                super.onDrawerOpened(drawerView);
-                getSupportActionBar().setTitle("Navigation");
-                invalidateOptionsMenu();
-            }
+        nav.setNavigationItemSelectedListener
+                (new NavigationView.OnNavigationItemSelectedListener()
+                {
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem menuItem)
+                    {
+                        selectDrawerItem(menuItem);
+                        return true;
+                    }
+                });
+    }
 
-            public void onDrawerClosed(View view)
-            {
-                super.onDrawerClosed(view);
-                getSupportActionBar().setTitle(activityTitle);
-                invalidateOptionsMenu();
-            }
-        };
-        drawerToggle.setDrawerIndicatorEnabled(true);
-        drawerLayout.setDrawerListener(drawerToggle);
+    public void selectDrawerItem(MenuItem menuItem)
+    {
+        Fragment fragment = null;
+        Class fragmentClass = null;
+        switch (menuItem.getItemId())
+        {
+            case R.id.profile:
+                fragmentClass = UserProfile.class;
+                break;
+            case R.id.scoreboard:
+                fragmentClass = Scoreboard.class;
+                break;
+
+            default:
+                fragmentClass = Feed.class;
+        }
+        try
+        {
+            fragment = (Fragment) fragmentClass.newInstance();
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.feedContent, fragment).commit();
+
+        menuItem.setChecked(true);
+        setTitle(menuItem.getTitle());
+        drawerLayout.closeDrawers();
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        if (drawerToggle.onOptionsItemSelected(item))
+        {
+            return true;
+        }
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                drawerLayout.openDrawer(GravityCompat.START);
+                return true;
+
+            case R.id.scoreboard:
+                Intent intent = new Intent(this, Scoreboard.class);
+                this.startActivity(intent);
+                break;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -95,26 +135,4 @@ public class Feed extends AppCompatActivity {
         drawerToggle.onConfigurationChanged(newConfig);
     }
 
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        switch (item.getItemId())
-        {
-            case R.id.scoreboard:
-                    Intent intent = new Intent(this,Scoreboard.class);
-                    this.startActivity(intent);
-                    break;
-
-
-
-
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-
-
-
-        return true;
-    }
 }
