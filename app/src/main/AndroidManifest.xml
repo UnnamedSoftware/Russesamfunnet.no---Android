@@ -42,7 +42,14 @@
                 android:value=".Feed" />
         </activity>
 
-
+        <activity
+            android:name=".Settings"
+            android:label="@string/app_name"
+            android:parentActivityName=".Feed">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Feed" />
+        </activity>
 
     </application>
 
