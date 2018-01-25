@@ -10,7 +10,7 @@
     android:gravity="bottom">
 
     <com.mikhaellopez.circularimageview.CircularImageView
-        android:id="@+id/circularImageView"
+        android:id="@+id/userProfilePicture"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_marginEnd="92dp"

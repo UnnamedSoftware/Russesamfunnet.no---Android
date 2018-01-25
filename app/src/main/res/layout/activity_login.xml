@@ -13,7 +13,7 @@
         android:layout_height="wrap_content" />
 
     <com.mikhaellopez.circularimageview.CircularImageView
-        android:id="@+id/circularImageView"
+        android:id="@+id/userProfilePicture"
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:layout_marginEnd="92dp"
@@ -41,7 +41,7 @@
         android:inputType="textEmailAddress"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/circularImageView" />
+        app:layout_constraintTop_toBottomOf="@+id/userProfilePicture" />
 
     <EditText
         android:id="@+id/password"
