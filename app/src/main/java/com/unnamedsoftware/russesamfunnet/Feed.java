@@ -80,7 +80,9 @@ public class Feed extends AppCompatActivity {
                 intent = new Intent(this, Scoreboard.class);
                 this.startActivity(intent);
                 break;
-
+            case R.id.settings:
+                intent = new Intent(this, Settings.class);
+                this.startActivity(intent);
             default:
 
         }
