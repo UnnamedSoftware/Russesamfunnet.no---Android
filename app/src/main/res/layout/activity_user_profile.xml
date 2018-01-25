@@ -5,13 +5,19 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <!-- ActionBar -->
+    <include
+        layout="@layout/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
     <com.mikhaellopez.circularimageview.CircularImageView
         android:id="@+id/circularImageView"
         android:layout_width="127dp"
         android:layout_height="125dp"
         android:layout_marginEnd="92dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="56dp"
         android:src="@drawable/default_user"
         app:civ_border_color="#EEEEEE"
         app:civ_border_width="4dp"
@@ -19,7 +25,7 @@
         app:civ_shadow_color="#8BC34A"
         app:civ_shadow_radius="10"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.043"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -29,12 +35,12 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="96dp"
+        android:layout_marginTop="136dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="John Smith"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.489"
+        app:layout_constraintHorizontal_bias="0.615"
         app:layout_constraintStart_toEndOf="@+id/circularImageView"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -68,7 +74,7 @@
         app:layout_constraintHorizontal_bias="0.482"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintVertical_bias="0.491"
         app:srcCompat="@drawable/r_card" />
 
 
