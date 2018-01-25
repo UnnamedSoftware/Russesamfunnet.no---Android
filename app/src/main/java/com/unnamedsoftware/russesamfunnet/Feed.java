@@ -33,6 +33,7 @@ public class Feed extends AppCompatActivity {
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Russesamfunnet - Feed");
 
         drawerLayout = findViewById(R.id.navigationDrawer);
         drawerToggle = setUpDrawerToggle();
