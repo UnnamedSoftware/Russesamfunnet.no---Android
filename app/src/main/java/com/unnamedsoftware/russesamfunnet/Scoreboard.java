@@ -1,5 +1,6 @@
 package com.unnamedsoftware.russesamfunnet;
 
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;

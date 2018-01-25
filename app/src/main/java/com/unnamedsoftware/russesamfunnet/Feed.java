@@ -62,6 +62,10 @@ public class Feed extends AppCompatActivity {
                 });
     }
 
+    /**
+     * This method designates what happens when a menu item are selected in the navigation drawer.
+     * @param menuItem
+     */
     public void selectDrawerItem(MenuItem menuItem)
     {
         Intent intent;
