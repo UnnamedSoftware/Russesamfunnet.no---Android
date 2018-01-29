@@ -50,6 +50,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Feed" />
         </activity>
+        <activity
+            android:name=".Knot"
+            android:label="@string/app_name"
+            android:parentActivityName=".KnotList">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".KnotList" />
+        </activity>
 
         <activity
             android:name=".Settings"
