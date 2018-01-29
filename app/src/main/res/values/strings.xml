@@ -8,7 +8,9 @@
     <string name="knotList">Knute Liste</string>
     <string name="settings">Instillinger</string>
     <string name="logout">Log ut</string>
-
+    <string name="hello_world">hello</string>
+    <string name="first">first</string>
+    <string name="last">last</string>
 
 
 </resources>
