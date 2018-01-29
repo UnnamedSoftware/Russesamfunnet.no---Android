@@ -2,12 +2,11 @@ package com.unnamedsoftware.russesamfunnet;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.os.Bundle;
 import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
@@ -33,7 +32,7 @@ public class Feed extends AppCompatActivity {
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Russesamfunnet - Feed");
+        setTitle("Russesamfunnet - Feed");
 
         drawerLayout = findViewById(R.id.navigationDrawer);
         drawerToggle = setUpDrawerToggle();
@@ -76,13 +75,21 @@ public class Feed extends AppCompatActivity {
                 intent = new Intent(this, UserProfile.class);
                 this.startActivity(intent);
                 break;
+
             case R.id.scoreboard:
                 intent = new Intent(this, Scoreboard.class);
                 this.startActivity(intent);
                 break;
+
+            case R.id.knotList:
+                intent = new Intent(this, KnotList.class);
+                this.startActivity(intent);
+                break;
+
             case R.id.settings:
                 intent = new Intent(this, Settings.class);
                 this.startActivity(intent);
+                break;
             default:
 
         }

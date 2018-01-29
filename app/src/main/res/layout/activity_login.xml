@@ -85,7 +85,7 @@
         app:layout_constraintTop_toBottomOf="@+id/userPassword" />
 
     <Button
-        android:id="@+id/loginWithGoogleFacebook"
+        android:id="@+id/dummyButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
