@@ -29,7 +29,8 @@ public class KnotList extends AppCompatActivity
     }
 
     @Override
-    public boolean onSupportNavigateUp() {
+    public boolean onSupportNavigateUp()
+    {
         onBackPressed();
         return true;
     }
