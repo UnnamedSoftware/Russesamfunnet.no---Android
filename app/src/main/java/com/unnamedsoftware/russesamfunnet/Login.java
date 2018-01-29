@@ -101,11 +101,10 @@ public class Login extends AppCompatActivity {
      * @param userEmailString
      * @param userPasswordString
      */
-    private void toServer(View view, String userEmailString, String userPasswordString) {
-        Boolean registered;
-
+    private void toServer(View view, String userEmailString, String userPasswordString)
+    {
         RequestQueue queue = Volley.newRequestQueue(view.getContext());
-        String url = "http://oihoiejiowjgowjgpowkgiowgpinweoginoæwegowegiownkoiewjds ";
+        String url = getString(R.string.url) + "/login?email=" + userEmailString + "&password=" + userPasswordString ;
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
