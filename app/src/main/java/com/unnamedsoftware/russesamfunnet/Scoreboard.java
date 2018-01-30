@@ -141,7 +141,7 @@ public class Scoreboard extends AppCompatActivity
         user = new ListUser("Karoline", "Handal", 18650, 10);
         userList.add(user);
 
-        user = new ListUser("Girts" ,"Strazdins ", 18549,19);
+        user = new ListUser("Girts" ,"Strazdins ", 13,19);
         userList.add(user);
     }
 
