@@ -46,7 +46,7 @@ public class RecyclerViewScoreboard extends RecyclerView.Adapter<RecyclerViewSco
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         ListUser listUser = userList.get(position);
-        holder.name.setText(listUser.getName());
+        holder.name.setText(listUser.getFullName());
         holder.position.setText(String.valueOf(listUser.getPosition()));
     }
 
