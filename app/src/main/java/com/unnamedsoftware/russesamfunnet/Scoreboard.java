@@ -74,7 +74,7 @@ public class Scoreboard extends AppCompatActivity
     }
 
     /**
-     * Uses the JSONparser to request the scoreboard from the server.
+     * Uses the JSONParser to request the scoreboard from the server.
      */
     private void getRussScoreboard() throws IOException
     {
