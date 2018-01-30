@@ -143,16 +143,6 @@ public class Scoreboard extends AppCompatActivity
         recyclerViewScoreboard.notifyDataSetChanged();
     }
 
-
-
-
-
-
-
-
-
-
-
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();
