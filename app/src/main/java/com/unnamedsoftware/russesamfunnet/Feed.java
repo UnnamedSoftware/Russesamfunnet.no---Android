@@ -38,7 +38,7 @@ public class Feed extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RecyclerViewFeed recyclerViewFeed;
 
-    private String url = getString(R.string.url) + "feed";
+    private String url;
 
     // JSON Node names
     private static final String TAG_feed = "feed";
@@ -59,6 +59,8 @@ public class Feed extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feed);
 
+        url = getString(R.string.url) + "feed";
+
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         setTitle("Russesamfunnet - Feed");
@@ -71,12 +73,21 @@ public class Feed extends AppCompatActivity {
         nav = findViewById(R.id.navList);
         setupDrawerContent(nav);
 
+        /*
+        try
+        {
+            getFeed();
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+*/
+
         recyclerView = findViewById(R.id.recycler_view_feed);
         recyclerViewFeed = new RecyclerViewFeed(feedPosts);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-
         recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         recyclerView.setAdapter(recyclerViewFeed);
 
@@ -173,8 +184,6 @@ public class Feed extends AppCompatActivity {
 
         post = new FeedPost("Kim","Jong-Un ",894,"Very nice!");
         feedPosts.add(post);
-
-        recyclerViewFeed.notifyDataSetChanged();
     }
 
 
