@@ -23,6 +23,8 @@ public class Scoreboard extends AppCompatActivity
     private RecyclerView recyclerView;
     private RecyclerViewScoreboard recyclerViewScoreboard;
 
+    private String url = getString(R.string.url) + "scoreboardTop10";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
