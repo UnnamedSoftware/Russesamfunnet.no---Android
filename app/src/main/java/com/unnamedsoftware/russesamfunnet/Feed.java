@@ -82,7 +82,7 @@ public class Feed extends AppCompatActivity {
                 break;
 
             case R.id.knotList:
-                intent = new Intent(this, KnotList.class);
+                intent = new Intent(this, Knot.class);
                 this.startActivity(intent);
                 break;
 
