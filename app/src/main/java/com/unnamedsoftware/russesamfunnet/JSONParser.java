@@ -59,7 +59,7 @@ public class JSONParser
             }
             inputStream.close();
             json = stringBuilder.toString();
-        }catch (Exception e)
+        } catch (Exception e)
         {
             Log.e("Buffer Error", "Error converting result " + e.toString());
         }
@@ -67,7 +67,7 @@ public class JSONParser
         try
         {
             jsonObject = new JSONObject(json);
-        }catch (JSONException e)
+        } catch (JSONException e)
         {
             Log.e("JSON Parser", "Error parsing data " + e.toString());
         }
