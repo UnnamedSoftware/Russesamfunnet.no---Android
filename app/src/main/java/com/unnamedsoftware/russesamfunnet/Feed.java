@@ -41,26 +41,12 @@ public class Feed extends AppCompatActivity {
 
         nav = findViewById(R.id.navList);
         setupDrawerContent(nav);
+
+
+
+
     }
 
-    private ActionBarDrawerToggle setUpDrawerToggle()
-    {
-        return new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close);
-    }
-
-    private void setupDrawerContent(NavigationView nav)
-    {
-        nav.setNavigationItemSelectedListener
-                (new NavigationView.OnNavigationItemSelectedListener()
-                {
-                    @Override
-                    public boolean onNavigationItemSelected(MenuItem menuItem)
-                    {
-                        selectDrawerItem(menuItem);
-                        return true;
-                    }
-                });
-    }
 
     /**
      * This method designates what happens when a menu item are selected in the navigation drawer.
@@ -99,6 +85,25 @@ public class Feed extends AppCompatActivity {
 
     }
 
+    private ActionBarDrawerToggle setUpDrawerToggle()
+    {
+        return new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close);
+    }
+
+    private void setupDrawerContent(NavigationView nav)
+    {
+        nav.setNavigationItemSelectedListener
+                (new NavigationView.OnNavigationItemSelectedListener()
+                {
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem menuItem)
+                    {
+                        selectDrawerItem(menuItem);
+                        return true;
+                    }
+                });
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
@@ -122,5 +127,4 @@ public class Feed extends AppCompatActivity {
         super.onConfigurationChanged(newConfig);
         drawerToggle.onConfigurationChanged(newConfig);
     }
-
 }
