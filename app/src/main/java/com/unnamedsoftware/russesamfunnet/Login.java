@@ -67,7 +67,7 @@ public class Login extends AppCompatActivity {
                 if (isInputFieldEmpty(findViewById(R.id.userEmail))) {
                     drawRedBorder(findViewById(R.id.userEmail));
                     Toast.makeText(Login.this, "Please enter email", Toast.LENGTH_SHORT).show();
-                } else if (isUserEmailValid()) {
+                } else if (!isUserEmailValid()) {
                     Toast.makeText(Login.this, "Please enter a valid email", Toast.LENGTH_SHORT).show();
                 } else if (isInputFieldEmpty(findViewById(R.id.userPassword))) {
                     drawRedBorder(findViewById(R.id.userPassword));
@@ -194,10 +194,12 @@ public class Login extends AppCompatActivity {
     private boolean isUserEmailValid() {
         Boolean state;
 
-        EditText usernameEditText = (EditText) findViewById(R.id.userEmail);
+        EditText usernameEditText = findViewById(R.id.userEmail);
         String userEmail = usernameEditText.getText().toString();
 
         state = android.util.Patterns.EMAIL_ADDRESS.matcher(userEmail).matches();
+        System.out.println(userEmail);
+        System.out.println(state);
         return state;
     }
 }
