@@ -17,7 +17,7 @@ public class Feed extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private Toolbar toolbar;
     private NavigationView nav;
-
+//test
     private ActionBarDrawerToggle drawerToggle;
 
     /**
