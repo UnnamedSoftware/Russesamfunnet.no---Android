@@ -8,7 +8,7 @@ package com.unnamedsoftware.russesamfunnet.RecyclerView;
 public class FeedPost
 {
     private String poster;
-    private String post;
+    private String message;
     private String firstName;
     private String surname;
     private Integer russID;
@@ -18,7 +18,7 @@ public class FeedPost
         this.firstName = firstName;
         this.surname = surname;
         this.russID = russID;
-        this.post = post;
+        this.message = post;
         this.poster = firstName + " "  + surname;
     }
 
@@ -26,7 +26,7 @@ public class FeedPost
     public String getFirstName(){return this.firstName;}
     public String getSurname(){return this.surname;}
     public String getPoster(){return this.poster;}
-    public String getPost(){return this.post;}
+    public String getPost(){return this.message;}
 
     public Integer getRussID(){return this.russID;}
 
@@ -40,5 +40,5 @@ public class FeedPost
     }
     public void setRussID(Integer russID){this.russID = russID;}
     public void setPoster(String poster){this.poster = poster;}
-    public void setPost(String post){this.post  =post;}
+    public void setPost(String post){this.message  =post;}
 }

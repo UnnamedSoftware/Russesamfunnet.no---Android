@@ -75,7 +75,7 @@ public class Feed extends AppCompatActivity {
 
         nav = findViewById(R.id.navList);
         setupDrawerContent(nav);
-
+/*
         try
         {
             getFeed();
@@ -83,7 +83,8 @@ public class Feed extends AppCompatActivity {
         {
             e.printStackTrace();
         }
-
+*/
+dummy();
         recyclerView = findViewById(R.id.recycler_view_feed);
         recyclerViewFeed = new RecyclerViewFeed(feedPosts);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
