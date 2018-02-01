@@ -7,10 +7,10 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".Scoreboard"
-    tools:showIn="@layout/activity_feed">
+    tools:showIn="@layout/activity_knot_list">
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view_feed"
+        android:id="@+id/recycler_view_knot_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"

@@ -7,10 +7,10 @@
     android:padding="16dp"
     android:theme="@style/ThemeOverlay.AppCompat.Dark"
     android:orientation="vertical"
-    android:gravity="bottom">
+    android:gravity="center_horizontal">
 
     <com.mikhaellopez.circularimageview.CircularImageView
-        android:id="@+id/userProfilePicture"
+        android:id="@+id/circularImageView"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_marginEnd="92dp"

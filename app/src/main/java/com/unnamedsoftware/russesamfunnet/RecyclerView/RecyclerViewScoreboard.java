@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.unnamedsoftware.russesamfunnet.R;
@@ -18,15 +19,20 @@ public class RecyclerViewScoreboard extends RecyclerView.Adapter<RecyclerViewSco
 {
     private List<ListUser> userList;
 
+    //Replace with the users ID!
+    private Integer userID = 13;
+
     public class ViewHolder extends RecyclerView.ViewHolder
     {
         private TextView name, position;
+        private RelativeLayout layout;
 
         public ViewHolder(View view)
         {
             super(view);
             name = view.findViewById(R.id.rvUser);
             position = view.findViewById(R.id.rvPosition);
+            layout = view.findViewById(R.id.rvScoreboardLayout);
         }
     }
 
@@ -46,6 +52,10 @@ public class RecyclerViewScoreboard extends RecyclerView.Adapter<RecyclerViewSco
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         ListUser listUser = userList.get(position);
+        if (listUser.getRussID() == userID)
+        {
+            holder.layout.setBackgroundResource((R.drawable.user_scoreboard_border));
+        }
         holder.name.setText(listUser.getFullName());
         holder.position.setText(String.valueOf(listUser.getPosition()));
     }
@@ -54,6 +64,5 @@ public class RecyclerViewScoreboard extends RecyclerView.Adapter<RecyclerViewSco
     public int getItemCount() {
         return userList.size();
     }
-
 
 }

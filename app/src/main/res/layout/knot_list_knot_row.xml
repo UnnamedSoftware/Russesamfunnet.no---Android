@@ -12,7 +12,7 @@
     android:orientation="vertical">
 
     <com.mikhaellopez.circularimageview.CircularImageView
-        android:id="@+id/userProfilePicture"
+        android:id="@+id/circularKnotView"
         android:layout_width="65dp"
         android:layout_height="65dp"
         android:layout_alignParentStart="true"
@@ -30,20 +30,13 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/rvPoster"
+        android:id="@+id/rvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_toEndOf="@+id/userProfilePicture"
-        android:textSize="14sp"
-        android:textStyle="bold" />
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text=""
+        android:textSize="24sp" />
 
-    <TextView
-        android:id="@+id/rvPost"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/rvPoster"
-        android:layout_toEndOf="@+id/userProfilePicture"
-        android:textSize="12sp" />
 
 </RelativeLayout>

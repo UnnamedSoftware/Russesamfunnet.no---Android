@@ -7,9 +7,23 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import com.unnamedsoftware.russesamfunnet.RecyclerView.FeedPost;
+import com.unnamedsoftware.russesamfunnet.RecyclerView.RecyclerViewFeed;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class Feed extends AppCompatActivity {
@@ -20,6 +34,21 @@ public class Feed extends AppCompatActivity {
 //test
     private ActionBarDrawerToggle drawerToggle;
 
+    private List<FeedPost> feedPosts = new ArrayList<>();
+    private RecyclerView recyclerView;
+    private RecyclerViewFeed recyclerViewFeed;
+
+    private String url;
+
+    // JSON Node names
+    private static final String TAG_feed = "feed";
+    private static final String TAG_RUSSID = "russID";
+    private static final String TAG_FIRSTNAME = "firstName";
+    private static final String TAG_SURNAME = "lastName";
+    private static final String TAG_POST = "post";
+
+    JSONArray posts = null;
+
     /**
      *  https://guides.codepath.com/android/fragment-navigation-drawer
      *
@@ -29,6 +58,8 @@ public class Feed extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feed);
+
+        url = getString(R.string.url) + "feed";
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -42,9 +73,25 @@ public class Feed extends AppCompatActivity {
         nav = findViewById(R.id.navList);
         setupDrawerContent(nav);
 
+        /*
+        try
+        {
+            getFeed();
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+*/
 
+        recyclerView = findViewById(R.id.recycler_view_feed);
+        recyclerViewFeed = new RecyclerViewFeed(feedPosts);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
+        recyclerView.setAdapter(recyclerViewFeed);
 
-
+        dummy();
     }
 
 
@@ -82,8 +129,63 @@ public class Feed extends AppCompatActivity {
         menuItem.setChecked(true);
         setTitle(menuItem.getTitle());
         drawerLayout.closeDrawers();
-
     }
+
+    /**
+     * Uses the JSONParser to request the feed from the server.
+     */
+    private void getFeed() throws IOException
+    {
+        JSONParser jsonParser = new JSONParser();
+
+        JSONObject jsonObject = jsonParser.getJSONFromUrl(url);
+
+        try
+        {
+            posts = jsonObject.getJSONArray(TAG_feed);
+
+            for(int i = 0; i < posts.length(); i++)
+            {
+                JSONObject u = posts.getJSONObject(i);
+                Integer russId = Integer.valueOf(u.getString(TAG_RUSSID));
+                String firstName = u.getString(TAG_FIRSTNAME);
+                String surname = u.getString(TAG_SURNAME);
+                String post = u.getString(TAG_POST);
+
+                FeedPost posts = new FeedPost(firstName,surname,russId,post);
+                feedPosts.add(posts);
+            }
+            recyclerViewFeed.notifyDataSetChanged();
+        }catch (JSONException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    private void dummy()
+    {
+        FeedPost post = new FeedPost("Bob","Baker",34,"Donec euismod, tortor in rutrum dictum, mauris orci mattis nulla, vitae vestibulum nibh tortor eu mauris. Quisque interdum lacus vitae tellus tincidunt, sed egestas ex convallis. Sed non nibh nec urna fermentum luctus ut sit amet massa. Praesent cursus efficitur ex at massa nunc.");
+        feedPosts.add(post);
+
+        post = new FeedPost("Julia","Flowers",75,"Ut et semper quam. Ut pharetra tellus convallis libero venenatis, ut interdum ante facilisis. Aenean tempor sapien ut elit mollis, condimentum maximus velit euismod. Nunc efficitur lacus tellus, a sagittis odio placerat sed. Etiam et aliquet augue. Interdum et malesuada fames id.");
+        feedPosts.add(post);
+
+        post = new FeedPost("John","Smith",249,"Cras dictum feugiat vulputate. Vivamus sed suscipit lorem, et lobortis neque. Morbi nec pretium nisi. Aenean malesuada metus turpis, sed ullamcorper ex convallis eu. Proin purus mauris, pulvinar non interdum id, tempus vel magna. Vivamus consequat tortor tempor consectetur metus.");
+        feedPosts.add(post);
+
+        post = new FeedPost("Kristine","Krystal",758,"Morbi dictum nulla blandit massa pulvinar efficitur et id dolor. Cras iaculis accumsan enim quis placerat. Morbi mauris lectus, egestas sit amet viverra sit amet, laoreet sed quam. Morbi et porta nulla. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere sed.");
+        feedPosts.add(post);
+
+        post = new FeedPost("Teddy","Fresh",13,"Cras dictum feugiat vulputate. Vivamus sed suscipit lorem, et lobortis neque. Morbi nec pretium nisi. Aenean malesuada metus turpis, sed ullamcorper ex convallis eu. Proin purus mauris, pulvinar non interdum id, tempus vel magna. Vivamus consequat tortor tempor consectetur metus.");
+        feedPosts.add(post);
+
+        post = new FeedPost("Lilly","Evens",567,"In finibus finibus mollis. Sed sed nisl at turpis lobortis sollicitudin eu a nisi. Integer rhoncus, arcu vel blandit euismod, est arcu mattis ex, sit amet accumsan sapien diam nec turpis. In sagittis odio sit amet neque venenatis ultricies. Donec ullamcorper interdum lacus metus.");
+        feedPosts.add(post);
+
+        post = new FeedPost("Kim","Jong-Un ",894,"Very nice!");
+        feedPosts.add(post);
+    }
+
 
     private ActionBarDrawerToggle setUpDrawerToggle()
     {
