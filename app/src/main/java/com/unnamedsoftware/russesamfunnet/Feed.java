@@ -25,13 +25,16 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *
+ */
 
 public class Feed extends AppCompatActivity {
 
     private DrawerLayout drawerLayout;
     private Toolbar toolbar;
     private NavigationView nav;
-//test
+
     private ActionBarDrawerToggle drawerToggle;
 
     private List<FeedPost> feedPosts = new ArrayList<>();
@@ -73,7 +76,6 @@ public class Feed extends AppCompatActivity {
         nav = findViewById(R.id.navList);
         setupDrawerContent(nav);
 
-        /*
         try
         {
             getFeed();
@@ -81,7 +83,6 @@ public class Feed extends AppCompatActivity {
         {
             e.printStackTrace();
         }
-*/
 
         recyclerView = findViewById(R.id.recycler_view_feed);
         recyclerViewFeed = new RecyclerViewFeed(feedPosts);
@@ -91,9 +92,7 @@ public class Feed extends AppCompatActivity {
         recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         recyclerView.setAdapter(recyclerViewFeed);
 
-        dummy();
     }
-
 
     /**
      * This method designates what happens when a menu item are selected in the navigation drawer.
@@ -186,6 +185,13 @@ public class Feed extends AppCompatActivity {
         feedPosts.add(post);
     }
 
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+        setTitle("Russesamfunnet - Feed");
+    }
 
     private ActionBarDrawerToggle setUpDrawerToggle()
     {

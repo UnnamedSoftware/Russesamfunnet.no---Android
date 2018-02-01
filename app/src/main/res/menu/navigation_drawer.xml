@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-
     <item
         android:id="@+id/scoreboard"
-        android:title="@string/scoreboard"/>
+        android:title="@string/scoreboard" />
     <item
         android:id="@+id/profile"
         android:title="@string/profile"/>

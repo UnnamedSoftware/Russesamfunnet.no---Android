@@ -98,7 +98,6 @@ public class Login extends AppCompatActivity {
         String userPasswordString = userPassword.getText().toString();
 
         toServer(view, userEmailString, userPasswordString);
-
     }
 
 
@@ -119,6 +118,7 @@ public class Login extends AppCompatActivity {
                     @Override
                     public void onResponse(String response)
                     {
+                        System.out.println(response);
                         finishServerCom();
                     }
                 }, new Response.ErrorListener() {
