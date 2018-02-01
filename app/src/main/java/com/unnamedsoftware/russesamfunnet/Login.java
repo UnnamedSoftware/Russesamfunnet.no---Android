@@ -62,18 +62,6 @@ public class Login extends AppCompatActivity
             }
         });
 
-<<<<<<< HEAD
-=======
-        Button dummyButton = findViewById(R.id.dummyButton);
-        dummyButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                startActivity(new Intent(Login.this, Feed.class));
-            }
-        });
->>>>>>> 48406551d3d71bd715e95b6a842e558dfd098e64
     }
 
     @Override
