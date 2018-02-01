@@ -30,6 +30,8 @@ import java.util.Map;
 public class Login extends AppCompatActivity
 {
 
+    private Boolean response = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -86,10 +88,7 @@ public class Login extends AppCompatActivity
                                             Toast.makeText(Login.this, "Please enter password", Toast.LENGTH_SHORT).show();
                                         } else
                                         {
-                                            if(userRegistered(view))
-                                            {
-                                                startActivity(new Intent(Login.this, Feed.class));
-                                            }else {Toast.makeText(Login.this, "Please enter a valid email", Toast.LENGTH_SHORT).show();}
+                                            userRegistered(view);
                                         }
                                     }
                                 }
@@ -102,9 +101,8 @@ public class Login extends AppCompatActivity
      *
      * @return
      */
-    private boolean userRegistered(View view)
+    private void userRegistered(View view)
     {
-
         EditText userEmail = findViewById(R.id.userEmail);
         String userEmailString = userEmail.getText().toString();
 
@@ -112,7 +110,6 @@ public class Login extends AppCompatActivity
         String userPasswordString = userPassword.getText().toString();
 
         toServer(view, userEmailString, userPasswordString);
-        return true;
     }
 
 
@@ -134,9 +131,12 @@ public class Login extends AppCompatActivity
                     @Override
                     public void onResponse(String response)
                     {
+                        String theResponse = response.substring(1, response.length()-1);
                         System.out.println(response);
-                        if (response.equals("true"))
+                        System.out.println(theResponse);
+                        if (theResponse.equalsIgnoreCase("true"))
                         {
+                            System.out.println("finish");
                             finishServerCom();
                         }
                     }
@@ -168,6 +168,7 @@ public class Login extends AppCompatActivity
 
     private void finishServerCom()
     {
+        startActivity(new Intent(Login.this, Feed.class));
         finish();
     }
 
@@ -225,8 +226,6 @@ public class Login extends AppCompatActivity
         String userEmail = usernameEditText.getText().toString();
 
         state = android.util.Patterns.EMAIL_ADDRESS.matcher(userEmail).matches();
-        System.out.println(userEmail);
-        System.out.println(state);
         return state;
     }
 }
