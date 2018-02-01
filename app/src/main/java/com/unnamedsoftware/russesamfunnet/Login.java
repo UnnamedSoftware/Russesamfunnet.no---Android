@@ -19,6 +19,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -35,6 +39,15 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        // Configure sign-in to request the user's ID, email address, and basic
+        // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+
+        // Build a GoogleSignInClient with the options specified by gso.
+        GoogleSignInClient mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+
         loginUser(findViewById(R.id.loginButton));
 
         Button registerButton = (Button) findViewById(R.id.registerButton);
@@ -45,15 +58,26 @@ public class Login extends AppCompatActivity {
             }
         });
 
-        Button dummyButton = findViewById(R.id.dummyButton);
-        dummyButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(Login.this, Feed.class));
-            }
-        });
     }
 
+    @Override
+    public void onStart(){
+        super.onStart();
+
+        // Check for existing Google Sign In account, if the user is already signed in
+        // the GoogleSignInAccount will be non-null.
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+        updateUI(account);
+
+    }
+
+    /**
+     * If the user already is logged in, jump straight to app
+     * @param account
+     */
+    private void updateUI(GoogleSignInAccount account) {
+
+    }
 
     /**
      * The functions associated with the login button
