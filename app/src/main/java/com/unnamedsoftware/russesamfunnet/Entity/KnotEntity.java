@@ -13,6 +13,7 @@ public class KnotEntity implements Parcelable {
     private Integer knotId;
     private String details;
     private SchoolEntity schoolId;
+    private String title;
 
 
     //private String status;
@@ -24,9 +25,18 @@ public class KnotEntity implements Parcelable {
         this.knotId = knotId;
     }
 
-    public KnotEntity(Integer knotId, String details) {
+    public KnotEntity(Integer knotId, String details, String title) {
         this.knotId = knotId;
         this.details = details;
+        this.title = title;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public Integer getKnotId() {
@@ -109,4 +119,5 @@ public class KnotEntity implements Parcelable {
     private KnotEntity(Parcel in) {
         mData = in.readInt();
     }
+
 }

@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.unnamedsoftware.russesamfunnet.Entity.KnotEntity;
@@ -31,6 +32,7 @@ import java.util.logging.Logger;
 
 public class Knot extends AppCompatActivity
 {
+    private KnotEntity knotEntity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,9 +52,21 @@ public class Knot extends AppCompatActivity
         }
 
         Intent i = getIntent();
-        KnotEntity knotEntity = (KnotEntity) i.getParcelableExtra("knot_entity");
+        knotEntity = (KnotEntity) i.getParcelableExtra("knot_entity");
+        this.fillInData();
 
     }
+
+    private void fillInData(){
+
+        TextView textViewTitle = findViewById(R.id.knot_name);
+        textViewTitle.setText(knotEntity.getTitle());
+
+        TextView textViewDescription = findViewById(R.id.description);
+        textViewDescription.setText(knotEntity.getDetails());
+    }
+
+
 
 
 
