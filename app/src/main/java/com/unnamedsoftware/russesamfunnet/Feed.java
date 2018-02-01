@@ -3,6 +3,7 @@ package com.unnamedsoftware.russesamfunnet;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.Parcel;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -14,6 +15,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import com.unnamedsoftware.russesamfunnet.Entity.KnotEntity;
 import com.unnamedsoftware.russesamfunnet.RecyclerView.FeedPost;
 import com.unnamedsoftware.russesamfunnet.RecyclerView.RecyclerViewFeed;
 
@@ -116,6 +118,7 @@ dummy();
 
             case R.id.knotList:
                 intent = new Intent(this, Knot.class);
+                intent.putExtra("knot_entity", new KnotEntity(10001, "Drink Beer", "Beer"));
                 this.startActivity(intent);
                 break;
 

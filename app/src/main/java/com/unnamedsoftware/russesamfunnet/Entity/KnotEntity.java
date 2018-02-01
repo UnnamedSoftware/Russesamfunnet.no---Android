@@ -3,13 +3,16 @@ package com.unnamedsoftware.russesamfunnet.Entity;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.io.Serializable;
+
 /**
  * Created by HallvardPC on 01.02.2018.
  */
 
-public class KnotEntity implements Parcelable {
+public class KnotEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    private int mData;
     private Integer knotId;
     private String details;
     private SchoolEntity schoolId;
@@ -86,38 +89,6 @@ public class KnotEntity implements Parcelable {
     @Override
     public String toString() {
         return "no.ntnu.unnamedsoftware.entity.Knots[ knotId=" + knotId + " ]";
-    }
-
-    private int mData;
-
-    /* everything below here is for implementing Parcelable */
-
-    // 99.9% of the time you can just ignore this
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    // write your object's data to the passed-in Parcel
-    @Override
-    public void writeToParcel(Parcel out, int flags) {
-        out.writeInt(mData);
-    }
-
-    // this is used to regenerate your object. All Parcelables must have a CREATOR that implements these two methods
-    public static final Parcelable.Creator<KnotEntity> CREATOR = new Parcelable.Creator<KnotEntity>() {
-        public KnotEntity createFromParcel(Parcel in) {
-            return new KnotEntity(in);
-        }
-
-        public KnotEntity[] newArray(int size) {
-            return new KnotEntity[size];
-        }
-    };
-
-    // example constructor that takes a Parcel and gives you an object populated with it's values
-    private KnotEntity(Parcel in) {
-        mData = in.readInt();
     }
 
 }
