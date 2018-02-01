@@ -27,10 +27,12 @@ import java.util.Map;
  * Created by Alexander Eilert Berg on 19.01.2018.
  */
 
-public class Login extends AppCompatActivity {
+public class Login extends AppCompatActivity
+{
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
@@ -38,17 +40,21 @@ public class Login extends AppCompatActivity {
         loginUser(findViewById(R.id.loginButton));
 
         Button registerButton = (Button) findViewById(R.id.registerButton);
-        registerButton.setOnClickListener(new View.OnClickListener() {
+        registerButton.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view)
+            {
                 startActivity(new Intent(Login.this, Register.class));
             }
         });
 
         Button dummyButton = findViewById(R.id.dummyButton);
-        dummyButton.setOnClickListener(new View.OnClickListener() {
+        dummyButton.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view)
+            {
                 startActivity(new Intent(Login.this, Feed.class));
             }
         });
@@ -60,27 +66,35 @@ public class Login extends AppCompatActivity {
      *
      * @param view
      */
-    public void loginUser(View view) {
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (isInputFieldEmpty(findViewById(R.id.userEmail))) {
-                    drawRedBorder(findViewById(R.id.userEmail));
-                    Toast.makeText(Login.this, "Please enter email", Toast.LENGTH_SHORT).show();
-                } else if (!isUserEmailValid()) {
-                    Toast.makeText(Login.this, "Please enter a valid email", Toast.LENGTH_SHORT).show();
-                } else if (isInputFieldEmpty(findViewById(R.id.userPassword))) {
-                    drawRedBorder(findViewById(R.id.userPassword));
-                    Toast.makeText(Login.this, "Please enter password", Toast.LENGTH_SHORT).show();
-                } else
-                    {
-                        userRegistered(view);
-                        startActivity(new Intent(Login.this, Feed.class));
-                    }
-                }
-            }
-        );}
-
+    public void loginUser(View view)
+    {
+        view.setOnClickListener(new View.OnClickListener()
+                                {
+                                    @Override
+                                    public void onClick(View view)
+                                    {
+                                        if (isInputFieldEmpty(findViewById(R.id.userEmail)))
+                                        {
+                                            drawRedBorder(findViewById(R.id.userEmail));
+                                            Toast.makeText(Login.this, "Please enter email", Toast.LENGTH_SHORT).show();
+                                        } else if (!isUserEmailValid())
+                                        {
+                                            Toast.makeText(Login.this, "Please enter a valid email", Toast.LENGTH_SHORT).show();
+                                        } else if (isInputFieldEmpty(findViewById(R.id.userPassword)))
+                                        {
+                                            drawRedBorder(findViewById(R.id.userPassword));
+                                            Toast.makeText(Login.this, "Please enter password", Toast.LENGTH_SHORT).show();
+                                        } else
+                                        {
+                                            if(userRegistered(view))
+                                            {
+                                                startActivity(new Intent(Login.this, Feed.class));
+                                            }else {Toast.makeText(Login.this, "Please enter a valid email", Toast.LENGTH_SHORT).show();}
+                                        }
+                                    }
+                                }
+        );
+    }
 
 
     /**
@@ -88,7 +102,7 @@ public class Login extends AppCompatActivity {
      *
      * @return
      */
-    private void userRegistered(View view)
+    private boolean userRegistered(View view)
     {
 
         EditText userEmail = findViewById(R.id.userEmail);
@@ -98,6 +112,7 @@ public class Login extends AppCompatActivity {
         String userPasswordString = userPassword.getText().toString();
 
         toServer(view, userEmailString, userPasswordString);
+        return true;
     }
 
 
@@ -111,29 +126,38 @@ public class Login extends AppCompatActivity {
     private void toServer(View view, String userEmailString, String userPasswordString)
     {
         RequestQueue queue = Volley.newRequestQueue(view.getContext());
-        String url = getString(R.string.url) + "/login?email=" + userEmailString + "&password=" + userPasswordString ;
+        String url = getString(R.string.url) + "login?email=" + userEmailString + "&password=" + userPasswordString;
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>() {
+                new Response.Listener<String>()
+                {
                     @Override
                     public void onResponse(String response)
                     {
                         System.out.println(response);
-                        finishServerCom();
+                        if (response.equals("true"))
+                        {
+                            finishServerCom();
+                        }
                     }
-                }, new Response.ErrorListener() {
+                }, new Response.ErrorListener()
+        {
             @Override
-            public void onErrorResponse(VolleyError error) {
+            public void onErrorResponse(VolleyError error)
+            {
                 System.out.println("Something did not work:" + error);
             }
-        }) {
+        })
+        {
             @Override
-            public String getBodyContentType() {
+            public String getBodyContentType()
+            {
                 return "application/json";
             }
 
             @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
+            public Map<String, String> getHeaders() throws AuthFailureError
+            {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("Content-Type", " application/json");
                 return params;
@@ -153,7 +177,8 @@ public class Login extends AppCompatActivity {
      *
      * @param fieldName
      */
-    private void drawRedBorder(View fieldName) {
+    private void drawRedBorder(View fieldName)
+    {
         ShapeDrawable shape = new ShapeDrawable(new RectShape());
         shape.getPaint().setColor(Color.RED);
         shape.getPaint().setStyle(Paint.Style.STROKE);
@@ -169,7 +194,8 @@ public class Login extends AppCompatActivity {
      *
      * @return True if field is empty
      */
-    private boolean isInputFieldEmpty(View fieldName) {
+    private boolean isInputFieldEmpty(View fieldName)
+    {
         Boolean state;
 
         EditText inputEditText = (EditText) fieldName;
@@ -179,7 +205,7 @@ public class Login extends AppCompatActivity {
         {
             state = true;
         } else
-            {
+        {
             state = false;
         }
         return state;
@@ -191,7 +217,8 @@ public class Login extends AppCompatActivity {
      *
      * @return True if the email is in the correct format
      */
-    private boolean isUserEmailValid() {
+    private boolean isUserEmailValid()
+    {
         Boolean state;
 
         EditText usernameEditText = findViewById(R.id.userEmail);
