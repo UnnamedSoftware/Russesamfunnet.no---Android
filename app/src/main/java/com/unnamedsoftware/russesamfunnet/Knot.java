@@ -15,6 +15,13 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.Toast;
 
+import com.unnamedsoftware.russesamfunnet.Entity.KnotEntity;
+import com.unnamedsoftware.russesamfunnet.RecyclerView.ListUser;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.logging.Logger;
 
 /**
@@ -42,46 +49,12 @@ public class Knot extends AppCompatActivity
             System.out.println(e.fillInStackTrace());
         }
 
+        Intent i = getIntent();
+        KnotEntity knotEntity = (KnotEntity) i.getParcelableExtra("knot_entity");
+
     }
 
 
-    public void buttonClicked(View view) {
-        LayoutInflater inflater = getLayoutInflater();
-        View alertLayout = inflater.inflate(R.layout.activity_witness_popup, null);
-        final CheckBox cbToggle = alertLayout.findViewById(R.id.cb_show_pass);
-
-        cbToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
-            }
-        });
-
-        AlertDialog.Builder alert = new AlertDialog.Builder(this);
-        alert.setTitle("Info");
-        // this is set the view from XML inside AlertDialog
-        alert.setView(alertLayout);
-        // disallow cancel of AlertDialog on click of back button and outside touch
-        alert.setCancelable(false);
-        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(getBaseContext(), "Cancel clicked", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        alert.setPositiveButton("Done", new DialogInterface.OnClickListener() {
-
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-            }
-        });
-        AlertDialog dialog = alert.create();
-        dialog.show();
-    }
 
     @Override
     public boolean onSupportNavigateUp() {
