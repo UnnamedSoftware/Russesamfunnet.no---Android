@@ -3,6 +3,7 @@ package com.unnamedsoftware.russesamfunnet;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.Parcel;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -14,6 +15,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import com.unnamedsoftware.russesamfunnet.Entity.KnotEntity;
 import com.unnamedsoftware.russesamfunnet.RecyclerView.FeedPost;
 import com.unnamedsoftware.russesamfunnet.RecyclerView.RecyclerViewFeed;
 
@@ -25,13 +27,16 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *
+ */
 
 public class Feed extends AppCompatActivity {
 
     private DrawerLayout drawerLayout;
     private Toolbar toolbar;
     private NavigationView nav;
-//test
+
     private ActionBarDrawerToggle drawerToggle;
 
     private List<FeedPost> feedPosts = new ArrayList<>();
@@ -72,8 +77,7 @@ public class Feed extends AppCompatActivity {
 
         nav = findViewById(R.id.navList);
         setupDrawerContent(nav);
-
-        /*
+/*
         try
         {
             getFeed();
@@ -82,7 +86,7 @@ public class Feed extends AppCompatActivity {
             e.printStackTrace();
         }
 */
-
+dummy();
         recyclerView = findViewById(R.id.recycler_view_feed);
         recyclerViewFeed = new RecyclerViewFeed(feedPosts);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
@@ -91,9 +95,7 @@ public class Feed extends AppCompatActivity {
         recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         recyclerView.setAdapter(recyclerViewFeed);
 
-        dummy();
     }
-
 
     /**
      * This method designates what happens when a menu item are selected in the navigation drawer.
@@ -116,6 +118,7 @@ public class Feed extends AppCompatActivity {
 
             case R.id.knotList:
                 intent = new Intent(this, Knot.class);
+                intent.putExtra("knot_entity", new KnotEntity(10001, "Drink Beer", "Beer"));
                 this.startActivity(intent);
                 break;
 
@@ -186,6 +189,13 @@ public class Feed extends AppCompatActivity {
         feedPosts.add(post);
     }
 
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+        setTitle("Russesamfunnet - Feed");
+    }
 
     private ActionBarDrawerToggle setUpDrawerToggle()
     {

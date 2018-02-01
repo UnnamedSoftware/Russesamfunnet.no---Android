@@ -19,7 +19,25 @@ public class ListUser
         this.russID = russID;
         this.position = position;
 
-        this.fullName = firstName + " "  + surname;
+        createFullName(firstName,surname);
+
+    }
+
+    /**
+     * Creates the full name of the user by combining the first and surname.
+     * If the full name exceeds a total of 19 characters the last part of the surname gets replaced by a ...
+     */
+    private void createFullName(String firstName, String surname)
+    {
+        String name = firstName + " ";
+        int i = name.length() + surname.length();
+        if(i > 19)
+        {
+            name += surname;
+            name = name.substring(0, 19) + "...";
+        }else{name += surname;}
+
+        this.fullName = name;
     }
 
     public String getFirstName(){return this.firstName;}
