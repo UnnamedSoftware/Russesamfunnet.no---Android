@@ -26,7 +26,7 @@ public class ListUser
     public String getSurname(){return this.surname;}
     public String getFullName(){return this.fullName;}
 
-    public Integer getRussID(){return this.position;}
+    public Integer getRussID(){return this.russID;}
     public Integer getPosition()
     {
         return this.position;

@@ -3,6 +3,7 @@ package com.unnamedsoftware.russesamfunnet;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -28,7 +29,7 @@ public class Scoreboard extends AppCompatActivity
     private RecyclerView recyclerView;
     private RecyclerViewScoreboard recyclerViewScoreboard;
 
-    private String url = getString(R.string.url) + "scoreboardTop10";
+    private String url;
 
     // JSON Node names
     private static final String TAG_RUSS = "russ";
@@ -48,13 +49,15 @@ public class Scoreboard extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scoreboard);
 
+        url = getString(R.string.url) + "scoreboardTop10";
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         setTitle("Russesamfunnet - Scoreboard");
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-
+/*
         try
         {
             getRussScoreboard();
@@ -62,15 +65,16 @@ public class Scoreboard extends AppCompatActivity
         {
             e.printStackTrace();
         }
-
-        recyclerView = findViewById(R.id.recycler_view_scoreboard);
-        recyclerViewScoreboard = new RecyclerViewScoreboard(userList);
+*/
+        this.recyclerView = findViewById(R.id.recycler_view_scoreboard);
+        this.recyclerViewScoreboard = new RecyclerViewScoreboard(userList);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         recyclerView.setAdapter(recyclerViewScoreboard);
 
-
+        dummy();
     }
 
     /**
@@ -137,10 +141,8 @@ public class Scoreboard extends AppCompatActivity
         user = new ListUser("Karoline", "Handal", 18650, 10);
         userList.add(user);
 
-        user = new ListUser("Girts" ,"Strazdins ", 18549,19);
+        user = new ListUser("Girts" ,"Strazdins ", 13,19);
         userList.add(user);
-
-        recyclerViewScoreboard.notifyDataSetChanged();
     }
 
     @Override
