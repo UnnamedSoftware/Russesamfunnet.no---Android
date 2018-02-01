@@ -31,7 +31,7 @@ public class Feed extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private Toolbar toolbar;
     private NavigationView nav;
-
+//test
     private ActionBarDrawerToggle drawerToggle;
 
     private List<FeedPost> feedPosts = new ArrayList<>();
