@@ -66,8 +66,8 @@ public class Scoreboard extends AppCompatActivity
             e.printStackTrace();
         }
 */
-        recyclerView = findViewById(R.id.recycler_view_scoreboard);
-        recyclerViewScoreboard = new RecyclerViewScoreboard(userList);
+        this.recyclerView = findViewById(R.id.recycler_view_scoreboard);
+        this.recyclerViewScoreboard = new RecyclerViewScoreboard(userList);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
