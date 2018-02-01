@@ -17,12 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.unnamedsoftware.russesamfunnet.Entity.KnotEntity;
-import com.unnamedsoftware.russesamfunnet.RecyclerView.ListUser;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
 import java.util.logging.Logger;
 
 /**

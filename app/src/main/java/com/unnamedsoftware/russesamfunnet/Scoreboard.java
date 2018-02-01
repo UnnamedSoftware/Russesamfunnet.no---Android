@@ -57,7 +57,7 @@ public class Scoreboard extends AppCompatActivity
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-/*
+
         try
         {
             getRussScoreboard();
@@ -65,7 +65,7 @@ public class Scoreboard extends AppCompatActivity
         {
             e.printStackTrace();
         }
-*/
+
         this.recyclerView = findViewById(R.id.recycler_view_scoreboard);
         this.recyclerViewScoreboard = new RecyclerViewScoreboard(userList);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
@@ -73,8 +73,6 @@ public class Scoreboard extends AppCompatActivity
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         recyclerView.setAdapter(recyclerViewScoreboard);
-
-        dummy();
     }
 
     /**
