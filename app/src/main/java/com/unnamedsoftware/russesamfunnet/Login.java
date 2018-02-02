@@ -1,10 +1,6 @@
 package com.unnamedsoftware.russesamfunnet;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.drawable.ShapeDrawable;
-import android.graphics.drawable.shapes.RectShape;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -75,16 +71,16 @@ public class Login extends AppCompatActivity
                                     @Override
                                     public void onClick(View view)
                                     {
-                                        if (isInputFieldEmpty(findViewById(R.id.userEmail)))
+                                        if (InputAnalyzer.isInputFieldEmpty(findViewById(R.id.userEmail)))
                                         {
-                                            drawRedBorder(findViewById(R.id.userEmail));
+                                            InputAnalyzer.drawRedBorder(findViewById(R.id.userEmail));
                                             Toast.makeText(Login.this, "Please enter email", Toast.LENGTH_SHORT).show();
-                                        } else if (!isUserEmailValid())
+                                        } else if (!InputAnalyzer.isUserEmailValid(findViewById(R.id.email)))
                                         {
                                             Toast.makeText(Login.this, "Please enter a valid email", Toast.LENGTH_SHORT).show();
-                                        } else if (isInputFieldEmpty(findViewById(R.id.userPassword)))
+                                        } else if (InputAnalyzer.isInputFieldEmpty(findViewById(R.id.userPassword)))
                                         {
-                                            drawRedBorder(findViewById(R.id.userPassword));
+                                            InputAnalyzer.drawRedBorder(findViewById(R.id.userPassword));
                                             Toast.makeText(Login.this, "Please enter password", Toast.LENGTH_SHORT).show();
                                         } else
                                         {
@@ -172,60 +168,4 @@ public class Login extends AppCompatActivity
         finish();
     }
 
-
-    /**
-     * Adds a red boarder to the given field
-     *
-     * @param fieldName
-     */
-    private void drawRedBorder(View fieldName)
-    {
-        ShapeDrawable shape = new ShapeDrawable(new RectShape());
-        shape.getPaint().setColor(Color.RED);
-        shape.getPaint().setStyle(Paint.Style.STROKE);
-        shape.getPaint().setStrokeWidth(3);
-
-        EditText inputField = (EditText) fieldName;
-        inputField.setBackground(shape);
-    }
-
-
-    /**
-     * Checks if the input field field is empty, returns true if it is.
-     *
-     * @return True if field is empty
-     */
-    private boolean isInputFieldEmpty(View fieldName)
-    {
-        Boolean state;
-
-        EditText inputEditText = (EditText) fieldName;
-        String input = inputEditText.getText().toString();
-
-        if (input.matches(""))
-        {
-            state = true;
-        } else
-        {
-            state = false;
-        }
-        return state;
-    }
-
-
-    /**
-     * Returns true if the email is in the correct format
-     *
-     * @return True if the email is in the correct format
-     */
-    private boolean isUserEmailValid()
-    {
-        Boolean state;
-
-        EditText usernameEditText = findViewById(R.id.userEmail);
-        String userEmail = usernameEditText.getText().toString();
-
-        state = android.util.Patterns.EMAIL_ADDRESS.matcher(userEmail).matches();
-        return state;
-    }
 }

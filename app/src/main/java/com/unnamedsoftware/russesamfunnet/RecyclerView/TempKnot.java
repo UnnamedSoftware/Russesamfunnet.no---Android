@@ -8,13 +8,20 @@ public class TempKnot
 {
     private String title;
     private Integer knotID;
+    private String description;
 
-    public TempKnot(String title, Integer knotID)
+    public TempKnot(String title,String description, Integer knotID)
     {
         this.title = title;
         this.knotID = knotID;
+        this.description = description;
     }
 
+    public String getDescription(){return this.description;}
+    public void setDescription(String description)
+    {
+        this.description = description;
+    }
     public String getTitle(){return this.title;}
     public Integer getKnotID(){return this.knotID;}
     public void setTitle(String title)

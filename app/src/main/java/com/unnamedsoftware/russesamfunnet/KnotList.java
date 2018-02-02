@@ -8,8 +8,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
-import com.unnamedsoftware.russesamfunnet.RecyclerView.RecyclerViewKnotList;
 import com.unnamedsoftware.russesamfunnet.RecyclerView.TempKnot;
+import com.unnamedsoftware.russesamfunnet.RecyclerView.ViewKnotListAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -31,7 +31,7 @@ public class KnotList extends AppCompatActivity
 
     private List<TempKnot> tempKnots = new ArrayList<>();
     private RecyclerView recyclerView;
-    private RecyclerViewKnotList recyclerViewKnotList;
+    private ViewKnotListAdapter viewKnotListAdapter;
     private JSONObject jsonObject = null;
 
     private String url;
@@ -63,12 +63,13 @@ public class KnotList extends AppCompatActivity
 
 
         this.recyclerView = findViewById(R.id.recycler_view_knot_list);
-        this.recyclerViewKnotList = new RecyclerViewKnotList (tempKnots);
+        this.viewKnotListAdapter = new ViewKnotListAdapter (tempKnots);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
-        recyclerView.setAdapter(recyclerViewKnotList);
+        recyclerView.setAdapter(viewKnotListAdapter);
+
 
         try
         {
@@ -110,12 +111,12 @@ public class KnotList extends AppCompatActivity
                 JSONObject knotsJSONObject = knots.getJSONObject(i);
                 Integer knotID = Integer.valueOf(knotsJSONObject.getString(TAG_KNOTID));
                 String title = knotsJSONObject.getString(TAG_TITLE);
+                String description = knotsJSONObject.getString("description");
 
-
-                TempKnot knot = new TempKnot(title,knotID);
+                TempKnot knot = new TempKnot(title,description,knotID);
                 tempKnots.add(knot);
             }
-            this.recyclerViewKnotList.notifyDataSetChanged();
+            this.viewKnotListAdapter.notifyDataSetChanged();
         }catch (JSONException e)
         {
             e.printStackTrace();
