@@ -16,6 +16,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +32,7 @@ public class KnotList extends AppCompatActivity
     private List<TempKnot> tempKnots = new ArrayList<>();
     private RecyclerView recyclerView;
     private RecyclerViewKnotList recyclerViewKnotList;
+    private JSONObject jsonObject = null;
 
     private String url;
 
@@ -77,15 +80,27 @@ public class KnotList extends AppCompatActivity
 
     }
 
+    private void setJsonObject(JSONObject jsonObject)
+    {
+        this.jsonObject = jsonObject;
+    }
+
     /**
      * Uses the JSONParser to request the knot list from the server.
      */
     private void getKnotList() throws IOException
     {
-        JSONParser jsonParser = new JSONParser();
-
-        JSONObject jsonObject = jsonParser.getJSONFromUrl(url);
-
+        try {
+            new JSONParser(new JSONParser.OnPostExecute() {
+                @Override
+                public void onPostExecute(JSONObject jsonObject) {
+                    setJsonObject(jsonObject);
+                }
+            }).execute(new URL(url));
+        }   catch (MalformedURLException e)
+        {
+            e.printStackTrace();
+        }
         try
         {
             knots = jsonObject.getJSONArray(TAG_KNOTLIST);

@@ -14,6 +14,16 @@ public class ScoreboardEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     private Integer scoreboardId;
     private int points;
+
+    public int getPosition() {
+        return position;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
+    }
+
+    private int position;
     private RussEntity russId;
 
     public ScoreboardEntity() {
@@ -23,9 +33,11 @@ public class ScoreboardEntity implements Serializable {
         this.scoreboardId = scoreboardId;
     }
 
-    public ScoreboardEntity(Integer scoreboardId, int points) {
+    public ScoreboardEntity(Integer scoreboardId, int points, int position, RussEntity russId) {
         this.scoreboardId = scoreboardId;
         this.points = points;
+        this.position = position;
+        this.russId = russId;
     }
 
     public Integer getScoreboardId() {
