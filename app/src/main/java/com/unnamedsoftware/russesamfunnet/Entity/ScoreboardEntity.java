@@ -1,8 +1,5 @@
 package com.unnamedsoftware.russesamfunnet.Entity;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import java.io.Serializable;
 
 /**
