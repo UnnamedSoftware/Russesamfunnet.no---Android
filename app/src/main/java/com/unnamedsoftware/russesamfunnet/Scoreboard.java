@@ -94,6 +94,7 @@ public class Scoreboard extends AppCompatActivity
             new JSONParser(new JSONParser.OnPostExecute() {
                 @Override
                 public void onPostExecute(JSONObject jsonObject) {
+                    System.out.println("Inside onPostExecute");
                     setJsonObject(jsonObject);
                 }
             }).execute(new URL(url));
