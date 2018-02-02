@@ -1,6 +1,8 @@
 package com.unnamedsoftware.russesamfunnet;
 
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
@@ -54,7 +56,7 @@ public class Scoreboard extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scoreboard);
         //getString(R.string.url)
-        url =  "http://localhost:8080/scoreboardTop10?theRussId=1";
+        url =  "http://ec2-18-196-123-217.eu-central-1.compute.amazonaws.com:8080/scoreboardTop10?theRussId=1";
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -62,7 +64,7 @@ public class Scoreboard extends AppCompatActivity
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-/*
+
         try
         {
             getRussScoreboard();
@@ -70,7 +72,6 @@ public class Scoreboard extends AppCompatActivity
         {
             e.printStackTrace();
         }
-*/      dummy();
         this.recyclerView = findViewById(R.id.recycler_view_scoreboard);
         this.recyclerViewScoreboard = new RecyclerViewScoreboard(userList);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
@@ -88,13 +89,15 @@ public class Scoreboard extends AppCompatActivity
     /**
      * Uses the JSONParser to request the scoreboard from the server.
      */
+    @RequiresApi(api = Build.VERSION_CODES.CUPCAKE)
     private void getRussScoreboard() throws IOException
     {
         try {
             new JSONParser(new JSONParser.OnPostExecute() {
                 @Override
                 public void onPostExecute(JSONObject jsonObject) {
-                    System.out.println("Inside onPostExecute");
+                    if (jsonObject == null) System.out.println("\nInside onPostExecute\n");
+
                     setJsonObject(jsonObject);
                 }
             }).execute(new URL(url));
@@ -107,7 +110,9 @@ public class Scoreboard extends AppCompatActivity
 
         JSONArray users = null;
         try {
-            users = jsonObject.toJSONArray(jsonObject.names());
+            JSONArray jsonNames = jsonObject.names();
+            if (jsonNames == null) System.out.println("WEAIKFJUHASIUFG");
+            users = jsonObject.toJSONArray(jsonNames);
         }catch (Exception e)
         {
             System.out.println(e.fillInStackTrace());

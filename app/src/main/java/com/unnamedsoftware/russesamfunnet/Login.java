@@ -75,7 +75,7 @@ public class Login extends AppCompatActivity
                                         {
                                             InputAnalyzer.drawRedBorder(findViewById(R.id.userEmail));
                                             Toast.makeText(Login.this, "Please enter email", Toast.LENGTH_SHORT).show();
-                                        } else if (!InputAnalyzer.isUserEmailValid(findViewById(R.id.email)))
+                                        } else if (!InputAnalyzer.isUserEmailValid(findViewById(R.id.userEmail)))
                                         {
                                             Toast.makeText(Login.this, "Please enter a valid email", Toast.LENGTH_SHORT).show();
                                         } else if (InputAnalyzer.isInputFieldEmpty(findViewById(R.id.userPassword)))

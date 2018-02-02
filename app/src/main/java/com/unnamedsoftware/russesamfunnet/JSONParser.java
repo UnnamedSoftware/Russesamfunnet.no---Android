@@ -42,7 +42,7 @@ public class JSONParser extends AsyncTask<URL, Void, JSONObject>
         try
         {
             urlConnection = (HttpURLConnection) urls[0].openConnection();
-            InputStream inputStream = urlConnection.getInputStream();
+            inputStream = urlConnection.getInputStream();
             InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
 
             int data = inputStreamReader.read();
@@ -64,15 +64,24 @@ public class JSONParser extends AsyncTask<URL, Void, JSONObject>
 
         try
         {
+            System.out.println("\n line 1 \n");
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"), 8);
+            System.out.println("\n line 2 \n");
             StringBuilder stringBuilder = new StringBuilder();
+            System.out.println("\n line 3 \n");
             String line = null;
             while ((line = reader.readLine()) != null)
             {
                 stringBuilder.append(line + "\n");
+
             }
             inputStream.close();
+            System.out.println("\n line 4 \n");
+
+            System.out.println("String builder: " + stringBuilder.toString());
             json = stringBuilder.toString();
+
+            System.out.println("\n line 5 \n");
         } catch (Exception e)
         {
             Log.e("Buffer Error", "Error converting result " + e.toString());
@@ -81,6 +90,7 @@ public class JSONParser extends AsyncTask<URL, Void, JSONObject>
         try
         {
             jsonObject = new JSONObject(json);
+            System.out.println("\n line 6 \n");
         } catch (JSONException e)
         {
             Log.e("JSON Parser", "Error parsing data " + e.toString());
