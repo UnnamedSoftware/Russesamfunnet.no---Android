@@ -8,7 +8,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
-import com.unnamedsoftware.russesamfunnet.RecyclerView.ListUser;
+import com.unnamedsoftware.russesamfunnet.Entity.RussEntity;
+import com.unnamedsoftware.russesamfunnet.Entity.SchoolEntity;
+import com.unnamedsoftware.russesamfunnet.Entity.ScoreboardEntity;
 import com.unnamedsoftware.russesamfunnet.RecyclerView.RecyclerViewScoreboard;
 
 import org.json.JSONArray;
@@ -16,7 +18,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -25,20 +30,20 @@ import java.util.List;
 
 public class Scoreboard extends AppCompatActivity
 {
-    private List<ListUser> userList = new ArrayList<>();
+    private List<ScoreboardEntity> userList = new ArrayList<>();
     private RecyclerView recyclerView;
     private RecyclerViewScoreboard recyclerViewScoreboard;
+    private JSONObject jsonObject = null;
 
     private String url;
 
     // JSON Node names
-    private static final String TAG_RUSS = "russ";
-    private static final String TAG_RUSSID = "russID";
-    private static final String TAG_FIRSTNAME = "firstName";
-    private static final String TAG_SURNAME = "lastName";
+    private static final String TAG_SCOREBOARDID = "scoreboardId";
+    private static final String TAG_POINTS = "points";
     private static final String TAG_POSITION = "position";
+    private static final String TAG_RUSS_ID = "russId";
 
-    JSONArray users = null;
+
 
     /**
      *
@@ -48,8 +53,8 @@ public class Scoreboard extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scoreboard);
-
-        url = getString(R.string.url) + "scoreboardTop10";
+        //getString(R.string.url)
+        url =  "http://localhost:8080/scoreboardTop10?theRussId=1";
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -75,38 +80,78 @@ public class Scoreboard extends AppCompatActivity
         recyclerView.setAdapter(recyclerViewScoreboard);
     }
 
+    private void setJsonObject(JSONObject jsonObject)
+    {
+        this.jsonObject = jsonObject;
+    }
+
     /**
      * Uses the JSONParser to request the scoreboard from the server.
      */
     private void getRussScoreboard() throws IOException
     {
-        JSONParser jsonParser = new JSONParser();
+        try {
+            new JSONParser(new JSONParser.OnPostExecute() {
+                @Override
+                public void onPostExecute(JSONObject jsonObject) {
+                    setJsonObject(jsonObject);
+                }
+            }).execute(new URL(url));
+        }   catch (MalformedURLException e)
+        {
+            e.printStackTrace();
+        }
 
-        JSONObject jsonObject = jsonParser.getJSONFromUrl(url);
+
+
+        JSONArray users = null;
+        try {
+            users = jsonObject.toJSONArray(jsonObject.names());
+        }catch (Exception e)
+        {
+            System.out.println(e.fillInStackTrace());
+        }
 
         try
         {
-            users = jsonObject.getJSONArray(TAG_RUSS);
-
-            for(int i = 0; i < users.length(); i++)
+            System.out.println("Hi?");
+            System.out.println(users.length());
+            for(int i = 1; i < users.length(); i++)
             {
                 JSONObject u = users.getJSONObject(i);
-                Integer russId = Integer.valueOf(u.getString(TAG_RUSSID));
-                String firstName = u.getString(TAG_FIRSTNAME);
-                String surname = u.getString(TAG_SURNAME);
+
+                Integer scoreboardId = Integer.valueOf(u.getString(TAG_SCOREBOARDID));
+                Integer points = Integer.valueOf(u.getString(TAG_POINTS));
                 Integer position = Integer.valueOf(u.getString(TAG_POSITION));
 
-                ListUser user = new ListUser(firstName,surname,russId,position);
+                Integer russId = Integer.valueOf(u.getString(TAG_RUSS_ID));
+                String russStatus = u.getString("russStatus");
+                String firstName = u.getString("firstName");
+                String lastName = u.getString("lastName");
+                String email = u.getString("email");
+                String russPassword = u.getString("russPassword");
+                String profilePicture = u.getString("profilePicture");
+                String russCard = u.getString("russCard");
+                String russRole = u.getString("russRole");
+                Integer russYear = Integer.valueOf(u.getString("russYear"));
+                Integer schoolId = Integer.valueOf(u.getString("schoolId"));
+                String schoolName = u.getString("schoolName");
+                String schoolStatus = u.getString("schoolStatus");
+
+                SchoolEntity school = new SchoolEntity(schoolId, schoolName, schoolStatus);
+                RussEntity russ = new RussEntity(russId, russStatus, firstName, lastName, email, russPassword, russRole, russYear);
+                System.out.println(russId);
+                ScoreboardEntity user = new ScoreboardEntity(scoreboardId, points, position, russ);
                 userList.add(user);
             }
             recyclerViewScoreboard.notifyDataSetChanged();
-        }catch (JSONException e)
+        }catch (Exception e)
         {
             e.printStackTrace();
         }
     }
 
-
+/**
     private void dummy()
     {
         ListUser user = new ListUser("Ken","Netland", 164535, 1);
@@ -142,7 +187,7 @@ public class Scoreboard extends AppCompatActivity
         user = new ListUser("Girts" ,"Strazdins ", 13,19);
         userList.add(user);
     }
-
+*/
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();

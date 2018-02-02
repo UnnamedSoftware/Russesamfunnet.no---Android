@@ -1,7 +1,9 @@
 package com.unnamedsoftware.russesamfunnet;
 
+import android.os.AsyncTask;
 import android.util.Log;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -16,18 +18,30 @@ import java.net.URL;
  * Created by Alexander Eilert Berg on 29.01.2018.
  */
 
-public class JSONParser
+public class JSONParser extends AsyncTask<URL, Void, JSONObject>
 {
     static InputStream inputStream = null;
     static JSONObject jsonObject = null;
     static String json = "";
 
-    public JSONObject getJSONFromUrl(String urlString) throws IOException
+    public interface OnPostExecute {
+        void onPostExecute(JSONObject jsonObject);
+    }
+    OnPostExecute callback;
+    public JSONParser(OnPostExecute callback)
     {
-        URL url = new URL(urlString);
-        HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+        this.callback = callback;
+    }
+
+    @Override
+    protected JSONObject doInBackground(URL... urls) {
+
+        HttpURLConnection urlConnection = null;
+
+
         try
         {
+            urlConnection = (HttpURLConnection) urls[0].openConnection();
             InputStream inputStream = urlConnection.getInputStream();
             InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
 
@@ -74,4 +88,14 @@ public class JSONParser
 
         return jsonObject;
     }
+
+    @Override
+    protected void onPostExecute(JSONObject jsonObject)
+    {
+        if (callback != null)
+        {
+            callback.onPostExecute(jsonObject);
+        }
+    }
+
 }

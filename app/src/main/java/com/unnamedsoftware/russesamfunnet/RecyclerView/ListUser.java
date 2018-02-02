@@ -3,7 +3,7 @@ package com.unnamedsoftware.russesamfunnet.RecyclerView;
 /**
  * Created by Alexander Eilert Berg on 29.01.2018.
  */
-
+/**
 public class ListUser
 {
     private String fullName;
@@ -26,7 +26,7 @@ public class ListUser
     /**
      * Creates the full name of the user by combining the first and surname.
      * If the full name exceeds a total of 19 characters the last part of the surname gets replaced by a ...
-     */
+     *//**
     private void createFullName(String firstName, String surname)
     {
         String name = firstName + " ";
@@ -68,3 +68,4 @@ public class ListUser
         this.position = position;
     }
 }
+*/
