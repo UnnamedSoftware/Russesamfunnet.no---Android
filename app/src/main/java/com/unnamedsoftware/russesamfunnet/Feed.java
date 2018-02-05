@@ -3,7 +3,6 @@ package com.unnamedsoftware.russesamfunnet;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.os.Parcel;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -15,7 +14,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
-import com.unnamedsoftware.russesamfunnet.Entity.KnotEntity;
 import com.unnamedsoftware.russesamfunnet.RecyclerView.FeedPost;
 import com.unnamedsoftware.russesamfunnet.RecyclerView.RecyclerViewFeed;
 
@@ -24,6 +22,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,6 +42,7 @@ public class Feed extends AppCompatActivity {
     private List<FeedPost> feedPosts = new ArrayList<>();
     private RecyclerView recyclerView;
     private RecyclerViewFeed recyclerViewFeed;
+    private JSONArray jsonArray = null;
 
     private String url;
 
@@ -64,7 +65,7 @@ public class Feed extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feed);
 
-        url = getString(R.string.url) + "feed";
+        url = getString(R.string.url) + "schoolFeed?russId=1";
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -77,7 +78,7 @@ public class Feed extends AppCompatActivity {
 
         nav = findViewById(R.id.navList);
         setupDrawerContent(nav);
-/*
+
         try
         {
             getFeed();
@@ -85,8 +86,8 @@ public class Feed extends AppCompatActivity {
         {
             e.printStackTrace();
         }
-*/
-dummy();
+
+
         recyclerView = findViewById(R.id.recycler_view_feed);
         recyclerViewFeed = new RecyclerViewFeed(feedPosts);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
@@ -117,8 +118,7 @@ dummy();
                 break;
 
             case R.id.knotList:
-                intent = new Intent(this, Knot.class);
-                intent.putExtra("knot_entity", new KnotEntity(10001, "Drink Beer", "Beer"));
+                intent = new Intent(this, KnotList.class);
                 this.startActivity(intent);
                 break;
 
@@ -134,31 +134,43 @@ dummy();
         drawerLayout.closeDrawers();
     }
 
+
     /**
      * Uses the JSONParser to request the feed from the server.
      */
-    private void getFeed() throws IOException
+    private void getFeed() throws IOException {
+        try {
+            new JSONParser(new JSONParser.OnPostExecute() {
+                @Override
+                public void onPostExecute(JSONArray jsonArray) {
+                    fillFeed(jsonArray);
+                }
+            }).execute(new URL(url));
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+    }
+
+        public void fillFeed(JSONArray jsonArray)
     {
-        JSONParser jsonParser = new JSONParser();
-
-        JSONObject jsonObject = jsonParser.getJSONFromUrl(url);
-
         try
         {
-            posts = jsonObject.getJSONArray(TAG_feed);
+            posts = jsonArray;
 
             for(int i = 0; i < posts.length(); i++)
             {
                 JSONObject u = posts.getJSONObject(i);
-                Integer russId = Integer.valueOf(u.getString(TAG_RUSSID));
-                String firstName = u.getString(TAG_FIRSTNAME);
-                String surname = u.getString(TAG_SURNAME);
-                String post = u.getString(TAG_POST);
+                JSONObject newRussObject = u.getJSONObject("russId");
+                Integer russId = Integer.valueOf(newRussObject.getString("russId"));
+                String firstName = newRussObject.getString("firstName");
+                String surname = newRussObject.getString("lastName");
+                String post = u.getString("message");
 
                 FeedPost posts = new FeedPost(firstName,surname,russId,post);
                 feedPosts.add(posts);
             }
             recyclerViewFeed.notifyDataSetChanged();
+
         }catch (JSONException e)
         {
             e.printStackTrace();

@@ -47,7 +47,8 @@ public class Knot extends AppCompatActivity
         }
 
         Intent i = getIntent();
-        knotEntity = (KnotEntity) i.getParcelableExtra("knot_entity");
+        knotEntity =(KnotEntity) i.getSerializableExtra("knot_entity");
+        System.out.println(knotEntity.getKnotId());
         this.fillInData();
 
     }

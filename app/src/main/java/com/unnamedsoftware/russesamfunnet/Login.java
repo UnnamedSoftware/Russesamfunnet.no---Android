@@ -1,10 +1,6 @@
 package com.unnamedsoftware.russesamfunnet;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.drawable.ShapeDrawable;
-import android.graphics.drawable.shapes.RectShape;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -38,6 +34,8 @@ public class Login extends AppCompatActivity
 {
     private static final int RC_SIGN_IN = 83;
     private static final String ERROR_TAG = "FATAL ERROR";
+
+    private Boolean response = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -138,6 +136,7 @@ public class Login extends AppCompatActivity
      */
     public void loginUser(View view)
     {
+<<<<<<< HEAD
 view.setOnClickListener(new View.OnClickListener()
             {
                 @Override
@@ -163,6 +162,30 @@ view.setOnClickListener(new View.OnClickListener()
                     }
                 }
             }
+=======
+        view.setOnClickListener(new View.OnClickListener()
+                                {
+                                    @Override
+                                    public void onClick(View view)
+                                    {
+                                        if (InputAnalyzer.isInputFieldEmpty(findViewById(R.id.userEmail)))
+                                        {
+                                            InputAnalyzer.drawRedBorder(findViewById(R.id.userEmail));
+                                            Toast.makeText(Login.this, "Please enter email", Toast.LENGTH_SHORT).show();
+                                        } else if (!InputAnalyzer.isUserEmailValid(findViewById(R.id.userEmail)))
+                                        {
+                                            Toast.makeText(Login.this, "Please enter a valid email", Toast.LENGTH_SHORT).show();
+                                        } else if (InputAnalyzer.isInputFieldEmpty(findViewById(R.id.userPassword)))
+                                        {
+                                            InputAnalyzer.drawRedBorder(findViewById(R.id.userPassword));
+                                            Toast.makeText(Login.this, "Please enter password", Toast.LENGTH_SHORT).show();
+                                        } else
+                                        {
+                                            userRegistered(view);
+                                        }
+                                    }
+                                }
+>>>>>>> 3f348496fa496f1e287bb29cbb5c3d13f283390b
         );
     }
 
@@ -172,9 +195,8 @@ view.setOnClickListener(new View.OnClickListener()
      *
      * @return
      */
-    private boolean userRegistered(View view)
+    private void userRegistered(View view)
     {
-
         EditText userEmail = findViewById(R.id.userEmail);
         String userEmailString = userEmail.getText().toString();
 
@@ -182,7 +204,6 @@ view.setOnClickListener(new View.OnClickListener()
         String userPasswordString = userPassword.getText().toString();
 
         toServer(view, userEmailString, userPasswordString);
-        return true;
     }
 
 
@@ -204,9 +225,12 @@ view.setOnClickListener(new View.OnClickListener()
                     @Override
                     public void onResponse(String response)
                     {
+                        String theResponse = response.substring(1, response.length()-1);
                         System.out.println(response);
-                        if (response.equals("true"))
+                        System.out.println(theResponse);
+                        if (theResponse.equalsIgnoreCase("true"))
                         {
+                            System.out.println("finish");
                             finishServerCom();
                         }
                     }
@@ -238,65 +262,8 @@ view.setOnClickListener(new View.OnClickListener()
 
     private void finishServerCom()
     {
+        startActivity(new Intent(Login.this, Feed.class));
         finish();
     }
 
-
-    /**
-     * Adds a red boarder to the given field
-     *
-     * @param fieldName
-     */
-    private void drawRedBorder(View fieldName)
-    {
-        ShapeDrawable shape = new ShapeDrawable(new RectShape());
-        shape.getPaint().setColor(Color.RED);
-        shape.getPaint().setStyle(Paint.Style.STROKE);
-        shape.getPaint().setStrokeWidth(3);
-
-        EditText inputField = (EditText) fieldName;
-        inputField.setBackground(shape);
-    }
-
-
-    /**
-     * Checks if the input field field is empty, returns true if it is.
-     *
-     * @return True if field is empty
-     */
-    private boolean isInputFieldEmpty(View fieldName)
-    {
-        Boolean state;
-
-        EditText inputEditText = (EditText) fieldName;
-        String input = inputEditText.getText().toString();
-
-        if (input.matches(""))
-        {
-            state = true;
-        } else
-        {
-            state = false;
-        }
-        return state;
-    }
-
-
-    /**
-     * Returns true if the email is in the correct format
-     *
-     * @return True if the email is in the correct format
-     */
-    private boolean isUserEmailValid()
-    {
-        Boolean state;
-
-        EditText usernameEditText = findViewById(R.id.userEmail);
-        String userEmail = usernameEditText.getText().toString();
-
-        state = android.util.Patterns.EMAIL_ADDRESS.matcher(userEmail).matches();
-        System.out.println(userEmail);
-        System.out.println(state);
-        return state;
-    }
 }

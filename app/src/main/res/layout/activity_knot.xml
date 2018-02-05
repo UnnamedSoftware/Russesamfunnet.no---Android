@@ -17,7 +17,7 @@
         android:layout_height="150dp"
         android:layout_marginEnd="92dp"
         android:layout_marginStart="92dp"
-        android:src="@drawable/logo_img"
+        android:src="@drawable/knot"
         app:civ_border_color="#EEEEEE"
         app:civ_border_width="4dp"
         app:civ_shadow="true"

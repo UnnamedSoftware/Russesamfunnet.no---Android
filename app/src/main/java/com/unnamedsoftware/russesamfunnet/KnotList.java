@@ -8,14 +8,16 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
-import com.unnamedsoftware.russesamfunnet.RecyclerView.RecyclerViewKnotList;
 import com.unnamedsoftware.russesamfunnet.RecyclerView.TempKnot;
+import com.unnamedsoftware.russesamfunnet.RecyclerView.ViewKnotListAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +31,8 @@ public class KnotList extends AppCompatActivity
 
     private List<TempKnot> tempKnots = new ArrayList<>();
     private RecyclerView recyclerView;
-    private RecyclerViewKnotList recyclerViewKnotList;
+    private ViewKnotListAdapter viewKnotListAdapter;
+    private JSONArray jsonArray = null;
 
     private String url;
 
@@ -45,7 +48,7 @@ public class KnotList extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_knot_list);
 
-        url = getString(R.string.url) + "knotList";
+        url = getString(R.string.url) + "getKnotsList?russId=1";
 
 
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -60,12 +63,13 @@ public class KnotList extends AppCompatActivity
 
 
         this.recyclerView = findViewById(R.id.recycler_view_knot_list);
-        this.recyclerViewKnotList = new RecyclerViewKnotList (tempKnots);
+        this.viewKnotListAdapter = new ViewKnotListAdapter (tempKnots);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
-        recyclerView.setAdapter(recyclerViewKnotList);
+        recyclerView.setAdapter(viewKnotListAdapter);
+
 
         try
         {
@@ -80,27 +84,36 @@ public class KnotList extends AppCompatActivity
     /**
      * Uses the JSONParser to request the knot list from the server.
      */
-    private void getKnotList() throws IOException
+    private void getKnotList() throws IOException {
+        try {
+            new JSONParser(new JSONParser.OnPostExecute() {
+                @Override
+                public void onPostExecute(JSONArray jsonArray) {
+                    fillKnotList(jsonArray);
+                }
+            }).execute(new URL(url));
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+    }
+
+        public void fillKnotList(JSONArray jsonArray)
     {
-        JSONParser jsonParser = new JSONParser();
-
-        JSONObject jsonObject = jsonParser.getJSONFromUrl(url);
-
         try
         {
-            knots = jsonObject.getJSONArray(TAG_KNOTLIST);
+            knots = jsonArray;
 
             for(int i = 0; i < knots.length(); i++)
             {
                 JSONObject knotsJSONObject = knots.getJSONObject(i);
-                Integer knotID = Integer.valueOf(knotsJSONObject.getString(TAG_KNOTID));
-                String title = knotsJSONObject.getString(TAG_TITLE);
+                Integer knotID = Integer.valueOf(knotsJSONObject.getString("knotId"));
+                String title = knotsJSONObject.getString("knotName");
+                String description = knotsJSONObject.getString("knotDetails");
 
-
-                TempKnot knot = new TempKnot(title,knotID);
+                TempKnot knot = new TempKnot(title,description,knotID);
                 tempKnots.add(knot);
             }
-            this.recyclerViewKnotList.notifyDataSetChanged();
+            this.viewKnotListAdapter.notifyDataSetChanged();
         }catch (JSONException e)
         {
             e.printStackTrace();

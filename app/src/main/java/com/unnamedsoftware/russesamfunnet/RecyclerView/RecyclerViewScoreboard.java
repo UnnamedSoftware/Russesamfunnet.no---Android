@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.unnamedsoftware.russesamfunnet.Entity.RussEntity;
+import com.unnamedsoftware.russesamfunnet.Entity.ScoreboardEntity;
 import com.unnamedsoftware.russesamfunnet.R;
 
 import java.util.List;
@@ -17,7 +19,7 @@ import java.util.List;
  */
 public class RecyclerViewScoreboard extends RecyclerView.Adapter<RecyclerViewScoreboard.ViewHolder>
 {
-    private List<ListUser> userList;
+    private List<ScoreboardEntity> userList;
 
     //Replace with the users ID!
     private Integer userID = 13;
@@ -36,7 +38,7 @@ public class RecyclerViewScoreboard extends RecyclerView.Adapter<RecyclerViewSco
         }
     }
 
-    public RecyclerViewScoreboard(List<ListUser> userList)
+    public RecyclerViewScoreboard(List<ScoreboardEntity> userList)
     {
         this.userList = userList;
     }
@@ -51,12 +53,12 @@ public class RecyclerViewScoreboard extends RecyclerView.Adapter<RecyclerViewSco
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        ListUser listUser = userList.get(position);
-        if (listUser.getRussID() == userID)
+        ScoreboardEntity listUser = userList.get(position);
+        if (listUser.getRussId().getRussId() == userID)
         {
             holder.layout.setBackgroundResource((R.drawable.user_scoreboard_border));
         }
-        holder.name.setText(listUser.getFullName());
+        holder.name.setText(listUser.getRussId().getFirstName());
         holder.position.setText(String.valueOf(listUser.getPosition()));
     }
 
