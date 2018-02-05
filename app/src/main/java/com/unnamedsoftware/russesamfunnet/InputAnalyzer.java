@@ -39,19 +39,24 @@ public class InputAnalyzer
      */
     public static boolean isInputFieldEmpty(View fieldName)
     {
-        Boolean state;
-
         EditText inputEditText = (EditText) fieldName;
-        String input = inputEditText.getText().toString();
+        try
+        {
+            String input = inputEditText.getText().toString();
 
-        if (input.matches(""))
+            if (input.matches(""))
+            {
+                return true;
+            } else
+            {
+                return false;
+            }
+        } catch (NullPointerException e)
         {
-            state = true;
-        } else
-        {
-            state = false;
+            System.out.println("Nothing in input");
+            e.printStackTrace();
         }
-        return state;
+        return false;
     }
 
 
@@ -70,8 +75,6 @@ public class InputAnalyzer
         state = android.util.Patterns.EMAIL_ADDRESS.matcher(userEmail).matches();
         return state;
     }
-
-
 
 
 }
