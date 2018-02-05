@@ -25,10 +25,16 @@ public class InputAnalyzer
         ShapeDrawable shape = new ShapeDrawable(new RectShape());
         shape.getPaint().setColor(Color.RED);
         shape.getPaint().setStyle(Paint.Style.STROKE);
-        shape.getPaint().setStrokeWidth(3);
+        shape.getPaint().setStrokeWidth(5);
 
         EditText inputField = (EditText) fieldName;
         inputField.setBackground(shape);
+    }
+
+    public static void clearBorder(View fieldName)
+    {
+        EditText inputField = (EditText) fieldName;
+        inputField.getBackground().clearColorFilter();
     }
 
 
@@ -69,12 +75,50 @@ public class InputAnalyzer
     {
         Boolean state;
 
-        EditText usernameEditText = (EditText) viewID;
-        String userEmail = usernameEditText.getText().toString();
+        EditText inputEditText = (EditText) viewID;
+        String inputString = inputEditText.getText().toString();
 
-        state = android.util.Patterns.EMAIL_ADDRESS.matcher(userEmail).matches();
+        state = android.util.Patterns.EMAIL_ADDRESS.matcher(inputString).matches();
         return state;
     }
 
+    /**
+     * Returns true if the password is correct length
+     * Length restrictions are between 8 and 255 char.
+     * @return Returns true if the password is correct length
+     */
+    public static boolean isPasswordValid(View viewId)
+    {
+        boolean state = false;
 
+        EditText inputEditText = (EditText) viewId;
+        String inputString = inputEditText.getText().toString();
+
+        if (inputString.length() >= 8 && inputString.length() <= 255)
+        {
+            state = true;
+        }
+        return state;
+    }
+
+    /**
+     * Returns true if the passwords matches
+     * @return Returns true if the passwords matches
+     */
+    public static boolean doesPasswordsMatch(View password1, View password2)
+    {
+        boolean state = false;
+
+        EditText pass1 = (EditText) password1 ;
+        String stringPass1 = pass1.getText().toString();
+
+        EditText pass2 = (EditText) password2 ;
+        String stringPass2 = pass2.getText().toString();
+
+        if (stringPass1.equals(stringPass2))
+        {
+            state = true;
+        }
+        return state;
+    }
 }
