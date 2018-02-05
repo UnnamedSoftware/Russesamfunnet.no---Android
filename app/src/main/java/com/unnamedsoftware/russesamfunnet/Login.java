@@ -91,7 +91,8 @@ public class Login extends AppCompatActivity
      * @param account
      */
     private void updateUI(GoogleSignInAccount account) {
-        System.out.println("AAAAAAAAAAAAAAAA");
+        System.out.println(account.getDisplayName());
+
     }
 
     /**
@@ -101,6 +102,7 @@ public class Login extends AppCompatActivity
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, this.RC_SIGN_IN);
     }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
