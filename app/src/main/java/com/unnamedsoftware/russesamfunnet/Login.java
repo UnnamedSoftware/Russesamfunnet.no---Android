@@ -38,7 +38,7 @@ public class Login extends AppCompatActivity
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        setupUI(findViewById(R.id.registerParent));
+        setupUI(findViewById(R.id.loginParent));
 
         loginUser(findViewById(R.id.loginButton));
 
