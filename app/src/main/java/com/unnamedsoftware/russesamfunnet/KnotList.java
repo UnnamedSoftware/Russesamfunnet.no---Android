@@ -32,7 +32,7 @@ public class KnotList extends AppCompatActivity
     private List<TempKnot> tempKnots = new ArrayList<>();
     private RecyclerView recyclerView;
     private ViewKnotListAdapter viewKnotListAdapter;
-    private JSONObject jsonObject = null;
+    private JSONArray jsonArray = null;
 
     private String url;
 
@@ -48,7 +48,7 @@ public class KnotList extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_knot_list);
 
-        url = getString(R.string.url) + "knotList";
+        url = getString(R.string.url) + "getKnotsList?russId=1";
 
 
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -81,37 +81,34 @@ public class KnotList extends AppCompatActivity
 
     }
 
-    private void setJsonObject(JSONObject jsonObject)
-    {
-        this.jsonObject = jsonObject;
-    }
-
     /**
      * Uses the JSONParser to request the knot list from the server.
      */
-    private void getKnotList() throws IOException
-    {
+    private void getKnotList() throws IOException {
         try {
             new JSONParser(new JSONParser.OnPostExecute() {
                 @Override
-                public void onPostExecute(JSONObject jsonObject) {
-                    setJsonObject(jsonObject);
+                public void onPostExecute(JSONArray jsonArray) {
+                    fillKnotList(jsonArray);
                 }
             }).execute(new URL(url));
-        }   catch (MalformedURLException e)
-        {
+        } catch (MalformedURLException e) {
             e.printStackTrace();
         }
+    }
+
+        public void fillKnotList(JSONArray jsonArray)
+    {
         try
         {
-            knots = jsonObject.getJSONArray(TAG_KNOTLIST);
+            knots = jsonArray;
 
             for(int i = 0; i < knots.length(); i++)
             {
                 JSONObject knotsJSONObject = knots.getJSONObject(i);
-                Integer knotID = Integer.valueOf(knotsJSONObject.getString(TAG_KNOTID));
-                String title = knotsJSONObject.getString(TAG_TITLE);
-                String description = knotsJSONObject.getString("description");
+                Integer knotID = Integer.valueOf(knotsJSONObject.getString("knotId"));
+                String title = knotsJSONObject.getString("knotName");
+                String description = knotsJSONObject.getString("knotDetails");
 
                 TempKnot knot = new TempKnot(title,description,knotID);
                 tempKnots.add(knot);

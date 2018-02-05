@@ -42,7 +42,7 @@ public class Feed extends AppCompatActivity {
     private List<FeedPost> feedPosts = new ArrayList<>();
     private RecyclerView recyclerView;
     private RecyclerViewFeed recyclerViewFeed;
-    private JSONObject jsonObject = null;
+    private JSONArray jsonArray = null;
 
     private String url;
 
@@ -65,7 +65,7 @@ public class Feed extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feed);
 
-        url = getString(R.string.url) + "feed";
+        url = getString(R.string.url) + "schoolFeed?russId=1";
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -78,7 +78,7 @@ public class Feed extends AppCompatActivity {
 
         nav = findViewById(R.id.navList);
         setupDrawerContent(nav);
-/*
+
         try
         {
             getFeed();
@@ -86,8 +86,8 @@ public class Feed extends AppCompatActivity {
         {
             e.printStackTrace();
         }
-*/
-dummy();
+
+
         recyclerView = findViewById(R.id.recycler_view_feed);
         recyclerViewFeed = new RecyclerViewFeed(feedPosts);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
@@ -134,44 +134,43 @@ dummy();
         drawerLayout.closeDrawers();
     }
 
-    private void setJsonObject(JSONObject jsonObject)
-    {
-        this.jsonObject = jsonObject;
-    }
 
     /**
      * Uses the JSONParser to request the feed from the server.
      */
-    private void getFeed() throws IOException
-    {
+    private void getFeed() throws IOException {
         try {
             new JSONParser(new JSONParser.OnPostExecute() {
                 @Override
-                public void onPostExecute(JSONObject jsonObject) {
-                    setJsonObject(jsonObject);
+                public void onPostExecute(JSONArray jsonArray) {
+                    fillFeed(jsonArray);
                 }
             }).execute(new URL(url));
-        }   catch (MalformedURLException e)
-        {
+        } catch (MalformedURLException e) {
             e.printStackTrace();
         }
+    }
 
+        public void fillFeed(JSONArray jsonArray)
+    {
         try
         {
-            posts = jsonObject.getJSONArray(TAG_feed);
+            posts = jsonArray;
 
             for(int i = 0; i < posts.length(); i++)
             {
                 JSONObject u = posts.getJSONObject(i);
-                Integer russId = Integer.valueOf(u.getString(TAG_RUSSID));
-                String firstName = u.getString(TAG_FIRSTNAME);
-                String surname = u.getString(TAG_SURNAME);
-                String post = u.getString(TAG_POST);
+                JSONObject newRussObject = u.getJSONObject("russId");
+                Integer russId = Integer.valueOf(newRussObject.getString("russId"));
+                String firstName = newRussObject.getString("firstName");
+                String surname = newRussObject.getString("lastName");
+                String post = u.getString("message");
 
                 FeedPost posts = new FeedPost(firstName,surname,russId,post);
                 feedPosts.add(posts);
             }
             recyclerViewFeed.notifyDataSetChanged();
+
         }catch (JSONException e)
         {
             e.printStackTrace();

@@ -35,7 +35,7 @@ public class Scoreboard extends AppCompatActivity
     private List<ScoreboardEntity> userList = new ArrayList<>();
     private RecyclerView recyclerView;
     private RecyclerViewScoreboard recyclerViewScoreboard;
-    private JSONObject jsonObject = null;
+    private JSONArray jsonArray = null;
 
     private String url;
 
@@ -56,7 +56,7 @@ public class Scoreboard extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scoreboard);
         //getString(R.string.url)
-        url =  "http://ec2-18-196-123-217.eu-central-1.compute.amazonaws.com:8080/scoreboardTop10?theRussId=1";
+        url = getString(R.string.url) + "scoreboardTop10?theRussId=1";
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -81,48 +81,39 @@ public class Scoreboard extends AppCompatActivity
         recyclerView.setAdapter(recyclerViewScoreboard);
     }
 
-    private void setJsonObject(JSONObject jsonObject)
-    {
-        this.jsonObject = jsonObject;
-    }
-
     /**
      * Uses the JSONParser to request the scoreboard from the server.
      */
     @RequiresApi(api = Build.VERSION_CODES.CUPCAKE)
-    private void getRussScoreboard() throws IOException
-    {
+    private void getRussScoreboard() throws IOException {
         try {
             new JSONParser(new JSONParser.OnPostExecute() {
                 @Override
-                public void onPostExecute(JSONObject jsonObject) {
-                    if (jsonObject == null) System.out.println("\nInside onPostExecute\n");
+                public void onPostExecute(JSONArray jsonArray) {
+                    if (jsonArray == null) System.out.println("\n Inside onPostExecute \n");
 
-                    setJsonObject(jsonObject);
+                    fillScoreboard(jsonArray);
                 }
             }).execute(new URL(url));
-        }   catch (MalformedURLException e)
-        {
+        } catch (MalformedURLException e) {
             e.printStackTrace();
         }
+    }
 
 
+
+        public void fillScoreboard(JSONArray jsonArray)
+        {
 
         JSONArray users = null;
-        try {
-            JSONArray jsonNames = jsonObject.names();
-            if (jsonNames == null) System.out.println("WEAIKFJUHASIUFG");
-            users = jsonObject.toJSONArray(jsonNames);
-        }catch (Exception e)
-        {
-            System.out.println(e.fillInStackTrace());
-        }
-
         try
         {
+            users = jsonArray;
+            if (jsonArray == null) System.out.println("Scoreboard DEADBEEF");
             System.out.println("Hi?");
             System.out.println(users.length());
-            for(int i = 1; i < users.length(); i++)
+            int length = users.length();
+            for(int i = 0; i < length; i++)
             {
                 JSONObject u = users.getJSONObject(i);
 
@@ -130,19 +121,23 @@ public class Scoreboard extends AppCompatActivity
                 Integer points = Integer.valueOf(u.getString(TAG_POINTS));
                 Integer position = Integer.valueOf(u.getString(TAG_POSITION));
 
-                Integer russId = Integer.valueOf(u.getString(TAG_RUSS_ID));
-                String russStatus = u.getString("russStatus");
-                String firstName = u.getString("firstName");
-                String lastName = u.getString("lastName");
-                String email = u.getString("email");
-                String russPassword = u.getString("russPassword");
-                String profilePicture = u.getString("profilePicture");
-                String russCard = u.getString("russCard");
-                String russRole = u.getString("russRole");
-                Integer russYear = Integer.valueOf(u.getString("russYear"));
-                Integer schoolId = Integer.valueOf(u.getString("schoolId"));
-                String schoolName = u.getString("schoolName");
-                String schoolStatus = u.getString("schoolStatus");
+
+                JSONObject newRussObject = u.getJSONObject("russId");
+
+                Integer russId = Integer.valueOf(newRussObject.getString(TAG_RUSS_ID));
+                String russStatus = newRussObject.getString("russStatus");
+                String firstName = newRussObject.getString("firstName");
+                String lastName = newRussObject.getString("lastName");
+                String email = newRussObject.getString("email");
+                String russPassword = newRussObject.getString("russPassword");
+                String profilePicture = newRussObject.getString("profilePicture");
+                String russCard = newRussObject.getString("russCard");
+                String russRole = newRussObject.getString("russRole");
+                Integer russYear = Integer.valueOf(newRussObject.getString("russYear"));
+                JSONObject newSchoolObject = newRussObject.getJSONObject("schoolId");
+                Integer schoolId = Integer.valueOf(newSchoolObject.getString("schoolId"));
+                String schoolName = newSchoolObject.getString("schoolName");
+                String schoolStatus = newSchoolObject.getString("schoolStatus");
 
                 SchoolEntity school = new SchoolEntity(schoolId, schoolName, schoolStatus);
                 RussEntity russ = new RussEntity(russId, russStatus, firstName, lastName, email, russPassword, russRole, russYear);

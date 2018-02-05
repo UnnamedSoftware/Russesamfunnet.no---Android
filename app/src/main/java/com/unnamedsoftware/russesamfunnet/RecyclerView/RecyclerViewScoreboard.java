@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.unnamedsoftware.russesamfunnet.Entity.RussEntity;
 import com.unnamedsoftware.russesamfunnet.Entity.ScoreboardEntity;
 import com.unnamedsoftware.russesamfunnet.R;
 
@@ -26,15 +25,16 @@ public class RecyclerViewScoreboard extends RecyclerView.Adapter<RecyclerViewSco
 
     public class ViewHolder extends RecyclerView.ViewHolder
     {
-        private TextView name, position;
+        private TextView name, position, points;
         private RelativeLayout layout;
 
         public ViewHolder(View view)
         {
             super(view);
             name = view.findViewById(R.id.rvUser);
-            position = view.findViewById(R.id.rvPosition);
+            points = view.findViewById(R.id.rvPoints);
             layout = view.findViewById(R.id.rvScoreboardLayout);
+            position = view.findViewById(R.id.rvPosition);
         }
     }
 
@@ -59,7 +59,9 @@ public class RecyclerViewScoreboard extends RecyclerView.Adapter<RecyclerViewSco
             holder.layout.setBackgroundResource((R.drawable.user_scoreboard_border));
         }
         holder.name.setText(listUser.getRussId().getFirstName());
+        holder.points.setText(String.valueOf(listUser.getPoints()));
         holder.position.setText(String.valueOf(listUser.getPosition()));
+
     }
 
     @Override
