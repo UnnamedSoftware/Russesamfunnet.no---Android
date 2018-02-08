@@ -19,6 +19,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,6 +36,7 @@ public class Login extends AppCompatActivity
 {
 
     private Boolean response = false;
+    CallbackManager callbackManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -41,6 +47,8 @@ public class Login extends AppCompatActivity
         setupUI(findViewById(R.id.loginParent));
 
         loginUser(findViewById(R.id.loginButton));
+
+
 
         Button registerButton = (Button) findViewById(R.id.registerButton);
         registerButton.setOnClickListener(new View.OnClickListener()
@@ -61,6 +69,33 @@ public class Login extends AppCompatActivity
                 startActivity(new Intent(Login.this, Feed.class));
             }
         });
+
+        callbackManager = CallbackManager.Factory.create();
+
+        LoginManager.getInstance().registerCallback(callbackManager,
+                new FacebookCallback<LoginResult>() {
+                    @Override
+                    public void onSuccess(LoginResult loginResult) {
+                        finishServerCom();
+                    }
+
+                    @Override
+                    public void onCancel() {
+                        // App code
+                    }
+
+                    @Override
+                    public void onError(FacebookException exception) {
+                        exception.fillInStackTrace();
+                    }
+                });
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        callbackManager.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
 
