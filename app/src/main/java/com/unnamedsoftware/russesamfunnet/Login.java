@@ -2,7 +2,9 @@ package com.unnamedsoftware.russesamfunnet;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -13,6 +15,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.ExecutorDelivery;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -26,6 +29,11 @@ import com.facebook.FacebookException;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 
+import org.json.JSONArray;
+
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -46,12 +54,13 @@ public class Login extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         setupUI(findViewById(R.id.loginParent));
-
+/*
         loginUser(findViewById(R.id.loginButton));
         if (AccessToken.getCurrentAccessToken() != null)
         {
             finishServerCom();
         }
+        */
 
 
 
@@ -81,8 +90,8 @@ public class Login extends AppCompatActivity
                 new FacebookCallback<LoginResult>() {
                     @Override
                     public void onSuccess(LoginResult loginResult) {
-                        System.out.println(loginResult.getAccessToken().getToken());
-                        finishServerCom();
+                        String url = getString(R.string.url) + "facebookLogin?accessToken=" + loginResult.getAccessToken().getToken();
+                        facebookLoginCheck(url);
                     }
 
                     @Override
@@ -102,6 +111,31 @@ public class Login extends AppCompatActivity
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         callbackManager.onActivityResult(requestCode, resultCode, data);
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.CUPCAKE)
+    private void facebookLoginCheck(String url) {
+        try {
+            new JSONParser(new JSONParser.OnPostExecute() {
+                @Override
+                public void onPostExecute(JSONArray jsonArray) {
+                    try {
+
+                        if (jsonArray.get(0).equals("true")) {
+                            finishServerCom();
+                        } else {
+                            Toast.makeText(Login.this, "Login failed", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        e.fillInStackTrace();
+                    }
+                }
+            }).execute(new URL(url));
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
     }
 
 
