@@ -19,6 +19,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -47,6 +48,10 @@ public class Login extends AppCompatActivity
         setupUI(findViewById(R.id.loginParent));
 
         loginUser(findViewById(R.id.loginButton));
+        if (AccessToken.getCurrentAccessToken() != null)
+        {
+            finishServerCom();
+        }
 
 
 
@@ -76,6 +81,7 @@ public class Login extends AppCompatActivity
                 new FacebookCallback<LoginResult>() {
                     @Override
                     public void onSuccess(LoginResult loginResult) {
+                        System.out.println(loginResult.getAccessToken().getToken());
                         finishServerCom();
                     }
 
