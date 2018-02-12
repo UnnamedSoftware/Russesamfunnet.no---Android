@@ -30,6 +30,7 @@ import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -54,13 +55,13 @@ public class Login extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         setupUI(findViewById(R.id.loginParent));
-/*
+
         loginUser(findViewById(R.id.loginButton));
         if (AccessToken.getCurrentAccessToken() != null)
         {
-            finishServerCom();
+            facebookLoginCheck(getString(R.string.url) + "facebookLogin?accessToken=" + AccessToken.getCurrentAccessToken().getToken());
         }
-        */
+
 
 
 
@@ -113,17 +114,23 @@ public class Login extends AppCompatActivity
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.CUPCAKE)
+    //@RequiresApi(api = Build.VERSION_CODES.CUPCAKE)
     private void facebookLoginCheck(String url) {
-        try {
-            new JSONParser(new JSONParser.OnPostExecute() {
+            try
+            {
+            new JSONObjectParser(new JSONObjectParser.OnPostExecute() {
                 @Override
-                public void onPostExecute(JSONArray jsonArray) {
+                public void onPostExecute(JSONObject jsonObject) {
                     try {
-
-                        if (jsonArray.get(0).equals("true")) {
+                        if (jsonObject.getString("loginStatus").equals("Login success")) {
                             finishServerCom();
-                        } else {
+                        } else if(jsonObject.getString("loginStatus").equals("User not in db")){
+                            Intent intent = new Intent(Login.this, FacebookRegisterActivity.class);
+                            intent.putExtra("facebookToken", AccessToken.getCurrentAccessToken().getToken());
+                            startActivity(intent);
+
+                        } else{
+                            System.out.println(jsonObject.getString("loginStatus"));
                             Toast.makeText(Login.this, "Login failed", Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -136,6 +143,7 @@ public class Login extends AppCompatActivity
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
+
     }
 
 
