@@ -2,7 +2,9 @@ package com.unnamedsoftware.russesamfunnet;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -13,13 +15,26 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.ExecutorDelivery;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,6 +46,7 @@ public class Login extends AppCompatActivity
 {
 
     private Boolean response = false;
+    CallbackManager callbackManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -41,6 +57,13 @@ public class Login extends AppCompatActivity
         setupUI(findViewById(R.id.loginParent));
 
         loginUser(findViewById(R.id.loginButton));
+        if (AccessToken.getCurrentAccessToken() != null)
+        {
+            facebookLoginCheck(getString(R.string.url) + "facebookLogin?accessToken=" + AccessToken.getCurrentAccessToken().getToken());
+        }
+
+
+
 
         Button registerButton = (Button) findViewById(R.id.registerButton);
         registerButton.setOnClickListener(new View.OnClickListener()
@@ -61,6 +84,66 @@ public class Login extends AppCompatActivity
                 startActivity(new Intent(Login.this, Feed.class));
             }
         });
+
+        callbackManager = CallbackManager.Factory.create();
+
+        LoginManager.getInstance().registerCallback(callbackManager,
+                new FacebookCallback<LoginResult>() {
+                    @Override
+                    public void onSuccess(LoginResult loginResult) {
+                        String url = getString(R.string.url) + "facebookLogin?accessToken=" + loginResult.getAccessToken().getToken();
+                        facebookLoginCheck(url);
+                    }
+
+                    @Override
+                    public void onCancel() {
+                        // App code
+                    }
+
+                    @Override
+                    public void onError(FacebookException exception) {
+                        exception.fillInStackTrace();
+                    }
+                });
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        callbackManager.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    //@RequiresApi(api = Build.VERSION_CODES.CUPCAKE)
+    private void facebookLoginCheck(String url) {
+            try
+            {
+            new JSONObjectParser(new JSONObjectParser.OnPostExecute() {
+                @Override
+                public void onPostExecute(JSONObject jsonObject) {
+                    try {
+                        if (jsonObject.getString("loginStatus").equals("Login success")) {
+                            finishServerCom();
+                        } else if(jsonObject.getString("loginStatus").equals("User not in db")){
+                            Intent intent = new Intent(Login.this, FacebookRegisterActivity.class);
+                            intent.putExtra("facebookToken", AccessToken.getCurrentAccessToken().getToken());
+                            startActivity(intent);
+
+                        } else{
+                            System.out.println(jsonObject.getString("loginStatus"));
+                            Toast.makeText(Login.this, "Login failed", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        e.fillInStackTrace();
+                    }
+                }
+            }).execute(new URL(url));
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
     }
 
 

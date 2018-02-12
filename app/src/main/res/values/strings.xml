@@ -9,6 +9,9 @@
     <string name="settings">Instillinger</string>
     <string name="logout">Log ut</string>
 
+    <string name="facebook_app_id">291199641408779</string>
+    <string name="fb_login_protocol_scheme">fb291199641408779</string>
+
     <!-- SERVER URL -->
     <string name="url">http://158.38.101.146:8080/</string>
 
