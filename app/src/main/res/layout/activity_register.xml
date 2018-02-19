@@ -8,13 +8,18 @@
     android:clickable="true"
     android:focusableInTouchMode="true" >
 
+    <include
+        layout="@layout/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
     <com.mikhaellopez.circularimageview.CircularImageView
         android:id="@+id/logo"
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:layout_marginEnd="92dp"
         android:layout_marginStart="92dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="28dp"
         android:src="@drawable/logo_img"
         app:civ_border_color="#EEEEEE"
         app:civ_border_width="4dp"
@@ -22,6 +27,7 @@
         app:civ_shadow_color="#8BC34A"
         app:civ_shadow_radius="10"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.481"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+    android:background="#88676767"
+    android:orientation="vertical">
+
+        <NumberPicker
+            android:id="@+id/dateDay"
+            android:layout_width="120dp"
+            android:layout_height="184dp"
+            android:layout_marginBottom="236dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginStart="12dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/dateMonth"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <NumberPicker
+            android:id="@+id/dateMonth"
+            android:layout_width="120dp"
+            android:layout_height="184dp"
+            android:layout_marginBottom="236dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginStart="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/dateYear"
+            app:layout_constraintStart_toEndOf="@+id/dateDay" />
+
+        <NumberPicker
+            android:id="@+id/dateYear"
+            android:layout_width="120dp"
+            android:layout_height="184dp"
+            android:layout_marginBottom="236dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginStart="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/dateMonth" />
+
+        <TextView
+            android:id="@+id/dayText"
+            android:layout_width="120dp"
+            android:layout_height="45dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="193dp"
+            android:ems="10"
+            android:inputType="none"
+            android:text="Dag"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/dateDay"
+            app:layout_constraintEnd_toStartOf="@+id/MonthText"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/MonthText"
+            android:layout_width="120dp"
+            android:layout_height="45dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="193dp"
+            android:ems="10"
+            android:inputType="none"
+            android:text="Måned"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/dateMonth"
+            app:layout_constraintEnd_toStartOf="@+id/YearText"
+            app:layout_constraintStart_toEndOf="@+id/dayText"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/YearText"
+            android:layout_width="120dp"
+            android:layout_height="45dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="193dp"
+            android:ems="10"
+            android:inputType="none"
+            android:text="År"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/dateYear"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/MonthText"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <Button
+            android:id="@+id/confirmButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="178dp"
+            android:layout_marginEnd="157dp"
+            android:layout_marginStart="157dp"
+            android:layout_marginTop="11dp"
+            android:text="Godkjenn"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dateMonth" />
+</android.support.constraint.ConstraintLayout>

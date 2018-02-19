@@ -37,5 +37,4 @@
         android:layout_toEndOf="@+id/circularKnotView"
         android:textSize="24sp" />
 
-
 </RelativeLayout>

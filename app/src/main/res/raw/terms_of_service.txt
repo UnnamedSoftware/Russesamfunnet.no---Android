@@ -1,45 +1,49 @@
-
-Vi har utarbeidet disse Vilkårene for Tjenesten (som vi fra nå av kaller «Vilkårene») slik at du er klar over hvilke regler som styrer vårt forhold til deg. Selv om vi har gjort alt vi kan for å gjøre språket i Vilkårene så lite juridisk som mulig, kan det være deler av disse Vilkårene som fortsatt fremstår som en tradisjonell kontrakt. Det er en god grunn til dette; Disse Vilkårene danner faktisk en juridisk bindende kontrakt mellom deg og Russesamfunnet Les dem derfor nøye.
+Vilkår for Tjenesten
+Vi har utarbeidet disse Vilkårene for Tjenesten (som vi fra nå av kaller «Vilkårene») slik at du er klar over hvilke regler som styrer vårt forhold til deg. Selv om vi har gjort alt vi kan for å gjøre språket i Vilkårene så lite juridisk som mulig, kan det være deler av disse Vilkårene som fortsatt fremstår som en tradisjonell kontrakt. Det er en god grunn til dette; Disse Vilkårene danner faktisk en juridisk bindende kontrakt mellom deg og Unnamed softwares. Les dem derfor nøye.
 
 For å bruke Russesamfunnet eller noen av våre andre produkter eller tjenester som lenker til disse Vilkårene (vi viser til disse som "Tjenestene"), må du ha akseptert våre Vilkår for Tjenestene, som ble presentert for deg (i) da du først registrerte deg, og (ii) når vi har gjort viktige endringer i Vilkår eller Personvernreglene. Aksepterer du dem ikke, kan du naturligvis heller ikke bruke Tjenestene.
 
-VARSEL OM VOLDGIFT: HVIS DU BRUKER TJENESTENE PÅ VEGNE AV EN BEDRIFT, VIL BEDRIFTEN VÆRE BUNDET AV VOLDGIFTKLAUSULEN SOM BESKRIVES SENERE I DISSE VILKÅRENE.
 
 
 Hvem kan bruke Tjenesten
-Ingen under 17 år har lov til å opprette en konto eller bruke Tjenestene.Pass derfor på å lese alle vilkårene nøye.
+Ingen under 17 år har lov til å opprette en konto eller bruke Tjenestene. Pass derfor på å lese alle vilkårene nøye.
 
 Ved å bruke Tjenestene erklærer du at:
-Du kan inngå en bindende kontakt med Russesamfunnet.
+Du kan inngå en bindende kontakt med Unnamed softwares.
 Du ikke er en person som er utelukket fra å motta Tjenestene i henhold til norske lovgivning – det vil si at du ikke vises i det norske finansdepartementets liste over spesielt angitte statsborgere eller står overfor lignende forbud.
 Du vil rette deg etter disse Vilkårene og alle gjeldende lokale, kommunale, regionale, nasjonale, og internasjonale lover, regler og forskrifter.
 
 Hvis du bruker Tjenestene på vegne av en bedrift eller en annen enhet, erklærer du at du er autorisert til å gi alle lisensene som fremgår av disse vilkårene, og godta disse vilkårene på vegne av bedriften eller enheten
 
 
+
 	2. Rettigheter vi gir deg
-Russesamfunnet gir deg en personlig, verdensomspennende, avgiftsfri, ikke-overførbar, ikke-eksklusiv, gjenkallelig og ikke-viderelisensierbar lisens til å bruke Tjenestene. Denne lisensen har utelukkende som formål å la deg bruke og benytte deg av Tjenestenes fordeler på en måte som disse Vilkårene og våre bruksbetingelser, slik som våre Samfunnsretningslinjer tillater.
+Russesamfunnet gir deg en personlig, verdensomspennende, avgiftsfri, ikke-overførbar, ikke-eksklusiv, gjenkallelig og ikke-viderelisensierbar lisens til å bruke Tjenestene. Denne lisensen har utelukkende som formål å la deg bruke og benytte deg av Tjenestenes fordeler på en måte som disse Vilkårene og våre bruksbetingelser, slik som våre Samfunns retningslinjer tillater.
 All programvare som vi leverer, kan automatisk laste ned og installere oppgraderinger, oppdateringer eller andre nye funksjoner. Du kan justere disse automatiske nedlastingene via enhetens innstillinger.
 Du har ikke anledning til å kopiere, modifisere, distribuere, selge eller leie ut noen del av Tjenestene våre, og du kan ikke foreta en omvendt utvikling eller prøve å trekke ut kildekode fra denne programvaren, bortsett fra hvis lover forhindrer disse restriksjonene eller du har vår skriftlige tillatelse til å gjøre det.
+
 
 	3. Rettigheter du gir oss
 Mange av våre Tjenester lar deg skape, laste opp, publisere, sende, motta og lagre innhold. Når du gjør det, beholder du alle rettigheter til eierskap i innholdet som du hadde til å begynne med. Men du gir oss lisens til å bruke innholdet. Omfanget av lisensen avhenger av hvilke tjenester du bruker og innstillingene du har valgt.
 
 Vi kaller Feed-innsendelser som er innstilt på å være synlige for alle ved din skole eller i din valgte sone for “Offentlig innhold”. For alt innhold du sender til Tjenestene annet en Offentlig innhold gir du Russesamfunnet en verdensomspennende, vederlagsfri, underlisensierbar og overførbar lisens til å være vert, lagre, bruke, vise, reprodusere, modifisere, tilpasse, redigere, publisere og distribuere innholdet for så lenge du bruker Tjenestene. Denne lisensen har alene det formål å drive, utvikle, levere, markedsføre og forbedre tjenestene samt utforske og utvikle nye.
 
-Fordi Offentlig Innhold i seg selv er offentlig og av offentlig interesse, er lisensen du gir oss for innhold som sendes til disse tjenestene mer omfattende. I tillegg til å gi oss rettighetene nevnt i forrige avsnitt, gir du oss en evigvarende lisens til å lage avledede arbeider fra, promotere, utstille, kringkaste, syndikere, offentlig fremføre, underlisensiere og offentlig vise Offentlig Innhold i enhver form og med enhver medie- eller distribusjonsmetode (nå kjent eller senere utviklet). I den grad det er nødvendig, når du er med i, oppretter, laster opp, legger ut, eller sender Offentlig Innhold, gir du også Russesamfunnet en ubegrenset, verdensomspennende, evigvarende rettighet og lisens til å bruke ditt navn, skikkelse og stemme, også i sammenheng med kommersielt eller sponset innhold. Dette betyr blant annet at du ikke har krav på kompensasjon fra Russesamfunnet eller våre samarbeidspartneres hvis ditt navn, skikkelse eller stemme overføres gjennom Tjenestene.
+Fordi Offentlig Innhold i seg selv er offentlig og av offentlig interesse, er lisensen du gir oss for innhold som sendes til disse tjenestene mer omfattende. I tillegg til å gi oss rettighetene nevnt i forrige avsnitt, gir du oss en evigvarende lisens til å lage avledede arbeider fra, promotere, utstille, kringkaste, syndikere, offentlig fremføre, underlisensiere og offentlig vise Offentlig Innhold i enhver form og med enhver medie- eller distribusjonsmetode (nå kjent eller senere utviklet). I den grad det er nødvendig, når du er med i, oppretter, laster opp, legger ut, eller sender Offentlig Innhold, gir du også Unnamed softwares en ubegrenset, verdensomspennende, evigvarende rettighet og lisens til å bruke ditt navn, skikkelse og stemme, også i sammenheng med kommersielt eller sponset innhold. Dette betyr blant annet at du ikke har krav på kompensasjon fra Unnamed softwares eller våre samarbeidspartneres hvis ditt navn, skikkelse eller stemme overføres gjennom Tjenestene.
 
 For mer informasjon om hvordan du tilpasser hvem som kan se innholdet ditt, kan du se våre Personvernregler og Brukerstøtte.
-Vi forbeholder oss retten til å slette alt innhold (i) som vi mener bryter med disse Vilkårene eller våre Samfunnsretningslinjer, eller (ii) hvis det er nødvendig for å etterkomme våre juridiske forpliktelser. Like fullt er du alene ansvarlig for det du innholdet du skaper, laster opp, legger ut, sender eller lagrer via Tjenestene.
-Tjenestene kan inneholde annonser. Tatt i betraktning at Russesamfunnet lar deg få tilgang til og bruke Tjenestene, aksepterer du at vi, Russesamfunnet, våre samarbeidspartnere og våre tredjeparts partnere kan plassere annonser på Tjenestene, inkludert personalisert annonsering basert på informasjonen du leverer oss, eller som vi samler inn eller innhenter om deg. Siden Tjenestene inneholder innhold som du og andre brukere leverer til oss, kan til tider annonser vises nær, mellom over eller i innholdet ditt.
+Vi forbeholder oss retten til å slette alt innhold (i) som vi mener bryter med disse Vilkårene eller våre Samfunns retningslinjer, eller (ii) hvis det er nødvendig for å etterkomme våre juridiske forpliktelser. Like fullt er du alene ansvarlig for det du innholdet du skaper, laster opp, legger ut, sender eller lagrer via Tjenestene.
+Tjenestene kan inneholde annonser. Tatt i betraktning at Russesamfunnet lar deg få tilgang til og bruke Tjenestene, aksepterer du at vi, Unnamed softwares, våre samarbeidspartnere og våre tredjeparts partnere kan plassere annonser på Tjenestene, inkludert personalisert annonsering basert på informasjonen du leverer oss, eller som vi samler inn eller innhenter om deg. Siden Tjenestene inneholder innhold som du og andre brukere leverer til oss, kan til tider annonser vises nær, mellom over eller i innholdet ditt.
 Vi liker alltid å høre fra brukerne våre. Men hvis du frivillig sender inn tilbakemeldinger eller forslag, må du vite at vi kan bruke idéene dine uten å gi deg godtgjøring.
 
+
 	4. Andres innhold
-Mye av innholdet på våre Tjenester er produsert av brukere, utgivere og andre tredjeparter. Enten dette innholdet er sendt offentlig eller privat, står personen eller organisasjonen som sendte innholdet alene ansvarlig for dette. Selv om Russesamfunnet har forbeholdt seg retten til å se gjennom alt innhold som vises på Tjenestene og til å fjerne innhold som bryter med Vilkårene, våre Samfunnsretningslinjer eller loven, er det ikke nødvendigvis slik at vi ser gjennom alt.
-Gjennom disse Vilkårene og våre Samfunnsretningslinjer gjør vi det klart at vi ikke ønsker at våre Tjenester skal brukes i negative hensikter. Men siden vi ikke gjennomgår alt innhold, kan vi ikke garantere at innhold i tjenestene alltid retter seg etter våre Vilkår eller Retningslinjer.
+Mye av innholdet på våre Tjenester er produsert av brukere, utgivere og andre tredjeparter. Enten dette innholdet er sendt offentlig eller privat, står personen eller organisasjonen som sendte innholdet alene ansvarlig for dette. Selv om Russesamfunnet har forbeholdt seg retten til å se gjennom alt innhold som vises på Tjenestene og til å fjerne innhold som bryter med Vilkårene, våre Samfunns retningslinjer eller loven, er det ikke nødvendigvis slik at vi ser gjennom alt.
+Gjennom disse Vilkårene og våre Samfunns retningslinjer gjør vi det klart at vi ikke ønsker at våre Tjenester skal brukes i negative hensikter. Men siden vi ikke gjennomgår alt innhold, kan vi ikke garantere at innhold i tjenestene alltid retter seg etter våre Vilkår eller Retningslinjer.
+
 
 	5. Personvern
 Personvernet ditt er viktig for oss. Du kan lære mer om hvordan vi behandler informasjonen din når du bruker våre Tjenester ved å lese Personvernerklæringen. Vi oppfordrer deg til å se nøye på vår Personvernerklæring siden, ved å akseptere den, sier du deg enig i at informasjonen din kan bli samlet og behandlet av, såvel som av deres samarbeidspartnere, og bli sendt ut av Norge, inkludert til land som ikke nødvendigvis har samme lover om databeskyttelse som i Norge.
+
 
 
 	6. Respekt for andres rettigheter
@@ -52,6 +56,8 @@ Du må også respektere Russesamfunnet sine rettigheter. Disse vilkårene gir de
 bruke merkevarer, logoer, design, fotografier, videoer eller noe annet materiale som brukes i våre Tjenester.
 kopiere, arkivere, laste ned, laste opp, distribuere, syndikere, kringkaste, fremføre, fremvise, gjøre tilgjengelig eller på annen måte bruke noen del av Tjenestene eller innholdet i Tjenestene, bortsett fra slik som angitt i disse Vilkårene;
 bruke Tjenestene, verktøy tilgjengelig i Tjenestene, eller innholdet på Tjenestene for kommersielle formål uten vårt samtykke.
+
+
 	7. Sikkerhet
 Vi legger ned stor innsats for å gjøre Tjenestene våre til et trygt sted for alle brukere. Men vi kan ikke garantere det. Det er her du kommer inn i bildet. Ved å bruke Tjenestene godtar du at:
 Du ikke vil bruke Tjenestene til formål som er ulovlige eller forbudt i disse Vilkårene.
@@ -66,8 +72,10 @@ Du vil ikke prøve å omgå noen av teknikkene vi bruker for innholdsfiltrering,
 Du ikke vil sondere, skanne eller teste sårbarheten til våre Tjenester eller noe system eller nettverk.
 Du ikke vil oppfordre eller promotere aktivitet som bryter med disse Vilkårene.
 Vi bryr oss også om sikkerheten din mens du bruker Tjenestene. Ikke bruk Tjenestene på en måte som kan distrahere deg fra å følge trafikk- eller sikkerhetslover. For eksempel, aldri sjekk noene av Tjenestene og kjør. Og sett aldri deg selv eller andre i fare bare for å bruke Tjenestene.
+
+
 	10. Kontoen din
-Du er ansvarlig for all aktivitet som skjer på din Russesamfunnet-konto. Derfor er det viktig at du holder kontoen din sikker. En måte du kan gjøre det på, er å velge et sterkt passord som du ikke bruker til noen annen konto.
+Du er ansvarlig for all aktivitet som skjer på din Russesamfunnet -konto. Derfor er det viktig at du holder kontoen din sikker. En måte du kan gjøre det på, er å velge et sterkt passord som du ikke bruker til noen annen konto.
 Ved å bruke Tjenestene godtar du, i tillegg til å utøve sunn fornuft, at:
 Du vil ikke opprette mer enn én konto til deg selv.
 Du ikke vil opprette en ny konto hvis vi allerede har deaktivert kontoen din, med mindre du har skriftlig tillatelse til å gjøre det.
@@ -79,26 +87,196 @@ Hvis du tror at noen har fått tilgang til kontoen din, må du umiddelbart konta
 
 	11. Datakostnader og Mobiltelefoner
 Du er ansvarlig for eventuelle mobilkostnader du pådrar deg for å bruke våre Tjenester, inkludert tekstmeldinger og datakostnader. Hvis du er usikker på hva disse kostnadene kan være, bør du spørre tjenesteleverandøren din før du bruker Tjenestene.
+
+
 	12. Tjenester fra tredjeparter
-Hvis du bruker en tjeneste, funksjon eller funksjonalitet som drives av en tredjepart og er gjort tilgjengelig via våre Tjenester (inkludert Tjenester vi tilbyr i samarbeid med en tredjepart), vil hver av partenes vilkår styre den respektive partens forhold til deg. Russesamfunnet er ansvarlige eller går god for disse tredjepartsvilkårene eller handlinger som er gjort under tredjepartens vilkår.
+Hvis du bruker en tjeneste, funksjon eller funksjonalitet som drives av en tredjepart og er gjort tilgjengelig via våre Tjenester (inkludert Tjenester vi tilbyr i samarbeid med en tredjepart), vil hver av partenes vilkår styre den respektive partens forhold til deg. Unnamed softwares er ansvarlige eller går god for disse tredjepartsvilkårene eller handlinger som er gjort under tredjepartens vilkår.
+
+
 
 	13. Endring av Tjenestene og oppsigelse
 
 Vi forbedrer stadig Tjenestene våre og lager nye hele tiden. Det betyr at vi kan legge til eller fjerne funksjoner, produkter eller funksjonalitet, og vi kan også fjerne eller stoppe Tjenestene helt. Dette kan vi gjøre når som helst, og når vi gjør det, vil vi forsøke å varsle deg på forhånd, men det vil ikke alltid være mulig å få det til.
 
-Russesamfunnet  kan si opp disse Vilkårene med deg hvis du ikke skulle føye deg etter Vilkårene, våre Samfunnsretningslinjer eller loven, eller av grunner som ligger utenfor vår kontroll. Og selv om vi vil prøve å gi deg beskjed på forhånd, kan vi ikke garantere dette. Vår rett til å si opp disse Vilkårene betyr at vi kan stoppe vår leveranse av enhver Tjeneste til deg, eller innføre nye grenser eller tilleggsbegrensninger på din mulighet til å bruke våre Tjenester. Vi kan for eksempel deaktivere kontoen din på grunn av langvarig inaktivitet, og vi kan tilbakekalle brukernavnet ditt når som helst av samme grunn.
+Unnamed softwares kan si opp disse Vilkårene med deg hvis du ikke skulle føye deg etter Vilkårene, våre Samfunns retningslinjer eller loven, eller av grunner som ligger utenfor vår kontroll. Og selv om vi vil prøve å gi deg beskjed på forhånd, kan vi ikke garantere dette. Vår rett til å si opp disse Vilkårene betyr at vi kan stoppe vår leveranse av enhver Tjeneste til deg, eller innføre nye grenser eller tilleggs begrensninger på din mulighet til å bruke våre Tjenester. Vi kan for eksempel deaktivere kontoen din på grunn av langvarig inaktivitet, og vi kan tilbakekalle brukernavnet ditt når som helst av samme grunn.
+
+
 
 	
 	14. Ansvarsfraskrivelse
 Vi prøver å holde Tjenestene i drift og fri for forstyrrelser. Men vi kan ikke love at vi alltid vil lykkes.
 Tjenestene blir levert "slik de er" og "som tilgjengelig" og så langt det er mulig etter loven, uten garantier av noe slag, enten i klartekst eller underforstått, inkludert, spesielt impliserte garantier, betingelser eller andre vilkår relatert til (i) salgbarhet, tilfredsstillende kvalitet, egnethet for et spesielt formål, tittel, råderett, ukrenkelighet, eller (ii) som fremkommer som resultat av forhandlinger. I tillegg, selv om Russesamfunnet forsøker å levere gode brukererfaringer, garanterer vi ikke at: (a) Tjenestene alltid vil være sikre, feilfri, eller tidsmessig; (b) Tjenestene alltid vil fungere uten forsinkelser, avbrudd eller feil; eller (c) alt innhold eller informasjon du mottar via Tjenestene vil være rettidig eller presis.
-Russesamfunnet og deres tilknyttede selskaper tar ikke noe ansvar for og stiller ikke opp for noe innhold som du, en annen bruker eller en tredjepart lager, laster opp, sender, mottar eller lagrer på eller via våre Tjenester. Du forstår og aksepterer at du kan bli eksponert for innhold som kan være støtende, illegalt, villedende eller på annen måte upassende, hvilket Russesamfunnet vil være ansvarlige for.
+Unnamed softwares og deres tilknyttede selskaper tar ikke noe ansvar for og stiller ikke opp for noe innhold som du, en annen bruker eller en tredjepart lager, laster opp, sender, mottar eller lagrer på eller via våre Tjenester. Du forstår og aksepterer at du kan bli eksponert for innhold som kan være støtende, illegalt, villedende eller på annen måte upassende, hvilket Unnamed softwares vil være ansvarlige for.
+
+
 
 	16. Ansvarsbegrensning
-Russesamfunnet og våre datterselskaper, direktører, ledere, aksjeeiere, ansatte, lisensgivere og agenter vil ikke være ansvarlige for noen indirekte eller tilfeldige skader, følgeskader, strafferettslige, eller multiple skader eller noe tap av profitt eller driftsinntekter, enten de er pådratt direkte eller indirekte, eller tap av data, bruk eller goodwill, eller andre immaterielle tap som er resultat av: (a) din bruk av Tjenestene eller manglende evne til å bruke Tjenestene; (b) din tilgang til eller manglende evne til å få tilgang til Tjenestene; (c) andre brukere eller tredjeparts atferd eller innhold på eller via Tjenestene; eller (d) uautorisert tilgang, bruk eller endring av ditt innhold.
+Unnamed softwares vil ikke være ansvarlige for noen indirekte eller tilfeldige skader, følgeskader, strafferettslige, eller multiple skader eller noe tap av profitt eller driftsinntekter, enten de er pådratt direkte eller indirekte, eller tap av data, bruk eller goodwill, eller andre immaterielle tap som er resultat av: (a) din bruk av Tjenestene eller manglende evne til å bruke Tjenestene; (b) din tilgang til eller manglende evne til å få tilgang til Tjenestene; (c) andre brukere eller tredjeparts atferd eller innhold på eller via Tjenestene; eller (d) uautorisert tilgang, bruk eller endring av ditt innhold.
 
-	17. Endelige Vilkår
-Disse Vilkårene utgjør den fulle avtalen mellom deg og Russesamfunnet, og erstatter alle tidligere avtaler.
+
+
+	17. Samfunns Retningslinjer
+Russesamfunnet handler om å kommunisere med andre russ på din skole eller i nærområdet, hjelpe deg med å samle flest mulig russeknuter, skape en fredfull konkurranse rundt innsamlingen av knutene og ha det gøy sammen. Vårt mål ved å opprette disse retningslinjene er å oppnå den beste atmosfæren i Tjenesten, samtidig som å sikre at tjenestene er sikker og behagelig for alle brukere. 
+Her er noen viktige retningslinjer for å bruke Russesamfunnet.
+Voksent innhold
+Vi forbyr innlegg som promoterer eller distribuere pornografisk innhold.
+Amning og andre bilder av nakenhet i ikke-seksuelle sammenhenger er i orden.
+Nakenhet eller seksuelt forslag som involverer mindreårige
+Legg aldri ut, lagre eller send naken eller seksuelt innhold som involverer personer under 18 år - selv om deg selv.
+Dette inkluderer å legge til tegninger eller bildetekster til innlegg for å gjøre det seksuelt, selv som en vits.
+Ulovlig innhold
+Ikke bruk Russesamfunnet for noen ulovlige ugang.
+Invasjon av personvern
+Ikke bruk Russesamfunnet til å krenke en annens personvern.
+Trusler og vold
+Ikke truer med å skade en person, gruppe mennesker eller eiendom.
+Trakassering og mobbing
+Vi tolererer ikke mobbing eller trakassering på Russesamfunnet.
+Ikke legg ut innhold med det formål å få noen til å føle seg dårlig.
+Etterligning
+Ikke late som å være noen du ikke er - inkludert venner, kjendiser, merker eller andre organisasjoner.
+Hate Tale
+Ikke legg inn innhold som trykker ned, ærekrenker eller fremmer diskriminering på grunnlag av rase, etnisitet, nasjonal opprinnelse, religion, seksuell orientering, kjønn, funksjonshemming eller veteran status.
+Terrorisme
+Vi forbyder innhold som fremmer terrorisme.
+Spam
+Vi har null toleranse for spam.
+
+Hvis du bryter disse retningslinjene, kan vi fjerne det fornærmende innholdet, avslutte kontoen din eller varsle rettshåndhevelse. Hvis kontoen din er avsluttet for å bryte vilkårene for bruk eller disse retningslinjene, kan du ikke bruke Russesamfunnet igjen. Ta disse retningslinjene seriøst og ære dem i den ånden de er ment for. Vi vil gjøre vårt beste for å håndheve dem konsekvent og rettferdig, og til slutt vil vi prøve å gjøre det vi synes er best i hver situasjon.
+
+
+
+	18. Personvernregler
+Russesamfunnet er en sosial plattform med formål å digitalisere og forberede Russetiden. 
+Når du benytter våre tjenester, deler du en del informasjon med oss. Derfor ønsker vi å være i forkant om informasjonen vi samler inn, hvordan vi bruker den, hvem vi deler den med og hvilke muligheter vi gir deg til å kontrollere, få tilgang til og oppdatere informasjonen din.
+
+Det er derfor vi har skrevet denne personsvernerklæringen. Der er også derfor vi har prøvd å skriver den på enklest mulig måte. Dersom det fortsatt er noe du lurer på når det gjelder disse personvernreglene, er det bare å kontakte oss.
+
+	18.1 Informasjon vi samler inn
+Det er tre grunnleggende kategorier av informasjon vi samler inn:
+Informasjonen du velger å gi oss.
+Informasjonen vi får når du bruker tjenestene våre.
+Informasjonen vi får fra tredjeparter.
+
+
+Her er litt flere detaljer om disse kategoriene.
+
+	18.1.1 Informasjonen du velger å gi oss.
+Når du samhandler med tjenestene våres, samler vi inn informasjonen som du velger å dele med oss. Tjenestene våre krever for eksempel at du oppretter en standard Russesamfunn-konto eller bruker en validert Google eller Facebook konto. I denne forbindelse må vi samle inn noen viktige detaljer om deg, som for eksempel et passord, en e-postadresse, og fødselsdatoen din. For å gjøre det lettere for andre å finne deg kan vi også be deg om å gi oss noe tilleggsinformasjon som blir offentlig synlig i tjenestene våre, slik som profilbilder, ditt fulle navn, russekortet ditt eller annen nyttig identifiserende informasjon. 
+
+Du vil naturligvis også gi oss tilgang til all informasjon du legger ut via tjenestene. Husk på alle som ser det du legger ut kan lagre eller kopiere dette innholdet. Den sunne fornuften som man bør bruke når man er på Internett, gjelder derfor også for Russesamfunnet; ikke send meldinger eller del innhold som du ikke vil at noen skal lagre eller dele.
+Når du kontakter kundeservice eller kommunisere med oss på andre måter, samler vi inn den informasjonen du gir frivillig. 
+
+		18.1.2 Informasjon vi får når du bruker tjenestene våre
+Når du bruker tjenestene våre, samler vi inn informasjon om hvilke av disse tjenestene du har brukt, og hvordan du har brukt dem. Vi kan for eksempel vite at du så på en spesiell knute, på en viss event i en viss tidsperiode eller en annens bruker profil.  Her er en mer fullstending forklaring på informasjonstypene vi samler inn når du bruker tjenestene våre:
+
+Brukerinformasjon. Vi samler inn informasjon om aktiviteten din via tjenestene våre. Vi kan for eksempel samle inn informasjon om:
+Hvordan du samhandler med tjenestene, eksempelvis hvilke vitner du velger, hvilke knuter/profiler/events du ser på eller hvilke søkeord du skriver inn.
+Innholdsinformasjon. Vi samler innhold du lagrer på våre tjenester, for eksempel event elle feed publiseringer.
+Informasjon om enheter. Vi kan samle innhold fra og om enhetene du bruker. Vi kan samle for eksempel:
+Informasjon om din maskinvare og programvare, som enhetsmodell, operativsystem, enhetsminne, annonserings-identifikatorer, unike applikasjons-identifikatorer, installerte apper, unike enhets-identifikatorer, type nettleser, språk, batterinivå og tidssone;
+informasjon fra enhets sensorer, for eksempel akselerometre, gyroskoper, kompasser, mikrofoner, og om du har tilkoblet hodetelefoner; og
+informasjon om trådløse og mobile nettverkstilkoblinger, for eksempel mobilnummer, tjenesteleverandør og signalstyrke.
+Kamera og Bilder. Mange av tjenestene våre krever at vi samler inn bilder og annen informasjon fra enhetens kamera og bilder. For eksempel vil du ikke være i stand til å legge til et profilbilde eller russekort med mindre vi får tilgang til kameraet og/eller bildene.
+Lokalisering Informasjon. Når du bruker tjenestene våre, kan vi samle inn informasjon om din lokalisering. Med din tillatelse kan vi også samle inn informasjon om presis lokalisering ved hjelp av metoder som inkluderer GPS, trådløse nettverk, mobiltårn, WI-FI-tilgangspunkter og andre sensorer som gyroskop, akselerometer og kompass.
+Informasjon samlet inn av informasjonskapsler og annen teknologi. Som med de fleste elektroniske tjenester og mobilapplikasjoner kan vi bruke informasjonskapsler og annen teknologi, som for eksempel web signal, nettlagring og unike reklame identifikatorer, for å samle inn informasjon om aktivitet, nettleser og enhet. Vi kan også bruke denne teknologien til å samle inn informasjon når du kommuniserer med tjenestene vi tilbyr gjennom en av våre partnere. De fleste nettlesere er stilt inn slik at de godtar informasjonskapsler automatisk. Hvis du foretrekker det, kan du vanligvis fjerne eller avvise informasjonskapsler gjennom innstillingene på nettleseren eller enheten din. Husk imidlertid at dersom du fjerner eller avviser informasjonskapsler, kan det påvirke tilgjengeligheten og funksjonaliteten til våre tjenester. Hvis du vil vite mer om hvordan vi bruker informasjonskapsler og de ulike valgene dine, kan du sjekke ut vår Erklæring om informasjonskapsler. For å vite mer om hvordan tredjeparter bruker disse teknologiene på våre tjenester, må du lese delen Analyse- og reklametjenester levert av andre i våre personvernregler.
+Log Informasjon. Vi samler også inn log informasjon når du bruker nettsidene våre. Denne informasjonene inkludere blant annet:
+Detaljer om hvordan du har brukt tjenestene våre.
+Enhetsinformasjon, som nettleser type og språk.
+Tilgangstider.
+Sider du har sett.
+IP-adresse.
+Identifikatorer forbundet med informasjonskapsler eller annen teknologi som kan identifisere enheten eller nettleseren din.
+Sider du besøkte før eller etter du navigerte til nettsiden vår. 
+
+18.1.3 Informasjon vi samler inn fra tredjeparter
+Vi kan samle inn informasjon som andre brukere oppgir om deg når de bruker tjenestene våre. Vi kan også hente inn informasjon fra våre samarbeidspartnere, eller alle andre tredjeparter, og kombinere den med informasjonen vi samler inn gjennom tjenestene våre.
+
+18.2 Hvordan vi bruker informasjon
+Vi samler inn denne informasjonen for å gi deg fantastiske tjenester som vi hele tiden ønsker å forbedre. Her er noen av måtene vi kan gjøre dette på:
+Utvikle, betjene, forbedre, levere, vedlikeholde og beskytte våre  tjenester.
+sende deg kommunikasjon, inkludert via e-post. Vi kan for eksempel bruke e-post for å svare på dine henvendelser til support eller for å dele informasjon om våre produkter, tjenester og kampanjetilbud som vi tror er av interesse for deg.
+overvåke og analysere trender og bruk.
+skreddersy tjenestene ved å blant annet foreslå venner eller profilinformasjon, eller spesialtilpasse innholdet vi viser deg, inkludert annonser.
+levere og forbedre annonseres målretting og målinger, inkludert ved bruk av dine presise posisjonsdata (igjen, kun hvis du har gitt oss tilgang til å samle disse dataene), både i og utenfor våre tjenester. Se Kontroll over informasjonen din i en egen seksjon nedenfor for mer informasjon om Snap Inc. sin annonsepraksis og dine valg.
+forbedre sikkerheten til våre produkter og tjenester.
+verifisere identiteten din og forhindre bedrageri eller annen uautorisert eller ulovlig aktivitet.
+bruke informasjon som vi har samlet inn fra informasjonskapsler eller annen teknologi, til å forbedre tjenestene og din opplevelse med dem.
+håndheve våre Vilkår for Tjenesten og andre retningslinjer for bruk.
+Vi kan også lagre noe informasjon lokalt på enheten din. Vi kan for eksempel lagre informasjon som hurtigbuffer slik at du kan åpne appen og se innhold fortere.
+
+18.3 Hvordan vi deler informasjon
+Vi kan dele informasjon om deg på følgende måter:
+Med andre brukere. Vi kan dele følgende informasjon med andre Russesamfunn-brukere:
+Informasjon om deg, slik som fullt navn og profil bilde. 
+All informasjon du har samtykket til at vi deler.
+Innholdet du legger ut eller sender vil bli delt med andre Russesamfunn-brukere. I hvilket omfang innholdet ditt blir delt, avhenger av dine personlige innstillinger og hvilken type tjeneste du bruker.
+Med alle Russesamfunn-brukere, våre samarbeidspartnere og allmennheten. Vi kan dele følgende informasjon med alle Russesamfunn-brukere, samt våre samarbeidspartnere og allmennheten:
+Offentlig informasjon som ditt fulle navn, russekort og profilbilde.
+Alt innhold du sender på feeden eller i event.
+Med tredjeparter. Vi kan dele informasjonen din med følgende tredjeparter:
+Med tjenesteleverandører, selgere og partnere. Vi kan dele informasjon om deg med tjenesteleverandører som utfører tjenester på våre vegne, og forretningspartnere som leverer tjenester og funksjonalitet. For mer informasjon om datainnsamling av våre tjenesters tredjeparter, se under.
+Med tredjeparter av juridiske årsaker. Vi kan informasjon om deg hvis vi har grunn til å tro at utlevering av informasjonen er nødvendig for å:
+Overholde eventuelle gyldige juridiske prosesser, forespørsel fra myndigheter eller gjeldende lover, regler eller forskrifter.
+undersøke, rette opp eller håndheve potensielle brudd på våre Vilkår for Tjenesten.
+beskytte rettigheter, eiendom og sikkerhet for oss, våre brukere eller andre.
+oppdage og løse eventuelle bedrageri- eller sikkerhets anliggender.
+Med tredjeparter som en del av en fusjon eller oppkjøp. Hvis Russesamfunnet blir involvert i en fusjon, salg av aktiva, finansiering, likvidering eller konkurs, eller oppkjøp av alle eller deler av vår virksomhet til et annet selskap, kan vi dele informasjonen med dette selskapet før og etter transaksjonen utføres.
+Vi kan også dele med tredjeparter - slik som annonsører-innsamlede, ikke personlig identifiserbar eller anonymisert informasjon.
+
+
+	18.4 Innhold og integrasjoner fra tredjeparter
+Tjenestene kan også inneholde tredjeparts koblinger og søkeresultater, inkludere tredjeparts integrasjoner, eller tilby en tjeneste med felles merkevare eller tredjeparts merkevare. Via disse koblingene, tredjeparts integrasjon eller en tjeneste som leveres av eller sammen med et annet selskap med felles eller tredjeparts merkevare, kan du gi informasjon (inkludert personlig informasjon) direkte til tredjeparten, oss eller begge. Du erkjenner og godtar at vi ikke er ansvarlig for hvordan disse tredjepartene samler eller bruker informasjonen. Som alltid oppfordrer vi deg til å lese personvernreglene til hver tredjeparts nettside eller tjeneste du besøker eller bruker, inkludert de tredjeparter du kommuniserer med via våre tjenester.
+
+18.5 Analyse- og reklame tjenester
+	18.5.1 Levert av andre
+Vi kan la andre selskaper bruke informasjonskapsler, nettvarder og annen teknologi på våre tjenester. Disse selskapene kan samle inn informasjon om hvordan du bruker våre tjenester over tid og kombinere det med lignende informasjon fra andre tjenester og selskaper. Denne informasjonen kan brukes til å, blant annet, analysere og spore data, avgjøre populariteten til bestemt innhold og til å forstå nettaktiviteten din bedre.
+Noen bedrifter, inkludert våre tilknyttede selskaper, kan i tillegg bruke informasjonen de samler inn på tjenestene våre til å måle annonseresultater og levere mer relevante annonser på vegne av oss eller andre selskaper, inkludert tredjeparters nettsider og apper.
+		18.5.2 Levert av oss
+Vi kan samle inn informasjon om aktiviteten din på tredjepartstjenester som bruker informasjonskapsler og annen teknologi som tilbys av oss. Vi bruker denne informasjonen til å forbedre våre annonseringstjenester, inkludert måling av annonse ytelse og for å vise deg mer relevante annonser.
+
+	18.6 Hvor lenge vi beholder innholdet ditt
+Russesamfunnet gir deg muligheten til å forbedre Russetiden din. Fra vår side betyr dette at vi automatisk sletter innholdet ditt på slutten av Russe sesongen. Men husk: Det finnes andre måter brukere av tjenestene våres kan lagre innholdet.
+Du må forstå at brukere som ser innholdet du deler, alltid kan lagre innholdet på flere forskjellige måter; som skjermbilde, med app-funksjoner eller ved å bruke en annen bildeinnhentingsteknologi. Det er også mulig, som med all digital informasjon, at noen kan være i stand til å på annen måte få tilgang til meldinger eller finne dem i enhetens midlertidige lagringsplass. Husk på at selv om systemene våre er utformet for å utføre slette rutinene våre automatisk, kan vi ikke love at slettingen foregår innen en spesifikk tidsramme. Det kan også hende at vi må utsette slette rutinene våre dersom vi i henhold til en juridisk gyldig hendelse blir bedt om å bevare innhold eller dersom vi får rapporter om misbruk eller andre brudd på våre Vilkår for tjenesten. Endelig kan vi også sikkerhetskopiere enkelte opplysninger i en begrenset periode eller slik loven krever.
+	
+	18.7 Kontroll over informasjonen din
+Vi vil at du skal ha kontroll over informasjonen din, og derfor gir vi deg følgende verktøy.
+Tilgang og oppdateringer. Vi tilstreber å la deg få tilgang til og oppdatere mesteparten av den personlige informasjonen vi har om deg. Det er likevel grenser for hvilke forespørsler vi vil tillate. Vi kan avvise en forespørsel grunnet flere årsaker, inkludert, for eksempel, at forespørselen setter andre brukeres personvern i fare, at den krever teknisk innsats som ikke står i forhold til forespørselen, at den er gjentakende eller at den er ulovlig. Du kan få tilgang til og oppdatere de fleste av de grunnleggende kontoopplysningene direkte i appen ved å gå inn på appens Innstillinger-side. Hvis du trenger å få tilgang til, oppdatere eller slette annen personlig informasjon som vi kanskje har, kan du kontakte oss. Fordi personvernet ditt er viktig for oss, kan vi be deg om å bekrefte identiteten din eller å oppgi ytterligere informasjon før vi lar deg få tilgang til eller oppdatere din personlige informasjon. Vi vil forsøke å oppdatere og behandle informasjonen din gratis, men hvis det krever en uforholdsmessig stor innsats fra vår side, kan det påløpe et gebyr. Vi kommer selvfølgelig til å opplyse om gebyret før vi etterkommer forespørselen din.
+Inndragelse av tillatelser. Hvis du senere ombestemmer deg vedrørende vår løpende mulighet til å samle informasjon fra visse kilder som du allerede har godtatt, som fra posisjonstjenester, kan du ganske enkelt tilbakekalle ditt samtykke ved å endre innstillingene på enheten din, dersom disse alternativene er tilgjengelig på enheten. Hvis du gjør dette, vil naturligvis enkelte tenester miste full funksjonalitet.
+Sletting av konto. Selv om vi håper du vil være en bruker av Russesamfunnet gjennom hele din periode som Russ, kan du, hvis du av en eller annen grunn ønsker å slette kontoen din, ved å navigere til innstillinger. 
+	
+18.8 Endringer av personvernreglene
+Vi kan endre disse personvernreglene fra tid til annen. Når vi gjør dette, vil vi gjøre deg oppmerksom på det på en eller annen måte. Noen ganger kommer vi til å informere deg ved å endre datoen øverst i personvernreglene som er tilgjengelig på nettsiden vår og i mobilapplikasjonen. Andre ganger kan vi gi deg et tilleggs varsel (eksempelvis ved å legge ved en erklæring på hjemmesidene våre eller gi et varsel i appen).
+
+	19. Retningslinjer for bruk av informasjonskapsler (cookies)
+En cookie (informasjonskapsel) er et lite stykke data som lagres på enheten din for å hjelpe nettsteder og mobilapper å huske ting om deg. Andre teknologier, som nettlagring og identifikatorer tilknyttet enheten din, kan også brukes til lignende formål. I denne personvernerklæringen bruker vi betegnelsen "cookies" om alle disse teknologiene.
+Vår personvernerklæring forklarer hvordan vi samler inn og bruker informasjon fra deg og om deg når du bruker Russesamfunnet.Personvernerklæringen forklarer mer om hvordan vi bruker cookies og dine valgmuligheter.
+	19.1 Slik bruker vi cookies
+Russesamfunnet bruker, som de fleste andre nettjenester, cookies av en rekke grunner, for eksempel for å beskytte din Russesamfunndata og kontoen din, for å måle hvilke tjenester som er mest populære, for å telle antall besøkende på en side, for å forbedre brukeropplevelsen og sikre tjenesten, og generelt for å gi deg en bedre og mer intuitiv opplevelse. De cookies vi bruker tilhører stort sett en av de følgende typene.
+Følgende er de forskjellige typer cookies i bruk og hvorfor vi bruker cookies.
+Preferanser
+Vi bruker cookies for å huske dine innstillinger og preferanser.
+Sikkerhet
+Vi bruker cookies for å identifisere og forhindre sikkerhetsrisiko.
+Vi kan for eksempel bruke cookies til å lagre bruker historikken din for å forhindre at andre endrer passordet ditt uten brukernavn og passord.
+Ytelse 
+Vi bruker cookies til å samle inn informasjon om hvordan du bruker våre tjenester og for å hjelpe oss med å forbedre dem
+Vi kan for eksempel bruke cookies til å finne ut om du har utført handlinger på en bestemt side.
+Analyse
+Vi bruker cookies til å hjelpe oss med å forbedre tjenestene våre.
+Vi kan for eksempel bruke cookies for å lære mer om hvilke funksjoner som er mest populære hos brukerne våre, og hvilke vi kanskje bør endre litt.
+Annonsering
+Vi bruker cookies for å levere annonser, gjøre dem mer relevante og meningsfulle for forbrukerne, og for å spore effektiviteten av våre annonsekampanjer, både på våre tjenester og på andre nettsteder eller mobilapper.
+19.2 Dine valg muligheter
+Din nettleser eller enhet kan gi deg mulighet til å blokkere eller på annen måte begrense bruken av cookies. Men cookies er en viktig del av funksjonaliteten i våre tjenester fungerer, slik at fjerning, blokkering eller begrensning av bruken av dem kan påvirke tilgjengeligheten og funksjonaliteten til tjenestene våre.
+Nettleser-cookies
+Nettleseren din kan gi deg muligheten til å nekte noen eller alle cookies. Du kan også fjerne cookies fra nettleseren din. For mer informasjon om hvordan du administrerer cookies, følg instruksjonene for nettleseren din.
+Mobile enhetsidentifikatorer
+Operativsystemet ditt kan gi deg mulighet til å velge bort at visse enhets identifikatorer brukes til interessebasert annonsering. Du bør henvise til instruksjonene fra produsenten av mobilenheten din. Denne informasjonen er vanligvis tilgjengelig under "innstillinger" -funksjonen til mobilenheten.
+Og du kan selvfølgelig, hvis mobilenheten tilbyr en avinstallering prosess, til enhver tid forhindre at vi samler inn informasjon gjennom appen ved å avinstallere Russesamfunn-appen.
+
+20. Endelige Vilkår
+Disse Vilkårene utgjør den fulle avtalen mellom deg og Unnamed softwares og erstatter alle tidligere avtaler.
 Disse vilkårene skaper eller pålegger ingen rettigheter til tredjeparter.
 Hvis vi ikke håndhever en bestemmelse i disse vilkårene, skal det ikke anses som en fraskrivelse av rettigheter.
 Vi forbeholder oss alle rettigheter som ikke uttrykkelig er gitt til deg.
