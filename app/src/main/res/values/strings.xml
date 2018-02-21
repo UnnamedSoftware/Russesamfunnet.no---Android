@@ -8,6 +8,8 @@
     <string name="knotList">Knute Liste</string>
     <string name="settings">Instillinger</string>
     <string name="logout">Log ut</string>
+    <string name="app_label">Russesamfunnet</string>
+    <string name="search_hint">Søk Skole</string>
 
     <string name="facebook_app_id">291199641408779</string>
     <string name="fb_login_protocol_scheme">fb291199641408779</string>

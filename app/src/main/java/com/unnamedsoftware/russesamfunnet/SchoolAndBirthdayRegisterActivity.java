@@ -86,6 +86,23 @@ public class SchoolAndBirthdayRegisterActivity extends AppCompatActivity
         //--- Set Month ---
         numberPickerMonth.setMaxValue(12);
         numberPickerMonth.setMinValue(1);
+
+        //If you want to have Months displayed as strings do use this as a guide
+        /*
+            NumberPicker numberPicker = new NumberPicker(this);
+            String[] arrayString= new String[]{"hakuna","matata","timon","and","pumba"};
+            numberPicker.setMinValue(0);
+            numberPicker.setMaxValue(arrayString.length-1);
+
+            numberPicker.setFormatter(new NumberPicker.Formatter() {
+            @Override
+            public String format(int value) {
+            return arrayString[value];
+            }
+            });
+        */
+
+
         numberPickerMonth.setWrapSelectorWheel(false);
         numberPickerMonth.setOnValueChangedListener(new NumberPicker.OnValueChangeListener()
         {

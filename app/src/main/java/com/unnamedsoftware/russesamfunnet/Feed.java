@@ -151,6 +151,10 @@ public class Feed extends AppCompatActivity {
         }
     }
 
+    /**
+     *
+     * @param jsonArray
+     */
         public void fillFeed(JSONArray jsonArray)
     {
         try
