@@ -207,10 +207,9 @@ public class Login extends AppCompatActivity
                     @Override
                     public void onResponse(String response)
                     {
-                        String theResponse = response.substring(1, response.length()-1);
                         System.out.println(response);
-                        System.out.println(theResponse);
-                        if (theResponse.equalsIgnoreCase("true"))
+                        System.out.println(response);
+                        if (response.equalsIgnoreCase("true"))
                         {
                             System.out.println("finish");
                             finishServerCom();
