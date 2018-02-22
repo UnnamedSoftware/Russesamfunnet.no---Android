@@ -28,6 +28,11 @@ import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.Task;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -44,7 +49,6 @@ import java.util.Map;
 
 public class Login extends AppCompatActivity
 {
-
     private Boolean response = false;
     CallbackManager callbackManager;
 
@@ -75,16 +79,6 @@ public class Login extends AppCompatActivity
             }
         });
 
-        Button dummyButton = findViewById(R.id.dummyButton);
-        dummyButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                startActivity(new Intent(Login.this, Feed.class));
-            }
-        });
-
         callbackManager = CallbackManager.Factory.create();
 
         LoginManager.getInstance().registerCallback(callbackManager,
@@ -106,7 +100,6 @@ public class Login extends AppCompatActivity
                     }
                 });
     }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
