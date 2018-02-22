@@ -1,6 +1,7 @@
 package com.unnamedsoftware.russesamfunnet.RecyclerView;
 
 
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,8 +9,10 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.unnamedsoftware.russesamfunnet.Entity.RussEntity;
 import com.unnamedsoftware.russesamfunnet.Entity.ScoreboardEntity;
 import com.unnamedsoftware.russesamfunnet.R;
+import com.unnamedsoftware.russesamfunnet.UserProfile;
 
 import java.util.List;
 
@@ -50,7 +53,7 @@ public class RecyclerViewScoreboard extends RecyclerView.Adapter<RecyclerViewSco
 
         return new ViewHolder(itemView);
     }
-
+/*
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         ScoreboardEntity listUser = userList.get(position);
@@ -62,6 +65,30 @@ public class RecyclerViewScoreboard extends RecyclerView.Adapter<RecyclerViewSco
         holder.points.setText(String.valueOf(listUser.getPoints()));
         holder.position.setText(String.valueOf(listUser.getPosition()));
 
+    }
+*/
+    @Override
+    public void onBindViewHolder(ViewHolder holder, int position)
+    {
+        final ScoreboardEntity listUser = userList.get(position);
+        if (listUser.getRussId().getRussId() == userID)
+        {
+            holder.layout.setBackgroundResource((R.drawable.user_scoreboard_border));
+        }
+        holder.name.setText(listUser.getRussId().getFirstName());
+        holder.points.setText(String.valueOf(listUser.getPoints()));
+        holder.position.setText(String.valueOf(listUser.getPosition()));
+        holder.itemView.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                RussEntity tempRuss = listUser.getRussId();
+                Intent intent = new Intent(v.getContext(), UserProfile.class);
+                intent.putExtra("russ_entity", tempRuss.getRussId());
+                v.getContext().startActivity(intent);
+            }
+        });
     }
 
     @Override

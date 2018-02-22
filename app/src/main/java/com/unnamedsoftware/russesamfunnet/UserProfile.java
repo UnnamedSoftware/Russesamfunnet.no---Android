@@ -1,5 +1,6 @@
 package com.unnamedsoftware.russesamfunnet;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -38,8 +39,15 @@ public class UserProfile extends AppCompatActivity
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        if(bundle != null) {
+            url = getString(R.string.url) + "userRuss?russId=" + bundle.getInt("russ_entity");
+        }else
+        {
+            url = getString(R.string.url) + "userRuss?russId=1";
+        }
 
-        url = getString(R.string.url) + "userRuss?russId=1";
         try {
             getUserRuss();
         }catch (Exception e)
