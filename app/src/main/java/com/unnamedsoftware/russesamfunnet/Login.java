@@ -68,7 +68,6 @@ public class Login extends AppCompatActivity
 
 
 
-
         Button registerButton = (Button) findViewById(R.id.registerButton);
         registerButton.setOnClickListener(new View.OnClickListener()
         {
