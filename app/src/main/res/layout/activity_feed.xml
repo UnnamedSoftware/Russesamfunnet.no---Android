@@ -5,12 +5,30 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <android.support.design.widget.NavigationView
+        android:id="@+id/navList"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="@android:color/white"
+        android:choiceMode="singleChoice"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="0dp"
+        app:headerLayout="@layout/nav_header"
+        app:itemTextColor="@color/colorPrimaryDark"
+        app:menu="@menu/navigation_drawer" />
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
         <!-- ActionBar -->
+
         <include
             layout="@layout/toolbar"
             android:layout_width="match_parent"
@@ -18,6 +36,7 @@
 
 
         <!-- Main content -->
+
         <FrameLayout
             android:id="@+id/feedContent"
             android:layout_width="match_parent"
@@ -30,22 +49,50 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
         </FrameLayout>
     </LinearLayout>
 
     <!-- Navigation Drawer -->
-    <android.support.design.widget.NavigationView
-        android:id="@+id/navList"
-        app:itemTextColor="@color/colorPrimaryDark"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:background="@android:color/white"
-        android:choiceMode="singleChoice"
-        android:divider="@android:color/transparent"
-        android:dividerHeight="0dp"
-        app:headerLayout="@layout/nav_header"
-        app:menu="@menu/navigation_drawer" />
+
+        <LinearLayout
+            android:id="@+id/layout_chatbox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:minHeight="48dp"
+            android:background="#ffffff"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent">
+
+            <EditText
+                android:id="@+id/edittext_chatbox"
+                android:hint="Enter message"
+                android:background="@android:color/transparent"
+                android:layout_gravity="center"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:maxLines="6"/>
+
+            <Button
+                android:id="@+id/button_chatbox_send"
+                android:text="SEND"
+                android:textSize="14dp"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:layout_width="64dp"
+                android:layout_height="48dp"
+                android:gravity="center"
+                android:layout_gravity="bottom" />
+
+        </LinearLayout>
+
+
+    </android.support.constraint.ConstraintLayout>
 
 </android.support.v4.widget.DrawerLayout>
 
