@@ -65,7 +65,7 @@ public class Feed extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feed);
 
-        url = getString(R.string.url) + "schoolFeed?russId=1";
+        url = getString(R.string.url) + "schoolFeed?russId=" + ((MyApplication) this.getApplication()).getRussId();
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

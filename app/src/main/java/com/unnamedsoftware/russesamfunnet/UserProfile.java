@@ -45,7 +45,7 @@ public class UserProfile extends AppCompatActivity
             url = getString(R.string.url) + "userRuss?russId=" + bundle.getInt("russ_entity");
         }else
         {
-            url = getString(R.string.url) + "userRuss?russId=1";
+            url = getString(R.string.url) + "userRuss?russId=" + ((MyApplication) this.getApplication()).getRussId();
         }
 
         try {

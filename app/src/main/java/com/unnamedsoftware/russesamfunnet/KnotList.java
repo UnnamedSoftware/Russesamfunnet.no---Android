@@ -48,7 +48,7 @@ public class KnotList extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_knot_list);
 
-        url = getString(R.string.url) + "getKnotsList?russId=1";
+        url = getString(R.string.url) + "getKnotsList?russId=" + ((MyApplication) this.getApplication()).getRussId();
 
 
         Toolbar toolbar = findViewById(R.id.toolbar);

@@ -56,7 +56,7 @@ public class Scoreboard extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scoreboard);
         //getString(R.string.url)
-        url = getString(R.string.url) + "scoreboardTop10?theRussId=6";
+        url = getString(R.string.url) + "scoreboardTop10?theRussId=" + ((MyApplication) this.getApplication()).getRussId();
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
