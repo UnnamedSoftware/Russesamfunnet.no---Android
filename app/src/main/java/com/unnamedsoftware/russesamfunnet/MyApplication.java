@@ -10,13 +10,13 @@ import com.unnamedsoftware.russesamfunnet.Entity.RussEntity;
 
 public class MyApplication extends Application {
 
-    private RussEntity russ;
+    private int russId;
 
-    public RussEntity getRuss() {
-        return russ;
+    public int getRussId() {
+        return russId;
     }
 
-    public void setRuss(RussEntity russ) {
-        this.russ = russ;
+    public void setRussId(int russId) {
+        this.russId = russId;
     }
 }

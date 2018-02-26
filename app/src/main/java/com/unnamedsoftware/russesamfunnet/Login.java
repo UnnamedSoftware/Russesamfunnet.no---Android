@@ -85,6 +85,7 @@ public class Login extends AppCompatActivity
                     @Override
                     public void onSuccess(LoginResult loginResult) {
                         String url = getString(R.string.url) + "facebookLogin?accessToken=" + loginResult.getAccessToken().getToken();
+                        ((MyApplication) getApplication()).setRussId(Integer.parseInt(loginResult.getAccessToken().getUserId()));
                         facebookLoginCheck(url);
                     }
 
@@ -198,6 +199,35 @@ public class Login extends AppCompatActivity
      */
     private void toServer(View view, String userEmailString, String userPasswordString)
     {
+        String url = getString(R.string.url) + "login?email=" + userEmailString + "&password=" + userPasswordString;
+        try
+        {
+            new JSONObjectParser(new JSONObjectParser.OnPostExecute() {
+                @Override
+                public void onPostExecute(JSONObject jsonObject) {
+                    try {
+                        if (jsonObject.getString("loginStatus").equals("Login success")) {
+                            ((MyApplication) getApplication()).setRussId(jsonObject.getInt("userId"));
+                            finishServerCom();
+                        } else if(jsonObject.getString("loginStatus").equals("User not in db")){
+                            startActivity(new Intent(Login.this, Register.class));
+
+                        } else{
+                            System.out.println(jsonObject.getString("loginStatus"));
+                            Toast.makeText(Login.this, "Login failed", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        e.fillInStackTrace();
+                    }
+                }
+            }).execute(new URL(url));
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        /**
         RequestQueue queue = Volley.newRequestQueue(view.getContext());
         String url = getString(R.string.url) + "login?email=" + userEmailString + "&password=" + userPasswordString;
 
@@ -207,7 +237,6 @@ public class Login extends AppCompatActivity
                     @Override
                     public void onResponse(String response)
                     {
-                        System.out.println(response);
                         System.out.println(response);
                         if (response.equalsIgnoreCase("true"))
                         {
@@ -239,6 +268,7 @@ public class Login extends AppCompatActivity
             }
         };
         queue.add(stringRequest);
+         */
     }
 
     private void finishServerCom()
