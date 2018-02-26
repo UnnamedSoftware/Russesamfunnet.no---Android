@@ -1,6 +1,7 @@
 package com.unnamedsoftware.russesamfunnet.RecyclerView;
 
 
+import android.app.Application;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -24,7 +25,7 @@ public class RecyclerViewScoreboard extends RecyclerView.Adapter<RecyclerViewSco
     private List<ScoreboardEntity> userList;
 
     //Replace with the users ID!
-    private Integer userID = 13;
+    private Integer userID ;
 
     public class ViewHolder extends RecyclerView.ViewHolder
     {
@@ -41,8 +42,9 @@ public class RecyclerViewScoreboard extends RecyclerView.Adapter<RecyclerViewSco
         }
     }
 
-    public RecyclerViewScoreboard(List<ScoreboardEntity> userList)
+    public RecyclerViewScoreboard(List<ScoreboardEntity> userList, int userId)
     {
+        this.userID = userId;
         this.userList = userList;
     }
 

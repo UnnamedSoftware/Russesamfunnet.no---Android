@@ -109,7 +109,7 @@ public class Feed extends AppCompatActivity {
         {
             case R.id.profile:
                 intent = new Intent(this, UserProfile.class);
-                intent.putExtra("russ_entity",1);
+                intent.putExtra("russ_entity",((MyApplication) this.getApplication()).getRussId());
                 this.startActivity(intent);
                 break;
 

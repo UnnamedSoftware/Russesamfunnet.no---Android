@@ -45,6 +45,8 @@ public class UserProfile extends AppCompatActivity
             url = getString(R.string.url) + "userRuss?russId=" + bundle.getInt("russ_entity");
         }else
         {
+            System.out.println("User id: ");
+            System.out.println(((MyApplication) this.getApplication()).getRussId());
             url = getString(R.string.url) + "userRuss?russId=" + ((MyApplication) this.getApplication()).getRussId();
         }
 
@@ -58,6 +60,7 @@ public class UserProfile extends AppCompatActivity
 
     private void getUserRuss() throws IOException {
         try {
+            System.out.println(url);
             new JSONParser(new JSONParser.OnPostExecute() {
                 @Override
                 public void onPostExecute(JSONArray jsonArray) {
