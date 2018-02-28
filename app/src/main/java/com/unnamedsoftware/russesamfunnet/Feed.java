@@ -12,7 +12,13 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.unnamedsoftware.russesamfunnet.RecyclerView.FeedPost;
 import com.unnamedsoftware.russesamfunnet.RecyclerView.RecyclerViewFeed;
@@ -96,7 +102,31 @@ public class Feed extends AppCompatActivity {
         recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         recyclerView.setAdapter(recyclerViewFeed);
 
+
+        Button button = (Button) findViewById(R.id.button_chatbox_send);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendMessage((EditText) findViewById(R.id.edittext_chatbox));
+            }
+        });
+
     }
+
+    public void sendMessage(EditText editText)
+    {
+        try {
+            String message = editText.getText().toString();
+            System.out.println(message);
+            getFeed();
+        } catch (Exception e)
+        {
+            System.out.println(e.fillInStackTrace());
+        }
+    }
+
+
+
 
     /**
      * This method designates what happens when a menu item are selected in the navigation drawer.
@@ -252,4 +282,8 @@ public class Feed extends AppCompatActivity {
         super.onConfigurationChanged(newConfig);
         drawerToggle.onConfigurationChanged(newConfig);
     }
+
+
+
+
 }
