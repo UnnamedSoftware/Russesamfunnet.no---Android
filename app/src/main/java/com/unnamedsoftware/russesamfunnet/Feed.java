@@ -118,7 +118,21 @@ public class Feed extends AppCompatActivity {
         try {
             String message = editText.getText().toString();
             System.out.println(message);
-            getFeed();
+            String urlSend = getString(R.string.url)
+                    + "postFeed?russId=" + ((MyApplication) this.getApplication()).getRussId()
+                    + "&message=" + message;
+
+            try {
+                new JSONParser(new JSONParser.OnPostExecute() {
+                    @Override
+                    public void onPostExecute(JSONArray jsonArray) {
+                        fillFeed(jsonArray);
+                    }
+                }).execute(new URL(urlSend));
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+
         } catch (Exception e)
         {
             System.out.println(e.fillInStackTrace());
