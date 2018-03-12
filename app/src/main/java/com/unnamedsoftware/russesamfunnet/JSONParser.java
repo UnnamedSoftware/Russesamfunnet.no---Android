@@ -5,7 +5,6 @@ import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -14,12 +13,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 /**
- * Created by Alexander Eilert Berg on 29.01.2018.
- */
-
-/**
  * Retrieves a JSONArray from the server, returns the JSONArray.
- *
+ * Created by Alexander Eilert Berg on 29.01.2018.
  */
 public class JSONParser extends AsyncTask<URL, Void, JSONArray>
 {

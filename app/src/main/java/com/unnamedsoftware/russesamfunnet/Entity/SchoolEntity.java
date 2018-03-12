@@ -1,15 +1,12 @@
 package com.unnamedsoftware.russesamfunnet.Entity;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import java.io.Serializable;
 
 /**
  * Created by HallvardPC on 01.02.2018.
  */
 
-public class SchoolEntity implements Serializable {
+public class SchoolEntity extends Entity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private Integer schoolId;
@@ -52,6 +49,9 @@ public class SchoolEntity implements Serializable {
     public void setSchoolStatus(String schoolStatus) {
         this.schoolStatus = schoolStatus;
     }
+
+    @Override
+    public String getSearchName(){return getSchoolName();}
 
     @Override
     public int hashCode() {

@@ -1,15 +1,12 @@
 package com.unnamedsoftware.russesamfunnet.Entity;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import java.io.Serializable;
 
 /**
  * Created by HallvardPC on 01.02.2018.
  */
 
-public class KnotEntity implements Serializable {
+public class KnotEntity extends Entity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private int mData;
@@ -66,6 +63,8 @@ public class KnotEntity implements Serializable {
         this.schoolId = schoolId;
     }
 
+
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -91,4 +90,9 @@ public class KnotEntity implements Serializable {
         return "no.ntnu.unnamedsoftware.entity.Knots[ knotId=" + knotId + " ]";
     }
 
+    @Override
+    public String getSearchName()
+    {
+        return getTitle();
+    }
 }

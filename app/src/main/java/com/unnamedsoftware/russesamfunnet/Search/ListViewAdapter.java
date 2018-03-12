@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.unnamedsoftware.russesamfunnet.Entity.Entity;
 import com.unnamedsoftware.russesamfunnet.R;
 
 import java.util.ArrayList;
@@ -22,10 +23,11 @@ public class ListViewAdapter extends BaseAdapter
 
     Context context;
     LayoutInflater layoutInflater;
-    private List<Object> dataSet = null;
-    private ArrayList<Object> arrayList;
 
-    public ListViewAdapter(Context context, List<Object> dataSet)
+    private List<Entity> dataSet = null;
+    private ArrayList<Entity> arrayList;
+
+    public ListViewAdapter(Context context, List<Entity> dataSet)
     {
         this.context = context;
         this.dataSet = dataSet;
@@ -74,8 +76,7 @@ public class ListViewAdapter extends BaseAdapter
             viewHolder = (ViewHolder) view.getTag();
         }
 
-        //Get the name (somehow)
-        viewHolder.textView.setText(dataSet.get(position).get);
+        viewHolder.textView.setText(dataSet.get(position).getSearchName());
         return view;
     }
 
@@ -88,11 +89,11 @@ public class ListViewAdapter extends BaseAdapter
             dataSet.addAll(arrayList);
         }else
         {
-            for (Object o : arrayList)
+            for (Entity entity : arrayList)
             {
-                if (o.getSearchName().toLowerCase(Locale.getDefault().contains(charText)))
+                if (entity.getSearchName().toLowerCase(Locale.getDefault()).contains(charText))
                 {
-                    dataSet.add(o);
+                    dataSet.add(entity);
                 }
             }
         }
