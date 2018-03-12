@@ -18,16 +18,16 @@
     <!-- SERVER URL -->
     <string name="url">http://158.38.101.146:8080/</string>
 
-    <!-- Municipalities, defaults to Møre og romsdal -->
+    <!-- Municipalities -->
     <string-array name="municipalities">
-        <item>Møre og Romsdal</item>
+        <item>Velg fylke</item>
         <item>Akershus</item>
         <item>Aust-Agder</item>
         <item>Buskerud</item>
         <item>Finnmark</item>
         <item>Hedmark</item>
         <item>Hordaland</item>
-
+        <item>Møre og Romsdal</item>
         <item>Nordland</item>
         <item>Oppland</item>
         <item>Rogaland</item>
@@ -40,101 +40,7 @@
         <item>Østfold</item>
     </string-array>
 
-    <!-- Locations, defaults to Møre og romsdal -->
-    <string-array name="MoreOgRomsdal">
-        <item>Ålesund</item>
-        <item>Aukra</item>
-        <item>Aure</item>
-        <item>Austnes</item>
-        <item>Batnfjordsøra</item>
-        <item>Brandal</item>
-        <item>Brattvåg</item>
-        <item>Bremsnes</item>
-        <item>Brønnsletten</item>
-        <item>Bud</item>
-        <item>Dragsund</item>
-        <item>Dragsund</item>
-        <item>Eide</item>
-        <item>Eidsvåg</item>
-        <item>Elnesvågen</item>
-        <item>Farstad</item>
-        <item>Fiksdal</item>
-        <item>Fiskåbygd</item>
-        <item>Fosnavåg</item>
-        <item>Giske</item>
-        <item>Gjerde</item>
-        <item>Glærem</item>
-        <item>Grøa</item>
-        <item>Hareid</item>
-        <item>Haugsbygda</item>
-        <item>Hellesylt</item>
-        <item>Hjelset</item>
-        <item>Hjørungavåg</item>
-        <item>Hoelsand</item>
-        <item>Hoffland</item>
-        <item>Hollingen</item>
-        <item>Hovdenakken</item>
-        <item>Ikornnes</item>
-        <item>Innfjorden</item>
-        <item>Isfjorden</item>
-        <item>Kleive</item>
-        <item>Kristiansund</item>
-        <item>Kvalsund</item>
-        <item>Kårvåg</item>
-        <item>Larsnes</item>
-        <item>Leikong</item>
-        <item>Leinstrand</item>
-        <item>Leitebakk</item>
-        <item>Liabø</item>
-        <item>Malme</item>
-        <item>Midsund</item>
-        <item>Molde</item>
-        <item>Moltustranda</item>
-        <item>Mork</item>
-        <item>Myklebost</item>
-        <item>Nesjestranda</item>
-        <item>Nordstrand</item>
-        <item>Rausand</item>
-        <item>Remøy</item>
-        <item>Rensvik</item>
-        <item>Rindal</item>
-        <item>Roald</item>
-        <item>Sjøholt</item>
-        <item>Skei-Surnadalsøra</item>
-        <item>Skodje</item>
-        <item>Solsletta</item>
-        <item>Steinshamn</item>
-        <item>Storbakken</item>
-        <item>Stordal</item>
-        <item>Stranda</item>
-        <item>Straumgjerde</item>
-        <item>Sundgot</item>
-        <item>Sunndalsøra</item>
-        <item>Sveggen</item>
-        <item>Sykkylven</item>
-        <item>Sylte</item>
-        <item>Sætre</item>
-        <item>Søvik</item>
-        <item>Tingvollvågen</item>
-        <item>Tjørvåg</item>
-        <item>Tomra</item>
-        <item>Torhaug</item>
-        <item>Tornes</item>
-        <item>Torvikbukt</item>
-        <item>Ulsteinvik</item>
-        <item>Valle</item>
-        <item>Vatne</item>
-        <item>Vestnes</item>
-        <item>Volda</item>
-        <item>Voll</item>
-        <item>Ørsta</item>
-
-
-
-        <item>Åndalsnes</item>
-        <item>Årset</item>
-    </string-array>
-
+    <!-- Locations -->
     <string-array name="Akershus">
         <item>Algarheim</item>
         <item>Aulifeltet</item>
@@ -489,8 +395,96 @@
         <item>Ålvik</item>
         <item>Årås</item>
     </string-array>
-
-    <!-- Normal location for Møre og romsdal -->
+    <string-array name="MoreOgRomsdal">
+        <item>Aukra</item>
+        <item>Aure</item>
+        <item>Austnes</item>
+        <item>Batnfjordsøra</item>
+        <item>Brandal</item>
+        <item>Brattvåg</item>
+        <item>Bremsnes</item>
+        <item>Brønnsletten</item>
+        <item>Bud</item>
+        <item>Dragsund</item>
+        <item>Dragsund</item>
+        <item>Eide</item>
+        <item>Eidsvåg</item>
+        <item>Elnesvågen</item>
+        <item>Farstad</item>
+        <item>Fiksdal</item>
+        <item>Fiskåbygd</item>
+        <item>Fosnavåg</item>
+        <item>Giske</item>
+        <item>Gjerde</item>
+        <item>Glærem</item>
+        <item>Grøa</item>
+        <item>Hareid</item>
+        <item>Haugsbygda</item>
+        <item>Hellesylt</item>
+        <item>Hjelset</item>
+        <item>Hjørungavåg</item>
+        <item>Hoelsand</item>
+        <item>Hoffland</item>
+        <item>Hollingen</item>
+        <item>Hovdenakken</item>
+        <item>Ikornnes</item>
+        <item>Innfjorden</item>
+        <item>Isfjorden</item>
+        <item>Kleive</item>
+        <item>Kristiansund</item>
+        <item>Kvalsund</item>
+        <item>Kårvåg</item>
+        <item>Larsnes</item>
+        <item>Leikong</item>
+        <item>Leinstrand</item>
+        <item>Leitebakk</item>
+        <item>Liabø</item>
+        <item>Malme</item>
+        <item>Midsund</item>
+        <item>Molde</item>
+        <item>Moltustranda</item>
+        <item>Mork</item>
+        <item>Myklebost</item>
+        <item>Nesjestranda</item>
+        <item>Nordstrand</item>
+        <item>Rausand</item>
+        <item>Remøy</item>
+        <item>Rensvik</item>
+        <item>Rindal</item>
+        <item>Roald</item>
+        <item>Sjøholt</item>
+        <item>Skei-Surnadalsøra</item>
+        <item>Skodje</item>
+        <item>Solsletta</item>
+        <item>Steinshamn</item>
+        <item>Storbakken</item>
+        <item>Stordal</item>
+        <item>Stranda</item>
+        <item>Straumgjerde</item>
+        <item>Sundgot</item>
+        <item>Sunndalsøra</item>
+        <item>Sveggen</item>
+        <item>Sykkylven</item>
+        <item>Sylte</item>
+        <item>Sætre</item>
+        <item>Søvik</item>
+        <item>Tingvollvågen</item>
+        <item>Tjørvåg</item>
+        <item>Tomra</item>
+        <item>Torhaug</item>
+        <item>Tornes</item>
+        <item>Torvikbukt</item>
+        <item>Ulsteinvik</item>
+        <item>Valle</item>
+        <item>Vatne</item>
+        <item>Vestnes</item>
+        <item>Volda</item>
+        <item>Voll</item>
+        <item>Ørsta</item>
+        <item>Ålesund</item>
+        <item>Åndalsnes</item>
+        <item>Årset</item>
+    </string-array>
 
     <string-array name="Nordland">
         <item>Alsvåg</item>

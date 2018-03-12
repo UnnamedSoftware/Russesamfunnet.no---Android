@@ -16,14 +16,12 @@ import com.unnamedsoftware.russesamfunnet.Entity.ScoreboardEntity;
 import com.unnamedsoftware.russesamfunnet.RecyclerView.RecyclerViewScoreboard;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -99,8 +97,6 @@ public class Scoreboard extends AppCompatActivity
             e.printStackTrace();
         }
     }
-
-
 
         public void fillScoreboard(JSONArray jsonArray)
         {

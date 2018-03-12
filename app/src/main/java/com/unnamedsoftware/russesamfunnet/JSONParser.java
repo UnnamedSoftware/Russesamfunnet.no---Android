@@ -23,7 +23,7 @@ public class JSONParser extends AsyncTask<URL, Void, JSONArray>
     static String json = "";
 
     public interface OnPostExecute {
-        void onPostExecute(JSONArray jsonArray);
+        void onPostExecute(JSONArray jsonArray) throws JSONException;
     }
     OnPostExecute callback;
     public JSONParser(OnPostExecute callback)
@@ -123,7 +123,13 @@ public class JSONParser extends AsyncTask<URL, Void, JSONArray>
     {
         if (callback != null)
         {
-            callback.onPostExecute(jsonArray);
+            try
+            {
+                callback.onPostExecute(jsonArray);
+            } catch (JSONException e)
+            {
+                e.printStackTrace();
+            }
         }
     }
 

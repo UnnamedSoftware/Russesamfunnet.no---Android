@@ -2,9 +2,11 @@ package com.unnamedsoftware.russesamfunnet;
 
 import android.app.Dialog;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -15,25 +17,40 @@ import android.widget.ImageButton;
 import android.widget.NumberPicker;
 import android.widget.Spinner;
 
-import com.unnamedsoftware.russesamfunnet.Search.SearchFragment;
+import com.unnamedsoftware.russesamfunnet.Entity.SchoolEntity;
+import com.unnamedsoftware.russesamfunnet.RecyclerView.SchoolAdapter;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 
-public class SchoolAndBirthdayRegisterActivity extends FragmentActivity
+public class SchoolAndBirthdayRegisterActivity extends AppCompatActivity
 {
     private EditText editText;
+    private Button okButton;
 
     private Spinner municipalitySpinner;
     private Spinner locationSpinner;
-    private static Dialog dialog;
 
     private String municipality;
     private String location;
+    private String dateString;
 
     final String[] day = new String[1];
     final String[] month = new String[1];
     final String[] year = new String[1];
+
+    private List<SchoolEntity> schoolEntityList = new ArrayList<>();
+    private RecyclerView recyclerView;
+    private SchoolAdapter schoolAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -72,19 +89,122 @@ public class SchoolAndBirthdayRegisterActivity extends FragmentActivity
                 chooseDate();
             }
         });
+
+        try
+        {
+            getSchools();
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+
+        this.recyclerView = findViewById(R.id.recycler_view_schoolList);
+        this.schoolAdapter = new SchoolAdapter(schoolEntityList);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
+
+        this.okButton = findViewById(R.id.okButton);
+       // if ()
+        //{
+            //make button grey
+
+        //} else
+        //{
+            //"make solid" and enable functions
+            okButton.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View view)
+                {
+                    String school = schoolAdapter.getSchoolName();
+
+                    System.out.println(dateString);
+                    System.out.println(school);
+
+                    //Do something with the information
+                }
+            });
+        //}
+
+
     }
 
     /**
-     * Loads the given fragment into the fragmentLayout
-     * @param fragment
+     * Retrieves the needed data set from the server using the JSONparser. Needs location and municipality
      */
-    private void loadFragment(Fragment fragment)
+    private void getSchools() throws IOException
     {
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.schoolRegistrationSearchFrameLayout, fragment);
-        fragmentTransaction.commit();
+        String wantedDataSet = "schools";
+        String url = getString(R.string.url);
+        String wanted = wantedDataSet.substring(0, 1).toUpperCase() + wantedDataSet.substring(1);
+        if (this.municipality == null && this.location == null) //Both are empty, get all data
+        {
+            String getArgument = "getAll" + wanted;
+            url += getArgument;
+
+        } else if (this.municipality.isEmpty() && !this.location.isEmpty()) //Only municipality is empty, get all data based on location
+        {
+            String getArgument = "getLocation" + wanted;
+            url += getArgument + "?" + "location=" + this.location;
+
+        } else if (!this.municipality.isEmpty() && this.location.isEmpty()) //Only location is empty, get all data based on municipality
+        {
+            String getArgument = "getMunicipality" + wanted;
+            url += getArgument + "?" + "municipality=" + this.municipality;
+
+        } else //Both municipality and location are given, retrieve data based on them.
+        {
+            String getArgument = "getLocation" + wanted;
+            url += getArgument + "?" + "location=" + this.location;
+        }
+        System.out.println(url);
+        try
+        {
+            new JSONParser(new JSONParser.OnPostExecute()
+            {
+                @Override
+                public void onPostExecute(JSONArray jsonArray) throws JSONException
+                {
+                    fillDataSet(jsonArray);
+                }
+            }).execute(new URL(url));
+        } catch (MalformedURLException e)
+        {
+            e.printStackTrace();
+        }
     }
 
+    /**
+     * Takes the given jsonArray and depending on the wanted data set chooses one of the cases
+     * in the switch.
+     *
+     * @param jsonArray
+     */
+    private void fillDataSet(JSONArray jsonArray) throws JSONException
+    {
+        JSONArray schools = null;
+        try
+        {
+            schools = jsonArray;
+            for (int i = 0; i < schools.length(); i++)
+            {
+                JSONObject newDataJSONObject = schools.getJSONObject(i);
+
+                Integer schoolId = Integer.valueOf(newDataJSONObject.getString("schoolId"));
+                String schoolName = newDataJSONObject.getString("schoolName");
+                String schoolStatus = newDataJSONObject.getString("schoolStatus");
+                SchoolEntity school = new SchoolEntity(schoolId, schoolName, schoolStatus);
+
+                schoolEntityList.add(school);
+            }
+            schoolAdapter.notifyDataSetChanged();
+        } catch (JSONException e)
+        {
+            e.printStackTrace();
+        }
+    }
 
     /**
      * Creates the spinner associated with the municipalities
@@ -102,6 +222,7 @@ public class SchoolAndBirthdayRegisterActivity extends FragmentActivity
             {
                 municipality = municipalitySpinner.getSelectedItem().toString();
                 setupLocationSpinner();
+                recyclerView.setAdapter(schoolAdapter);
             }
 
             @Override
@@ -134,9 +255,7 @@ public class SchoolAndBirthdayRegisterActivity extends FragmentActivity
                         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
                         {
                             location = locationSpinner.getSelectedItem().toString();
-                            SearchFragment searchFragment = new SearchFragment();
-                            searchFragment.setArguments(getBundle());
-                            loadFragment(searchFragment);
+                            updateSchoolAdapter();
                         }
 
                         @Override
@@ -155,9 +274,7 @@ public class SchoolAndBirthdayRegisterActivity extends FragmentActivity
                         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
                         {
                             location = locationSpinner.getSelectedItem().toString();
-                            SearchFragment searchFragment = new SearchFragment();
-                            searchFragment.setArguments(getBundle());
-                            loadFragment(searchFragment);
+                            updateSchoolAdapter();
                         }
 
                         @Override
@@ -176,9 +293,7 @@ public class SchoolAndBirthdayRegisterActivity extends FragmentActivity
                         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
                         {
                             location = locationSpinner.getSelectedItem().toString();
-                            SearchFragment searchFragment = new SearchFragment();
-                            searchFragment.setArguments(getBundle());
-                            loadFragment(searchFragment);
+                            updateSchoolAdapter();
                         }
 
                         @Override
@@ -197,9 +312,7 @@ public class SchoolAndBirthdayRegisterActivity extends FragmentActivity
                         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
                         {
                             location = locationSpinner.getSelectedItem().toString();
-                            SearchFragment searchFragment = new SearchFragment();
-                            searchFragment.setArguments(getBundle());
-                            loadFragment(searchFragment);
+                            updateSchoolAdapter();
                         }
 
                         @Override
@@ -218,9 +331,7 @@ public class SchoolAndBirthdayRegisterActivity extends FragmentActivity
                         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
                         {
                             location = locationSpinner.getSelectedItem().toString();
-                            SearchFragment searchFragment = new SearchFragment();
-                            searchFragment.setArguments(getBundle());
-                            loadFragment(searchFragment);
+                            updateSchoolAdapter();
                         }
 
                         @Override
@@ -239,9 +350,7 @@ public class SchoolAndBirthdayRegisterActivity extends FragmentActivity
                         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
                         {
                             location = locationSpinner.getSelectedItem().toString();
-                            SearchFragment searchFragment = new SearchFragment();
-                            searchFragment.setArguments(getBundle());
-                            loadFragment(searchFragment);
+                            updateSchoolAdapter();
                         }
 
                         @Override
@@ -260,9 +369,7 @@ public class SchoolAndBirthdayRegisterActivity extends FragmentActivity
                         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
                         {
                             location = locationSpinner.getSelectedItem().toString();
-                            SearchFragment searchFragment = new SearchFragment();
-                            searchFragment.setArguments(getBundle());
-                            loadFragment(searchFragment);
+                            updateSchoolAdapter();
                         }
 
                         @Override
@@ -281,9 +388,7 @@ public class SchoolAndBirthdayRegisterActivity extends FragmentActivity
                         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
                         {
                             location = locationSpinner.getSelectedItem().toString();
-                            SearchFragment searchFragment = new SearchFragment();
-                            searchFragment.setArguments(getBundle());
-                            loadFragment(searchFragment);
+                            updateSchoolAdapter();
                         }
 
                         @Override
@@ -302,9 +407,7 @@ public class SchoolAndBirthdayRegisterActivity extends FragmentActivity
                         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
                         {
                             location = locationSpinner.getSelectedItem().toString();
-                            SearchFragment searchFragment = new SearchFragment();
-                            searchFragment.setArguments(getBundle());
-                            loadFragment(searchFragment);
+                            updateSchoolAdapter();
                         }
 
                         @Override
@@ -323,9 +426,7 @@ public class SchoolAndBirthdayRegisterActivity extends FragmentActivity
                         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
                         {
                             location = locationSpinner.getSelectedItem().toString();
-                            SearchFragment searchFragment = new SearchFragment();
-                            searchFragment.setArguments(getBundle());
-                            loadFragment(searchFragment);
+                            updateSchoolAdapter();
                         }
 
                         @Override
@@ -344,9 +445,7 @@ public class SchoolAndBirthdayRegisterActivity extends FragmentActivity
                         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
                         {
                             location = locationSpinner.getSelectedItem().toString();
-                            SearchFragment searchFragment = new SearchFragment();
-                            searchFragment.setArguments(getBundle());
-                            loadFragment(searchFragment);
+                            updateSchoolAdapter();
                         }
 
                         @Override
@@ -365,9 +464,7 @@ public class SchoolAndBirthdayRegisterActivity extends FragmentActivity
                         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
                         {
                             location = locationSpinner.getSelectedItem().toString();
-                            SearchFragment searchFragment = new SearchFragment();
-                            searchFragment.setArguments(getBundle());
-                            loadFragment(searchFragment);
+                            updateSchoolAdapter();
                         }
 
                         @Override
@@ -386,9 +483,7 @@ public class SchoolAndBirthdayRegisterActivity extends FragmentActivity
                         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
                         {
                             location = locationSpinner.getSelectedItem().toString();
-                            SearchFragment searchFragment = new SearchFragment();
-                            searchFragment.setArguments(getBundle());
-                            loadFragment(searchFragment);
+                            updateSchoolAdapter();
                         }
 
                         @Override
@@ -407,9 +502,7 @@ public class SchoolAndBirthdayRegisterActivity extends FragmentActivity
                         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
                         {
                             location = locationSpinner.getSelectedItem().toString();
-                            SearchFragment searchFragment = new SearchFragment();
-                            searchFragment.setArguments(getBundle());
-                            loadFragment(searchFragment);
+                            updateSchoolAdapter();
                         }
 
                         @Override
@@ -428,9 +521,7 @@ public class SchoolAndBirthdayRegisterActivity extends FragmentActivity
                         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
                         {
                             location = locationSpinner.getSelectedItem().toString();
-                            SearchFragment searchFragment = new SearchFragment();
-                            searchFragment.setArguments(getBundle());
-                            loadFragment(searchFragment);
+                            updateSchoolAdapter();
                         }
 
                         @Override
@@ -449,9 +540,7 @@ public class SchoolAndBirthdayRegisterActivity extends FragmentActivity
                         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
                         {
                             location = locationSpinner.getSelectedItem().toString();
-                            SearchFragment searchFragment = new SearchFragment();
-                            searchFragment.setArguments(getBundle());
-                            loadFragment(searchFragment);
+                            updateSchoolAdapter();
                         }
 
                         @Override
@@ -470,9 +559,28 @@ public class SchoolAndBirthdayRegisterActivity extends FragmentActivity
                         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
                         {
                             location = locationSpinner.getSelectedItem().toString();
-                            SearchFragment searchFragment = new SearchFragment();
-                            searchFragment.setArguments(getBundle());
-                            loadFragment(searchFragment);
+                            updateSchoolAdapter();
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> adapterView)
+                        {
+                        }
+                    });
+                    break;
+
+                    case "Velg kommune":
+
+                    locationAdapter = ArrayAdapter.createFromResource(this, R.array.AllLocation, android.R.layout.simple_list_item_1);
+                    locationAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    locationSpinner.setAdapter(locationAdapter);
+                    locationSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+                    {
+                        @Override
+                        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
+                        {
+                            location = locationSpinner.getSelectedItem().toString();
+                            updateSchoolAdapter();
                         }
 
                         @Override
@@ -482,27 +590,6 @@ public class SchoolAndBirthdayRegisterActivity extends FragmentActivity
                     });
                     break;
             }
-        } else
-        {
-            locationAdapter = ArrayAdapter.createFromResource(this, R.array.AllLocation, android.R.layout.simple_list_item_1);
-            locationAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            locationSpinner.setAdapter(locationAdapter);
-            locationSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
-            {
-                @Override
-                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
-                {
-                    location = locationSpinner.getSelectedItem().toString();
-                    SearchFragment searchFragment = new SearchFragment();
-                    searchFragment.setArguments(getBundle());
-                    loadFragment(searchFragment);
-                }
-
-                @Override
-                public void onNothingSelected(AdapterView<?> adapterView)
-                {
-                }
-            });
         }
     }
 
@@ -585,6 +672,7 @@ public class SchoolAndBirthdayRegisterActivity extends FragmentActivity
             {
                 String date = (day[0] + "." + month[0] + "." + year[0]);
                 editText.setText(date);
+                dateString = date;
                 dialog.dismiss();
             }
         });
@@ -592,13 +680,12 @@ public class SchoolAndBirthdayRegisterActivity extends FragmentActivity
         dialog.show();
     }
 
-
     /**
      * Retrieves the current year and returns it as an int
      *
      * @return the current year as an int
      */
-    protected int getYear()
+    private int getYear()
     {
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
@@ -606,14 +693,18 @@ public class SchoolAndBirthdayRegisterActivity extends FragmentActivity
     }
 
     /**
-     * Creates a bundle for the search fragment
+     * Clears the school adapter and request the school list based on chosen location
      */
-    protected Bundle getBundle()
+    private void updateSchoolAdapter()
     {
-        Bundle bundle = new Bundle();
-        bundle.putString("location", this.location);
-        bundle.putString("municipality", this.municipality);
-        bundle.putString("wantedDataSet", "school");
-        return bundle;
+        schoolAdapter.clear();
+        try
+        {
+            getSchools();
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        }
     }
+
 }
