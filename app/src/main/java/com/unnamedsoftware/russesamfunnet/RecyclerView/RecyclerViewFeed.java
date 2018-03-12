@@ -56,5 +56,16 @@ public class RecyclerViewFeed extends RecyclerView.Adapter<RecyclerViewFeed.View
         return posts.size();
     }
 
+    public void clear() {
+        final int size = posts.size();
+        if (size > 0) {
+            for (int i = 0; i < size; i++) {
+                posts.remove(0);
+            }
+
+            notifyDataSetChanged();
+        }
+    }
+
 
 }
