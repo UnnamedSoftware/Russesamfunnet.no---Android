@@ -130,7 +130,7 @@ public class Login extends AppCompatActivity
                         if (jsonObject.getString("loginStatus").equals("Login success")) {
                             finishServerCom();
                         } else if(jsonObject.getString("loginStatus").equals("User not in db")){
-                            Intent intent = new Intent(Login.this, FacebookRegisterActivity.class);
+                            Intent intent = new Intent(Login.this, SchoolAndBirthdayRegisterActivity.class);
                             intent.putExtra("facebookToken", AccessToken.getCurrentAccessToken().getToken());
                             startActivity(intent);
 
@@ -239,9 +239,10 @@ public class Login extends AppCompatActivity
             e.printStackTrace();
         }
 
-        /**
+
+
         RequestQueue queue = Volley.newRequestQueue(view.getContext());
-        String url = getString(R.string.url) + "login?email=" + userEmailString + "&password=" + userPasswordString;
+        String newUrl = getString(R.string.url) + "login?email=" + userEmailString + "&password=" + userPasswordString;
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>()
