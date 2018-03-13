@@ -1,7 +1,9 @@
 package com.unnamedsoftware.russesamfunnet;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -12,7 +14,16 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
+import android.widget.TextView;
 
 import com.unnamedsoftware.russesamfunnet.RecyclerView.FeedPost;
 import com.unnamedsoftware.russesamfunnet.RecyclerView.RecyclerViewFeed;
@@ -65,7 +76,7 @@ public class Feed extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feed);
 
-        url = getString(R.string.url) + "schoolFeed?russId=1";
+        url = getString(R.string.url) + "schoolFeed?russId=" + ((MyApplication) this.getApplication()).getRussId();
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -78,6 +89,9 @@ public class Feed extends AppCompatActivity {
 
         nav = findViewById(R.id.navList);
         setupDrawerContent(nav);
+
+        getWindow().setSoftInputMode(
+                WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         try
         {
@@ -96,7 +110,57 @@ public class Feed extends AppCompatActivity {
         recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         recyclerView.setAdapter(recyclerViewFeed);
 
+
+        Button button = (Button) findViewById(R.id.button_chatbox_send);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendMessage((EditText) findViewById(R.id.edittext_chatbox));
+            }
+        });
+
     }
+
+    public void sendMessage(EditText editText)
+    {
+        try {
+            String message = editText.getText().toString();
+            System.out.println(message);
+            String urlSend = getString(R.string.url)
+                    + "postFeedToSchool?russId=" + ((MyApplication) this.getApplication()).getRussId()
+                    + "&message=" + message;
+            editText.setText("");
+
+            try {
+                new JSONObjectParser(new JSONObjectParser.OnPostExecute() {
+                    @Override
+                    public void onPostExecute(JSONObject jsonObject) {
+                        if(jsonObject != null)
+                        {
+
+                            try {
+                                recyclerViewFeed.clear();
+                                getFeed();
+                            }
+                            catch (Exception e)
+                            {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                }).execute(new URL(urlSend));
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+
+        } catch (Exception e)
+        {
+            System.out.println(e.fillInStackTrace());
+        }
+    }
+
+
+
 
     /**
      * This method designates what happens when a menu item are selected in the navigation drawer.
@@ -109,6 +173,7 @@ public class Feed extends AppCompatActivity {
         {
             case R.id.profile:
                 intent = new Intent(this, UserProfile.class);
+                intent.putExtra("russ_entity",((MyApplication) this.getApplication()).getRussId());
                 this.startActivity(intent);
                 break;
 
@@ -255,4 +320,8 @@ public class Feed extends AppCompatActivity {
         super.onConfigurationChanged(newConfig);
         drawerToggle.onConfigurationChanged(newConfig);
     }
+
+
+
+
 }

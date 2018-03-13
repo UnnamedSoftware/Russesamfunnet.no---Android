@@ -2,7 +2,9 @@ package com.unnamedsoftware.russesamfunnet;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -13,6 +15,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.ExecutorDelivery;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -25,9 +28,16 @@ import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.Task;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
@@ -76,7 +86,7 @@ public class Login extends AppCompatActivity
             @Override
             public void onClick(View view)
             {
-                startActivity(new Intent(Login.this, SchoolAndBirthdayRegisterActivity.class));
+                startActivity(new Intent(Login.this, Feed.class));
             }
         });
 
@@ -120,7 +130,7 @@ public class Login extends AppCompatActivity
                         if (jsonObject.getString("loginStatus").equals("Login success")) {
                             finishServerCom();
                         } else if(jsonObject.getString("loginStatus").equals("User not in db")){
-                            Intent intent = new Intent(Login.this, SchoolAndBirthdayRegisterActivity.class);
+                            Intent intent = new Intent(Login.this, FacebookRegisterActivity.class);
                             intent.putExtra("facebookToken", AccessToken.getCurrentAccessToken().getToken());
                             startActivity(intent);
 
@@ -201,6 +211,35 @@ public class Login extends AppCompatActivity
      */
     private void toServer(View view, String userEmailString, String userPasswordString)
     {
+        String url = getString(R.string.url) + "login?email=" + userEmailString + "&password=" + userPasswordString;
+        try
+        {
+            new JSONObjectParser(new JSONObjectParser.OnPostExecute() {
+                @Override
+                public void onPostExecute(JSONObject jsonObject) {
+                    try {
+                        if (jsonObject.getString("loginStatus").equals("Login success")) {
+                            ((MyApplication) getApplication()).setRussId(jsonObject.getInt("userId"));
+                            finishServerCom();
+                        } else if(jsonObject.getString("loginStatus").equals("User not in db")){
+                            startActivity(new Intent(Login.this, Register.class));
+
+                        } else{
+                            System.out.println(jsonObject.getString("loginStatus"));
+                            Toast.makeText(Login.this, "Login failed", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        e.fillInStackTrace();
+                    }
+                }
+            }).execute(new URL(url));
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        /**
         RequestQueue queue = Volley.newRequestQueue(view.getContext());
         String url = getString(R.string.url) + "login?email=" + userEmailString + "&password=" + userPasswordString;
 

@@ -54,7 +54,7 @@ public class Scoreboard extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scoreboard);
         //getString(R.string.url)
-        url = getString(R.string.url) + "scoreboardTop10?theRussId=1";
+        url = getString(R.string.url) + "scoreboardTop10?theRussId=" + ((MyApplication) this.getApplication()).getRussId();
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -71,7 +71,7 @@ public class Scoreboard extends AppCompatActivity
             e.printStackTrace();
         }
         this.recyclerView = findViewById(R.id.recycler_view_scoreboard);
-        this.recyclerViewScoreboard = new RecyclerViewScoreboard(userList);
+        this.recyclerViewScoreboard = new RecyclerViewScoreboard(userList, ((MyApplication) this.getApplication()).getRussId());
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -113,14 +113,14 @@ public class Scoreboard extends AppCompatActivity
             {
                 JSONObject u = users.getJSONObject(i);
 
-                Integer scoreboardId = Integer.valueOf(u.getString(TAG_SCOREBOARDID));
-                Integer points = Integer.valueOf(u.getString(TAG_POINTS));
-                Integer position = Integer.valueOf(u.getString(TAG_POSITION));
+                Integer scoreboardId = Integer.valueOf(u.getString("scoreboardId"));
+                Integer points = Integer.valueOf(u.getString("points"));
+                Integer position = Integer.valueOf(u.getString("position"));
 
 
                 JSONObject newRussObject = u.getJSONObject("russId");
 
-                Integer russId = Integer.valueOf(newRussObject.getString(TAG_RUSS_ID));
+                Integer russId = Integer.valueOf(newRussObject.getString("russId"));
                 String russStatus = newRussObject.getString("russStatus");
                 String firstName = newRussObject.getString("firstName");
                 String lastName = newRussObject.getString("lastName");
