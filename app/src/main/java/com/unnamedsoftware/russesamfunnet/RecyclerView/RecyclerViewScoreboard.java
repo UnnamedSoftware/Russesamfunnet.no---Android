@@ -25,7 +25,7 @@ public class RecyclerViewScoreboard extends RecyclerView.Adapter<RecyclerViewSco
     private List<ScoreboardEntity> userList;
 
     //Replace with the users ID!
-    private Integer userID ;
+    private Long userID ;
 
     public class ViewHolder extends RecyclerView.ViewHolder
     {
@@ -42,7 +42,7 @@ public class RecyclerViewScoreboard extends RecyclerView.Adapter<RecyclerViewSco
         }
     }
 
-    public RecyclerViewScoreboard(List<ScoreboardEntity> userList, int userId)
+    public RecyclerViewScoreboard(List<ScoreboardEntity> userList, Long userId)
     {
         this.userID = userId;
         this.userList = userList;

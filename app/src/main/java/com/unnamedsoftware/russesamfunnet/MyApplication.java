@@ -10,13 +10,13 @@ import com.unnamedsoftware.russesamfunnet.Entity.RussEntity;
 
 public class MyApplication extends Application {
 
-    private int russId;
+    private String accessToken;
 
-    public int getRussId() {
-        return russId;
+    public String getAccessToken() {
+        return accessToken;
     }
 
-    public void setRussId(int russId) {
-        this.russId = russId;
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
     }
 }

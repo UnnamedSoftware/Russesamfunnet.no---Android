@@ -211,7 +211,7 @@ public class Login extends AppCompatActivity
      */
     private void toServer(View view, String userEmailString, String userPasswordString)
     {
-        String url = getString(R.string.url) + "login?email=" + userEmailString + "&password=" + userPasswordString;
+        String url = getString(R.string.url) + "loginToken?email=" + userEmailString + "&password=" + userPasswordString;
         try
         {
             new JSONObjectParser(new JSONObjectParser.OnPostExecute() {
@@ -219,7 +219,7 @@ public class Login extends AppCompatActivity
                 public void onPostExecute(JSONObject jsonObject) {
                     try {
                         if (jsonObject.getString("loginStatus").equals("Login success")) {
-                            ((MyApplication) getApplication()).setRussId(jsonObject.getInt("userId"));
+                            ((MyApplication) getApplication()).setAccessToken(jsonObject.getString("accessToken"));
                             finishServerCom();
                         } else if(jsonObject.getString("loginStatus").equals("User not in db")){
                             startActivity(new Intent(Login.this, Register.class));

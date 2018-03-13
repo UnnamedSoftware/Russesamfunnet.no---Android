@@ -46,8 +46,8 @@ public class UserProfile extends AppCompatActivity
         }else
         {
             System.out.println("User id: ");
-            System.out.println(((MyApplication) this.getApplication()).getRussId());
-            url = getString(R.string.url) + "userRuss?russId=" + ((MyApplication) this.getApplication()).getRussId();
+            System.out.println(((MyApplication) this.getApplication()).getAccessToken());
+            url = getString(R.string.url) + "userRussToken?accessToken=" + ((MyApplication) this.getApplication()).getAccessToken();
         }
 
         try {
@@ -82,7 +82,7 @@ public class UserProfile extends AppCompatActivity
             {
                 JSONObject u = user.getJSONObject(i);
 
-                int russId = Integer.valueOf(u.getString("russId"));
+                Long russId = Long.valueOf(u.getString("russId"));
                 String russStatus = u.getString("russStatus");
                 String firstName = u.getString("firstName");
                 String lastName = u.getString("lastName");

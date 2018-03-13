@@ -76,7 +76,7 @@ public class Feed extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feed);
 
-        url = getString(R.string.url) + "schoolFeed?russId=" + ((MyApplication) this.getApplication()).getRussId();
+        url = getString(R.string.url) + "schoolFeedToken?russId=" + ((MyApplication) this.getApplication()).getAccessToken();
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -127,7 +127,7 @@ public class Feed extends AppCompatActivity {
             String message = editText.getText().toString();
             System.out.println(message);
             String urlSend = getString(R.string.url)
-                    + "postFeedToSchool?russId=" + ((MyApplication) this.getApplication()).getRussId()
+                    + "postFeedToSchoolToken?accessToken=" + ((MyApplication) this.getApplication()).getAccessToken()
                     + "&message=" + message;
             editText.setText("");
 
@@ -173,7 +173,6 @@ public class Feed extends AppCompatActivity {
         {
             case R.id.profile:
                 intent = new Intent(this, UserProfile.class);
-                intent.putExtra("russ_entity",((MyApplication) this.getApplication()).getRussId());
                 this.startActivity(intent);
                 break;
 

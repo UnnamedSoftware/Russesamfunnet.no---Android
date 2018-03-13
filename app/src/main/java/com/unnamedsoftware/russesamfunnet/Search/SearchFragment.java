@@ -187,7 +187,7 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
                     {
                         JSONObject u = data.getJSONObject(i);
                         JSONObject newDataJSONObject = u.getJSONObject("russId");
-                        Integer russId = Integer.valueOf(newDataJSONObject.getString("russId"));
+                        Long russId = Long.valueOf(newDataJSONObject.getString("russId"));
                         String russStatus = newDataJSONObject.getString("russStatus");
                         String firstName = newDataJSONObject.getString("firstName");
                         String lastName = newDataJSONObject.getString("lastName");

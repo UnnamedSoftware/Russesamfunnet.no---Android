@@ -9,7 +9,7 @@ import java.io.Serializable;
 public class RussEntity extends Entity implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private Integer russId;
+    private Long russId;
 
     private String russStatus;
     private String firstName;
@@ -28,11 +28,11 @@ public class RussEntity extends Entity implements Serializable {
     public RussEntity() {
     }
 
-    public RussEntity(Integer russId) {
+    public RussEntity(Long russId) {
         this.russId = russId;
     }
 
-    public RussEntity(Integer russId, String russStatus, String firstName, String lastName, String email, String russPassword, String russRole, int russYear) {
+    public RussEntity(Long russId, String russStatus, String firstName, String lastName, String email, String russPassword, String russRole, int russYear) {
         this.russId = russId;
         this.russStatus = russStatus;
         this.firstName = firstName;
@@ -43,11 +43,11 @@ public class RussEntity extends Entity implements Serializable {
         this.russYear = russYear;
     }
 
-    public Integer getRussId() {
+    public Long getRussId() {
         return russId;
     }
 
-    public void setRussId(Integer russId) {
+    public void setRussId(Long russId) {
         this.russId = russId;
     }
 
