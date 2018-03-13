@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.unnamedsoftware.russesamfunnet.Entity.SchoolEntity;
@@ -19,15 +20,18 @@ public class SchoolAdapter extends RecyclerView.Adapter<SchoolAdapter.ViewHolder
 {
     private List<SchoolEntity> schoolEntityList;
     private String schoolNameString;
+    private ViewHolder oldViewHolder;
 
     public class ViewHolder extends RecyclerView.ViewHolder
     {
         private TextView schoolName;
+        private RelativeLayout layout;
 
         public ViewHolder(View view)
         {
             super(view);
             schoolName = view.findViewById(R.id.saSchoolName);
+            layout = view.findViewById(R.id.saSchoolRow);
         }
     }
 
@@ -50,32 +54,46 @@ public class SchoolAdapter extends RecyclerView.Adapter<SchoolAdapter.ViewHolder
     {
         SchoolEntity schoolEntity = schoolEntityList.get(position);
         final String stringSchoolName = schoolEntity.getSchoolName();
+        final SchoolAdapter.ViewHolder viewHolder = holder;
         try
         {
-            holder.schoolName.setText(stringSchoolName);
+            viewHolder.schoolName.setText(stringSchoolName);
         } catch (NullPointerException e)
         {
             System.out.println(e);
         }
         {
-            holder.itemView.setOnClickListener(new View.OnClickListener()
+            viewHolder.itemView.setOnClickListener(new View.OnClickListener()
             {
                 @Override
                 public void onClick(View v)
                 {
                     setSchoolNameString(stringSchoolName);
-                    System.out.println("Skole Valgt! " + stringSchoolName);
-                    // Remove graying of OK button
+                    System.out.println("Skole Valgt! " + schoolNameString);
+                    if (oldViewHolder != viewHolder)
+                    {
+                        try
+                        {
+                            oldViewHolder.layout.setBackgroundResource((R.drawable.school_selection_empty));
+                        } catch (NullPointerException e)
+                        {
+                            e.printStackTrace();
+                        }
+
+                        viewHolder.layout.setBackgroundResource((R.drawable.school_selection_border));
+                        oldViewHolder = viewHolder;
+                    }
+
                 }
             });
         }
-        }
+    }
 
-        @Override
-        public int getItemCount ()
-        {
-            return schoolEntityList.size();
-        }
+    @Override
+    public int getItemCount()
+    {
+        return schoolEntityList.size();
+    }
 
     public void clear()
     {

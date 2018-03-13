@@ -31,6 +31,11 @@ public class InputAnalyzer
         inputField.setBackground(shape);
     }
 
+    /**
+     * WIP, supposed to clear or remove the border for when the user have done fixed the operation but sill (either new or other old one) have an error.
+     * This is to remove confusion.
+     * @param fieldName
+     */
     public static void clearBorder(View fieldName)
     {
         EditText inputField = (EditText) fieldName;
@@ -64,6 +69,30 @@ public class InputAnalyzer
         }
         return false;
     }
+
+    /**
+     * Checks if the given string is empty or null, returns true if this is the case.
+     * @param string
+     * @return True if string is empty or null
+     */
+    public static boolean isStringEmpty(String string)
+    {
+        String checkString = string;
+
+        try
+        {
+            if (checkString.isEmpty())
+            {
+                return true;
+            }
+        } catch (NullPointerException e)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
 
 
     /**

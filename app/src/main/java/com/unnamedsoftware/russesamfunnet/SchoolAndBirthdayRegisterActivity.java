@@ -1,5 +1,6 @@
 package com.unnamedsoftware.russesamfunnet;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +17,8 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.NumberPicker;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.unnamedsoftware.russesamfunnet.Entity.SchoolEntity;
 import com.unnamedsoftware.russesamfunnet.RecyclerView.SchoolAdapter;
@@ -34,7 +37,8 @@ import java.util.List;
 
 public class SchoolAndBirthdayRegisterActivity extends AppCompatActivity
 {
-    private EditText editText;
+    private EditText dateDisplay;
+    private TextView schoolNameDisplay;
     private Button okButton;
 
     private Spinner municipalitySpinner;
@@ -52,13 +56,14 @@ public class SchoolAndBirthdayRegisterActivity extends AppCompatActivity
     private RecyclerView recyclerView;
     private SchoolAdapter schoolAdapter;
 
+    @SuppressLint("WrongViewCast")
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_school_and_birthday_register);
 
-        this.editText = findViewById(R.id.dateDisplay);
+        this.dateDisplay = findViewById(R.id.dateDisplay);
         this.locationSpinner = findViewById(R.id.locationSpinner);
 
         this.day[0] = String.valueOf(1);
@@ -81,7 +86,7 @@ public class SchoolAndBirthdayRegisterActivity extends AppCompatActivity
             }
         });
 
-        editText.setOnClickListener(new View.OnClickListener()
+        dateDisplay.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View view)
@@ -106,27 +111,37 @@ public class SchoolAndBirthdayRegisterActivity extends AppCompatActivity
         recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
 
         this.okButton = findViewById(R.id.okButton);
-       // if ()
-        //{
-            //make button grey
+        this.okButton.setAlpha(.5f);
+        this.okButton.setClickable(false);
 
-        //} else
-        //{
-            //"make solid" and enable functions
-            okButton.setOnClickListener(new View.OnClickListener()
+        if (InputAnalyzer.isStringEmpty(dateString))
+        {
+            Toast.makeText(this, "Vennligst velg din fødselsdato", Toast.LENGTH_LONG);
+
+        } else if (InputAnalyzer.isStringEmpty(schoolAdapter.getSchoolName()))
+        {
+           Toast.makeText(this,"Vennligst velg din skole", Toast.LENGTH_LONG);
+
+        } else
+        {
+            this.okButton.setAlpha(1f);
+            this.okButton.setClickable(true);
+
+        }
+
+        okButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
             {
-                @Override
-                public void onClick(View view)
-                {
-                    String school = schoolAdapter.getSchoolName();
+                String school = schoolAdapter.getSchoolName();
 
-                    System.out.println(dateString);
-                    System.out.println(school);
+                System.out.println(dateString);
+                System.out.println(school);
 
-                    //Do something with the information
-                }
-            });
-        //}
+                //Do something with the information
+            }
+        });
 
 
     }
@@ -671,7 +686,7 @@ public class SchoolAndBirthdayRegisterActivity extends AppCompatActivity
             public void onClick(View view)
             {
                 String date = (day[0] + "." + month[0] + "." + year[0]);
-                editText.setText(date);
+                dateDisplay.setText(date);
                 dateString = date;
                 dialog.dismiss();
             }
