@@ -11,9 +11,9 @@ public class FeedPost
     private String message;
     private String firstName;
     private String surname;
-    private Integer russID;
+    private Long russID;
 
-    public FeedPost(String firstName, String surname, Integer russID,String post)
+    public FeedPost(String firstName, String surname, Long russID,String post)
     {
         this.firstName = firstName;
         this.surname = surname;
@@ -28,7 +28,7 @@ public class FeedPost
     public String getPoster(){return this.poster;}
     public String getPost(){return this.message;}
 
-    public Integer getRussID(){return this.russID;}
+    public Long getRussID(){return this.russID;}
 
     public void setFirstName(String firstName)
     {
@@ -38,7 +38,7 @@ public class FeedPost
     {
         this.surname = surname;
     }
-    public void setRussID(Integer russID){this.russID = russID;}
+    public void setRussID(Long russID){this.russID = russID;}
     public void setPoster(String poster){this.poster = poster;}
     public void setPost(String post){this.message  =post;}
 }

@@ -76,7 +76,8 @@ public class Feed extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feed);
 
-        url = getString(R.string.url) + "schoolFeedToken?russId=" + ((MyApplication) this.getApplication()).getAccessToken();
+        System.out.println(((MyApplication) this.getApplication()).getAccessToken());
+        url = getString(R.string.url) + "schoolFeedToken?accessToken=" + ((MyApplication) this.getApplication()).getAccessToken();
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -229,7 +230,7 @@ public class Feed extends AppCompatActivity {
             {
                 JSONObject u = posts.getJSONObject(i);
                 JSONObject newRussObject = u.getJSONObject("russId");
-                Integer russId = Integer.valueOf(newRussObject.getString("russId"));
+                Long russId = Long.valueOf(newRussObject.getString("russId"));
                 String firstName = newRussObject.getString("firstName");
                 String surname = newRussObject.getString("lastName");
                 String post = u.getString("message");
@@ -243,30 +244,6 @@ public class Feed extends AppCompatActivity {
         {
             e.printStackTrace();
         }
-    }
-
-    private void dummy()
-    {
-        FeedPost post = new FeedPost("Bob","Baker",34,"Donec euismod, tortor in rutrum dictum, mauris orci mattis nulla, vitae vestibulum nibh tortor eu mauris. Quisque interdum lacus vitae tellus tincidunt, sed egestas ex convallis. Sed non nibh nec urna fermentum luctus ut sit amet massa. Praesent cursus efficitur ex at massa nunc.");
-        feedPosts.add(post);
-
-        post = new FeedPost("Julia","Flowers",75,"Ut et semper quam. Ut pharetra tellus convallis libero venenatis, ut interdum ante facilisis. Aenean tempor sapien ut elit mollis, condimentum maximus velit euismod. Nunc efficitur lacus tellus, a sagittis odio placerat sed. Etiam et aliquet augue. Interdum et malesuada fames id.");
-        feedPosts.add(post);
-
-        post = new FeedPost("John","Smith",249,"Cras dictum feugiat vulputate. Vivamus sed suscipit lorem, et lobortis neque. Morbi nec pretium nisi. Aenean malesuada metus turpis, sed ullamcorper ex convallis eu. Proin purus mauris, pulvinar non interdum id, tempus vel magna. Vivamus consequat tortor tempor consectetur metus.");
-        feedPosts.add(post);
-
-        post = new FeedPost("Kristine","Krystal",758,"Morbi dictum nulla blandit massa pulvinar efficitur et id dolor. Cras iaculis accumsan enim quis placerat. Morbi mauris lectus, egestas sit amet viverra sit amet, laoreet sed quam. Morbi et porta nulla. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere sed.");
-        feedPosts.add(post);
-
-        post = new FeedPost("Teddy","Fresh",13,"Cras dictum feugiat vulputate. Vivamus sed suscipit lorem, et lobortis neque. Morbi nec pretium nisi. Aenean malesuada metus turpis, sed ullamcorper ex convallis eu. Proin purus mauris, pulvinar non interdum id, tempus vel magna. Vivamus consequat tortor tempor consectetur metus.");
-        feedPosts.add(post);
-
-        post = new FeedPost("Lilly","Evens",567,"In finibus finibus mollis. Sed sed nisl at turpis lobortis sollicitudin eu a nisi. Integer rhoncus, arcu vel blandit euismod, est arcu mattis ex, sit amet accumsan sapien diam nec turpis. In sagittis odio sit amet neque venenatis ultricies. Donec ullamcorper interdum lacus metus.");
-        feedPosts.add(post);
-
-        post = new FeedPost("Kim","Jong-Un ",894,"Very nice!");
-        feedPosts.add(post);
     }
 
 

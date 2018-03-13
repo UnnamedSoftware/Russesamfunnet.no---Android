@@ -219,6 +219,7 @@ public class Login extends AppCompatActivity
                 public void onPostExecute(JSONObject jsonObject) {
                     try {
                         if (jsonObject.getString("loginStatus").equals("Login success")) {
+                            System.out.println("Success");
                             ((MyApplication) getApplication()).setAccessToken(jsonObject.getString("accessToken"));
                             finishServerCom();
                         } else if(jsonObject.getString("loginStatus").equals("User not in db")){
