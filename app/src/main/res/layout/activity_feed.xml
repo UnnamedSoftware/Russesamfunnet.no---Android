@@ -58,8 +58,6 @@
             </FrameLayout>
         </LinearLayout>
 
-    <!-- Navigation Drawer -->
-
         <LinearLayout
             android:id="@+id/layout_chatbox"
             android:layout_width="0dp"

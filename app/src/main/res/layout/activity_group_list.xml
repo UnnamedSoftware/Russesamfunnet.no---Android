@@ -34,6 +34,7 @@
         app:srcCompat="@drawable/ic_add_white_48dp" />
 
     <include
+        android:id="@+id/include2"
         layout="@layout/content_group_list"
         android:layout_width="match_parent"
         android:layout_height="521dp"
@@ -42,7 +43,20 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/include2"
         app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/dummyLink"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="17dp"
+        android:layout_marginEnd="162dp"
+        android:layout_marginStart="162dp"
+        android:layout_marginTop="8dp"
+        android:text="Button"
+        app:layout_constraintBottom_toTopOf="@+id/include2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
 </android.support.constraint.ConstraintLayout>
