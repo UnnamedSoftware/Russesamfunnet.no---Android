@@ -69,6 +69,31 @@
                 android:value=".Feed" />
         </activity>
 
+        <activity
+            android:name=".GroupList"
+            android:label="@string/app_name"
+            android:parentActivityName=".Feed">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Feed" />
+        </activity>
+        <activity
+            android:name=".GroupHub"
+            android:label="@string/app_name"
+            android:parentActivityName=".GroupList">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".GroupList" />
+        </activity>
+        <activity
+            android:name=".GroupScoreboardMembersList"
+            android:label="@string/app_name"
+            android:parentActivityName=".GroupHub">
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value=".GroupHub" />
+        </activity>
+
         <activity android:name=".SchoolAndBirthdayRegisterActivity"
             android:windowSoftInputMode="adjustResize"
             android:label="@string/app_name"

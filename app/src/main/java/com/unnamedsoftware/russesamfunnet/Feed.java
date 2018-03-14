@@ -1,9 +1,7 @@
 package com.unnamedsoftware.russesamfunnet;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -14,16 +12,11 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
-import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.ScrollView;
-import android.widget.TextView;
 
 import com.unnamedsoftware.russesamfunnet.RecyclerView.FeedPost;
 import com.unnamedsoftware.russesamfunnet.RecyclerView.RecyclerViewFeed;
@@ -82,16 +75,7 @@ public class Feed extends AppCompatActivity {
         setSupportActionBar(toolbar);
         setTitle("Russesamfunnet - Feed");
 
-        drawerLayout = findViewById(R.id.navigationDrawer);
-        drawerToggle = setUpDrawerToggle();
-
-        drawerLayout.addDrawerListener(drawerToggle);
-
-        nav = findViewById(R.id.navList);
-        setupDrawerContent(nav);
-
-        getWindow().setSoftInputMode(
-                WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         try
         {
@@ -119,8 +103,21 @@ public class Feed extends AppCompatActivity {
             }
         });
 
+
+        drawerLayout = findViewById(R.id.navigationDrawer);
+        drawerToggle = setUpDrawerToggle();
+
+        drawerLayout.addDrawerListener(drawerToggle);
+
+        nav = findViewById(R.id.navList);
+        setupDrawerContent(nav);
+
     }
 
+    /**
+     *
+     * @param editText
+     */
     public void sendMessage(EditText editText)
     {
         try {
@@ -160,14 +157,13 @@ public class Feed extends AppCompatActivity {
     }
 
 
-
-
     /**
      * This method designates what happens when a menu item are selected in the navigation drawer.
      * @param menuItem
      */
     public void selectDrawerItem(MenuItem menuItem)
     {
+        System.out.println("selectDrawerItem");
         Intent intent;
         switch (menuItem.getItemId())
         {
@@ -285,12 +281,14 @@ public class Feed extends AppCompatActivity {
 
     private void setupDrawerContent(NavigationView nav)
     {
+        System.out.println("setupDrawerContent");
         nav.setNavigationItemSelectedListener
                 (new NavigationView.OnNavigationItemSelectedListener()
                 {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem)
                     {
+                        System.out.println("onNavigationItemSelected");
                         selectDrawerItem(menuItem);
                         return true;
                     }
@@ -308,8 +306,8 @@ public class Feed extends AppCompatActivity {
     }
 
     @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-
+    protected void onPostCreate(Bundle savedInstanceState)
+    {
         super.onPostCreate(savedInstanceState);
         drawerToggle.syncState();
     }
@@ -317,6 +315,7 @@ public class Feed extends AppCompatActivity {
     @Override
     public void onConfigurationChanged(Configuration newConfig)
     {
+        System.out.println("onConfigurationChanged");
         super.onConfigurationChanged(newConfig);
         drawerToggle.onConfigurationChanged(newConfig);
     }

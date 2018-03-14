@@ -2,9 +2,7 @@ package com.unnamedsoftware.russesamfunnet;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -15,7 +13,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
-import com.android.volley.ExecutorDelivery;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -28,16 +25,9 @@ import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.tasks.Task;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
@@ -86,7 +76,7 @@ public class Login extends AppCompatActivity
             @Override
             public void onClick(View view)
             {
-                startActivity(new Intent(Login.this, Feed.class));
+               startActivity(new Intent(Login.this, GroupList.class));
             }
         });
 
@@ -130,7 +120,7 @@ public class Login extends AppCompatActivity
                         if (jsonObject.getString("loginStatus").equals("Login success")) {
                             finishServerCom();
                         } else if(jsonObject.getString("loginStatus").equals("User not in db")){
-                            Intent intent = new Intent(Login.this, FacebookRegisterActivity.class);
+                            Intent intent = new Intent(Login.this, SchoolAndBirthdayRegisterActivity.class);
                             intent.putExtra("facebookToken", AccessToken.getCurrentAccessToken().getToken());
                             startActivity(intent);
 
@@ -239,11 +229,11 @@ public class Login extends AppCompatActivity
             e.printStackTrace();
         }
 
-        /**
-        RequestQueue queue = Volley.newRequestQueue(view.getContext());
-        String url = getString(R.string.url) + "login?email=" + userEmailString + "&password=" + userPasswordString;
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+        RequestQueue queue = Volley.newRequestQueue(view.getContext());
+        String newUrl = getString(R.string.url) + "login?email=" + userEmailString + "&password=" + userPasswordString;
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, newUrl,
                 new Response.Listener<String>()
                 {
                     @Override
