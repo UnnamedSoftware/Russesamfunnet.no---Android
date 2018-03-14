@@ -23,6 +23,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.AccessToken;
 import com.unnamedsoftware.russesamfunnet.Entity.SchoolEntity;
 import com.unnamedsoftware.russesamfunnet.RecyclerView.SchoolAdapter;
 
@@ -159,7 +160,7 @@ public class SchoolAndBirthdayRegisterActivity extends AppCompatActivity
 
     @RequiresApi(api = Build.VERSION_CODES.CUPCAKE)
     private void registerRuss(String dateString, String school) throws IOException {
-        String newUrl =  getString(R.string.url) + "facebookregister?accessToken=" + ((MyApplication) this.getApplication()).getAccessToken() + "&birthdate=" + dateString + "&schoolId=" + school;
+        String newUrl =  getString(R.string.url) + "facebookregister?accessToken=" + AccessToken.getCurrentAccessToken().getToken() + "&birthdate=" + dateString + "&schoolId=" + school;
         try {
             new JSONObjectParser(new JSONObjectParser.OnPostExecute() {
                 @Override
