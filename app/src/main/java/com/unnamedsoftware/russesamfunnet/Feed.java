@@ -94,9 +94,10 @@ public class Feed extends AppCompatActivity {
 
         drawerLayout.addDrawerListener(drawerToggle);
 
+
         nav = findViewById(R.id.navList);
         setupDrawerContent(nav);
-
+        drawerLayout.requestLayout();
         getWindow().setSoftInputMode(
                 WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
@@ -125,6 +126,7 @@ public class Feed extends AppCompatActivity {
                 sendMessage((EditText) findViewById(R.id.edittext_chatbox));
             }
         });
+
 
     }
 
@@ -272,21 +274,28 @@ public class Feed extends AppCompatActivity {
 
     private ActionBarDrawerToggle setUpDrawerToggle()
     {
-        return new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close);
+        ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close);
+        //toolbar.bringToFront();
+        //drawerLayout.requestLayout();
+        return drawerToggle;
     }
 
     private void setupDrawerContent(NavigationView nav)
     {
+        System.out.println("NAV");
+        nav.bringToFront();
         nav.setNavigationItemSelectedListener
                 (new NavigationView.OnNavigationItemSelectedListener()
                 {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem)
                     {
+                        System.out.println("Selected");
                         selectDrawerItem(menuItem);
                         return true;
                     }
                 });
+
     }
 
     @Override

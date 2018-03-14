@@ -22,15 +22,13 @@ import java.net.URL;
  * Created by Alexander Eilert Berg on 22.01.2018.
  */
 
-public class UserProfile extends AppCompatActivity
-{
+public class UserProfile extends AppCompatActivity {
     JSONArray user = null;
     String url = null;
     RussEntity russ;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
 
@@ -42,25 +40,22 @@ public class UserProfile extends AppCompatActivity
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        if(bundle != null) {
+
+        if (AccessToken.getCurrentAccessToken() != null) {
+            System.out.println(AccessToken.getCurrentAccessToken().getToken());
+            url = (getString(R.string.url) + "userRussFacebookToken?accessToken=" + AccessToken.getCurrentAccessToken().getToken());
+        } else if (((MyApplication) this.getApplication()).getAccessToken() != null) {
+            System.out.println("User id: ");
+            System.out.println(((MyApplication) this.getApplication()).getAccessToken());
+            url = getString(R.string.url) + "userRussToken?accessToken=" + ((MyApplication) this.getApplication()).getAccessToken();
+        } else if (bundle != null) {
             url = getString(R.string.url) + "userRuss?russId=" + bundle.getInt("russ_entity");
-        }else
-        {
-            if (AccessToken.getCurrentAccessToken() != null)
-            {
-                System.out.println(AccessToken.getCurrentAccessToken().getToken());
-                url = (getString(R.string.url) + "userRussFacebookToken?accessToken=" + AccessToken.getCurrentAccessToken().getToken());
-            }else {
-                System.out.println("User id: ");
-                System.out.println(((MyApplication) this.getApplication()).getAccessToken());
-                url = getString(R.string.url) + "userRussToken?accessToken=" + ((MyApplication) this.getApplication()).getAccessToken();
-            }
+            System.out.println(url);
         }
 
         try {
             getUserRuss();
-        }catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -79,14 +74,11 @@ public class UserProfile extends AppCompatActivity
         }
     }
 
-    public void fillProfile(JSONArray jsonArray)
-    {
-        try
-        {
+    public void fillProfile(JSONArray jsonArray) {
+        try {
             user = jsonArray;
 
-            for(int i = 0; i < user.length(); i++)
-            {
+            for (int i = 0; i < user.length(); i++) {
                 JSONObject u = user.getJSONObject(i);
 
                 Long russId = Long.valueOf(u.getString("russId"));
@@ -104,8 +96,7 @@ public class UserProfile extends AppCompatActivity
                 userName.setText(russ.getFirstName() + " " + russ.getLastName());
             }
 
-        }catch (JSONException e)
-        {
+        } catch (JSONException e) {
             e.printStackTrace();
         }
     }
