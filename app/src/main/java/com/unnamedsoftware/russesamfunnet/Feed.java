@@ -25,6 +25,7 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.facebook.AccessToken;
 import com.unnamedsoftware.russesamfunnet.RecyclerView.FeedPost;
 import com.unnamedsoftware.russesamfunnet.RecyclerView.RecyclerViewFeed;
 
@@ -75,9 +76,14 @@ public class Feed extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feed);
-
-        System.out.println(((MyApplication) this.getApplication()).getAccessToken());
-        url = getString(R.string.url) + "schoolFeedToken?accessToken=" + ((MyApplication) this.getApplication()).getAccessToken();
+        if (AccessToken.getCurrentAccessToken() != null)
+        {
+            System.out.println(AccessToken.getCurrentAccessToken().getToken());
+            url = (getString(R.string.url) + "schoolFeedFacebookToken?accessToken=" + AccessToken.getCurrentAccessToken().getToken());
+        }else {
+            System.out.println(((MyApplication) this.getApplication()).getAccessToken());
+            url = getString(R.string.url) + "schoolFeedToken?accessToken=" + ((MyApplication) this.getApplication()).getAccessToken();
+        }
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -127,9 +133,19 @@ public class Feed extends AppCompatActivity {
         try {
             String message = editText.getText().toString();
             System.out.println(message);
-            String urlSend = getString(R.string.url)
-                    + "postFeedToSchoolToken?accessToken=" + ((MyApplication) this.getApplication()).getAccessToken()
-                    + "&message=" + message;
+            String urlSend;
+            if (AccessToken.getCurrentAccessToken() != null)
+            {
+                System.out.println(AccessToken.getCurrentAccessToken().getToken());
+                urlSend = (getString(R.string.url)
+                        + "postFeedToSchoolFacebookToken?accessToken=" + AccessToken.getCurrentAccessToken().getToken())
+                        + "&message=" + message;
+            }else {
+                System.out.println(((MyApplication) this.getApplication()).getAccessToken());
+                urlSend = getString(R.string.url)
+                        + "postFeedToSchoolToken?accessToken=" + ((MyApplication) this.getApplication()).getAccessToken()
+                        + "&message=" + message;
+            }
             editText.setText("");
 
             try {

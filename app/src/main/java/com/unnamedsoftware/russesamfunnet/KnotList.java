@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
+import com.facebook.AccessToken;
 import com.unnamedsoftware.russesamfunnet.RecyclerView.TempKnot;
 import com.unnamedsoftware.russesamfunnet.RecyclerView.ViewKnotListAdapter;
 
@@ -47,8 +48,13 @@ public class KnotList extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_knot_list);
-
-        url = getString(R.string.url) + "getKnotsListToken?accessToken=" + ((MyApplication) this.getApplication()).getAccessToken();
+        if (AccessToken.getCurrentAccessToken() != null)
+        {
+            System.out.println(AccessToken.getCurrentAccessToken().getToken());
+            url = (getString(R.string.url) + "getKnotsListFacebookToken?accessToken=" + AccessToken.getCurrentAccessToken().getToken());
+        }else {
+            url = getString(R.string.url) + "getKnotsListToken?accessToken=" + ((MyApplication) this.getApplication()).getAccessToken();
+        }
 
 
         Toolbar toolbar = findViewById(R.id.toolbar);

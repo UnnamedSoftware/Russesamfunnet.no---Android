@@ -10,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
+import com.facebook.AccessToken;
 import com.unnamedsoftware.russesamfunnet.Entity.RussEntity;
 import com.unnamedsoftware.russesamfunnet.Entity.SchoolEntity;
 import com.unnamedsoftware.russesamfunnet.Entity.ScoreboardEntity;
@@ -55,7 +56,13 @@ public class Scoreboard extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scoreboard);
         //getString(R.string.url)
-        url = getString(R.string.url) + "scoreboardTop10Token?accessToken=" + ((MyApplication) this.getApplication()).getAccessToken();
+        if (AccessToken.getCurrentAccessToken() != null)
+        {
+            System.out.println(AccessToken.getCurrentAccessToken().getToken());
+            url = (getString(R.string.url) + "scoreboardTop10FacebookToken?accessToken=" + AccessToken.getCurrentAccessToken().getToken());
+        }else {
+            url = getString(R.string.url) + "scoreboardTop10Token?accessToken=" + ((MyApplication) this.getApplication()).getAccessToken();
+        }
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -102,7 +109,14 @@ public class Scoreboard extends AppCompatActivity
 
     @RequiresApi(api = Build.VERSION_CODES.CUPCAKE)
     private void getRussId() throws IOException {
-        String newUrl =  getString(R.string.url) + "userRussToken?accessToken=" + ((MyApplication) this.getApplication()).getAccessToken();
+        String newUrl;
+        if (AccessToken.getCurrentAccessToken() != null)
+        {
+            System.out.println(AccessToken.getCurrentAccessToken().getToken());
+            newUrl = (getString(R.string.url) + "userRussFacebookToken?accessToken=" + AccessToken.getCurrentAccessToken().getToken());
+        }else {
+            newUrl = getString(R.string.url) + "userRussToken?accessToken=" + ((MyApplication) this.getApplication()).getAccessToken();
+        }
         try {
             new JSONObjectParser(new JSONObjectParser.OnPostExecute() {
                 @Override

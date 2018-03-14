@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.EditText;
 
+import com.facebook.AccessToken;
 import com.unnamedsoftware.russesamfunnet.Entity.RussEntity;
 import com.unnamedsoftware.russesamfunnet.RecyclerView.FeedPost;
 
@@ -45,9 +46,15 @@ public class UserProfile extends AppCompatActivity
             url = getString(R.string.url) + "userRuss?russId=" + bundle.getInt("russ_entity");
         }else
         {
-            System.out.println("User id: ");
-            System.out.println(((MyApplication) this.getApplication()).getAccessToken());
-            url = getString(R.string.url) + "userRussToken?accessToken=" + ((MyApplication) this.getApplication()).getAccessToken();
+            if (AccessToken.getCurrentAccessToken() != null)
+            {
+                System.out.println(AccessToken.getCurrentAccessToken().getToken());
+                url = (getString(R.string.url) + "userRussFacebookToken?accessToken=" + AccessToken.getCurrentAccessToken().getToken());
+            }else {
+                System.out.println("User id: ");
+                System.out.println(((MyApplication) this.getApplication()).getAccessToken());
+                url = getString(R.string.url) + "userRussToken?accessToken=" + ((MyApplication) this.getApplication()).getAccessToken();
+            }
         }
 
         try {

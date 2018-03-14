@@ -165,7 +165,12 @@ public class SchoolAndBirthdayRegisterActivity extends AppCompatActivity
                 @Override
                 public void onPostExecute(JSONObject jsonObject) {
                     try {
-                        goToFeed();
+                        if(jsonObject.getString("loginStatus").equals("User successfully registered")) {
+                            goToFeed();
+                        }else
+                        {
+                            //do something else
+                        }
                     }catch (Exception e)
                     {
                         e.printStackTrace();
