@@ -160,7 +160,7 @@ public class SchoolAndBirthdayRegisterActivity extends AppCompatActivity
 
     @RequiresApi(api = Build.VERSION_CODES.CUPCAKE)
     private void registerRuss(String dateString, String school) throws IOException {
-        String newUrl =  getString(R.string.url) + "facebookregister?accessToken=" + AccessToken.getCurrentAccessToken().getToken() + "&birthdate=" + dateString + "&schoolId=" + school;
+        String newUrl =  getString(R.string.url) + "facebookRegister?accessToken=" + AccessToken.getCurrentAccessToken().getToken() + "&birthdate=" + dateString + "&schoolId=" + school;
         try {
             new JSONObjectParser(new JSONObjectParser.OnPostExecute() {
                 @Override
