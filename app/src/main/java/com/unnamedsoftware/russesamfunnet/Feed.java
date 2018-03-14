@@ -1,9 +1,7 @@
 package com.unnamedsoftware.russesamfunnet;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -14,16 +12,11 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
-import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.ScrollView;
-import android.widget.TextView;
 
 import com.facebook.AccessToken;
 import com.unnamedsoftware.russesamfunnet.RecyclerView.FeedPost;
@@ -76,8 +69,14 @@ public class Feed extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feed);
-
-        url = getString(R.string.url) + "schoolFeed?russId=" + ((MyApplication) this.getApplication()).getRussId();
+        if (AccessToken.getCurrentAccessToken() != null)
+        {
+            System.out.println(AccessToken.getCurrentAccessToken().getToken());
+            url = (getString(R.string.url) + "schoolFeedFacebookToken?accessToken=" + AccessToken.getCurrentAccessToken().getToken());
+        }else {
+            System.out.println(((MyApplication) this.getApplication()).getAccessToken());
+            url = getString(R.string.url) + "schoolFeedToken?accessToken=" + ((MyApplication) this.getApplication()).getAccessToken();
+        }
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -124,10 +123,6 @@ public class Feed extends AppCompatActivity {
 
     }
 
-    /**
-     *
-     * @param editText
-     */
     public void sendMessage(EditText editText)
     {
         try {
@@ -175,8 +170,6 @@ public class Feed extends AppCompatActivity {
             System.out.println(e.fillInStackTrace());
         }
     }
-
-
 
 
     /**
@@ -236,7 +229,7 @@ public class Feed extends AppCompatActivity {
      *
      * @param jsonArray
      */
-        public void fillFeed(JSONArray jsonArray)
+    public void fillFeed(JSONArray jsonArray)
     {
         try
         {
@@ -293,7 +286,6 @@ public class Feed extends AppCompatActivity {
                         return true;
                     }
                 });
-
     }
 
     @Override
@@ -319,8 +311,4 @@ public class Feed extends AppCompatActivity {
         super.onConfigurationChanged(newConfig);
         drawerToggle.onConfigurationChanged(newConfig);
     }
-
-
-
-
 }
