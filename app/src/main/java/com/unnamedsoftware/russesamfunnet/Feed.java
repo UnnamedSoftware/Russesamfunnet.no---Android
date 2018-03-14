@@ -1,7 +1,9 @@
 package com.unnamedsoftware.russesamfunnet;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -12,12 +14,18 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
+import android.widget.TextView;
 
+import com.facebook.AccessToken;
 import com.unnamedsoftware.russesamfunnet.RecyclerView.FeedPost;
 import com.unnamedsoftware.russesamfunnet.RecyclerView.RecyclerViewFeed;
 
@@ -75,7 +83,17 @@ public class Feed extends AppCompatActivity {
         setSupportActionBar(toolbar);
         setTitle("Russesamfunnet - Feed");
 
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        drawerLayout = findViewById(R.id.navigationDrawer);
+        drawerToggle = setUpDrawerToggle();
+
+        drawerLayout.addDrawerListener(drawerToggle);
+
+
+        nav = findViewById(R.id.navList);
+        setupDrawerContent(nav);
+        drawerLayout.requestLayout();
+        getWindow().setSoftInputMode(
+                WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         try
         {
@@ -104,14 +122,6 @@ public class Feed extends AppCompatActivity {
         });
 
 
-        drawerLayout = findViewById(R.id.navigationDrawer);
-        drawerToggle = setUpDrawerToggle();
-
-        drawerLayout.addDrawerListener(drawerToggle);
-
-        nav = findViewById(R.id.navList);
-        setupDrawerContent(nav);
-
     }
 
     /**
@@ -123,9 +133,19 @@ public class Feed extends AppCompatActivity {
         try {
             String message = editText.getText().toString();
             System.out.println(message);
-            String urlSend = getString(R.string.url)
-                    + "postFeedToSchool?russId=" + ((MyApplication) this.getApplication()).getRussId()
-                    + "&message=" + message;
+            String urlSend;
+            if (AccessToken.getCurrentAccessToken() != null)
+            {
+                System.out.println(AccessToken.getCurrentAccessToken().getToken());
+                urlSend = (getString(R.string.url)
+                        + "postFeedToSchoolFacebookToken?accessToken=" + AccessToken.getCurrentAccessToken().getToken())
+                        + "&message=" + message;
+            }else {
+                System.out.println(((MyApplication) this.getApplication()).getAccessToken());
+                urlSend = getString(R.string.url)
+                        + "postFeedToSchoolToken?accessToken=" + ((MyApplication) this.getApplication()).getAccessToken()
+                        + "&message=" + message;
+            }
             editText.setText("");
 
             try {
@@ -157,19 +177,19 @@ public class Feed extends AppCompatActivity {
     }
 
 
+
+
     /**
      * This method designates what happens when a menu item are selected in the navigation drawer.
      * @param menuItem
      */
     public void selectDrawerItem(MenuItem menuItem)
     {
-        System.out.println("selectDrawerItem");
         Intent intent;
         switch (menuItem.getItemId())
         {
             case R.id.profile:
                 intent = new Intent(this, UserProfile.class);
-                intent.putExtra("russ_entity",((MyApplication) this.getApplication()).getRussId());
                 this.startActivity(intent);
                 break;
 
@@ -226,7 +246,7 @@ public class Feed extends AppCompatActivity {
             {
                 JSONObject u = posts.getJSONObject(i);
                 JSONObject newRussObject = u.getJSONObject("russId");
-                Integer russId = Integer.valueOf(newRussObject.getString("russId"));
+                Long russId = Long.valueOf(newRussObject.getString("russId"));
                 String firstName = newRussObject.getString("firstName");
                 String surname = newRussObject.getString("lastName");
                 String post = u.getString("message");
@@ -242,30 +262,6 @@ public class Feed extends AppCompatActivity {
         }
     }
 
-    private void dummy()
-    {
-        FeedPost post = new FeedPost("Bob","Baker",34,"Donec euismod, tortor in rutrum dictum, mauris orci mattis nulla, vitae vestibulum nibh tortor eu mauris. Quisque interdum lacus vitae tellus tincidunt, sed egestas ex convallis. Sed non nibh nec urna fermentum luctus ut sit amet massa. Praesent cursus efficitur ex at massa nunc.");
-        feedPosts.add(post);
-
-        post = new FeedPost("Julia","Flowers",75,"Ut et semper quam. Ut pharetra tellus convallis libero venenatis, ut interdum ante facilisis. Aenean tempor sapien ut elit mollis, condimentum maximus velit euismod. Nunc efficitur lacus tellus, a sagittis odio placerat sed. Etiam et aliquet augue. Interdum et malesuada fames id.");
-        feedPosts.add(post);
-
-        post = new FeedPost("John","Smith",249,"Cras dictum feugiat vulputate. Vivamus sed suscipit lorem, et lobortis neque. Morbi nec pretium nisi. Aenean malesuada metus turpis, sed ullamcorper ex convallis eu. Proin purus mauris, pulvinar non interdum id, tempus vel magna. Vivamus consequat tortor tempor consectetur metus.");
-        feedPosts.add(post);
-
-        post = new FeedPost("Kristine","Krystal",758,"Morbi dictum nulla blandit massa pulvinar efficitur et id dolor. Cras iaculis accumsan enim quis placerat. Morbi mauris lectus, egestas sit amet viverra sit amet, laoreet sed quam. Morbi et porta nulla. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere sed.");
-        feedPosts.add(post);
-
-        post = new FeedPost("Teddy","Fresh",13,"Cras dictum feugiat vulputate. Vivamus sed suscipit lorem, et lobortis neque. Morbi nec pretium nisi. Aenean malesuada metus turpis, sed ullamcorper ex convallis eu. Proin purus mauris, pulvinar non interdum id, tempus vel magna. Vivamus consequat tortor tempor consectetur metus.");
-        feedPosts.add(post);
-
-        post = new FeedPost("Lilly","Evens",567,"In finibus finibus mollis. Sed sed nisl at turpis lobortis sollicitudin eu a nisi. Integer rhoncus, arcu vel blandit euismod, est arcu mattis ex, sit amet accumsan sapien diam nec turpis. In sagittis odio sit amet neque venenatis ultricies. Donec ullamcorper interdum lacus metus.");
-        feedPosts.add(post);
-
-        post = new FeedPost("Kim","Jong-Un ",894,"Very nice!");
-        feedPosts.add(post);
-    }
-
 
     @Override
     protected void onResume()
@@ -276,23 +272,28 @@ public class Feed extends AppCompatActivity {
 
     private ActionBarDrawerToggle setUpDrawerToggle()
     {
-        return new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close);
+        ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close);
+        //toolbar.bringToFront();
+        //drawerLayout.requestLayout();
+        return drawerToggle;
     }
 
     private void setupDrawerContent(NavigationView nav)
     {
-        System.out.println("setupDrawerContent");
+        System.out.println("NAV");
+        nav.bringToFront();
         nav.setNavigationItemSelectedListener
                 (new NavigationView.OnNavigationItemSelectedListener()
                 {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem)
                     {
-                        System.out.println("onNavigationItemSelected");
+                        System.out.println("Selected");
                         selectDrawerItem(menuItem);
                         return true;
                     }
                 });
+
     }
 
     @Override
@@ -306,8 +307,8 @@ public class Feed extends AppCompatActivity {
     }
 
     @Override
-    protected void onPostCreate(Bundle savedInstanceState)
-    {
+    protected void onPostCreate(Bundle savedInstanceState) {
+
         super.onPostCreate(savedInstanceState);
         drawerToggle.syncState();
     }
@@ -315,7 +316,6 @@ public class Feed extends AppCompatActivity {
     @Override
     public void onConfigurationChanged(Configuration newConfig)
     {
-        System.out.println("onConfigurationChanged");
         super.onConfigurationChanged(newConfig);
         drawerToggle.onConfigurationChanged(newConfig);
     }

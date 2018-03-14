@@ -10,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
+import com.facebook.AccessToken;
 import com.unnamedsoftware.russesamfunnet.Entity.RussEntity;
 import com.unnamedsoftware.russesamfunnet.Entity.SchoolEntity;
 import com.unnamedsoftware.russesamfunnet.Entity.ScoreboardEntity;
@@ -34,6 +35,7 @@ public class Scoreboard extends AppCompatActivity
     private RecyclerView recyclerView;
     private RecyclerViewScoreboard recyclerViewScoreboard;
     private JSONArray jsonArray = null;
+    private Long russId = null;
 
     private String url;
 
@@ -54,7 +56,13 @@ public class Scoreboard extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scoreboard);
         //getString(R.string.url)
-        url = getString(R.string.url) + "scoreboardTop10?theRussId=" + ((MyApplication) this.getApplication()).getRussId();
+        if (AccessToken.getCurrentAccessToken() != null)
+        {
+            System.out.println(AccessToken.getCurrentAccessToken().getToken());
+            url = (getString(R.string.url) + "scoreboardTop10FacebookToken?accessToken=" + AccessToken.getCurrentAccessToken().getToken());
+        }else {
+            url = getString(R.string.url) + "scoreboardTop10Token?accessToken=" + ((MyApplication) this.getApplication()).getAccessToken();
+        }
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -66,12 +74,13 @@ public class Scoreboard extends AppCompatActivity
         try
         {
             getRussScoreboard();
+            getRussId();
         } catch (IOException e)
         {
             e.printStackTrace();
         }
         this.recyclerView = findViewById(R.id.recycler_view_scoreboard);
-        this.recyclerViewScoreboard = new RecyclerViewScoreboard(userList, ((MyApplication) this.getApplication()).getRussId());
+        this.recyclerViewScoreboard = new RecyclerViewScoreboard(userList, russId);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -98,6 +107,37 @@ public class Scoreboard extends AppCompatActivity
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.CUPCAKE)
+    private void getRussId() throws IOException {
+        String newUrl;
+        if (AccessToken.getCurrentAccessToken() != null)
+        {
+            System.out.println(AccessToken.getCurrentAccessToken().getToken());
+            newUrl = (getString(R.string.url) + "userRussFacebookToken?accessToken=" + AccessToken.getCurrentAccessToken().getToken());
+        }else {
+            newUrl = getString(R.string.url) + "userRussToken?accessToken=" + ((MyApplication) this.getApplication()).getAccessToken();
+        }
+        try {
+            new JSONObjectParser(new JSONObjectParser.OnPostExecute() {
+                @Override
+                public void onPostExecute(JSONObject jsonObject) {
+                    try {
+                        setRussId(jsonObject.getLong("russId"));
+                    }catch (Exception e)
+                    {
+                        e.printStackTrace();
+                    }
+                }
+            }).execute(new URL(newUrl));
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void setRussId(Long russId)
+    {
+        this.russId = russId;
+    }
         public void fillScoreboard(JSONArray jsonArray)
         {
 
@@ -120,7 +160,7 @@ public class Scoreboard extends AppCompatActivity
 
                 JSONObject newRussObject = u.getJSONObject("russId");
 
-                Integer russId = Integer.valueOf(newRussObject.getString("russId"));
+                Long russId = Long.valueOf(newRussObject.getString("russId"));
                 String russStatus = newRussObject.getString("russStatus");
                 String firstName = newRussObject.getString("firstName");
                 String lastName = newRussObject.getString("lastName");

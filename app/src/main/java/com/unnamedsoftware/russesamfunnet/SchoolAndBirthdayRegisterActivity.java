@@ -2,7 +2,10 @@ package com.unnamedsoftware.russesamfunnet;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
@@ -20,6 +23,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.AccessToken;
 import com.unnamedsoftware.russesamfunnet.Entity.SchoolEntity;
 import com.unnamedsoftware.russesamfunnet.RecyclerView.SchoolAdapter;
 
@@ -139,11 +143,50 @@ public class SchoolAndBirthdayRegisterActivity extends AppCompatActivity
                 System.out.println(dateString);
                 System.out.println(school);
 
-                //Do something with the information
+                try{
+                    System.out.println("Ta-daaaa");
+                    registerRuss(dateString, school);
+                } catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+
             }
         });
 
 
+    }
+
+
+    @RequiresApi(api = Build.VERSION_CODES.CUPCAKE)
+    private void registerRuss(String dateString, String school) throws IOException {
+        String newUrl =  getString(R.string.url) + "facebookRegister?accessToken=" + AccessToken.getCurrentAccessToken().getToken() + "&birthdate=" + dateString + "&schoolId=" + school;
+        try {
+            new JSONObjectParser(new JSONObjectParser.OnPostExecute() {
+                @Override
+                public void onPostExecute(JSONObject jsonObject) {
+                    try {
+                        if(jsonObject.getString("loginStatus").equals("User successfully registered")) {
+                            goToFeed();
+                        }else
+                        {
+                            //do something else
+                        }
+                    }catch (Exception e)
+                    {
+                        e.printStackTrace();
+                    }
+                }
+            }).execute(new URL(newUrl));
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void goToFeed()
+    {
+        startActivity(new Intent(SchoolAndBirthdayRegisterActivity.this, Feed.class));
+        finish();
     }
 
     /**

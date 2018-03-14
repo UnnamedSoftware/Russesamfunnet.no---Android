@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.EditText;
 
+import com.facebook.AccessToken;
 import com.unnamedsoftware.russesamfunnet.Entity.RussEntity;
 import com.unnamedsoftware.russesamfunnet.RecyclerView.FeedPost;
 
@@ -21,15 +22,13 @@ import java.net.URL;
  * Created by Alexander Eilert Berg on 22.01.2018.
  */
 
-public class UserProfile extends AppCompatActivity
-{
+public class UserProfile extends AppCompatActivity {
     JSONArray user = null;
     String url = null;
     RussEntity russ;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
 
@@ -41,19 +40,22 @@ public class UserProfile extends AppCompatActivity
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        if(bundle != null) {
-            url = getString(R.string.url) + "userRuss?russId=" + bundle.getInt("russ_entity");
-        }else
-        {
+
+        if (AccessToken.getCurrentAccessToken() != null) {
+            System.out.println(AccessToken.getCurrentAccessToken().getToken());
+            url = (getString(R.string.url) + "userRussFacebookToken?accessToken=" + AccessToken.getCurrentAccessToken().getToken());
+        } else if (((MyApplication) this.getApplication()).getAccessToken() != null) {
             System.out.println("User id: ");
-            System.out.println(((MyApplication) this.getApplication()).getRussId());
-            url = getString(R.string.url) + "userRuss?russId=" + ((MyApplication) this.getApplication()).getRussId();
+            System.out.println(((MyApplication) this.getApplication()).getAccessToken());
+            url = getString(R.string.url) + "userRussToken?accessToken=" + ((MyApplication) this.getApplication()).getAccessToken();
+        } else if (bundle != null) {
+            url = getString(R.string.url) + "userRuss?russId=" + bundle.getInt("russ_entity");
+            System.out.println(url);
         }
 
         try {
             getUserRuss();
-        }catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -72,17 +74,14 @@ public class UserProfile extends AppCompatActivity
         }
     }
 
-    public void fillProfile(JSONArray jsonArray)
-    {
-        try
-        {
+    public void fillProfile(JSONArray jsonArray) {
+        try {
             user = jsonArray;
 
-            for(int i = 0; i < user.length(); i++)
-            {
+            for (int i = 0; i < user.length(); i++) {
                 JSONObject u = user.getJSONObject(i);
 
-                int russId = Integer.valueOf(u.getString("russId"));
+                Long russId = Long.valueOf(u.getString("russId"));
                 String russStatus = u.getString("russStatus");
                 String firstName = u.getString("firstName");
                 String lastName = u.getString("lastName");
@@ -97,8 +96,7 @@ public class UserProfile extends AppCompatActivity
                 userName.setText(russ.getFirstName() + " " + russ.getLastName());
             }
 
-        }catch (JSONException e)
-        {
+        } catch (JSONException e) {
             e.printStackTrace();
         }
     }
