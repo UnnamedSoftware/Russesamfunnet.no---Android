@@ -21,7 +21,7 @@ public class GroupScoreboardMembersList extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_scoreboard);
 
-        this.groupName = getIntent().getExtras().getString("groupName");
+        this.groupName = ((Global) this.getApplication()).getGroupName();
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

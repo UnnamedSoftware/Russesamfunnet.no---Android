@@ -8,7 +8,6 @@ import android.widget.EditText;
 
 import com.facebook.AccessToken;
 import com.unnamedsoftware.russesamfunnet.Entity.RussEntity;
-import com.unnamedsoftware.russesamfunnet.RecyclerView.FeedPost;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -50,7 +49,7 @@ public class UserProfile extends AppCompatActivity {
             } else if (((Global) this.getApplication()).getAccessToken() != null) {
                 System.out.println("User id: ");
                 System.out.println(((Global) this.getApplication()).getAccessToken());
-                url = getString(R.string.url) + "userRussToken?accessToken=" + ((MyApplication) this.getApplication()).getAccessToken();
+                url = getString(R.string.url) + "userRussToken?accessToken=" + ((Global) this.getApplication()).getAccessToken();
             }
         }
 

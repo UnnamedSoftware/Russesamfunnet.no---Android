@@ -10,7 +10,7 @@
     tools:showIn="@layout/activity_group_list">
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view_group_list"
+        android:id="@+id/glaGroup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"

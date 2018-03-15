@@ -43,15 +43,16 @@ public class GroupList extends AppCompatActivity
             }
         });
 
+        //This will be replaced by the glaGroup
+        ((Global) this.getApplication()).setGroupName("Data vg3");
+
         this.dummyLinkButton = findViewById(R.id.dummyLink);
         dummyLinkButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View view)
             {
-                Intent intent = new Intent (GroupList.this, GroupHub.class);
-                intent.putExtra("groupName", "Data vg2");
-                startActivity(intent);
+                startActivity(new Intent (GroupList.this, GroupHub.class));
             }
         });
 

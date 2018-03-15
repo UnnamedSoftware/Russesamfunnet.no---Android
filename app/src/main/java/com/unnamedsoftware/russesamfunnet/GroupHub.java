@@ -26,7 +26,7 @@ public class GroupHub extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_hub);
 
-        this.groupName = getIntent().getExtras().getString("groupName");
+        this.groupName = ((Global) this.getApplication()).getGroupName();
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -40,9 +40,7 @@ public class GroupHub extends AppCompatActivity
             {
 
                 Toast.makeText(GroupHub.this, "I've been clicked! :O", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(GroupHub.this, GroupScoreboardMembersList.class);
-                intent.putExtra("groupName",groupName);
-                startActivity(intent);
+                startActivity( new Intent(GroupHub.this, GroupScoreboardMembersList.class));
             }
         });
 
