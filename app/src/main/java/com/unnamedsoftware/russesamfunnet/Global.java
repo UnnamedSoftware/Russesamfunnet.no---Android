@@ -6,7 +6,7 @@ import android.app.Application;
  * Created by HallvardPC on 23.02.2018.
  */
 
-public class MyApplication extends Application {
+public class Global extends Application {
 
     private String accessToken;
 

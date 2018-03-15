@@ -74,8 +74,8 @@ public class Feed extends AppCompatActivity {
             System.out.println(AccessToken.getCurrentAccessToken().getToken());
             url = (getString(R.string.url) + "schoolFeedFacebookToken?accessToken=" + AccessToken.getCurrentAccessToken().getToken());
         }else {
-            System.out.println(((MyApplication) this.getApplication()).getAccessToken());
-            url = getString(R.string.url) + "schoolFeedToken?accessToken=" + ((MyApplication) this.getApplication()).getAccessToken();
+            System.out.println(((Global) this.getApplication()).getAccessToken());
+            url = getString(R.string.url) + "schoolFeedToken?accessToken=" + ((Global) this.getApplication()).getAccessToken();
         }
 
         toolbar = findViewById(R.id.toolbar);
@@ -136,9 +136,9 @@ public class Feed extends AppCompatActivity {
                         + "postFeedToSchoolFacebookToken?accessToken=" + AccessToken.getCurrentAccessToken().getToken())
                         + "&message=" + message;
             }else {
-                System.out.println(((MyApplication) this.getApplication()).getAccessToken());
+                System.out.println(((Global) this.getApplication()).getAccessToken());
                 urlSend = getString(R.string.url)
-                        + "postFeedToSchoolToken?accessToken=" + ((MyApplication) this.getApplication()).getAccessToken()
+                        + "postFeedToSchoolToken?accessToken=" + ((Global) this.getApplication()).getAccessToken()
                         + "&message=" + message;
             }
             editText.setText("");

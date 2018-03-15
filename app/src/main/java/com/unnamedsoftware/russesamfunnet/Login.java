@@ -210,7 +210,7 @@ public class Login extends AppCompatActivity
                     try {
                         if (jsonObject.getString("loginStatus").equals("Login success")) {
                             System.out.println("Success");
-                            ((MyApplication) getApplication()).setAccessToken(jsonObject.getString("accessToken"));
+                            ((Global) getApplication()).setAccessToken(jsonObject.getString("accessToken"));
                             finishServerCom();
                         } else if(jsonObject.getString("loginStatus").equals("User not in db")){
                             startActivity(new Intent(Login.this, Register.class));

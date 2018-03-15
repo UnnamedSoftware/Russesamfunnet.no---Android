@@ -61,7 +61,7 @@ public class Scoreboard extends AppCompatActivity
             System.out.println(AccessToken.getCurrentAccessToken().getToken());
             url = (getString(R.string.url) + "scoreboardTop10FacebookToken?accessToken=" + AccessToken.getCurrentAccessToken().getToken());
         }else {
-            url = getString(R.string.url) + "scoreboardTop10Token?accessToken=" + ((MyApplication) this.getApplication()).getAccessToken();
+            url = getString(R.string.url) + "scoreboardTop10Token?accessToken=" + ((Global) this.getApplication()).getAccessToken();
         }
 
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -115,7 +115,7 @@ public class Scoreboard extends AppCompatActivity
             System.out.println(AccessToken.getCurrentAccessToken().getToken());
             newUrl = (getString(R.string.url) + "userRussFacebookToken?accessToken=" + AccessToken.getCurrentAccessToken().getToken());
         }else {
-            newUrl = getString(R.string.url) + "userRussToken?accessToken=" + ((MyApplication) this.getApplication()).getAccessToken();
+            newUrl = getString(R.string.url) + "userRussToken?accessToken=" + ((Global) this.getApplication()).getAccessToken();
         }
         try {
             new JSONObjectParser(new JSONObjectParser.OnPostExecute() {
