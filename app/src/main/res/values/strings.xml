@@ -7,6 +7,8 @@
     <string name="scoreboard">Scoreboard</string>
     <string name="profile">Bruker Profil</string>
     <string name="knotList">Knute Liste</string>
+    <string name="group">Grupper</string>
+    <string name="event">Arrangementer</string>
     <string name="settings">Instillinger</string>
     <string name="logout">Log ut</string>
     <string name="app_label">Russesamfunnet</string>

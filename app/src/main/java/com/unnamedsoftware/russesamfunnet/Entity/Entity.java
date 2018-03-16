@@ -8,6 +8,9 @@ package com.unnamedsoftware.russesamfunnet.Entity;
 
 public abstract class Entity
 {
-    //Returns the display name used for searching
+    /**
+     * Returns the display name used for searching
+     * @return The display name used for searching
+     */
     public abstract String getSearchName();
 }

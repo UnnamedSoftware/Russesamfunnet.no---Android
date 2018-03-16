@@ -6,7 +6,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Toast;
 
 /**
  * The group hub, contains a preview of the top collectors (top 3/5) and a link to the complete list.
@@ -39,7 +38,7 @@ public class GroupHub extends AppCompatActivity
             public void onClick(View view)
             {
 
-                Toast.makeText(GroupHub.this, "I've been clicked! :O", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(GroupHub.this, "I've been clicked! :O", Toast.LENGTH_SHORT).show();
                 startActivity( new Intent(GroupHub.this, GroupScoreboardMembersList.class));
             }
         });

@@ -69,7 +69,7 @@ public class Login extends AppCompatActivity
                 startActivity(new Intent(Login.this, Register.class));
             }
         });
-
+/*
         Button dummyButton = findViewById(R.id.dummyButton);
         dummyButton.setOnClickListener(new View.OnClickListener()
         {
@@ -79,7 +79,7 @@ public class Login extends AppCompatActivity
                 startActivity(new Intent(Login.this, GroupList.class));
             }
         });
-
+*/
         callbackManager = CallbackManager.Factory.create();
 
         LoginManager.getInstance().registerCallback(callbackManager,

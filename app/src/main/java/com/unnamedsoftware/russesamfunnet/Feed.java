@@ -196,6 +196,14 @@ public class Feed extends AppCompatActivity {
                 this.startActivity(intent);
                 break;
 
+            case R.id.group:
+                 startActivity(new Intent(this, GroupList.class));
+                break;
+
+            case R.id.event:
+                startActivity(new Intent(this, Events.class));
+                break;
+
             case R.id.settings:
                 intent = new Intent(this, Settings.class);
                 this.startActivity(intent);

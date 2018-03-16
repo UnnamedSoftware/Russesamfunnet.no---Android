@@ -8,16 +8,27 @@
         android:id="@+id/profile"
         android:checked="false"
         android:title="@string/profile"/>
+
+    <item
+        android:id="@+id/knotList"
+        android:checkable="false"
+        android:title="@string/knotList"/>
+    <item
+        android:id="@+id/group"
+        android:checkable="false"
+        android:title="@string/group"/>
+    <item
+        android:id="@+id/event"
+        android:checkable="false"
+        android:title="@string/event"/>
+
     <item
         android:id="@+id/settings"
         android:actionLayout="@color/colorPrimaryDark"
         android:checkable="false"
         android:checked="false"
         android:title="@string/settings" />
-    <item
-        android:id="@+id/knotList"
-        android:checkable="false"
-        android:title="@string/knotList"/>
+
     <item
         android:id="@+id/logout"
         android:checkable="false"

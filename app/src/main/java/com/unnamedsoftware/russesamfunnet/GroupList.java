@@ -8,7 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 /**
  * Contains the list over the groups the user are a part of.
@@ -39,7 +38,7 @@ public class GroupList extends AppCompatActivity
             public void onClick(View view)
             {
                 addNewGroup();
-                Toast.makeText(GroupList.this, "I've been clicked! :O", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(GroupList.this, "I've been clicked! :O", Toast.LENGTH_SHORT).show();
             }
         });
 
