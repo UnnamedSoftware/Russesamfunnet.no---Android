@@ -12,13 +12,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -30,8 +23,6 @@ import org.json.JSONObject;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by Alexander Eilert Berg on 19.01.2018.
@@ -58,7 +49,8 @@ public class Login extends AppCompatActivity
             facebookLoginCheck(getString(R.string.url) + "facebookLogin?accessToken=" + AccessToken.getCurrentAccessToken().getToken());
         } else if(!((Global) getApplication()).getAccessToken().isEmpty())
         {
-            russesamfunnLoginCheck(getString(R.string.url) + "russesamfunnLogin?accessToken=" + ((Global) getApplication()).getAccessToken());
+            //Use for auto-login with our token
+            //russesamfunnLoginCheck(getString(R.string.url) + "russesamfunnLogin?accessToken=" + ((Global) getApplication()).getAccessToken());
         }
 
 
@@ -145,7 +137,6 @@ public class Login extends AppCompatActivity
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
-
     }
 
 
