@@ -72,10 +72,10 @@ public class Feed extends AppCompatActivity {
         if (AccessToken.getCurrentAccessToken() != null)
         {
             System.out.println(AccessToken.getCurrentAccessToken().getToken());
-            url = (getString(R.string.url) + "schoolFeedFacebookToken?accessToken=" + AccessToken.getCurrentAccessToken().getToken());
+            url = (getString(R.string.url) + "schoolFeed?accessToken=" + AccessToken.getCurrentAccessToken().getToken() + "&type=facebook");
         }else {
             System.out.println(((Global) this.getApplication()).getAccessToken());
-            url = getString(R.string.url) + "schoolFeedToken?accessToken=" + ((Global) this.getApplication()).getAccessToken();
+            url = getString(R.string.url) + "schoolFeed?accessToken=" + ((Global) this.getApplication()).getAccessToken() + "&type=russesamfunnet";
         }
 
         toolbar = findViewById(R.id.toolbar);
@@ -133,12 +133,14 @@ public class Feed extends AppCompatActivity {
             {
                 System.out.println(AccessToken.getCurrentAccessToken().getToken());
                 urlSend = (getString(R.string.url)
-                        + "postFeedToSchoolFacebookToken?accessToken=" + AccessToken.getCurrentAccessToken().getToken())
+                        + "postFeedToSchool?accessToken=" + AccessToken.getCurrentAccessToken().getToken())
+                        + "&type=facebook"
                         + "&message=" + message;
             }else {
                 System.out.println(((Global) this.getApplication()).getAccessToken());
                 urlSend = getString(R.string.url)
-                        + "postFeedToSchoolToken?accessToken=" + ((Global) this.getApplication()).getAccessToken()
+                        + "postFeedToSchool?accessToken=" + ((Global) this.getApplication()).getAccessToken()
+                        + "&type=russesamfunnet"
                         + "&message=" + message;
             }
             editText.setText("");

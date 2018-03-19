@@ -59,9 +59,9 @@ public class Scoreboard extends AppCompatActivity
         if (AccessToken.getCurrentAccessToken() != null)
         {
             System.out.println(AccessToken.getCurrentAccessToken().getToken());
-            url = (getString(R.string.url) + "scoreboardTop10FacebookToken?accessToken=" + AccessToken.getCurrentAccessToken().getToken());
+            url = (getString(R.string.url) + "scoreboardTop10?accessToken=" + AccessToken.getCurrentAccessToken().getToken() + "&type=facebook");
         }else {
-            url = getString(R.string.url) + "scoreboardTop10Token?accessToken=" + ((Global) this.getApplication()).getAccessToken();
+            url = getString(R.string.url) + "scoreboardTop10?accessToken=" + ((Global) this.getApplication()).getAccessToken() + "&type=russesamfunnet";
         }
 
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -113,9 +113,9 @@ public class Scoreboard extends AppCompatActivity
         if (AccessToken.getCurrentAccessToken() != null)
         {
             System.out.println(AccessToken.getCurrentAccessToken().getToken());
-            newUrl = (getString(R.string.url) + "userRussFacebookToken?accessToken=" + AccessToken.getCurrentAccessToken().getToken());
+            newUrl = (getString(R.string.url) + "userRuss?accessToken=" + AccessToken.getCurrentAccessToken().getToken() + "&type=facebook");
         }else {
-            newUrl = getString(R.string.url) + "userRussToken?accessToken=" + ((Global) this.getApplication()).getAccessToken();
+            newUrl = getString(R.string.url) + "userRuss?accessToken=" + ((Global) this.getApplication()).getAccessToken() + "&type=russesamfunnet";
         }
         try {
             new JSONObjectParser(new JSONObjectParser.OnPostExecute() {
