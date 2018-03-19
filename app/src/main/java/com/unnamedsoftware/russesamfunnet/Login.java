@@ -56,6 +56,9 @@ public class Login extends AppCompatActivity
         {
             System.out.println(getString(R.string.url) + "facebookLogin?accessToken=" + AccessToken.getCurrentAccessToken().getToken());
             facebookLoginCheck(getString(R.string.url) + "facebookLogin?accessToken=" + AccessToken.getCurrentAccessToken().getToken());
+        } else if(!((Global) getApplication()).getAccessToken().isEmpty())
+        {
+            russesamfunnLoginCheck(getString(R.string.url) + "russesamfunnLogin?accessToken=" + ((Global) getApplication()).getAccessToken());
         }
 
 

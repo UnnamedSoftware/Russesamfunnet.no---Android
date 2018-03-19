@@ -20,6 +20,9 @@ import java.io.IOException;
 
 public class Global extends Application
 {
+    //Used for debugging
+    static final Boolean DEBUG = false;
+
 
     //--- Token ---
     private String accessToken;
@@ -35,11 +38,13 @@ public class Global extends Application
     {
         if (accessToken.isEmpty())
         {
-            try
+            if(DEBUG) {System.out.println("Access token is empty");}
+                try
             {
                 FileReader fileReader = new FileReader(getCache("token"));
                 BufferedReader bufferedReader = new BufferedReader(fileReader);
                 accessToken = bufferedReader.readLine();
+                if(DEBUG) {System.out.println("BufferReader line: " + accessToken);}
             } catch (FileNotFoundException e)
             {
                 e.printStackTrace();
