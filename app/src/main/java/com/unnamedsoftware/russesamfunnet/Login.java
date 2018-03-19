@@ -54,6 +54,7 @@ public class Login extends AppCompatActivity
         loginUser(findViewById(R.id.loginButton));
         if (AccessToken.getCurrentAccessToken() != null)
         {
+            System.out.println(getString(R.string.url) + "facebookLogin?accessToken=" + AccessToken.getCurrentAccessToken().getToken());
             facebookLoginCheck(getString(R.string.url) + "facebookLogin?accessToken=" + AccessToken.getCurrentAccessToken().getToken());
         }
 
@@ -87,6 +88,7 @@ public class Login extends AppCompatActivity
                     @Override
                     public void onSuccess(LoginResult loginResult) {
                         String url = getString(R.string.url) + "facebookLogin?accessToken=" + loginResult.getAccessToken().getToken();
+                        System.out.println(url);
                         facebookLoginCheck(url);
                     }
 
@@ -118,8 +120,10 @@ public class Login extends AppCompatActivity
                 public void onPostExecute(JSONObject jsonObject) {
                     try {
                         if (jsonObject.getString("loginStatus").equals("Login success")) {
+                            System.out.println(jsonObject.get("loginStatus"));
                             finishServerCom();
                         } else if(jsonObject.getString("loginStatus").equals("User not in db")){
+                            System.out.println(jsonObject.get("loginStatus"));
                             Intent intent = new Intent(Login.this, SchoolAndBirthdayRegisterActivity.class);
                             intent.putExtra("facebookToken", AccessToken.getCurrentAccessToken().getToken());
                             startActivity(intent);
