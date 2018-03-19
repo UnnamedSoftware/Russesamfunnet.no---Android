@@ -51,9 +51,9 @@ public class KnotList extends AppCompatActivity
         if (AccessToken.getCurrentAccessToken() != null)
         {
             System.out.println(AccessToken.getCurrentAccessToken().getToken());
-            url = (getString(R.string.url) + "getKnotsListFacebookToken?accessToken=" + AccessToken.getCurrentAccessToken().getToken());
+            url = (getString(R.string.url) + "getKnotsList?accessToken=" + AccessToken.getCurrentAccessToken().getToken() + "&type=facebook");
         }else {
-            url = getString(R.string.url) + "getKnotsListToken?accessToken=" + ((MyApplication) this.getApplication()).getAccessToken();
+            url = getString(R.string.url) + "getKnotsList?accessToken=" + ((MyApplication) this.getApplication()).getAccessToken() + "&type=russesamfunnet";
         }
 
 

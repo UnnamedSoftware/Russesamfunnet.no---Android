@@ -41,16 +41,24 @@ public class UserProfile extends AppCompatActivity {
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         try {
-            url = getString(R.string.url) + "userRuss?russId=" + bundle.getLong("russ_entity");
+            if (AccessToken.getCurrentAccessToken() != null) {
+                url = getString(R.string.url)
+                        + "getOtherRuss?accessToken=" + AccessToken.getCurrentAccessToken().getToken()
+                        +"&type=facebook";
+            } else if (((MyApplication) this.getApplication()).getAccessToken() != null) {
+            url = getString(R.string.url)
+                    + "getOtherRuss?accessToken=" + ((MyApplication) this.getApplication()).getAccessToken()
+                    +"&type=russesamfunnet";
+            }
             System.out.println(url);
         } catch (Exception e) {
             if (AccessToken.getCurrentAccessToken() != null) {
                 System.out.println(AccessToken.getCurrentAccessToken().getToken());
-                url = (getString(R.string.url) + "userRussFacebookToken?accessToken=" + AccessToken.getCurrentAccessToken().getToken());
+                url = (getString(R.string.url) + "userRuss?accessToken=" + AccessToken.getCurrentAccessToken().getToken() + "&type=facebook");
             } else if (((MyApplication) this.getApplication()).getAccessToken() != null) {
                 System.out.println("User id: ");
                 System.out.println(((MyApplication) this.getApplication()).getAccessToken());
-                url = getString(R.string.url) + "userRussToken?accessToken=" + ((MyApplication) this.getApplication()).getAccessToken();
+                url = getString(R.string.url) + "userRuss?accessToken=" + ((MyApplication) this.getApplication()).getAccessToken() + "&type=russesamfunnet";
             }
         }
 

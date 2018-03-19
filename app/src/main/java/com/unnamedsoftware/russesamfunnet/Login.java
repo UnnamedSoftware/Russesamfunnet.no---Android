@@ -243,51 +243,6 @@ public class Login extends AppCompatActivity
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
-
-
-
-        RequestQueue queue = Volley.newRequestQueue(view.getContext());
-        String newUrl = getString(R.string.url) + "login?email=" + userEmailString + "&password=" + userPasswordString;
-
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>()
-                {
-                    @Override
-                    public void onResponse(String response)
-                    {
-                        String theResponse = response.substring(1, response.length()-1);
-                        System.out.println(response);
-                        System.out.println(theResponse);
-                        if (theResponse.equalsIgnoreCase("true"))
-                        {
-                            System.out.println("finish");
-                            finishServerCom();
-                        }
-                    }
-                }, new Response.ErrorListener()
-        {
-            @Override
-            public void onErrorResponse(VolleyError error)
-            {
-                System.out.println("Something did not work:" + error);
-            }
-        })
-        {
-            @Override
-            public String getBodyContentType()
-            {
-                return "application/json";
-            }
-
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError
-            {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("Content-Type", " application/json");
-                return params;
-            }
-        };
-        queue.add(stringRequest);
     }
 
     private void finishServerCom()
