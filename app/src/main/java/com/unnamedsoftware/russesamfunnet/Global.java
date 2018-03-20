@@ -36,7 +36,7 @@ public class Global extends Application
      */
     public String getAccessToken()
     {
-        if (accessToken.isEmpty())
+        if (accessToken.isEmpty() || accessToken == null)
         {
             if(DEBUG) {System.out.println("Access token is empty");}
                 try

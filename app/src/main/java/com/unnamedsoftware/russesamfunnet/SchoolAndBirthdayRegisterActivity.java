@@ -120,7 +120,7 @@ public class SchoolAndBirthdayRegisterActivity extends AppCompatActivity
 
         if (InputAnalyzer.isStringEmpty(dateString))
         {
-            Toast.makeText(this, "Vennligst velg din fødselsdato", Toast.LENGTH_LONG);
+            Toast.makeText(this, "Vennligst velg din fÃ¸dselsdato", Toast.LENGTH_LONG);
 
         } else if (InputAnalyzer.isStringEmpty(schoolAdapter.getSchoolName()))
         {
@@ -417,7 +417,7 @@ public class SchoolAndBirthdayRegisterActivity extends AppCompatActivity
                         }
                     });
                     break;
-                case "Møre og Romsdal":
+                case "MÃ¸re og Romsdal":
                     locationAdapter = ArrayAdapter.createFromResource(this, R.array.MoreOgRomsdal, android.R.layout.simple_list_item_1);
                     locationAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     locationSpinner.setAdapter(locationAdapter);
@@ -550,7 +550,7 @@ public class SchoolAndBirthdayRegisterActivity extends AppCompatActivity
                         }
                     });
                     break;
-                case "Trøndelag":
+                case "TrÃ¸ndelag":
                     locationAdapter = ArrayAdapter.createFromResource(this, R.array.Trondelag, android.R.layout.simple_list_item_1);
                     locationAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     locationSpinner.setAdapter(locationAdapter);
@@ -607,7 +607,7 @@ public class SchoolAndBirthdayRegisterActivity extends AppCompatActivity
                         }
                     });
                     break;
-                case "Østfold":
+                case "Ã˜stfold":
                     locationAdapter = ArrayAdapter.createFromResource(this, R.array.Ostfold, android.R.layout.simple_list_item_1);
                     locationAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     locationSpinner.setAdapter(locationAdapter);
@@ -658,7 +658,7 @@ public class SchoolAndBirthdayRegisterActivity extends AppCompatActivity
     private void chooseDate()
     {
         final Dialog dialog = new Dialog(this);
-        dialog.setTitle("Fødsels dato");
+        dialog.setTitle("FÃ¸dsels dato");
         dialog.setContentView(R.layout.datepicker);
 
         Button confirm = dialog.findViewById(R.id.confirmButton);
