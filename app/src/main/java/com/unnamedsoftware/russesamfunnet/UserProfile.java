@@ -40,14 +40,26 @@ public class UserProfile extends AppCompatActivity {
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         try {
-            if (AccessToken.getCurrentAccessToken() != null) {
-                url = getString(R.string.url)
-                        + "getOtherRuss?accessToken=" + AccessToken.getCurrentAccessToken().getToken()
-                        +"&type=facebook";
+            Long russId = bundle.getLong("russ_entity");
+            if(russId != 0) {
+                if (AccessToken.getCurrentAccessToken() != null) {
+                    url = getString(R.string.url)
+                            + "getOtherRuss?accessToken=" + AccessToken.getCurrentAccessToken().getToken()
+                            + "&type=facebook"
+                            + "&russId=" + russId;
+                } else if (((Global) this.getApplication()).getAccessToken() != null) {
+                    url = getString(R.string.url)
+                            + "getOtherRuss?accessToken=" + ((Global) this.getApplication()).getAccessToken()
+                            + "&type=russesamfunnet"
+                            + "&russId=" + russId;
+                }
+            } else if (AccessToken.getCurrentAccessToken() != null) {
+                System.out.println(AccessToken.getCurrentAccessToken().getToken());
+                url = (getString(R.string.url) + "userRuss?accessToken=" + AccessToken.getCurrentAccessToken().getToken() + "&type=facebook");
             } else if (((Global) this.getApplication()).getAccessToken() != null) {
-            url = getString(R.string.url)
-                    + "getOtherRuss?accessToken=" + ((Global) this.getApplication()).getAccessToken()
-                    +"&type=russesamfunnet";
+                System.out.println("User id: ");
+                System.out.println(((Global) this.getApplication()).getAccessToken());
+                url = getString(R.string.url) + "userRuss?accessToken=" + ((Global) this.getApplication()).getAccessToken() + "&type=russesamfunnet";
             }
             System.out.println(url);
         } catch (Exception e) {
