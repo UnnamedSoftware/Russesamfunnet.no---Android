@@ -13,9 +13,9 @@ import java.util.List;
 public class FeedEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private Integer feedId;
+    private Long feedId;
     private String type;
-    private String zone;
+    private Long groupId;
     private SchoolEntity schoolId;
     private String message;
     private RussEntity russId;
@@ -24,20 +24,20 @@ public class FeedEntity implements Serializable {
     public FeedEntity() {
     }
 
-    public FeedEntity(Integer feedId) {
+    public FeedEntity(Long feedId) {
         this.feedId = feedId;
     }
 
-    public FeedEntity(Integer feedId, String message) {
+    public FeedEntity(Long feedId, String message) {
         this.feedId = feedId;
         this.message = message;
     }
 
-    public int getFeedId() {
+    public Long getFeedId() {
         return feedId;
     }
 
-    public void setFeedId(Integer feedId) {
+    public void setFeedId(Long feedId) {
         this.feedId = feedId;
     }
 
@@ -49,12 +49,12 @@ public class FeedEntity implements Serializable {
         this.type = type;
     }
 
-    public String getZone() {
-        return zone;
+    public Long getGroupId() {
+        return groupId;
     }
 
-    public void setZone(String zone) {
-        this.zone = zone;
+    public void setGroupId(Long groupId) {
+        this.groupId = groupId;
     }
 
     public SchoolEntity getSchoolId() {
