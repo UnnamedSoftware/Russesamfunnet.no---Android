@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.io.Serializable;
+import java.security.acl.Group;
 import java.util.List;
 
 /**
@@ -13,9 +14,10 @@ import java.util.List;
 public class FeedEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    private String poster;
     private Long feedId;
     private String type;
-    private Long groupId;
+    private GroupEntity groupId;
     private SchoolEntity schoolId;
     private String message;
     private RussEntity russId;
@@ -28,9 +30,11 @@ public class FeedEntity implements Serializable {
         this.feedId = feedId;
     }
 
-    public FeedEntity(Long feedId, String message) {
+    public FeedEntity(Long feedId, String message, RussEntity russId) {
         this.feedId = feedId;
         this.message = message;
+        this.russId = russId;
+        this.poster = russId.getFirstName() + " " + russId.getLastName();
     }
 
     public Long getFeedId() {
@@ -49,11 +53,11 @@ public class FeedEntity implements Serializable {
         this.type = type;
     }
 
-    public Long getGroupId() {
+    public GroupEntity getGroupId() {
         return groupId;
     }
 
-    public void setGroupId(Long groupId) {
+    public void setGroupId(GroupEntity groupId) {
         this.groupId = groupId;
     }
 
@@ -72,6 +76,7 @@ public class FeedEntity implements Serializable {
     public void setMessage(String message) {
         this.message = message;
     }
+    public String getPoster(){return this.poster;}
 
     public RussEntity getRussId() {
         return russId;

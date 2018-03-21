@@ -20,7 +20,9 @@ import android.widget.EditText;
 
 import com.facebook.AccessToken;
 import com.facebook.login.LoginManager;
-import com.unnamedsoftware.russesamfunnet.RecyclerView.FeedPost;
+import com.unnamedsoftware.russesamfunnet.Entity.FeedEntity;
+import com.unnamedsoftware.russesamfunnet.Entity.RussEntity;
+import com.unnamedsoftware.russesamfunnet.Entity.SchoolEntity;
 import com.unnamedsoftware.russesamfunnet.RecyclerView.RecyclerViewFeed;
 
 import org.json.JSONArray;
@@ -46,7 +48,7 @@ public class Feed extends AppCompatActivity {
 
     private ActionBarDrawerToggle drawerToggle;
 
-    private List<FeedPost> feedPosts = new ArrayList<>();
+    private List<FeedEntity> feedPosts = new ArrayList<>();
     private RecyclerView recyclerView;
     private RecyclerViewFeed recyclerViewFeed;
     private JSONArray jsonArray = null;
@@ -260,13 +262,31 @@ public class Feed extends AppCompatActivity {
             {
                 JSONObject u = posts.getJSONObject(i);
                 JSONObject newRussObject = u.getJSONObject("russId");
-                Long russId = Long.valueOf(newRussObject.getString("russId"));
-                String firstName = newRussObject.getString("firstName");
-                String surname = newRussObject.getString("lastName");
-                String post = u.getString("message");
 
-                FeedPost posts = new FeedPost(firstName,surname,russId,post);
-                feedPosts.add(0, posts);
+                Long russId = Long.valueOf(newRussObject.getString("russId"));
+                String russStatus = newRussObject.getString("russStatus");
+                String firstName = newRussObject.getString("firstName");
+                String lastName = newRussObject.getString("lastName");
+                String email = newRussObject.getString("email");
+                String russPassword = newRussObject.getString("russPassword");
+                String profilePicture = newRussObject.getString("profilePicture");
+                String russCard = newRussObject.getString("russCard");
+                String russRole = newRussObject.getString("russRole");
+                Integer russYear = Integer.valueOf(newRussObject.getString("russYear"));
+                JSONObject newSchoolObject = newRussObject.getJSONObject("schoolId");
+                Integer schoolId = Integer.valueOf(newSchoolObject.getString("schoolId"));
+                String schoolName = newSchoolObject.getString("schoolName");
+                String schoolStatus = newSchoolObject.getString("schoolStatus");
+
+                SchoolEntity school = new SchoolEntity(schoolId, schoolName, schoolStatus);
+                RussEntity russ = new RussEntity(russId, russStatus, firstName, lastName, email, russPassword, russRole, russYear);
+                String message = u.getString("message");
+                Long feedId = u.getLong("feedId");
+                if(u.getString("type").equals("School")) {
+                    FeedEntity posts = new FeedEntity(feedId, message, russ);
+                    feedPosts.add(0, posts);
+                }
+
 
             }
             recyclerViewFeed.notifyDataSetChanged();
