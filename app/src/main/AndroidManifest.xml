@@ -8,12 +8,14 @@
     <application
         android:name=".Global"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/logo_v3_72x72_round"
         android:label="Russesamfunnet"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Login">
+        <activity
+            android:name=".Login"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -23,8 +25,7 @@
 
         <activity
             android:name=".Feed"
-            android:label="@string/app_name" />
-
+            android:label="@string/app_name"/>
         <activity
             android:name=".Register"
             android:label="@string/app_name" />

@@ -33,6 +33,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ *  https://guides.codepath.com/android/fragment-navigation-drawer
  *
  */
 
@@ -60,14 +61,11 @@ public class Feed extends AppCompatActivity {
 
     JSONArray posts = null;
 
-    /**
-     *  https://guides.codepath.com/android/fragment-navigation-drawer
-     *
-     */
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
 
         setContentView(R.layout.activity_feed);
         if (AccessToken.getCurrentAccessToken() != null)
@@ -256,7 +254,8 @@ public class Feed extends AppCompatActivity {
                 String post = u.getString("message");
 
                 FeedPost posts = new FeedPost(firstName,surname,russId,post);
-                feedPosts.add(posts);
+                feedPosts.add(0, posts);
+
             }
             recyclerViewFeed.notifyDataSetChanged();
 
