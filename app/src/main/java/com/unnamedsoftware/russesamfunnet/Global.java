@@ -36,7 +36,7 @@ public class Global extends Application
      */
     public String getAccessToken()
     {
-        if (accessToken.isEmpty() || accessToken == null)
+        if (accessToken == null)
         {
             if(DEBUG) {System.out.println("Access token is empty");}
                 try
@@ -109,6 +109,27 @@ public class Global extends Application
             e.printStackTrace();
         }
         this.accessToken = accessToken;
+    }
+
+    /**
+     * Deletes the file with the given name
+     *
+     */
+    public String deleteCache(String fileName)
+    {
+        File file = new File(getCacheDir(), fileName);
+        accessToken = null;
+        if (file.exists())
+        {
+            Boolean successCheck = file.delete();
+
+            if(successCheck == true){
+                return "File successfully deleted.";
+            }
+        } else {
+            return "There is no file with that name.";
+        }
+        return "The file was not deleted.";
     }
 
     /**

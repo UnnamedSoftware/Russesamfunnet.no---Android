@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.facebook.AccessToken;
+import com.facebook.login.LoginManager;
 import com.unnamedsoftware.russesamfunnet.RecyclerView.FeedPost;
 import com.unnamedsoftware.russesamfunnet.RecyclerView.RecyclerViewFeed;
 
@@ -208,6 +209,17 @@ public class Feed extends AppCompatActivity {
             case R.id.settings:
                 intent = new Intent(this, Settings.class);
                 this.startActivity(intent);
+                break;
+
+            case R.id.logout:
+                LoginManager.getInstance().logOut();
+                Intent i = getBaseContext().getPackageManager()
+                        .getLaunchIntentForPackage( getBaseContext().getPackageName() );
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                System.out.println(((Global) this.getApplication()).deleteCache("token"));
+                System.out.println(((Global) this.getApplication()).deleteCache("tokenType"));
+                finish();
+                startActivity(i);
                 break;
             default:
 
