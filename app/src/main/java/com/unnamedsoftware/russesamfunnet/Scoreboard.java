@@ -138,7 +138,9 @@ public class Scoreboard extends AppCompatActivity
     {
         this.russId = russId;
     }
-        public void fillScoreboard(JSONArray jsonArray)
+
+
+    public void fillScoreboard(JSONArray jsonArray)
         {
 
         JSONArray users = null;

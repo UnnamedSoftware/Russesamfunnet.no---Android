@@ -1,13 +1,22 @@
 package com.unnamedsoftware.russesamfunnet;
 
 import android.app.Dialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+
+import com.unnamedsoftware.russesamfunnet.Entity.GroupEntity;
+import com.unnamedsoftware.russesamfunnet.RecyclerView.GroupListAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Contains the list over the groups the user are a part of.
@@ -19,7 +28,10 @@ import android.widget.Button;
 public class GroupList extends AppCompatActivity
 {
     private FloatingActionButton floatingActionButton;
-    private Button dummyLinkButton;
+    private List<GroupEntity> groupEntityList = new ArrayList<>();
+    private RecyclerView recyclerView;
+    private GroupListAdapter groupListAdapter;
+    private String url;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -42,25 +54,22 @@ public class GroupList extends AppCompatActivity
             }
         });
 
-        //This will be replaced by the glaGroup
-        ((Global) this.getApplication()).setGroupName("Data vg3");
-
-        this.dummyLinkButton = findViewById(R.id.dummyLink);
-        dummyLinkButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                startActivity(new Intent (GroupList.this, GroupHub.class));
-            }
-        });
-
         System.out.println(getSupportActionBar());
-        if(getSupportActionBar() != null)
+        if (getSupportActionBar() != null)
         {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
+
+        dummy();
+
+        this.recyclerView = findViewById(R.id.glaGroup);
+        this.groupListAdapter = new GroupListAdapter(groupEntityList);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
+        recyclerView.setAdapter(groupListAdapter);
     }
 
     /**
@@ -69,7 +78,7 @@ public class GroupList extends AppCompatActivity
     private void addNewGroup()
     {
         final Dialog dialog = new Dialog(this);
-        dialog.setTitle ("Grupper");
+        dialog.setTitle("Grupper");
         dialog.setContentView(R.layout.group_list_dialog);
 
         Button addNewGroupButton = dialog.findViewById(R.id.addNewGroupButton);
@@ -86,5 +95,18 @@ public class GroupList extends AppCompatActivity
     }
 
 
+    private void dummy()
+    {
+        GroupEntity group = new GroupEntity(1, "Data vg3");
+        groupEntityList.add(group);
+        group = new GroupEntity(2, "Cult of conflict");
+        groupEntityList.add(group);
+        group = new GroupEntity(3, "Gjengen");
+        groupEntityList.add(group);
+        group = new GroupEntity(4, "Sy klubben");
+        groupEntityList.add(group);
+        group = new GroupEntity(5, "Borgund elektro linje");
+        groupEntityList.add(group);
+    }
 
 }

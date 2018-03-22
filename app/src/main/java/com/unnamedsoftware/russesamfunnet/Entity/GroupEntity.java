@@ -13,7 +13,11 @@ public class GroupEntity extends Entity implements Serializable
     private Integer groupID;
     private String groupName;
 
-
+    public GroupEntity(Integer groupID, String groupName)
+    {
+        this.groupID = groupID;
+        this.groupName = groupName;
+    }
 
     @Override
     public String getSearchName()
@@ -21,6 +25,7 @@ public class GroupEntity extends Entity implements Serializable
         return this.groupName;
     }
 
+    public Integer getGroupID(){return this.groupID;}
 
 
 }
