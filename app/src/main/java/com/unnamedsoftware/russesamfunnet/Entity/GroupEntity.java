@@ -27,5 +27,15 @@ public class GroupEntity extends Entity implements Serializable
 
     public Integer getGroupID(){return this.groupID;}
 
+    public void setGroupID(Integer groupID) {
+        this.groupID = groupID;
+    }
 
+    public String getGroupName() {
+        return groupName;
+    }
+
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
+    }
 }

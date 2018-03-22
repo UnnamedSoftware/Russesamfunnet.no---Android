@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.unnamedsoftware.russesamfunnet.Entity.FeedEntity;
 import com.unnamedsoftware.russesamfunnet.R;
 
 import java.util.List;
@@ -16,7 +17,7 @@ import java.util.List;
 
 public class RecyclerViewFeed extends RecyclerView.Adapter<RecyclerViewFeed.ViewHolder>
 {
-    private List<FeedPost> posts;
+    private List<FeedEntity> posts;
 
     public class ViewHolder extends RecyclerView.ViewHolder
     {
@@ -29,7 +30,7 @@ public class RecyclerViewFeed extends RecyclerView.Adapter<RecyclerViewFeed.View
         }
     }
 
-    public  RecyclerViewFeed (List<FeedPost> feedPosts)
+    public  RecyclerViewFeed (List<FeedEntity> feedPosts)
     {
         this.posts = feedPosts;
     }
@@ -45,9 +46,9 @@ public class RecyclerViewFeed extends RecyclerView.Adapter<RecyclerViewFeed.View
     @Override
     public void onBindViewHolder(ViewHolder holder, int position)
     {
-        FeedPost feedPost = posts.get(position);
+        FeedEntity feedPost = posts.get(position);
         holder.poster.setText(feedPost.getPoster());
-        holder.post.setText(feedPost.getPost());
+        holder.post.setText(feedPost.getMessage());
     }
 
     @Override
