@@ -1,7 +1,6 @@
 package com.unnamedsoftware.russesamfunnet.RecyclerView;
 
 
-import android.app.Application;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -20,11 +19,10 @@ import java.util.List;
 /**
  * Created by Alexander Eilert Berg on 29.01.2018.
  */
-public class RecyclerViewScoreboard extends RecyclerView.Adapter<RecyclerViewScoreboard.ViewHolder>
+public class ScoreboardAdapter extends RecyclerView.Adapter<ScoreboardAdapter.ViewHolder>
 {
     private List<ScoreboardEntity> userList;
 
-    //Replace with the users ID!
     private Long userID ;
 
     public class ViewHolder extends RecyclerView.ViewHolder
@@ -42,9 +40,11 @@ public class RecyclerViewScoreboard extends RecyclerView.Adapter<RecyclerViewSco
         }
     }
 
-    public RecyclerViewScoreboard(List<ScoreboardEntity> userList, Long userId)
+    public ScoreboardAdapter(List<ScoreboardEntity> userList, Long userId)
     {
+        System.out.println("SA russ id pre: " + userID);
         this.userID = userId;
+        System.out.println("SA russ id post: " + userID);
         this.userList = userList;
     }
 
@@ -73,6 +73,7 @@ public class RecyclerViewScoreboard extends RecyclerView.Adapter<RecyclerViewSco
     public void onBindViewHolder(ViewHolder holder, int position)
     {
         final ScoreboardEntity listUser = userList.get(position);
+        System.out.println("-----" + listUser.getRussId().getRussId() + " & " +  userID + "-----");
         if (listUser.getRussId().getRussId() == userID)
         {
             holder.layout.setBackgroundResource((R.drawable.user_scoreboard_border));

@@ -1,36 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:id="@+id/scoreboard"
-        android:checked="false"
-        android:title="@string/scoreboard" />
-    <item
-        android:id="@+id/profile"
-        android:checked="false"
-        android:title="@string/profile"/>
 
-    <item
-        android:id="@+id/knotList"
-        android:checkable="false"
-        android:title="@string/knotList"/>
-    <item
-        android:id="@+id/group"
-        android:checkable="false"
-        android:title="@string/group"/>
-    <item
-        android:id="@+id/event"
-        android:checkable="false"
-        android:title="@string/event"/>
+    <group
+        android:id="@+id/menu_top"
+        android:checkableBehavior="none">
+            <item
+                android:id="@+id/scoreboard"
+                android:icon="@drawable/ic_format_list_numbered_black_24dp"
+                android:title="@string/scoreboard" />
+            <item
+                android:id="@+id/profile"
+                android:icon="@drawable/ic_account_circle_black_18dp"
+                android:title="@string/profile" />
 
-    <item
-        android:id="@+id/settings"
-        android:actionLayout="@color/colorPrimaryDark"
-        android:checkable="false"
-        android:checked="false"
-        android:title="@string/settings" />
+            <item
+                android:id="@+id/knotList"
+                android:icon="@drawable/ic_assignment_black_18dp"
+                android:title="@string/knotList" />
+    </group>
 
-    <item
-        android:id="@+id/logout"
-        android:checkable="false"
-        android:title="@string/logout"/>
+    <group
+        android:checkableBehavior="none">
+            <item
+                android:id="@+id/group"
+                android:icon="@drawable/ic_group_black_24dp"
+                android:title="@string/group" />
+            <item
+                android:id="@+id/event"
+                android:icon="@drawable/ic_event_black_18dp"
+                android:title="@string/event" />
+    </group>
+
+    <group
+        android:id="@+id/menu_bottom"
+        android:checkableBehavior="none">
+            <item
+                android:id="@+id/settings"
+                android:icon="@drawable/ic_settings_black_24dp"
+                android:title="@string/settings" />
+
+            <item
+                android:id="@+id/logout"
+                android:icon="@drawable/ic_exit_to_app_black_18dp"
+                android:title="@string/logout" />
+    </group>
 </menu>

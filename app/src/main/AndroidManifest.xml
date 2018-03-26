@@ -105,10 +105,16 @@
             android:value=".GroupHub" />
         </activity>
 
-        <activity android:name=".SchoolAndBirthdayRegisterActivity"
+
+        <activity android:name=".BirthdayRegisterActivity"
             android:windowSoftInputMode="adjustResize"
             android:label="@string/app_name"
-            android:parentActivityName=".Login"/>
+            android:parentActivityName=".Register"/>
+
+        <activity android:name=".SchoolRegisterActivity"
+            android:windowSoftInputMode="adjustResize"
+            android:label="@string/app_name"
+            android:parentActivityName=".BirthdayRegisterActivity"/>
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"

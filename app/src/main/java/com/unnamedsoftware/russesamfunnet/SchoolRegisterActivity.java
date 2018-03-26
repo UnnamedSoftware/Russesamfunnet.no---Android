@@ -1,7 +1,6 @@
 package com.unnamedsoftware.russesamfunnet;
 
 import android.annotation.SuppressLint;
-import android.app.Dialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -11,17 +10,14 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.NumberPicker;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.facebook.AccessToken;
 import com.unnamedsoftware.russesamfunnet.Entity.SchoolEntity;
@@ -35,69 +31,46 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 
-public class SchoolAndBirthdayRegisterActivity extends AppCompatActivity
+public class SchoolRegisterActivity extends AppCompatActivity
 {
-    private EditText dateDisplay;
     private TextView schoolNameDisplay;
-    private Button okButton;
+    private Button registerButton;
 
     private Spinner municipalitySpinner;
     private Spinner locationSpinner;
 
     private String municipality;
     private String location;
-    private String dateString;
-
-    final String[] day = new String[1];
-    final String[] month = new String[1];
-    final String[] year = new String[1];
 
     private List<SchoolEntity> schoolEntityList = new ArrayList<>();
     private RecyclerView recyclerView;
     private SchoolAdapter schoolAdapter;
+
+    private String firstName;
+    private String surname;
+    private String email;
+    private String password;
+    private String dateString;
 
     @SuppressLint("WrongViewCast")
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_school_and_birthday_register);
+        setContentView(R.layout.activity_school_register);
 
-        this.dateDisplay = findViewById(R.id.dateDisplay);
         this.locationSpinner = findViewById(R.id.locationSpinner);
 
-        this.day[0] = String.valueOf(1);
-        this.month[0] = String.valueOf(1);
-        this.year[0] = Integer.toString(getYear() - 17);
 
         //Spinner setup
         setupMunicipalitySpinner();
+        setupLocationSpinner();
 
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-
-        ImageButton imageButton = findViewById(R.id.dateImage);
-        imageButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                chooseDate();
-            }
-        });
-
-        dateDisplay.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                chooseDate();
-            }
-        });
 
         try
         {
@@ -107,6 +80,13 @@ public class SchoolAndBirthdayRegisterActivity extends AppCompatActivity
             e.printStackTrace();
         }
 
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        TextView toolbarTitle = toolbar.findViewById(R.id.toolbar_title);
+        toolbarTitle.setText(toolbar.getTitle());
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        toolbarTitle.setText("Velg skole");
+
         this.recyclerView = findViewById(R.id.recycler_view_schoolList);
         this.schoolAdapter = new SchoolAdapter(schoolEntityList);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
@@ -114,34 +94,19 @@ public class SchoolAndBirthdayRegisterActivity extends AppCompatActivity
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
 
-        this.okButton = findViewById(R.id.okButton);
-        this.okButton.setAlpha(.5f);
-        this.okButton.setClickable(false);
+        this.registerButton = findViewById(R.id.registerButton);
+        this.registerButton.setAlpha(.5f);
+        this.registerButton.setClickable(false);
 
-        if (InputAnalyzer.isStringEmpty(dateString))
-        {
-            Toast.makeText(this, "Vennligst velg din fødselsdato", Toast.LENGTH_LONG);
+        setInputData();
 
-        } else if (InputAnalyzer.isStringEmpty(schoolAdapter.getSchoolName()))
-        {
-           Toast.makeText(this,"Vennligst velg din skole", Toast.LENGTH_LONG);
-
-        } else
-        {
-            this.okButton.setAlpha(1f);
-            this.okButton.setClickable(true);
-
-        }
-
-        okButton.setOnClickListener(new View.OnClickListener()
+        registerButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View view)
             {
                 String school = schoolAdapter.getSchoolName();
 
-                System.out.println(dateString);
-                System.out.println(school);
 
                 try{
                     System.out.println("Ta-daaaa");
@@ -157,6 +122,26 @@ public class SchoolAndBirthdayRegisterActivity extends AppCompatActivity
 
     }
 
+    /**
+     * Set data from intent to variables
+     */
+    private void setInputData()
+    {
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        try
+        {
+            this.firstName = (String) bundle.get("firstName");
+            this.surname = (String) bundle.get("surname");
+            this.email = (String) bundle.get("email");
+            this.password = (String) bundle.get("password");
+            this.dateString = (String) bundle.get("dataString");
+        } catch (NullPointerException e)
+        {
+            System.out.println("Empty intent. e: ");
+            e.printStackTrace();
+        }
+    }
 
     @RequiresApi(api = Build.VERSION_CODES.CUPCAKE)
     private void registerRuss(String dateString, String school) throws IOException {
@@ -185,7 +170,7 @@ public class SchoolAndBirthdayRegisterActivity extends AppCompatActivity
 
     private void goToFeed()
     {
-        startActivity(new Intent(SchoolAndBirthdayRegisterActivity.this, Feed.class));
+        startActivity(new Intent(SchoolRegisterActivity.this, Feed.class));
         finish();
     }
 
@@ -648,106 +633,26 @@ public class SchoolAndBirthdayRegisterActivity extends AppCompatActivity
                     });
                     break;
             }
-        }
-    }
-
-
-    /**
-     * Displays the date picker, when date is set updates the date display and saves the date as a string for use with the registration
-     */
-    private void chooseDate()
-    {
-        final Dialog dialog = new Dialog(this);
-        dialog.setTitle("Fødsels dato");
-        dialog.setContentView(R.layout.datepicker);
-
-        Button confirm = dialog.findViewById(R.id.confirmButton);
-
-        final NumberPicker numberPickerDay = dialog.findViewById(R.id.dateDay);
-        final NumberPicker numberPickerMonth = dialog.findViewById(R.id.dateMonth);
-        final NumberPicker numberPickerYear = dialog.findViewById(R.id.dateYear);
-
-        //--- Set Day ---
-        numberPickerDay.setMaxValue(30);
-        numberPickerDay.setMinValue(1);
-        numberPickerDay.setWrapSelectorWheel(false);
-        numberPickerDay.setOnValueChangedListener(new NumberPicker.OnValueChangeListener()
+        }else
         {
-            @Override
-            public void onValueChange(NumberPicker numberPicker, int oldValue, int newValue)
+            locationAdapter = ArrayAdapter.createFromResource(this, R.array.AllLocation, android.R.layout.simple_list_item_1);
+            locationAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            locationSpinner.setAdapter(locationAdapter);
+            locationSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
             {
-                day[0] = Integer.toString(newValue);
-            }
-        });
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
+                {
+                    location = locationSpinner.getSelectedItem().toString();
+                    updateSchoolAdapter();
+                }
 
-        //--- Set Month ---
-        numberPickerMonth.setMaxValue(12);
-        numberPickerMonth.setMinValue(1);
-
-        //If you want to have Months displayed as strings do use this as a guide
-        /*
-            NumberPicker numberPicker = new NumberPicker(this);
-            String[] arrayString= new String[]{"hakuna","matata","timon","and","pumba"};
-            numberPicker.setMinValue(0);
-            numberPicker.setMaxValue(arrayString.length-1);
-
-            numberPicker.setFormatter(new NumberPicker.Formatter() {
-            @Override
-            public String format(int value) {
-            return arrayString[value];
-            }
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView)
+                {
+                }
             });
-        */
-
-
-        numberPickerMonth.setWrapSelectorWheel(false);
-        numberPickerMonth.setOnValueChangedListener(new NumberPicker.OnValueChangeListener()
-        {
-            @Override
-            public void onValueChange(NumberPicker numberPicker, int oldValue, int newValue)
-            {
-                month[0] = Integer.toString(newValue);
-            }
-        });
-
-        //--- Set Year ---
-        numberPickerYear.setMaxValue(getYear() - 17);
-        numberPickerYear.setMinValue(getYear() - 30);
-        numberPickerYear.setWrapSelectorWheel(false);
-        numberPickerYear.setOnValueChangedListener(new NumberPicker.OnValueChangeListener()
-        {
-            @Override
-            public void onValueChange(NumberPicker numberPicker, int oldValue, int newValue)
-            {
-                year[0] = Integer.toString(newValue);
-            }
-        });
-
-        confirm.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                String date = (day[0] + "." + month[0] + "." + year[0]);
-                dateDisplay.setText(date);
-                dateString = date;
-                dialog.dismiss();
-            }
-        });
-
-        dialog.show();
-    }
-
-    /**
-     * Retrieves the current year and returns it as an int
-     *
-     * @return the current year as an int
-     */
-    private int getYear()
-    {
-        Calendar calendar = Calendar.getInstance();
-        int year = calendar.get(Calendar.YEAR);
-        return year;
+        }
     }
 
     /**

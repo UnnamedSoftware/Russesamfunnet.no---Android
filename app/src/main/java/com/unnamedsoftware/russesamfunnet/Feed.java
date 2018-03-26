@@ -23,7 +23,7 @@ import com.facebook.login.LoginManager;
 import com.unnamedsoftware.russesamfunnet.Entity.FeedEntity;
 import com.unnamedsoftware.russesamfunnet.Entity.RussEntity;
 import com.unnamedsoftware.russesamfunnet.Entity.SchoolEntity;
-import com.unnamedsoftware.russesamfunnet.RecyclerView.RecyclerViewFeed;
+import com.unnamedsoftware.russesamfunnet.RecyclerView.FeedAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -50,7 +50,7 @@ public class Feed extends AppCompatActivity {
 
     private List<FeedEntity> feedPosts = new ArrayList<>();
     private RecyclerView recyclerView;
-    private RecyclerViewFeed recyclerViewFeed;
+    private FeedAdapter feedAdapter;
     private JSONArray jsonArray = null;
 
     private String url;
@@ -93,8 +93,7 @@ public class Feed extends AppCompatActivity {
         nav = findViewById(R.id.navList);
         setupDrawerContent(nav);
         drawerLayout.requestLayout();
-        getWindow().setSoftInputMode(
-                WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        getWindow().setSoftInputMode(       WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         try
         {
@@ -106,12 +105,12 @@ public class Feed extends AppCompatActivity {
 
 
         recyclerView = findViewById(R.id.recycler_view_feed);
-        recyclerViewFeed = new RecyclerViewFeed(feedPosts);
+        feedAdapter = new FeedAdapter(feedPosts);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
-        recyclerView.setAdapter(recyclerViewFeed);
+        recyclerView.setAdapter(feedAdapter);
 
 
         Button button = (Button) findViewById(R.id.button_chatbox_send);
@@ -155,7 +154,7 @@ public class Feed extends AppCompatActivity {
                         {
 
                             try {
-                                recyclerViewFeed.clear();
+                                feedAdapter.clear();
                                 getFeed();
                             }
                             catch (Exception e)
@@ -226,7 +225,7 @@ public class Feed extends AppCompatActivity {
             default:
 
         }
-        menuItem.setChecked(true);
+        menuItem.setChecked(false);
         setTitle(menuItem.getTitle());
         drawerLayout.closeDrawers();
     }
@@ -286,10 +285,8 @@ public class Feed extends AppCompatActivity {
                     FeedEntity posts = new FeedEntity(feedId, message, russ);
                     feedPosts.add(0, posts);
                 }
-
-
             }
-            recyclerViewFeed.notifyDataSetChanged();
+            feedAdapter.notifyDataSetChanged();
 
         }catch (JSONException e)
         {

@@ -10,7 +10,7 @@ public class KnotEntity extends Entity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private int mData;
-    private Integer knotId;
+    private Long knotId;
     private String details;
     private SchoolEntity schoolId;
     private String title;
@@ -21,11 +21,11 @@ public class KnotEntity extends Entity implements Serializable {
     public KnotEntity() {
     }
 
-    public KnotEntity(Integer knotId) {
+    public KnotEntity(Long knotId) {
         this.knotId = knotId;
     }
 
-    public KnotEntity(Integer knotId, String details, String title) {
+    public KnotEntity(Long knotId, String title, String details) {
         this.knotId = knotId;
         this.details = details;
         this.title = title;
@@ -39,11 +39,11 @@ public class KnotEntity extends Entity implements Serializable {
         this.title = title;
     }
 
-    public Integer getKnotId() {
+    public Long getKnotId() {
         return knotId;
     }
 
-    public void setKnotId(Integer knotId) {
+    public void setKnotId(Long knotId) {
         this.knotId = knotId;
     }
 

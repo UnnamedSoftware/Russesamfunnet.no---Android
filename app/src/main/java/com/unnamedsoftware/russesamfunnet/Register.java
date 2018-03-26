@@ -1,11 +1,8 @@
 package com.unnamedsoftware.russesamfunnet;
 
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -15,21 +12,17 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.StringWriter;
-import java.io.Writer;
-
 /**
  * Created by Alexander Eilert Berg on 22.01.2018.
  */
 
 public class Register extends AppCompatActivity
 {
-    String termsOfService;
+    private String firstName;
+    private String surname;
+    private String email;
+    private String password;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -40,14 +33,7 @@ public class Register extends AppCompatActivity
 
         registerUser(findViewById(R.id.registerButton));
 
-        InputStream inputStream = this.getResources().openRawResource(R.raw.terms_of_service);
-        try
-        {
-            termsOfService = StreamToString(inputStream);
-        } catch (IOException e)
-        {
-            e.printStackTrace();
-        }
+
     }
 
     /**
@@ -161,85 +147,38 @@ public class Register extends AppCompatActivity
 
                                         } else
                                         {
-                                            displayTermsOfService();
+                                            setInputData();
+                                            Intent intent = new Intent(Register.this, BirthdayRegisterActivity.class);
+                                            intent.putExtra("firstName", firstName);
+                                            intent.putExtra("surname", surname);
+                                            intent.putExtra("email", email);
+                                            intent.putExtra("password", password);
+                                            startActivity(intent);
                                         }
-
-                                        //Send data to server
-
-
                                     }
                                 }
         );
     }
 
-    /**
-     * Displays the terms of service as an AlertDialog.
-     * The user has to accept or disagree.
-     * If the user accepts the input data gets sent to the server.
-     * If the user disagrees the user is sent to the Login screen.
-     */
-    private void displayTermsOfService()
-    {
-        final AlertDialog.Builder builder;
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-        {
-            builder = new AlertDialog.Builder(this, android.R.style.Theme_Material_Dialog_Alert);
-        } else
-        {
-            builder = new AlertDialog.Builder(this);
-        }
-        builder.setTitle("Vilkår for Tjenesten")
-                .setMessage(termsOfService)
-                .setPositiveButton("Avslå", new DialogInterface.OnClickListener()
-                {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i)
-                    {
-                        startActivity(new Intent(Register.this, Login.class));
-                    }
-                })
-                .setNegativeButton("Aksepter", new DialogInterface.OnClickListener()
-                {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i)
-                    {
-
-                    }
-                })
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .show();
-    }
-
 
     /**
-     * Takes an inputStream and extracts its string
-     *
-     * @param in
-     * @return Returns inputStreams string
-     * @throws IOException
+     * Reads the information in the various editTexts and sets them as variables
      */
-    public static String StreamToString(InputStream in) throws IOException
+    private void setInputData()
     {
-        if (in == null)
-        {
-            return "";
-        }
-        Writer writer = new StringWriter();
-        char[] buffer = new char[1024];
         try
         {
-            Reader reader = new BufferedReader(new InputStreamReader(in, "UTF-8"));
-            int n;
-            while ((n = reader.read(buffer)) != -1)
-            {
-                writer.write(buffer, 0, n);
-            }
-        } finally
+            this.firstName = ((EditText) findViewById(R.id.registerFirstNameInput)).getText().toString();
+            this.surname = ((EditText) findViewById(R.id.registerSurnameInput)).getText().toString();
+            this.email = ((EditText) findViewById(R.id.registerEmailInput)).getText().toString();
+            this.password = ((EditText) findViewById(R.id.registerPasswordInput)).getText().toString();
+        } catch (NullPointerException e)
         {
+            System.out.println("Empty editText fields. e: ");
+            e.printStackTrace();
         }
-        return writer.toString();
     }
+
 
     /**
      * Hides the keyboard
@@ -255,12 +194,16 @@ public class Register extends AppCompatActivity
                 activity.getCurrentFocus().getWindowToken(), 0);
     }
 
-    public void setupUI(View view) {
+    public void setupUI(View view)
+    {
 
         // Set up touch listener for non-text box views to hide keyboard.
-        if (!(view instanceof EditText)) {
-            view.setOnTouchListener(new View.OnTouchListener() {
-                public boolean onTouch(View v, MotionEvent event) {
+        if (!(view instanceof EditText))
+        {
+            view.setOnTouchListener(new View.OnTouchListener()
+            {
+                public boolean onTouch(View v, MotionEvent event)
+                {
                     hideSoftKeyboard(Register.this);
                     return false;
                 }
@@ -268,8 +211,10 @@ public class Register extends AppCompatActivity
         }
 
         //If a layout container, iterate over children and seed recursion.
-        if (view instanceof ViewGroup) {
-            for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++) {
+        if (view instanceof ViewGroup)
+        {
+            for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++)
+            {
                 View innerView = ((ViewGroup) view).getChildAt(i);
                 setupUI(innerView);
             }

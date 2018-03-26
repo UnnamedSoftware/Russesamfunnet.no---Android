@@ -209,7 +209,7 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
                         JSONObject u = data.getJSONObject(i);
                         JSONObject newDataJSONObject = u.getJSONObject("");
 
-                        Integer knotId = newDataJSONObject.getInt("knotId");
+                        Long knotId = newDataJSONObject.getLong("knotId");
                         String details = newDataJSONObject.getString("knotDetails");
                         String title = newDataJSONObject.getString("knotName");
 

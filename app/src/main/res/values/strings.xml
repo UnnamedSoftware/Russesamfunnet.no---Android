@@ -5,8 +5,8 @@
     <string name="drawer_close">Close navigation drawer</string>
 
     <string name="scoreboard">Scoreboard</string>
-    <string name="profile">Bruker Profil</string>
-    <string name="knotList">Knute Liste</string>
+    <string name="profile">Brukerprofil</string>
+    <string name="knotList">Knuteliste</string>
     <string name="group">Grupper</string>
     <string name="event">Arrangementer</string>
     <string name="settings">Instillinger</string>
@@ -1092,6 +1092,7 @@
     </string-array>
 
     <string-array name="AllLocation">
+        <item>Velg Kommune</item>
         <item>Aksdal</item>
         <item>Algarheim</item>
         <item>Alshus</item>

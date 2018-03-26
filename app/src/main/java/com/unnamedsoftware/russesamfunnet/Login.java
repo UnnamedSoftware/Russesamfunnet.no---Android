@@ -120,7 +120,7 @@ public class Login extends AppCompatActivity
                             finishServerCom();
                         } else if(jsonObject.getString("loginStatus").equals("User not in db")){
                             System.out.println(jsonObject.get("loginStatus"));
-                            Intent intent = new Intent(Login.this, SchoolAndBirthdayRegisterActivity.class);
+                            Intent intent = new Intent(Login.this, SchoolRegisterActivity.class);
                             intent.putExtra("facebookToken", AccessToken.getCurrentAccessToken().getToken());
                             startActivity(intent);
 

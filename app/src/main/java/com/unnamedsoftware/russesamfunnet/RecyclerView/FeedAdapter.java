@@ -15,7 +15,7 @@ import java.util.List;
  * Created by Alexander Eilert Berg on 30.01.2018.
  */
 
-public class RecyclerViewFeed extends RecyclerView.Adapter<RecyclerViewFeed.ViewHolder>
+public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>
 {
     private List<FeedEntity> posts;
 
@@ -30,7 +30,7 @@ public class RecyclerViewFeed extends RecyclerView.Adapter<RecyclerViewFeed.View
         }
     }
 
-    public  RecyclerViewFeed (List<FeedEntity> feedPosts)
+    public FeedAdapter(List<FeedEntity> feedPosts)
     {
         this.posts = feedPosts;
     }

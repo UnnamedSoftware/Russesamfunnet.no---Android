@@ -24,6 +24,22 @@ public class Global extends Application
     static final Boolean DEBUG = false;
 
 
+    //--- Russ ID ---
+    private Long russId;
+
+    /**
+     * Sets the russ ID
+     * @param russId
+     */
+    public void setRussId(Long russId){this.russId = russId;}
+
+    /**
+     * Returns the russ ID
+     * @return The russ ID
+     */
+    public Long getRussId(){return this.russId;}
+
+
     //--- Token ---
     private String accessToken;
 
@@ -165,9 +181,27 @@ public class Global extends Application
      * Holds the current group name, for use in the toolbar in group hub and scoreboard.
      */
     private String groupName;
+    private Integer groupID;
 
     /**
-     * Uses the recived string to change the current group name
+     * Uses the received string to change the current group id
+     *
+     * @param newGroupID
+     */
+    public void setGroupID(Integer newGroupID){this.groupID = newGroupID;}
+
+    /**
+     * Returns the current (last accessed) group id
+     *
+     * @return the current (last accessed) group id
+     */
+    public Integer getGroupID()
+    {
+        return groupID;
+    }
+
+    /**
+     * Uses the received string to change the current group name
      *
      * @param newGroupName
      */

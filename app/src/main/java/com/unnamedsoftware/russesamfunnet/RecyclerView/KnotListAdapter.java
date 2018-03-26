@@ -17,9 +17,9 @@ import java.util.List;
  * Created by Alexander Eilert Berg on 30.01.2018.
  */
 
-public class ViewKnotListAdapter extends RecyclerView.Adapter<ViewKnotListAdapter.ViewHolder>
+public class KnotListAdapter extends RecyclerView.Adapter<KnotListAdapter.ViewHolder>
 {
-    private List<TempKnot> knotList;
+    private List<KnotEntity> knotEntityList;
 
     public class ViewHolder extends RecyclerView.ViewHolder
     {
@@ -32,32 +32,32 @@ public class ViewKnotListAdapter extends RecyclerView.Adapter<ViewKnotListAdapte
         }
     }
 
-    public ViewKnotListAdapter(List<TempKnot> knotList)
+    public KnotListAdapter(List<KnotEntity> knotList)
     {
-        this.knotList = knotList;
+        this.knotEntityList = knotList;
     }
 
     @Override
-    public ViewKnotListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
+    public KnotListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.knot_list_knot_row, parent, false);
         return new ViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(ViewKnotListAdapter.ViewHolder holder,  int position)
+    public void onBindViewHolder(KnotListAdapter.ViewHolder holder, int position)
     {
         final int pos = position;
-        TempKnot tempKnot = knotList.get(position);
-        holder.title.setText(tempKnot.getTitle());
+        KnotEntity knotEntity = knotEntityList.get(position);
+        holder.title.setText(knotEntity.getTitle());
         holder.itemView.setOnClickListener(new View.OnClickListener()
     {
         @Override
         public void onClick(View v)
         {
-            TempKnot tempKnot = knotList.get(pos);
+            KnotEntity knotEntity = knotEntityList.get(pos);
             Intent intent = new Intent(v.getContext(), Knot.class);
-            intent.putExtra("knot_entity", new KnotEntity(tempKnot.getKnotID(), tempKnot.getDescription(), tempKnot.getTitle()));
+            intent.putExtra("knot_entity", new KnotEntity(knotEntity.getKnotId(), knotEntity.getDetails(), knotEntity.getTitle()));
             v.getContext().startActivity(intent);
         }
     });
@@ -66,9 +66,6 @@ public class ViewKnotListAdapter extends RecyclerView.Adapter<ViewKnotListAdapte
     @Override
     public int getItemCount()
     {
-        return knotList.size();
+        return knotEntityList.size();
     }
-
-
-
 }

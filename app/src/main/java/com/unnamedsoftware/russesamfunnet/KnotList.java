@@ -9,8 +9,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
 import com.facebook.AccessToken;
-import com.unnamedsoftware.russesamfunnet.RecyclerView.TempKnot;
-import com.unnamedsoftware.russesamfunnet.RecyclerView.ViewKnotListAdapter;
+import com.unnamedsoftware.russesamfunnet.Entity.KnotEntity;
+import com.unnamedsoftware.russesamfunnet.RecyclerView.KnotListAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,9 +30,9 @@ import java.util.List;
 public class KnotList extends AppCompatActivity
 {
 
-    private List<TempKnot> tempKnots = new ArrayList<>();
+    private List<KnotEntity> knotEntities = new ArrayList<>();
     private RecyclerView recyclerView;
-    private ViewKnotListAdapter viewKnotListAdapter;
+    private KnotListAdapter knotListAdapter;
     private JSONArray jsonArray = null;
 
     private String url;
@@ -69,12 +69,12 @@ public class KnotList extends AppCompatActivity
 
 
         this.recyclerView = findViewById(R.id.recycler_view_knot_list);
-        this.viewKnotListAdapter = new ViewKnotListAdapter (tempKnots);
+        this.knotListAdapter = new KnotListAdapter(knotEntities);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
-        recyclerView.setAdapter(viewKnotListAdapter);
+        recyclerView.setAdapter(knotListAdapter);
 
 
         try
@@ -112,14 +112,14 @@ public class KnotList extends AppCompatActivity
             for(int i = 0; i < knots.length(); i++)
             {
                 JSONObject knotsJSONObject = knots.getJSONObject(i);
-                Integer knotID = Integer.valueOf(knotsJSONObject.getString("knotId"));
+                Long knotID = Long.valueOf(knotsJSONObject.getString("knotId"));
                 String title = knotsJSONObject.getString("knotName");
                 String description = knotsJSONObject.getString("knotDetails");
 
-                TempKnot knot = new TempKnot(title,description,knotID);
-                tempKnots.add(knot);
+                KnotEntity knot = new KnotEntity(knotID,title,description);
+                knotEntities.add(knot);
             }
-            this.viewKnotListAdapter.notifyDataSetChanged();
+            this.knotListAdapter.notifyDataSetChanged();
         }catch (JSONException e)
         {
             e.printStackTrace();

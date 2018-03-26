@@ -1,24 +1,12 @@
 package com.unnamedsoftware.russesamfunnet;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.method.PasswordTransformationMethod;
-import android.text.style.EasyEditSpan;
-import android.util.DisplayMetrics;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.unnamedsoftware.russesamfunnet.Entity.KnotEntity;
-
-import java.util.logging.Logger;
 
 /**
  *
@@ -56,14 +44,11 @@ public class Knot extends AppCompatActivity
     private void fillInData(){
 
         TextView textViewTitle = findViewById(R.id.knot_name);
-        textViewTitle.setText(knotEntity.getTitle());
+        textViewTitle.setText(knotEntity.getDetails());
 
         TextView textViewDescription = findViewById(R.id.description);
-        textViewDescription.setText(knotEntity.getDetails());
+        textViewDescription.setText(knotEntity.getTitle());
     }
-
-
-
 
 
     @Override

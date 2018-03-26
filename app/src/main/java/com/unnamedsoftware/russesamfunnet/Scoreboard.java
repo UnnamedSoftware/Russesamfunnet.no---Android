@@ -14,7 +14,7 @@ import com.facebook.AccessToken;
 import com.unnamedsoftware.russesamfunnet.Entity.RussEntity;
 import com.unnamedsoftware.russesamfunnet.Entity.SchoolEntity;
 import com.unnamedsoftware.russesamfunnet.Entity.ScoreboardEntity;
-import com.unnamedsoftware.russesamfunnet.RecyclerView.RecyclerViewScoreboard;
+import com.unnamedsoftware.russesamfunnet.RecyclerView.ScoreboardAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -33,9 +33,8 @@ public class Scoreboard extends AppCompatActivity
 {
     private List<ScoreboardEntity> userList = new ArrayList<>();
     private RecyclerView recyclerView;
-    private RecyclerViewScoreboard recyclerViewScoreboard;
+    private ScoreboardAdapter scoreboardAdapter;
     private JSONArray jsonArray = null;
-    private Long russId = null;
 
     private String url;
 
@@ -46,13 +45,12 @@ public class Scoreboard extends AppCompatActivity
     private static final String TAG_RUSS_ID = "russId";
 
 
-
     /**
-     *
      * @param savedInstanceState
      */
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scoreboard);
         //getString(R.string.url)
@@ -60,8 +58,17 @@ public class Scoreboard extends AppCompatActivity
         {
             System.out.println(AccessToken.getCurrentAccessToken().getToken());
             url = (getString(R.string.url) + "scoreboardTop10?accessToken=" + AccessToken.getCurrentAccessToken().getToken() + "&type=facebook");
-        }else {
+        } else
+        {
             url = getString(R.string.url) + "scoreboardTop10?accessToken=" + ((Global) this.getApplication()).getAccessToken() + "&type=russesamfunnet";
+        }
+
+        try
+        {
+            getRussId();
+        } catch (IOException e)
+        {
+            e.printStackTrace();
         }
 
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -74,84 +81,55 @@ public class Scoreboard extends AppCompatActivity
         try
         {
             getRussScoreboard();
-            getRussId();
         } catch (IOException e)
         {
             e.printStackTrace();
         }
+
         this.recyclerView = findViewById(R.id.recycler_view_scoreboard);
-        this.recyclerViewScoreboard = new RecyclerViewScoreboard(userList, russId);
+        this.scoreboardAdapter = new ScoreboardAdapter(userList, ((Global) this.getApplication()).getRussId());
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
-        recyclerView.setAdapter(recyclerViewScoreboard);
+        recyclerView.setAdapter(scoreboardAdapter);
     }
 
     /**
      * Uses the JSONParser to request the scoreboard from the server.
      */
     @RequiresApi(api = Build.VERSION_CODES.CUPCAKE)
-    private void getRussScoreboard() throws IOException {
-        try {
-            new JSONParser(new JSONParser.OnPostExecute() {
+    private void getRussScoreboard() throws IOException
+    {
+        try
+        {
+            new JSONParser(new JSONParser.OnPostExecute()
+            {
                 @Override
-                public void onPostExecute(JSONArray jsonArray) {
+                public void onPostExecute(JSONArray jsonArray)
+                {
                     if (jsonArray == null) System.out.println("\n Inside onPostExecute \n");
 
                     fillScoreboard(jsonArray);
                 }
             }).execute(new URL(url));
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.CUPCAKE)
-    private void getRussId() throws IOException {
-        String newUrl;
-        if (AccessToken.getCurrentAccessToken() != null)
+        } catch (MalformedURLException e)
         {
-            System.out.println(AccessToken.getCurrentAccessToken().getToken());
-            newUrl = (getString(R.string.url) + "userRuss?accessToken=" + AccessToken.getCurrentAccessToken().getToken() + "&type=facebook");
-        }else {
-            newUrl = getString(R.string.url) + "userRuss?accessToken=" + ((Global) this.getApplication()).getAccessToken() + "&type=russesamfunnet";
-        }
-        try {
-            new JSONObjectParser(new JSONObjectParser.OnPostExecute() {
-                @Override
-                public void onPostExecute(JSONObject jsonObject) {
-                    try {
-                        setRussId(jsonObject.getLong("russId"));
-                    }catch (Exception e)
-                    {
-                        e.printStackTrace();
-                    }
-                }
-            }).execute(new URL(newUrl));
-        } catch (MalformedURLException e) {
             e.printStackTrace();
         }
     }
-
-    private void setRussId(Long russId)
-    {
-        this.russId = russId;
-    }
-
 
     public void fillScoreboard(JSONArray jsonArray)
-        {
+    {
 
         JSONArray users = null;
         try
         {
             users = jsonArray;
             if (jsonArray == null) System.out.println("Scoreboard DEADBEEF");
-            System.out.println("Hi?");
             System.out.println(users.length());
             int length = users.length();
-            for(int i = 0; i < length; i++)
+            for (int i = 0; i < length; i++)
             {
                 JSONObject u = users.getJSONObject(i);
 
@@ -183,54 +161,57 @@ public class Scoreboard extends AppCompatActivity
                 ScoreboardEntity user = new ScoreboardEntity(scoreboardId, points, position, russ);
                 userList.add(user);
             }
-            recyclerViewScoreboard.notifyDataSetChanged();
-        }catch (Exception e)
+            scoreboardAdapter.notifyDataSetChanged();
+        } catch (Exception e)
         {
             e.printStackTrace();
         }
     }
 
-/**
-    private void dummy()
-    {
-        ListUser user = new ListUser("Ken","Netland", 164535, 1);
-        userList.add(user);
-
-        user = new ListUser("Julia", "Aaby", 26454654, 2);
-        userList.add(user);
-
-        user = new ListUser("Gustav", "Buras", 6484,3);
-        userList.add(user);
-
-        user = new ListUser("Svenn", "Valen", 4468454,4);
-        userList.add(user);
-
-        user = new ListUser("Hallvard" ,"Roisum",84644 ,5);
-        userList.add(user);
-
-        user = new ListUser("Jostein", "Kringen", 98656,6);
-        userList.add(user);
-
-        user = new ListUser("Inga" ,"Estrem",846568 ,7);
-        userList.add(user);
-
-        user = new ListUser("Margrethe", "Svenningsen", 8846548,8);
-        userList.add(user);
-
-        user = new ListUser("Torbjørg" ,"Odegaard", 986,9);
-        userList.add(user);
-
-        user = new ListUser("Karoline", "Handal", 18650, 10);
-        userList.add(user);
-
-        user = new ListUser("Girts" ,"Strazdins ", 13,19);
-        userList.add(user);
-    }
-*/
     @Override
-    public boolean onSupportNavigateUp() {
+    public boolean onSupportNavigateUp()
+    {
         onBackPressed();
         return true;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.CUPCAKE)
+    private void getRussId() throws IOException
+    {
+        String newUrl;
+        if (AccessToken.getCurrentAccessToken() != null)
+        {
+            System.out.println(AccessToken.getCurrentAccessToken().getToken());
+            newUrl = (getString(R.string.url) + "userRuss?accessToken=" + AccessToken.getCurrentAccessToken().getToken() + "&type=facebook");
+        } else
+        {
+            newUrl = getString(R.string.url) + "userRuss?accessToken=" + ((Global) this.getApplication()).getAccessToken() + "&type=russesamfunnet";
+        }
+        try
+        {
+            new JSONObjectParser(new JSONObjectParser.OnPostExecute()
+            {
+                @Override
+                public void onPostExecute(JSONObject jsonObject)
+                {
+                    try
+                    {
+                        System.out.println("Russ id: " + jsonObject.getLong("russId"));
+                        setRussID(jsonObject.getLong("russId"));
+                    } catch (Exception e)
+                    {
+                        e.printStackTrace();
+                    }
+                }
+            }).execute(new URL(newUrl));
+        } catch (MalformedURLException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    private void setRussID(Long id)
+    {
+        ((Global) this.getApplication()).setRussId(id);
+    }
 }

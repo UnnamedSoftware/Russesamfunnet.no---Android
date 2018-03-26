@@ -53,6 +53,23 @@ public class Events extends AppCompatActivity
     }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     private void dummy()
     {
         EventEntity event = new EventEntity("Event 1", 1, "Aenean elementum, lectus consequat congue tincidunt, nibh quam venenatis enim, volutpat mollis quam felis quis enim. Curabitur et ante et lorem dapibus euismod. Praesent eget facilisis ante. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Etiam lectus felis, tempor ac volutpat in, aliquet et odio. Integer imperdiet dui egestas placerat volutpat. Cras sed maximus dui.");

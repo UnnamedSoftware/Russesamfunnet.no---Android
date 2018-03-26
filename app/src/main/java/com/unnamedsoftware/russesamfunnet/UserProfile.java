@@ -3,11 +3,17 @@ package com.unnamedsoftware.russesamfunnet;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.widget.EditText;
 
 import com.facebook.AccessToken;
+import com.unnamedsoftware.russesamfunnet.Entity.KnotEntity;
 import com.unnamedsoftware.russesamfunnet.Entity.RussEntity;
+import com.unnamedsoftware.russesamfunnet.RecyclerView.KnotListAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -16,18 +22,28 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Alexander Eilert Berg on 22.01.2018.
  */
 
-public class UserProfile extends AppCompatActivity {
-    JSONArray user = null;
+public class UserProfile extends AppCompatActivity
+{
+    JSONObject user = null;
     String url = null;
+    String completedURL = null;
     RussEntity russ;
 
+    private KnotListAdapter knotListAdapter;
+    private JSONArray jsonArray = null;
+    private RecyclerView recyclerView;
+    private List<KnotEntity> knotEntities = new ArrayList<>();
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
 
@@ -39,90 +55,178 @@ public class UserProfile extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        try {
+        try
+        {
             Long russId = bundle.getLong("russ_entity");
-            if(russId != 0) {
-                if (AccessToken.getCurrentAccessToken() != null) {
+            if (russId != 0)
+            {
+                if (AccessToken.getCurrentAccessToken() != null)
+                {
                     url = getString(R.string.url)
                             + "getOtherRuss?accessToken=" + AccessToken.getCurrentAccessToken().getToken()
                             + "&type=facebook"
                             + "&russId=" + russId;
-                } else if (((Global) this.getApplication()).getAccessToken() != null) {
+                } else if (((Global) this.getApplication()).getAccessToken() != null)
+                {
                     url = getString(R.string.url)
                             + "getOtherRuss?accessToken=" + ((Global) this.getApplication()).getAccessToken()
                             + "&type=russesamfunnet"
                             + "&russId=" + russId;
                 }
-            } else if (AccessToken.getCurrentAccessToken() != null) {
+            } else if (AccessToken.getCurrentAccessToken() != null)
+            {
                 System.out.println(AccessToken.getCurrentAccessToken().getToken());
                 url = (getString(R.string.url) + "userRuss?accessToken=" + AccessToken.getCurrentAccessToken().getToken() + "&type=facebook");
-            } else if (((Global) this.getApplication()).getAccessToken() != null) {
+            } else if (((Global) this.getApplication()).getAccessToken() != null)
+            {
                 System.out.println("User id: ");
                 System.out.println(((Global) this.getApplication()).getAccessToken());
                 url = getString(R.string.url) + "userRuss?accessToken=" + ((Global) this.getApplication()).getAccessToken() + "&type=russesamfunnet";
             }
             System.out.println(url);
-        } catch (Exception e) {
-            if (AccessToken.getCurrentAccessToken() != null) {
+        } catch (Exception e)
+        {
+            if (AccessToken.getCurrentAccessToken() != null)
+            {
                 System.out.println(AccessToken.getCurrentAccessToken().getToken());
                 url = (getString(R.string.url) + "userRuss?accessToken=" + AccessToken.getCurrentAccessToken().getToken() + "&type=facebook");
-            } else if (((Global) this.getApplication()).getAccessToken() != null) {
+            } else if (((Global) this.getApplication()).getAccessToken() != null)
+            {
                 System.out.println("User id: ");
                 System.out.println(((Global) this.getApplication()).getAccessToken());
                 url = getString(R.string.url) + "userRuss?accessToken=" + ((Global) this.getApplication()).getAccessToken() + "&type=russesamfunnet";
             }
         }
 
-        try {
+        if (AccessToken.getCurrentAccessToken() != null)
+        {
+            System.out.println(AccessToken.getCurrentAccessToken().getToken());
+            completedURL = (getString(R.string.url) + "completedKnots?accessToken=" + AccessToken.getCurrentAccessToken().getToken() + "&type=facebook");
+        }else {
+            completedURL = getString(R.string.url) + "completedKnots?accessToken=" + ((Global) this.getApplication()).getAccessToken() + "&type=russesamfunnet";
+        }
+
+        try
+        {
             getUserRuss();
-        } catch (Exception e) {
+            getCompletedKnots();
+        } catch (Exception e)
+        {
             e.printStackTrace();
         }
+
+        this.recyclerView = findViewById(R.id.recycler_view_user_knot_list);
+        this.knotListAdapter = new KnotListAdapter(knotEntities);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.addItemDecoration(new DividerItemDecoration(this,LinearLayoutManager.VERTICAL));
+        recyclerView.setAdapter(knotListAdapter);
     }
 
-    private void getUserRuss() throws IOException {
-        try {
-            System.out.println(url);
+
+    /**
+     * Retrieves with the JSONParser, the russ information a list over knots that the russ have completed
+     */
+    private void getCompletedKnots() throws IOException
+    {
+        try
+        {
             new JSONParser(new JSONParser.OnPostExecute() {
                 @Override
                 public void onPostExecute(JSONArray jsonArray) {
-                    fillProfile(jsonArray);
+                    fillCompletedKnotList(jsonArray);
                 }
-            }).execute(new URL(url));
+            }).execute(new URL(completedURL));
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
     }
 
-    public void fillProfile(JSONArray jsonArray) {
-        try {
-            user = jsonArray;
 
-            for (int i = 0; i < user.length(); i++) {
-                JSONObject u = user.getJSONObject(i);
 
-                Long russId = Long.valueOf(u.getString("russId"));
-                String russStatus = u.getString("russStatus");
-                String firstName = u.getString("firstName");
-                String lastName = u.getString("lastName");
-                String email = u.getString("email");
-                String russPassword = u.getString("russPassword");
-                String russRole = u.getString("russRole");
-                int russYear = Integer.valueOf(u.getString("russYear"));
+    /**
+     * Files an array list with russ information from a jsonArray
+     * @param givenJsonArray
+     */
+    private void fillCompletedKnotList(JSONArray givenJsonArray)
+    {
+        try
+        {
+            this.jsonArray = givenJsonArray;
 
-                russ = new RussEntity(russId, russStatus, firstName, lastName, email, russPassword, russRole, russYear);
+            for(int i = 0; i < jsonArray.length(); i++)
+            {
+                JSONObject knotsJSONObject = jsonArray.getJSONObject(i);
+                Long knotID = knotsJSONObject.getLong("knotId");
+                String title = knotsJSONObject.getString("knotName");
+                String description = knotsJSONObject.getString("knotDetails");
 
-                EditText userName = (EditText) findViewById(R.id.userName);
-                userName.setText(russ.getFirstName() + " " + russ.getLastName());
+                KnotEntity knot = new KnotEntity(knotID,title,description);
+                knotEntities.add(knot);
             }
+            this.knotListAdapter.notifyDataSetChanged();
+        }catch (JSONException e)
+        {
+            e.printStackTrace();
+        }
+    }
 
-        } catch (JSONException e) {
+    /**
+     * Retrieves the russ information
+     * @throws IOException
+     */
+    private void getUserRuss() throws IOException
+    {
+        try
+        {
+            System.out.println(url);
+            new JSONObjectParser(new JSONObjectParser.OnPostExecute()
+            {
+                @Override
+                public void onPostExecute(JSONObject jsonObject)
+                {
+                    fillProfile(jsonObject);
+                }
+            }).execute(new URL(url));
+        } catch (MalformedURLException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Files an array list with russ information from a jsonObject
+     * @param jsonObject
+     */
+    public void fillProfile(JSONObject jsonObject)
+    {
+        try
+        {
+            user = jsonObject;
+
+            Long russId = Long.valueOf(user.getString("russId"));
+            String russStatus = user.getString("russStatus");
+            String firstName = user.getString("firstName");
+            String lastName = user.getString("lastName");
+            String email = user.getString("email");
+            String russPassword = user.getString("russPassword");
+            String russRole = user.getString("russRole");
+            int russYear = Integer.valueOf(user.getString("russYear"));
+
+            russ = new RussEntity(russId, russStatus, firstName, lastName, email, russPassword, russRole, russYear);
+
+            EditText userName = (EditText) findViewById(R.id.userName);
+            userName.setText(russ.getFirstName() + " " + russ.getLastName());
+        } catch (JSONException e)
+        {
             e.printStackTrace();
         }
     }
 
     @Override
-    public boolean onSupportNavigateUp() {
+    public boolean onSupportNavigateUp()
+    {
         onBackPressed();
         return true;
     }
