@@ -8,9 +8,11 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.EditText;
 
 import com.facebook.AccessToken;
+import com.mikhaellopez.circularimageview.CircularImageView;
 import com.unnamedsoftware.russesamfunnet.Entity.KnotEntity;
 import com.unnamedsoftware.russesamfunnet.Entity.RussEntity;
 import com.unnamedsoftware.russesamfunnet.RecyclerView.KnotListAdapter;
@@ -40,6 +42,8 @@ public class UserProfile extends AppCompatActivity
     private JSONArray jsonArray = null;
     private RecyclerView recyclerView;
     private List<KnotEntity> knotEntities = new ArrayList<>();
+    private CircularImageView userImage;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -50,6 +54,26 @@ public class UserProfile extends AppCompatActivity
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Russesamfunnet - Bruker profil");
+
+        this.userImage = findViewById(R.id.userProfilePicture);
+        userImage.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                userProfilePictureClicked();
+            }
+        });
+        userImage.setOnLongClickListener(new View.OnLongClickListener()
+        {
+            @Override
+            public boolean onLongClick(View view)
+            {
+                userProfilePicturePressed();
+                return true;
+            }
+        });
+
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -122,6 +146,23 @@ public class UserProfile extends AppCompatActivity
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.addItemDecoration(new DividerItemDecoration(this,LinearLayoutManager.VERTICAL));
         recyclerView.setAdapter(knotListAdapter);
+    }
+
+
+    /**
+     * Enlarges the user profile picture.
+     */
+    private void userProfilePictureClicked()
+    {
+
+    }
+
+    /**
+     * Displays an dialog with options for changing the image (through camera or gallery)
+     */
+    private void userProfilePicturePressed()
+    {
+
     }
 
 

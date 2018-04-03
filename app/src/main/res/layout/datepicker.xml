@@ -2,17 +2,17 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_width="400dp"
+    android:layout_height="380dp"
+    android:orientation="vertical"
+    android:layout_gravity="center">
 
-    android:background="#88676767"
-    android:orientation="vertical">
 
     <NumberPicker
         android:id="@+id/dateDay"
-        android:layout_width="120dp"
-        android:layout_height="184dp"
-        android:layout_marginBottom="236dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="84dp"
         android:layout_marginEnd="5dp"
         android:layout_marginStart="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -21,9 +21,9 @@
 
     <NumberPicker
         android:id="@+id/dateMonth"
-        android:layout_width="120dp"
-        android:layout_height="184dp"
-        android:layout_marginBottom="236dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="84dp"
         android:layout_marginEnd="5dp"
         android:layout_marginStart="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -32,9 +32,9 @@
 
     <NumberPicker
         android:id="@+id/dateYear"
-        android:layout_width="120dp"
-        android:layout_height="184dp"
-        android:layout_marginBottom="236dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="84dp"
         android:layout_marginEnd="12dp"
         android:layout_marginStart="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -43,11 +43,11 @@
 
     <TextView
         android:id="@+id/dayText"
-        android:layout_width="120dp"
+        android:layout_width="64dp"
         android:layout_height="45dp"
         android:layout_marginEnd="5dp"
         android:layout_marginStart="12dp"
-        android:layout_marginTop="193dp"
+        android:layout_marginTop="71dp"
         android:ems="10"
         android:inputType="none"
         android:text="Dag"
@@ -56,16 +56,15 @@
         app:layout_constraintBottom_toTopOf="@+id/dateDay"
         app:layout_constraintEnd_toStartOf="@+id/MonthText"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/MonthText"
-        android:layout_width="120dp"
+        android:layout_width="64dp"
         android:layout_height="45dp"
         android:layout_marginEnd="5dp"
         android:layout_marginStart="5dp"
-        android:layout_marginTop="193dp"
+        android:layout_marginTop="71dp"
         android:ems="10"
         android:inputType="none"
         android:text="Måned"
@@ -75,16 +74,15 @@
         app:layout_constraintEnd_toStartOf="@+id/YearText"
         app:layout_constraintStart_toEndOf="@+id/dayText"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
         tools:ignore="MissingConstraints" />
 
     <TextView
         android:id="@+id/YearText"
-        android:layout_width="120dp"
+        android:layout_width="64dp"
         android:layout_height="45dp"
         android:layout_marginEnd="12dp"
         android:layout_marginStart="5dp"
-        android:layout_marginTop="193dp"
+        android:layout_marginTop="71dp"
         android:ems="10"
         android:inputType="none"
         android:text="År"
@@ -94,7 +92,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/MonthText"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/confirmButton"
@@ -108,5 +106,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dateMonth" />
+        app:layout_constraintTop_toBottomOf="@+id/dateMonth"
+        app:layout_constraintVertical_bias="0.0" />
+
 </android.support.constraint.ConstraintLayout>

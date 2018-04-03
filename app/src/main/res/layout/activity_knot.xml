@@ -72,8 +72,8 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
 
-        app:backgroundTint="@color/colorPrimaryDark"
-        app:srcCompat="@drawable/ic_add_white_48dp"
+        app:backgroundTint="@color/colorKnotNotCompleted"
+        app:srcCompat="@drawable/ic_close_black_48dp"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

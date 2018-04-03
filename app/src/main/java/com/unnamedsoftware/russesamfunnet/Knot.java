@@ -1,9 +1,12 @@
 package com.unnamedsoftware.russesamfunnet;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.TextView;
 
 import com.unnamedsoftware.russesamfunnet.Entity.KnotEntity;
@@ -16,6 +19,9 @@ import com.unnamedsoftware.russesamfunnet.Entity.KnotEntity;
 public class Knot extends AppCompatActivity
 {
     private KnotEntity knotEntity;
+    private FloatingActionButton completeFloatingActionButton;
+
+    private Boolean knotCompleted = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +44,29 @@ public class Knot extends AppCompatActivity
         knotEntity =(KnotEntity) i.getSerializableExtra("knot_entity");
         System.out.println(knotEntity.getKnotId());
         this.fillInData();
+
+        this.completeFloatingActionButton = findViewById(R.id.complete_button);
+        completeFloatingActionButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                //Check if knot is completed
+                if (knotCompleted == false)
+                {
+                    completeFloatingActionButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorKnotCompleted)));
+                    completeFloatingActionButton.setImageResource(R.drawable.ic_check_black_48dp);
+                    knotCompleted = true;
+                } else if (knotCompleted == true)
+                {
+                    completeFloatingActionButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorKnotNotCompleted)));
+                    completeFloatingActionButton.setImageResource(R.drawable.ic_close_black_48dp);
+                    knotCompleted = false;
+                }
+
+            }
+        });
+
 
     }
 

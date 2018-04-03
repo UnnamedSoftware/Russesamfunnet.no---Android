@@ -79,7 +79,6 @@ public class BirthdayRegisterActivity extends AppCompatActivity
 
         setInputData();
 
-
         Button button = findViewById(R.id.nextButton);
         button.setOnClickListener(new View.OnClickListener()
         {
@@ -187,7 +186,7 @@ public class BirthdayRegisterActivity extends AppCompatActivity
         //--- Set Year ---
         numberPickerYear.setMaxValue(getYear() - 17);
         numberPickerYear.setMinValue(getYear() - 30);
-        numberPickerYear.setWrapSelectorWheel(false);
+        numberPickerYear.setWrapSelectorWheel(true);
         numberPickerYear.setOnValueChangedListener(new NumberPicker.OnValueChangeListener()
         {
             @Override
