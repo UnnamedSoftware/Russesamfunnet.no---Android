@@ -186,7 +186,7 @@ public class Register extends AppCompatActivity
                                                                        + "&lastName=" + surname.getText());
                                         System.out.println(url);
                                         sendData(url);
-                                        
+
                                     }
                                 }
         );
