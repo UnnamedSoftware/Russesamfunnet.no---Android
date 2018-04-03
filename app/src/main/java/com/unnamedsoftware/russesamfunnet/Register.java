@@ -17,6 +17,8 @@ import android.widget.Toast;
 
 import com.facebook.AccessToken;
 
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -24,6 +26,8 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 /**
  * Created by Alexander Eilert Berg on 22.01.2018.
@@ -173,11 +177,16 @@ public class Register extends AppCompatActivity
                                         EditText email = findViewById(R.id.registerEmailInput);
                                         EditText password = findViewById(R.id.registerPasswordInput);
                                         EditText firstName = findViewById(R.id.registerFirstNameInput);
-                                        EditText Surname = findViewById(R.id.registerSurnameInput);
+                                        EditText surname = findViewById(R.id.registerSurnameInput);
                                         //Send data to server
-                                        url = (getString(R.string.url) + "russasamfunnetRegister?email=" + email);
+                                        url = (getString(R.string.url) + "russasamfunnetRegister?email=" + email.getText()
+                                                                       + "&password=" + password.getText()
+                                                                       + "&schoolId=" + 1
+                                                                       + "&firstName=" + firstName.getText()
+                                                                       + "&lastName=" + surname.getText());
                                         System.out.println(url);
-
+                                        sendData(url);
+                                        
                                     }
                                 }
         );
@@ -221,6 +230,31 @@ public class Register extends AppCompatActivity
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
     }
+
+    public void sendData(String url)
+    {
+            try {
+                new JSONObjectParser(new JSONObjectParser.OnPostExecute() {
+                    @Override
+                    public void onPostExecute(JSONObject jsonObject) {
+
+                            try {
+                                //GOTO feed. or wait for confirmation from admin
+                                startActivity(new Intent(Register.this, Feed.class));
+                                finish();
+                            }
+                            catch (Exception e)
+                            {
+                                e.printStackTrace();
+                            }
+
+                    }
+                }).execute(new URL(url));
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+
+        }
 
 
     /**
