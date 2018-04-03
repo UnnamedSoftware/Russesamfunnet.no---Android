@@ -1,5 +1,6 @@
 package com.unnamedsoftware.russesamfunnet;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.facebook.AccessToken;
 import com.mikhaellopez.circularimageview.CircularImageView;
@@ -61,7 +63,7 @@ public class UserProfile extends AppCompatActivity
             @Override
             public void onClick(View view)
             {
-                userProfilePictureClicked();
+                userProfilePictureClicked(view);
             }
         });
         userImage.setOnLongClickListener(new View.OnLongClickListener()
@@ -152,9 +154,30 @@ public class UserProfile extends AppCompatActivity
     /**
      * Enlarges the user profile picture.
      */
-    private void userProfilePictureClicked()
+    private void userProfilePictureClicked(View view)
     {
+        System.out.println("I've been pressed");
+        final Dialog dialog = new Dialog(view.getContext());
+        dialog.setContentView(R.layout.user_profile_picture_clicked_dialog);
+        ImageView userProfileEnlarged = dialog.findViewById(R.id.userProfilePictureEnlarged);
+        try
+        {
+            userProfileEnlarged.setImageResource(R.drawable.default_user);
 
+        }catch (NullPointerException e)
+        {
+            e.printStackTrace();
+        }
+
+        userProfileEnlarged.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
     }
 
     /**
