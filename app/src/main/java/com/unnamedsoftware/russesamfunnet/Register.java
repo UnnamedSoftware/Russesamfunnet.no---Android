@@ -1,11 +1,8 @@
 package com.unnamedsoftware.russesamfunnet;
 
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -15,28 +12,16 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.facebook.AccessToken;
-
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.StringWriter;
-import java.io.Writer;
-import java.net.MalformedURLException;
-import java.net.URL;
-
 /**
  * Created by Alexander Eilert Berg on 22.01.2018.
  */
 
 public class Register extends AppCompatActivity
 {
-    String termsOfService;
-
+    private String firstName;
+    private String surname;
+    private String email;
+    private String password;
     private String url;
 
     @Override
@@ -47,18 +32,6 @@ public class Register extends AppCompatActivity
         setupUI(findViewById(R.id.registerParent));
 
         registerUser(findViewById(R.id.registerButton));
-
-        InputStream inputStream = this.getResources().openRawResource(R.raw.terms_of_service);
-
-
-        try
-        {
-            termsOfService = StreamToString(inputStream);
-        } catch (IOException e)
-        {
-            e.printStackTrace();
-        }
-
     }
 
     /**
