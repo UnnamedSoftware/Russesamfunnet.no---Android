@@ -45,6 +45,7 @@ public class UserProfile extends AppCompatActivity
     private RecyclerView recyclerView;
     private List<KnotEntity> knotEntities = new ArrayList<>();
     private CircularImageView userImage;
+    private ImageView russCard;
 
 
     @Override
@@ -57,8 +58,18 @@ public class UserProfile extends AppCompatActivity
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Russesamfunnet - Bruker profil");
 
+        this.russCard = findViewById(R.id.russCard);
+        this.russCard.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                //userRussCardClicked(view);
+            }
+        });
+
         this.userImage = findViewById(R.id.userProfilePicture);
-        userImage.setOnClickListener(new View.OnClickListener()
+        this.userImage.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View view)
@@ -150,6 +161,36 @@ public class UserProfile extends AppCompatActivity
         recyclerView.setAdapter(knotListAdapter);
     }
 
+
+    /**
+     * Enlarges and rotates the russ card when clicked.
+     */
+    private void userRussCardClicked(View view)
+    {
+        System.out.println("I've been pressed");
+        final Dialog dialog = new Dialog(view.getContext());
+        dialog.setContentView(R.layout.user_russ_card_clicked_dialog);
+        ImageView userRussCardEnlarged = dialog.findViewById(R.id.userRussCardEnlarged);
+        try
+        {
+            userRussCardEnlarged.setImageResource(R.drawable.russ_card);
+            userRussCardEnlarged.setRotation(270);
+
+        }catch (NullPointerException e)
+        {
+            e.printStackTrace();
+        }
+
+        userRussCardEnlarged.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
 
     /**
      * Enlarges the user profile picture.
