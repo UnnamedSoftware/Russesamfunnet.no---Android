@@ -15,6 +15,8 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.facebook.AccessToken;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -31,6 +33,8 @@ public class Register extends AppCompatActivity
 {
     String termsOfService;
 
+    private String url;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -41,6 +45,8 @@ public class Register extends AppCompatActivity
         registerUser(findViewById(R.id.registerButton));
 
         InputStream inputStream = this.getResources().openRawResource(R.raw.terms_of_service);
+
+
         try
         {
             termsOfService = StreamToString(inputStream);
@@ -164,8 +170,13 @@ public class Register extends AppCompatActivity
                                             displayTermsOfService();
                                         }
 
+                                        EditText email = findViewById(R.id.registerEmailInput);
+                                        EditText password = findViewById(R.id.registerPasswordInput);
+                                        EditText firstName = findViewById(R.id.registerFirstNameInput);
+                                        EditText Surname = findViewById(R.id.registerSurnameInput);
                                         //Send data to server
-
+                                        url = (getString(R.string.url) + "russasamfunnetRegister?email=" + email);
+                                        System.out.println(url);
 
                                     }
                                 }
