@@ -10,7 +10,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.facebook.AccessToken;
@@ -44,9 +43,9 @@ public class UserProfile extends AppCompatActivity
     private JSONArray jsonArray = null;
     private RecyclerView recyclerView;
     private List<KnotEntity> knotEntities = new ArrayList<>();
+
     private CircularImageView userImage;
     private ImageView russCard;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -56,7 +55,6 @@ public class UserProfile extends AppCompatActivity
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Russesamfunnet - Bruker profil");
 
         this.russCard = findViewById(R.id.russCard);
         this.russCard.setOnClickListener(new View.OnClickListener()
@@ -82,11 +80,10 @@ public class UserProfile extends AppCompatActivity
             @Override
             public boolean onLongClick(View view)
             {
-                userProfilePicturePressed();
+                userProfilePicturePressed(view);
                 return true;
             }
         });
-
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -139,7 +136,8 @@ public class UserProfile extends AppCompatActivity
         {
             System.out.println(AccessToken.getCurrentAccessToken().getToken());
             completedURL = (getString(R.string.url) + "completedKnots?accessToken=" + AccessToken.getCurrentAccessToken().getToken() + "&type=facebook");
-        }else {
+        } else
+        {
             completedURL = getString(R.string.url) + "completedKnots?accessToken=" + ((Global) this.getApplication()).getAccessToken() + "&type=russesamfunnet";
         }
 
@@ -157,7 +155,7 @@ public class UserProfile extends AppCompatActivity
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.addItemDecoration(new DividerItemDecoration(this,LinearLayoutManager.VERTICAL));
+        recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         recyclerView.setAdapter(knotListAdapter);
     }
 
@@ -176,7 +174,7 @@ public class UserProfile extends AppCompatActivity
             userRussCardEnlarged.setImageResource(R.drawable.russ_card);
             userRussCardEnlarged.setRotation(270);
 
-        }catch (NullPointerException e)
+        } catch (NullPointerException e)
         {
             e.printStackTrace();
         }
@@ -205,7 +203,7 @@ public class UserProfile extends AppCompatActivity
         {
             userProfileEnlarged.setImageResource(R.drawable.default_user);
 
-        }catch (NullPointerException e)
+        } catch (NullPointerException e)
         {
             e.printStackTrace();
         }
@@ -221,13 +219,15 @@ public class UserProfile extends AppCompatActivity
         dialog.show();
     }
 
+
     /**
      * Displays an dialog with options for changing the image (through camera or gallery)
      */
-    private void userProfilePicturePressed()
+    private void userProfilePicturePressed(View view)
     {
-
+        startActivity(new Intent(UserProfile.this, CropImage.class));
     }
+
 
 
     /**
@@ -237,21 +237,24 @@ public class UserProfile extends AppCompatActivity
     {
         try
         {
-            new JSONParser(new JSONParser.OnPostExecute() {
+            new JSONParser(new JSONParser.OnPostExecute()
+            {
                 @Override
-                public void onPostExecute(JSONArray jsonArray) {
+                public void onPostExecute(JSONArray jsonArray)
+                {
                     fillCompletedKnotList(jsonArray);
                 }
             }).execute(new URL(completedURL));
-        } catch (MalformedURLException e) {
+        } catch (MalformedURLException e)
+        {
             e.printStackTrace();
         }
     }
 
 
-
     /**
      * Files an array list with russ information from a jsonArray
+     *
      * @param givenJsonArray
      */
     private void fillCompletedKnotList(JSONArray givenJsonArray)
@@ -260,18 +263,18 @@ public class UserProfile extends AppCompatActivity
         {
             this.jsonArray = givenJsonArray;
 
-            for(int i = 0; i < jsonArray.length(); i++)
+            for (int i = 0; i < jsonArray.length(); i++)
             {
                 JSONObject knotsJSONObject = jsonArray.getJSONObject(i);
                 Long knotID = knotsJSONObject.getLong("knotId");
                 String title = knotsJSONObject.getString("knotName");
                 String description = knotsJSONObject.getString("knotDetails");
 
-                KnotEntity knot = new KnotEntity(knotID,title,description);
+                KnotEntity knot = new KnotEntity(knotID, title, description);
                 knotEntities.add(knot);
             }
             this.knotListAdapter.notifyDataSetChanged();
-        }catch (JSONException e)
+        } catch (JSONException e)
         {
             e.printStackTrace();
         }
@@ -279,6 +282,7 @@ public class UserProfile extends AppCompatActivity
 
     /**
      * Retrieves the russ information
+     *
      * @throws IOException
      */
     private void getUserRuss() throws IOException
@@ -302,6 +306,7 @@ public class UserProfile extends AppCompatActivity
 
     /**
      * Files an array list with russ information from a jsonObject
+     *
      * @param jsonObject
      */
     public void fillProfile(JSONObject jsonObject)
@@ -321,8 +326,7 @@ public class UserProfile extends AppCompatActivity
 
             russ = new RussEntity(russId, russStatus, firstName, lastName, email, russPassword, russRole, russYear);
 
-            EditText userName = (EditText) findViewById(R.id.userName);
-            userName.setText(russ.getFirstName() + " " + russ.getLastName());
+            getSupportActionBar().setTitle(russ.getFirstName() + " " + russ.getLastName());
         } catch (JSONException e)
         {
             e.printStackTrace();

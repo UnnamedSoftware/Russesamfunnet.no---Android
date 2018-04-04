@@ -9,7 +9,7 @@
     <include
         layout="@layout/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"/>
 
     <com.mikhaellopez.circularimageview.CircularImageView
         android:id="@+id/userProfilePicture"
@@ -17,7 +17,7 @@
         android:layout_height="125dp"
         android:layout_marginEnd="92dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="56dp"
+        android:layout_marginTop="64dp"
         android:src="@drawable/default_user"
         app:civ_border_color="#EEEEEE"
         app:civ_border_width="4dp"
@@ -25,25 +25,8 @@
         app:civ_shadow_color="#8BC34A"
         app:civ_shadow_radius="10"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.043"
+        app:layout_constraintHorizontal_bias="0.728"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/userName"
-        style="@android:style/Widget.AutoCompleteTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="136dp"
-        android:editable="false"
-        android:ems="10"
-        android:inputType="none"
-        android:text="John Smith"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.615"
-        app:layout_constraintStart_toEndOf="@+id/userProfilePicture"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
@@ -53,12 +36,13 @@
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.482"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userName"
-        app:layout_constraintVertical_bias="0.04000002"
+        app:layout_constraintTop_toBottomOf="@+id/userProfilePicture"
+        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/russ_card" />
 
         <include

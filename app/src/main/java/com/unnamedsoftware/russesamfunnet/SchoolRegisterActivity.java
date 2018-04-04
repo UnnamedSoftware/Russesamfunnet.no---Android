@@ -19,7 +19,6 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.facebook.AccessToken;
 import com.unnamedsoftware.russesamfunnet.Entity.SchoolEntity;
 import com.unnamedsoftware.russesamfunnet.RecyclerView.SchoolAdapter;
 
@@ -144,20 +143,28 @@ public class SchoolRegisterActivity extends AppCompatActivity
     }
 
     @RequiresApi(api = Build.VERSION_CODES.CUPCAKE)
-    private void registerRuss(String dateString, String school) throws IOException {
-        String newUrl =  getString(R.string.url) + "facebookRegister?accessToken=" + AccessToken.getCurrentAccessToken().getToken() + "&birthdate=" + dateString + "&schoolId=" + school;
+    private void registerRuss(String dateString, String school) throws IOException
+    {
+            String newUrl =  getString(R.string.url) + "russasamfunnetRegister?email=" + email
+                + "&password=" + password
+                + "&schoolName=" + school
+                + "&firstName=" + firstName
+                + "&lastName=" + surname;
+
+        System.out.println(newUrl);
+      //  String newUrl =  getString(R.string.url) + "facebookRegister?accessToken=" + AccessToken.getCurrentAccessToken().getToken() + "&birthdate=" + dateString + "&schoolId=" + school;
         try {
             new JSONObjectParser(new JSONObjectParser.OnPostExecute() {
                 @Override
                 public void onPostExecute(JSONObject jsonObject) {
+
                     try {
-                        if(jsonObject.getString("loginStatus").equals("User successfully registered")) {
-                            goToFeed();
-                        }else
-                        {
-                            //do something else
-                        }
-                    }catch (Exception e)
+                        //GOTO feed. or wait for confirmation from admin
+                        String accessToken = jsonObject.getString("accessToken");
+                        System.out.println(accessToken);
+                        complete(accessToken);
+                    }
+                    catch (Exception e)
                     {
                         e.printStackTrace();
                     }
@@ -168,6 +175,18 @@ public class SchoolRegisterActivity extends AppCompatActivity
         }
     }
 
+    private void complete(String token)
+    {
+        ((Global) this.getApplication()).setAccessToken(token,"russesamfunnet");
+        goToFeed();
+        finish();
+    }
+
+
+
+    /**
+     * Sends the user to the school feed
+     */
     private void goToFeed()
     {
         startActivity(new Intent(SchoolRegisterActivity.this, Feed.class));

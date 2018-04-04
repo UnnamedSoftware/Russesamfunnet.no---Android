@@ -3,7 +3,9 @@
     package="com.unnamedsoftware.russesamfunnet">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-feature android:name="android.hardware.camera" />
 
     <application
         android:name=".Global"
@@ -104,6 +106,15 @@
             android:name="android.support.PARENT_ACTIVITY"
             android:value=".GroupHub" />
         </activity>
+
+        <activity android:name=".CropImage"
+            android:label="@string/app_name"
+            android:parentActivityName=".UserProfile">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".UserProfile" />
+        </activity>
+
 
 
         <activity android:name=".BirthdayRegisterActivity"
