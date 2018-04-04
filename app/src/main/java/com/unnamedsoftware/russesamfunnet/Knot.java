@@ -44,11 +44,12 @@ public class Knot extends AppCompatActivity {
         } catch (Exception e) {
             System.out.println(e.fillInStackTrace());
         }
-        checkIfCompleted();
+
         Intent i = getIntent();
         knotEntity = (KnotEntity) i.getSerializableExtra("knot_entity");
         System.out.println(knotEntity.getKnotId());
         this.fillInData();
+        checkIfCompleted();
 
         this.completeFloatingActionButton = findViewById(R.id.complete_button);
         completeFloatingActionButton.setOnClickListener(new View.OnClickListener() {
@@ -126,8 +127,13 @@ public class Knot extends AppCompatActivity {
                     try {
                         if(jsonObject.getString("response").equals("true"))
                         {
+                            completeFloatingActionButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorKnotCompleted)));
+                            completeFloatingActionButton.setImageResource(R.drawable.ic_check_black_48dp);
                             setKnotCompleted(true);
                         } else{
+                            completeFloatingActionButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorKnotNotCompleted)));
+                            completeFloatingActionButton.setImageResource(R.drawable.ic_close_black_48dp);
+                            System.out.println("No");
                             setKnotCompleted(false);
                         }
                     } catch (Exception e)
