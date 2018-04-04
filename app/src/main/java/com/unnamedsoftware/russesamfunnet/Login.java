@@ -200,7 +200,8 @@ public class Login extends AppCompatActivity
      */
     private void toServer(View view, String userEmailString, String userPasswordString)
     {
-        String url = getString(R.string.url) + "loginToken?email=" + userEmailString + "&password=" + userPasswordString;
+        String passwordSHA = org.apache.commons.codec.digest.DigestUtils.sha256Hex(userPasswordString);
+        String url = getString(R.string.url) + "loginToken?email=" + userEmailString + "&password=" + passwordSHA;
         try
         {
             new JSONObjectParser(new JSONObjectParser.OnPostExecute() {
