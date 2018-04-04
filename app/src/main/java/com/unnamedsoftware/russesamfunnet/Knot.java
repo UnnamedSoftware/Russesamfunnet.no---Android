@@ -44,7 +44,7 @@ public class Knot extends AppCompatActivity {
         } catch (Exception e) {
             System.out.println(e.fillInStackTrace());
         }
-
+        checkIfCompleted();
         Intent i = getIntent();
         knotEntity = (KnotEntity) i.getSerializableExtra("knot_entity");
         System.out.println(knotEntity.getKnotId());
@@ -92,7 +92,7 @@ public class Knot extends AppCompatActivity {
                         String url = (getString(R.string.url)
                                 + "unRegisterCompletedKnot?accessToken=" + AccessToken.getCurrentAccessToken().getToken())
                                 + "&type=russesamfunnet"
-                                + "&knotI =" + knotEntity.getKnotId();
+                                + "&knotId=" + knotEntity.getKnotId();
                         completeKnot(url);
                     }
                 }
@@ -101,6 +101,50 @@ public class Knot extends AppCompatActivity {
         });
 
 
+    }
+
+    public void checkIfCompleted() {
+        String url = "";
+        if (AccessToken.getCurrentAccessToken() != null)
+        {
+            url = (getString(R.string.url)
+                    + "checkIfCompleted?accessToken=" + AccessToken.getCurrentAccessToken().getToken())
+                    + "&type=facebook"
+                    + "&knotId=" + knotEntity.getKnotId();
+            completeKnot(url);
+        }else {
+            url = (getString(R.string.url)
+                    + "checkIfCompleted?accessToken=" + AccessToken.getCurrentAccessToken().getToken())
+                    + "&type=russesamfunnet"
+                    + "&knotId=" + knotEntity.getKnotId();
+            completeKnot(url);
+        }
+        try {
+            new JSONObjectParser(new JSONObjectParser.OnPostExecute() {
+                @Override
+                public void onPostExecute(JSONObject jsonObject) {
+                    try {
+                        if(jsonObject.getString("response").equals("true"))
+                        {
+                            setKnotCompleted(true);
+                        } else{
+                            setKnotCompleted(false);
+                        }
+                    } catch (Exception e)
+                    {
+                        e.printStackTrace();
+                    }
+                }
+            }).execute(new URL(url));
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void setKnotCompleted(Boolean bol)
+    {
+        knotCompleted = bol;
     }
 
     public void completeKnot(String url) {
