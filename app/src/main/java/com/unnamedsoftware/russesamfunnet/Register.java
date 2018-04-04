@@ -150,7 +150,8 @@ public class Register extends AppCompatActivity
                                             intent.putExtra("firstName", firstName);
                                             intent.putExtra("surname", surname);
                                             intent.putExtra("email", email);
-                                            intent.putExtra("password", password);
+                                            String passwordSHA = org.apache.commons.codec.digest.DigestUtils.sha256Hex(password);
+                                            intent.putExtra("password", passwordSHA);
                                             startActivity(intent);
                                         }
                                     }
