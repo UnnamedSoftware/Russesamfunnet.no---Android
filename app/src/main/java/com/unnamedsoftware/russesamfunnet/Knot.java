@@ -13,11 +13,16 @@ import android.widget.TextView;
 import com.facebook.AccessToken;
 import com.unnamedsoftware.russesamfunnet.Entity.KnotEntity;
 import com.unnamedsoftware.russesamfunnet.Entity.RussEntity;
+import com.unnamedsoftware.russesamfunnet.Entity.SchoolEntity;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Created by Alexander Eilert Berg on 29.01.2018.
@@ -153,7 +158,64 @@ public class Knot extends AppCompatActivity {
         knotCompleted = bol;
     }
 
+    public void getWitnesses(String url) {
+        System.out.println(url);
+        try {
+            new JSONParser(new JSONParser.OnPostExecute() {
+                @Override
+                public void onPostExecute(JSONArray jsonArray) {
+                    try {
+                        fillWitnessListSuggestions(jsonArray);
+
+                    } catch (Exception e)
+                    {
+                        e.printStackTrace();
+                    }
+                }
+            }).execute(new URL(url));
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private void fillWitnessListSuggestions(JSONArray jsonArray) {
+        List<RussEntity> witnessSuggestions = new ArrayList<RussEntity>();
+        for(int i = 0; i <= jsonArray.length() ; i++)
+        {
+            try {
+
+                JSONObject u = jsonArray.getJSONObject(i);
+                JSONObject newRussObject = u.getJSONObject("russId");
+
+                Long russId = Long.valueOf(newRussObject.getString("russId"));
+                String russStatus = newRussObject.getString("russStatus");
+                String firstName = newRussObject.getString("firstName");
+                String lastName = newRussObject.getString("lastName");
+                String email = newRussObject.getString("email");
+                String russPassword = newRussObject.getString("russPassword");
+                String profilePicture = newRussObject.getString("profilePicture");
+                String russCard = newRussObject.getString("russCard");
+                String russRole = newRussObject.getString("russRole");
+                Integer russYear = Integer.valueOf(newRussObject.getString("russYear"));
+                JSONObject newSchoolObject = newRussObject.getJSONObject("schoolId");
+                Integer schoolId = Integer.valueOf(newSchoolObject.getString("schoolId"));
+                String schoolName = newSchoolObject.getString("schoolName");
+                String schoolStatus = newSchoolObject.getString("schoolStatus");
+
+                SchoolEntity school = new SchoolEntity(schoolId, schoolName, schoolStatus);
+                RussEntity russ = new RussEntity(russId, russStatus, firstName, lastName, email, russPassword, russRole, russYear);
+                witnessSuggestions.add(russ);
+            } catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+
+        }
+    }
+
     public void completeKnot(String url) {
+        System.out.println(url);
         try {
             new JSONObjectParser(new JSONObjectParser.OnPostExecute() {
                 @Override
