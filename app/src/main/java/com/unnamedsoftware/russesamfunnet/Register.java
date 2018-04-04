@@ -12,6 +12,9 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import org.apache.commons.codec.binary.Hex;
+import org.apache.commons.codec.digest.DigestUtils;
+
 /**
  * Created by Alexander Eilert Berg on 22.01.2018.
  */
@@ -150,8 +153,9 @@ public class Register extends AppCompatActivity
                                             intent.putExtra("firstName", firstName);
                                             intent.putExtra("surname", surname);
                                             intent.putExtra("email", email);
-                                            String passwordSHA = org.apache.commons.codec.digest.DigestUtils.sha256Hex(password);
-                                            intent.putExtra("password", passwordSHA);
+                                           // String passwordSHA = org.apache.commons.codec.digest.DigestUtils.sha256Hex(password);
+                                            String hash = new String(Hex.encodeHex(DigestUtils.sha(password)));
+                                            intent.putExtra("password", hash);
                                             startActivity(intent);
                                         }
                                     }

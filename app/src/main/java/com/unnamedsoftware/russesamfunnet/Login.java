@@ -19,6 +19,8 @@ import com.facebook.FacebookException;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 
+import org.apache.commons.codec.binary.Hex;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.json.JSONObject;
 
 import java.net.MalformedURLException;
@@ -200,8 +202,9 @@ public class Login extends AppCompatActivity
      */
     private void toServer(View view, String userEmailString, String userPasswordString)
     {
-        String passwordSHA = org.apache.commons.codec.digest.DigestUtils.sha256Hex(userPasswordString);
-        String url = getString(R.string.url) + "loginToken?email=" + userEmailString + "&password=" + passwordSHA;
+        //String passwordSHA = org.apache.commons.codec.digest.DigestUtils.sha256Hex(userPasswordString);
+        String hash = new String(Hex.encodeHex(DigestUtils.sha(userPasswordString)));
+        String url = getString(R.string.url) + "loginToken?email=" + userEmailString + "&password=" + hash;
         try
         {
             new JSONObjectParser(new JSONObjectParser.OnPostExecute() {

@@ -145,13 +145,29 @@ public class SchoolRegisterActivity extends AppCompatActivity
 
     @RequiresApi(api = Build.VERSION_CODES.CUPCAKE)
     private void registerRuss(String dateString, String school) throws IOException {
-        String newUrl =  getString(R.string.url) + "facebookRegister?accessToken=" + AccessToken.getCurrentAccessToken().getToken() + "&birthdate=" + dateString + "&schoolId=" + school;
+        String newUrl;
+        if (AccessToken.getCurrentAccessToken() != null)
+        {
+            System.out.println(AccessToken.getCurrentAccessToken().getToken());
+            newUrl =  getString(R.string.url) + "facebookRegisterNew?accessToken=" + AccessToken.getCurrentAccessToken().getToken()
+                    + "&email=" + email
+                    + "&schoolId=" + school
+                    + "&russYear=0"
+                    + "&birthdate=" + dateString;
+        }else {
+            newUrl =  getString(R.string.url) + "russasamfunnetRegister?email=" + email
+                    + "&password=" + password
+                    + "&schoolName=" + school
+                    + "&firstName=" + firstName
+                    + "&lastName=" + surname;
+        }
         try {
             new JSONObjectParser(new JSONObjectParser.OnPostExecute() {
                 @Override
                 public void onPostExecute(JSONObject jsonObject) {
                     try {
-                        if(jsonObject.getString("loginStatus").equals("User successfully registered")) {
+                        if(jsonObject.getString("loginStatus").equals("Login success")) {
+                            ((Global) getApplication()).setAccessToken(jsonObject.getString("accessToken"), "russesamfunnet");
                             goToFeed();
                         }else
                         {
