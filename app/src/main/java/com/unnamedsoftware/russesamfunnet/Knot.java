@@ -1,11 +1,18 @@
 package com.unnamedsoftware.russesamfunnet;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -14,6 +21,7 @@ import com.facebook.AccessToken;
 import com.unnamedsoftware.russesamfunnet.Entity.KnotEntity;
 import com.unnamedsoftware.russesamfunnet.Entity.RussEntity;
 import com.unnamedsoftware.russesamfunnet.Entity.SchoolEntity;
+import com.unnamedsoftware.russesamfunnet.Search.SearchAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -31,6 +39,9 @@ import java.util.List;
 public class Knot extends AppCompatActivity {
     private KnotEntity knotEntity;
     private FloatingActionButton completeFloatingActionButton;
+    private FloatingActionButton witnessFloatingActionButton1;
+    private FloatingActionButton witnessFloatingActionButton2;
+    List<RussEntity> russEntityList;
 
     private Boolean knotCompleted = false;
 
@@ -42,7 +53,7 @@ public class Knot extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         setTitle("Russesamfunnet");
-
+        russEntityList = new ArrayList<>();
         try {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -52,9 +63,24 @@ public class Knot extends AppCompatActivity {
 
         Intent i = getIntent();
         knotEntity = (KnotEntity) i.getSerializableExtra("knot_entity");
+        checkIfCompleted();
         System.out.println(knotEntity.getKnotId());
         this.fillInData();
-        checkIfCompleted();
+        this.witnessFloatingActionButton1 = findViewById(R.id.add_witness_button1);
+        witnessFloatingActionButton1.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                searchDialog();
+            }
+        });
+        this.witnessFloatingActionButton2 = findViewById(R.id.add_witness_button2);
+        witnessFloatingActionButton2.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                searchDialog();
+            }
+        });
+
 
         this.completeFloatingActionButton = findViewById(R.id.complete_button);
         completeFloatingActionButton.setOnClickListener(new View.OnClickListener() {
@@ -76,7 +102,7 @@ public class Knot extends AppCompatActivity {
                         completeKnot(url);
                     }else {
                         String url = (getString(R.string.url)
-                                + "registerCompletedKnot?accessToken=" + AccessToken.getCurrentAccessToken().getToken())
+                                + "registerCompletedKnot?accessToken=" + ((Global) getApplication()).getAccessToken())
                                 + "&type=russesamfunnet"
                                 + "&knotId=" + knotEntity.getKnotId()
                                 + "&witness1=0"
@@ -96,7 +122,7 @@ public class Knot extends AppCompatActivity {
                         completeKnot(url);
                     }else {
                         String url = (getString(R.string.url)
-                                + "unRegisterCompletedKnot?accessToken=" + AccessToken.getCurrentAccessToken().getToken())
+                                + "unRegisterCompletedKnot?accessToken=" + ((Global) getApplication()).getAccessToken())
                                 + "&type=russesamfunnet"
                                 + "&knotId=" + knotEntity.getKnotId();
                         completeKnot(url);
@@ -120,7 +146,7 @@ public class Knot extends AppCompatActivity {
             completeKnot(url);
         }else {
             url = (getString(R.string.url)
-                    + "checkIfCompleted?accessToken=" + AccessToken.getCurrentAccessToken().getToken())
+                    + "checkIfCompleted?accessToken=" + ((Global) this.getApplication()).getAccessToken())
                     + "&type=russesamfunnet"
                     + "&knotId=" + knotEntity.getKnotId();
             completeKnot(url);
@@ -158,7 +184,20 @@ public class Knot extends AppCompatActivity {
         knotCompleted = bol;
     }
 
-    public void getWitnesses(String url) {
+    public void getWitnesses(String parameter) {
+        String url;
+        if (AccessToken.getCurrentAccessToken() != null)
+        {
+            url = (getString(R.string.url)
+                    + "searchForRussByName?accessToken=" + AccessToken.getCurrentAccessToken().getToken())
+                    + "&type=facebook"
+                    + "&parameter=" + parameter;
+        }else {
+            url = (getString(R.string.url)
+                    + "searchForRussByName?accessToken=" + ((Global) this.getApplication()).getAccessToken())
+                    + "&type=russesamfunnet"
+                    + "&parameter=" + parameter;
+        }
         System.out.println(url);
         try {
             new JSONParser(new JSONParser.OnPostExecute() {
@@ -178,15 +217,65 @@ public class Knot extends AppCompatActivity {
         }
 
     }
+    /**
+     * Displays the dialog for searching
+     */
+    private void searchDialog()
+    {
+
+        RecyclerView recyclerView;
+        SearchAdapter searchAdapter;
+        if(!russEntityList.isEmpty()) {
+            searchAdapter = new SearchAdapter(russEntityList);
+
+            recyclerView = findViewById(R.id.saResults);
+            if(recyclerView == null)
+            {
+                System.out.println("Ditte e din feil Alex!");
+            }
+            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+            recyclerView.setLayoutManager(layoutManager);
+            recyclerView.setItemAnimator(new DefaultItemAnimator());
+            recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
+
+
+            recyclerView.setAdapter(searchAdapter);
+        }
+        final Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.search_dialog);
+        final EditText editText = new EditText(this);
+        editText.setMinimumWidth(60);
+        dialog.setContentView(editText);
+
+
+        editText.addTextChangedListener(new TextWatcher(){
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                getWitnesses(editText.getText().toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+
+        });
+        dialog.show();
+    }
+
 
     private void fillWitnessListSuggestions(JSONArray jsonArray) {
-        List<RussEntity> witnessSuggestions = new ArrayList<RussEntity>();
-        for(int i = 0; i <= jsonArray.length() ; i++)
+        List<RussEntity> witnessSuggestions = new ArrayList<>();
+        for(int i = 0; i < jsonArray.length() ; i++)
         {
             try {
 
-                JSONObject u = jsonArray.getJSONObject(i);
-                JSONObject newRussObject = u.getJSONObject("russId");
+                JSONObject newRussObject = jsonArray.getJSONObject(i);
 
                 Long russId = Long.valueOf(newRussObject.getString("russId"));
                 String russStatus = newRussObject.getString("russStatus");
@@ -206,12 +295,13 @@ public class Knot extends AppCompatActivity {
                 SchoolEntity school = new SchoolEntity(schoolId, schoolName, schoolStatus);
                 RussEntity russ = new RussEntity(russId, russStatus, firstName, lastName, email, russPassword, russRole, russYear);
                 witnessSuggestions.add(russ);
-            } catch (Exception e)
-            {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
-
         }
+        russEntityList.clear();
+        russEntityList = witnessSuggestions;
+        searchDialog();
     }
 
     public void completeKnot(String url) {
