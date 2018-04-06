@@ -22,10 +22,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".Feed"
-            android:label="@string/app_name"/>
+            android:label="@string/app_name" />
         <activity
             android:name=".Register"
             android:label="@string/app_name" />
@@ -69,7 +68,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Feed" />
         </activity>
-
         <activity
             android:name=".Events"
             android:label="@string/app_name"
@@ -78,7 +76,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Feed" />
         </activity>
-
         <activity
             android:name=".GroupList"
             android:label="@string/app_name"
@@ -90,8 +87,8 @@
         <activity
             android:name=".GroupHub"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme"
-            android:parentActivityName=".GroupList">
+            android:parentActivityName=".GroupList"
+            android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".GroupList" />
@@ -100,21 +97,20 @@
             android:name=".GroupScoreboardMembersList"
             android:label="@string/app_name"
             android:parentActivityName=".GroupHub">
-        <meta-data
-            android:name="android.support.PARENT_ACTIVITY"
-            android:value=".GroupHub" />
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".GroupHub" />
         </activity>
-
-
-        <activity android:name=".BirthdayRegisterActivity"
-            android:windowSoftInputMode="adjustResize"
+        <activity
+            android:name=".BirthdayRegisterActivity"
             android:label="@string/app_name"
-            android:parentActivityName=".Register"/>
-
-        <activity android:name=".SchoolRegisterActivity"
-            android:windowSoftInputMode="adjustResize"
+            android:parentActivityName=".Register"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".SchoolRegisterActivity"
             android:label="@string/app_name"
-            android:parentActivityName=".BirthdayRegisterActivity"/>
+            android:parentActivityName=".BirthdayRegisterActivity"
+            android:windowSoftInputMode="adjustResize" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
@@ -136,6 +132,7 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
+        <activity android:name=".WitnessSelection"></activity>
     </application>
 
 </manifest>

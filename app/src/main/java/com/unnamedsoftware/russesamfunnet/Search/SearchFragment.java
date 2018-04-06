@@ -77,9 +77,9 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
 
         this.listView = view.findViewById(R.id.searchListView);
         this.listView.setAdapter(adapter);
-
+/*
         this.searchView = view.findViewById(R.id.search);
-        this.searchView.setOnQueryTextListener(this);
+        this.searchView.setOnQueryTextListener(this);*/
     }
 
     @Override

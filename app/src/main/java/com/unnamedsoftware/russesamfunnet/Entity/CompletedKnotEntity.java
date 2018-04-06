@@ -13,7 +13,7 @@ public class CompletedKnotEntity implements Serializable{
 
     private static final long serialVersionUID = 1L;
 
-    private Integer completedId;
+    private Long completedId;
     private KnotEntity knotId;
     private RussEntity russId;
     private RussEntity witnessId1;
@@ -22,15 +22,15 @@ public class CompletedKnotEntity implements Serializable{
     public CompletedKnotEntity() {
     }
 
-    public CompletedKnotEntity(Integer completedId) {
+    public CompletedKnotEntity(Long completedId) {
         this.completedId = completedId;
     }
 
-    public Integer getCompletedId() {
+    public Long getCompletedId() {
         return completedId;
     }
 
-    public void setCompletedId(Integer completedId) {
+    public void setCompletedId(Long completedId) {
         this.completedId = completedId;
     }
 
