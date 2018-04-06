@@ -11,6 +11,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
@@ -22,6 +23,8 @@ import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +37,9 @@ public class CropImage extends AppCompatActivity
 
     private CropImageView cropImageView;
     private Uri cropImageUri;
+    private Bitmap cropped;
+    private String currentPhotoPath;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,9 +54,40 @@ public class CropImage extends AppCompatActivity
      * Crop the image and set it back to the  cropping view.
      */
     public void onCropImageClick(View view) {
-        Bitmap cropped =  cropImageView.getCroppedImage(500, 500);
+        this.cropped =  cropImageView.getCroppedImage(500, 500);
         if (cropped != null)
             cropImageView.setImageBitmap(cropped);
+    }
+
+
+    public void onApproveImage(View view) throws IOException
+    {
+        Bitmap bitmap = cropImageView.getCroppedImage();
+
+        FileOutputStream outStream = null;
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        storageDir.mkdirs();
+        String fileName = String.format("russesamfunnetProfilePicture.jpg", System.currentTimeMillis());
+        File outFile = new File(storageDir, fileName);
+        outStream = new FileOutputStream(outFile);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outStream);
+        outStream.flush();
+        outStream.close();
+        System.out.println("------------------------------------------------------ " + outFile.toString() + " ------------------------------------------------------");
+        Toast.makeText(this, "Profile image changed!", Toast.LENGTH_SHORT).show();
+
+        Intent returnIntent = new Intent();
+        setResult(Activity.RESULT_CANCELED, returnIntent);
+        finish();
+    }
+
+
+
+    /**
+     * On load image button click, start pick  image chooser activity.
+     */
+    public void onLoadImageClick(View view) {
+        startActivityForResult(getPickImageChooserIntent(), 200);
     }
 
     @Override
@@ -123,7 +160,7 @@ public class CropImage extends AppCompatActivity
             allIntents.add(intent);
         }
 
-// the main intent is the last in the  list (fucking android) so pickup the useless one
+// the main intent is the last in the list
         Intent mainIntent =  allIntents.get(allIntents.size() - 1);
         for (Intent intent : allIntents) {
             if  (intent.getComponent().getClassName().equals("com.android.documentsui.DocumentsActivity"))  {

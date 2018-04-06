@@ -7,4 +7,5 @@
     <color name="colorShadow">#7F000000</color>
     <color name="colorKnotNotCompleted">#FE0000</color>
     <color name="colorKnotCompleted">#28AF37</color>
+    <color name="colorBlack">#000</color>
 </resources>

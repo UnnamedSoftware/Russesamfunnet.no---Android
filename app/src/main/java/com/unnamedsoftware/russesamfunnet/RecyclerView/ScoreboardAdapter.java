@@ -73,7 +73,7 @@ public class ScoreboardAdapter extends RecyclerView.Adapter<ScoreboardAdapter.Vi
     public void onBindViewHolder(ViewHolder holder, int position)
     {
         final ScoreboardEntity listUser = userList.get(position);
-        System.out.println("-----" + listUser.getRussId().getRussId() + " & " +  userID + "-----");
+        System.out.println("----- " + listUser.getRussId().getRussId() + " & " +  userID + " -----");
         if (listUser.getRussId().getRussId() == userID)
         {
             holder.layout.setBackgroundResource((R.drawable.user_scoreboard_border));

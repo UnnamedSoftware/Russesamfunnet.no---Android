@@ -1,103 +1,62 @@
 package com.unnamedsoftware.russesamfunnet.Search;
 
 import android.content.Context;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.TextView;
 
-import com.unnamedsoftware.russesamfunnet.Entity.Entity;
-import com.unnamedsoftware.russesamfunnet.R;
+import com.unnamedsoftware.russesamfunnet.Entity.RussEntity;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * Created by Alexander Eilert Berg on 21.02.2018.
  */
 
-public class ListViewAdapter extends BaseAdapter
+public class SearchAdapter  extends RecyclerView.Adapter<SearchAdapter.ViewHolder>
 {
 
     Context context;
     LayoutInflater layoutInflater;
 
-    private List<Entity> dataSet = null;
-    private ArrayList<Entity> arrayList;
+    private List<RussEntity> dataSet = null;
+    private ArrayList<RussEntity> arrayList;
 
-    public ListViewAdapter(Context context, List<Entity> dataSet)
+    public SearchAdapter(List<RussEntity> dataSet)
     {
-        this.context = context;
         this.dataSet = dataSet;
         layoutInflater = LayoutInflater.from(this.context);
         this.arrayList = new ArrayList<>();
         arrayList.addAll(dataSet);
     }
-
-    public class ViewHolder
+    public class ViewHolder extends RecyclerView.ViewHolder
     {
-        TextView textView;
-    }
-
-
-    @Override
-    public int getCount()
-    {
-        return dataSet.size();
-    }
-
-    @Override
-    public Object getItem(int position)
-    {
-        return dataSet.get(position);
-    }
-
-    @Override
-    public long getItemId(int position)
-    {
-        return position;
-    }
-
-    @Override
-    public View getView(int position, View view, ViewGroup viewGroup)
-    {
-        final ViewHolder viewHolder;
-        if (view == null)
+        public ViewHolder(final View itemLayoutView)
         {
-            viewHolder = new ViewHolder();
-            view = layoutInflater.inflate(R.layout.search_listview_item, null);
-
-            viewHolder.textView = view.findViewById(R.id.searchResult);
-            view.setTag(viewHolder);
-        } else
-        {
-            viewHolder = (ViewHolder) view.getTag();
+            super(itemLayoutView);
         }
-
-        viewHolder.textView.setText(dataSet.get(position).getSearchName());
-        return view;
     }
 
-    public void filter(String charText)
+
+    @Override
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {
-        charText = charText.toLowerCase(Locale.getDefault());
-        dataSet.clear();
-        if (charText.length() == 0)
-        {
-            dataSet.addAll(arrayList);
-        }else
-        {
-            for (Entity entity : arrayList)
-            {
-                if (entity.getSearchName().toLowerCase(Locale.getDefault()).contains(charText))
-                {
-                    dataSet.add(entity);
-                }
-            }
-        }
-        notifyDataSetChanged();
+        return null;
     }
+
+    @Override
+    public void onBindViewHolder(ViewHolder holder, int position)
+    {
+
+    }
+
+    @Override
+    public int getItemCount()
+    {
+        return 0;
+    }
+
 
 }

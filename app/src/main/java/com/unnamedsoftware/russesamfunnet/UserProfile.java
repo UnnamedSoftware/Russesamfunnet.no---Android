@@ -1,7 +1,10 @@
 package com.unnamedsoftware.russesamfunnet;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -22,6 +25,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -46,6 +50,7 @@ public class UserProfile extends AppCompatActivity
 
     private CircularImageView userImage;
     private ImageView russCard;
+    private File userImageFile = new File("/storage/emulated/0/Android/data/com.unnamedsoftware.russesamfunnet/files/Pictures/russesamfunnetProfilePicture.jpg");
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -62,11 +67,27 @@ public class UserProfile extends AppCompatActivity
             @Override
             public void onClick(View view)
             {
-                //userRussCardClicked(view);
+                userRussCardClicked(view);
             }
         });
 
         this.userImage = findViewById(R.id.userProfilePicture);
+
+
+        boolean hasImageOnServer = true;
+        if(!userImageFile.exists())
+        {
+            Bitmap bitmap = BitmapFactory.decodeFile(userImageFile.getAbsolutePath());
+            this.userImage.setImageBitmap(bitmap);
+        } else if (hasImageOnServer)
+        {
+            new LoadImage(this,userImage).execute("http://russesamfunnet.no/logos/logo.png");
+        } else
+        {
+            this.userImage.setImageResource(R.drawable.default_user);
+        }
+
+
         this.userImage.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -84,6 +105,7 @@ public class UserProfile extends AppCompatActivity
                 return true;
             }
         });
+
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -160,6 +182,7 @@ public class UserProfile extends AppCompatActivity
     }
 
 
+
     /**
      * Enlarges and rotates the russ card when clicked.
      */
@@ -199,10 +222,19 @@ public class UserProfile extends AppCompatActivity
         final Dialog dialog = new Dialog(view.getContext());
         dialog.setContentView(R.layout.user_profile_picture_clicked_dialog);
         ImageView userProfileEnlarged = dialog.findViewById(R.id.userProfilePictureEnlarged);
+
         try
         {
-            userProfileEnlarged.setImageResource(R.drawable.default_user);
-
+            if(userImageFile.exists())
+            {
+                System.out.println("Found image");
+                Bitmap bitmap = BitmapFactory.decodeFile(userImageFile.getAbsolutePath());
+                userProfileEnlarged.setImageBitmap(bitmap);
+            } else
+            {
+                System.out.println("Could not find image");
+                userProfileEnlarged.setImageResource(R.drawable.default_user);
+            }
         } catch (NullPointerException e)
         {
             e.printStackTrace();
@@ -225,10 +257,24 @@ public class UserProfile extends AppCompatActivity
      */
     private void userProfilePicturePressed(View view)
     {
-        startActivity(new Intent(UserProfile.this, CropImage.class));
+        Intent intent = new Intent(this,CropImage.class);
+        startActivityForResult(intent, 1);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
+        if (requestCode == 1) {
+            if(resultCode == Activity.RESULT_OK){
+                String result=data.getStringExtra("result");
+            }
+            if (resultCode == Activity.RESULT_CANCELED) {
+                //Write your code if there's no result
+                finish();
+                startActivity(getIntent());
+            }
+        }
+    }
 
     /**
      * Retrieves with the JSONParser, the russ information a list over knots that the russ have completed

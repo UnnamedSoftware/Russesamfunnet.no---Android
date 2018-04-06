@@ -1,29 +1,5 @@
 package com.unnamedsoftware.russesamfunnet.Search;
 
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ListView;
-import android.widget.SearchView;
-
-import com.unnamedsoftware.russesamfunnet.Entity.Entity;
-import com.unnamedsoftware.russesamfunnet.Entity.KnotEntity;
-import com.unnamedsoftware.russesamfunnet.Entity.RussEntity;
-import com.unnamedsoftware.russesamfunnet.Entity.SchoolEntity;
-import com.unnamedsoftware.russesamfunnet.JSONParser;
-import com.unnamedsoftware.russesamfunnet.R;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * The search activity TODO:PLease add documentation :(
  *
@@ -33,7 +9,7 @@ import java.util.List;
  * Requires an intent containing the location, municipality, and the wanted data set to work
  *
  * Created by Alexander Eilert Berg on 19.02.2018.
- */
+
 
 public class SearchFragment extends Fragment implements SearchView.OnQueryTextListener
 {
@@ -43,7 +19,7 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
     private String query;
 
     private ListView listView;
-    private ListViewAdapter adapter;
+    //private ListViewAdapter adapter;
     private SearchView searchView;
 
     JSONArray data = null;
@@ -96,9 +72,9 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
         return true;
     }
 
-    /**
+
      * Retrieves the needed data set from the server using the JSONparser. Needs an location, an municipality, and the wanted data set.
-     */
+
     private void getDataSet()
     {
         String url = getString(R.string.url);
@@ -146,7 +122,7 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
      * in the switch.
      *
      * @param jsonArray
-     */
+     *
     private void fillDataSet(JSONArray jsonArray)
     {
         try
@@ -226,9 +202,8 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
 
     /**
      * Returns the SearchView for use in ViewSwitchers
-     */
+     *
     public View getSearchView()
     {
         return searchView;
-    }
-}
+    }}*/

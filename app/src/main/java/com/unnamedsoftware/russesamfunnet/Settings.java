@@ -12,7 +12,8 @@ public class Settings extends AppCompatActivity
 {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
@@ -26,9 +27,9 @@ public class Settings extends AppCompatActivity
     }
 
     @Override
-    public boolean onSupportNavigateUp() {
+    public boolean onSupportNavigateUp()
+    {
         onBackPressed();
         return true;
     }
-
 }

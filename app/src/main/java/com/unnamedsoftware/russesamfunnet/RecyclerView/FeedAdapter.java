@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.mikhaellopez.circularimageview.CircularImageView;
 import com.unnamedsoftware.russesamfunnet.Entity.FeedEntity;
 import com.unnamedsoftware.russesamfunnet.R;
 
@@ -22,11 +23,14 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>
     public class ViewHolder extends RecyclerView.ViewHolder
     {
         private TextView poster, post;
+        private CircularImageView userImage;
+
         public ViewHolder(View view)
         {
             super(view);
             poster = view.findViewById(R.id.rvPoster);
             post = view.findViewById(R.id.rvPost);
+            userImage = view.findViewById(R.id.userProfilePicture);
         }
     }
 

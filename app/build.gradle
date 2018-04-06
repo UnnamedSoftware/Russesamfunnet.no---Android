@@ -28,13 +28,16 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
-    compile 'com.mikhaellopez:circularimageview:3.0.2'
-    compile 'com.android.support:design:26.1.0'
-    compile 'com.android.volley:volley:1.1.0'
-    compile 'com.google.android.gms:play-services-auth:11.8.0'
-    compile 'com.android.support:design:26.1.0'
+    implementation 'com.mikhaellopez:circularimageview:3.0.2'
+    implementation 'com.android.support:design:26.1.0'
+    implementation 'com.android.volley:volley:1.1.0'
+    implementation 'com.google.android.gms:play-services-auth:11.8.0'
+    implementation 'com.android.support:design:26.1.0'
     // https://mvnrepository.com/artifact/commons-codec/commons-codec
     implementation group: 'commons-codec', name: 'commons-codec', version: '1.10'
+
+
+    implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
 
 
     implementation 'com.facebook.android:facebook-android-sdk:4.31.0'

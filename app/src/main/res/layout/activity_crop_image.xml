@@ -1,26 +1,48 @@
-<LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <Button
+    <LinearLayout
+        android:id="@+id/linearLayout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Load Image"
-        android:onClick="onLoadImageClick"/>
+        android:orientation="horizontal"
+        android:gravity="center_horizontal"
+        android:padding="6dp"
+        android:weightSum="2">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:layout_weight="1"
+            android:onClick="onLoadImageClick"
+            android:text="Velg annet" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:layout_weight="1"
+            android:onClick="onApproveImage"
+            android:text="Godkjenn"/>
+    </LinearLayout>
 
     <com.theartofdev.edmodo.cropper.CropImageView
         android:id="@+id/CropImageView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        app:scaleType="fitCenter"/>
+        app:scaleType="fitCenter" />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Crop Image"
-        android:onClick="onCropImageClick"/>
+        android:onClick="onCropImageClick"
+        android:text="Beskjære bildet" />
 
 </LinearLayout>

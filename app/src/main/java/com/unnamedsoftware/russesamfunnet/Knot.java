@@ -7,12 +7,10 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.facebook.AccessToken;
 import com.unnamedsoftware.russesamfunnet.Entity.KnotEntity;
-import com.unnamedsoftware.russesamfunnet.Entity.RussEntity;
 
 import org.json.JSONObject;
 
@@ -49,6 +47,7 @@ public class Knot extends AppCompatActivity {
         knotEntity = (KnotEntity) i.getSerializableExtra("knot_entity");
         System.out.println(knotEntity.getKnotId());
         this.fillInData();
+
 
         this.completeFloatingActionButton = findViewById(R.id.complete_button);
         completeFloatingActionButton.setOnClickListener(new View.OnClickListener() {
