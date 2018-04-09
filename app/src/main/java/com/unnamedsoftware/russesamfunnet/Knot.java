@@ -1,38 +1,24 @@
 package com.unnamedsoftware.russesamfunnet;
 
-import android.app.Dialog;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.facebook.AccessToken;
+import com.mikhaellopez.circularimageview.CircularImageView;
 import com.unnamedsoftware.russesamfunnet.Entity.CompletedKnotEntity;
 import com.unnamedsoftware.russesamfunnet.Entity.KnotEntity;
 import com.unnamedsoftware.russesamfunnet.Entity.RussEntity;
-import com.unnamedsoftware.russesamfunnet.Entity.SchoolEntity;
-import com.unnamedsoftware.russesamfunnet.Search.SearchAdapter;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
 /**
  * Created by Alexander Eilert Berg on 29.01.2018.
@@ -41,11 +27,11 @@ import java.util.List;
 public class Knot extends AppCompatActivity {
     private KnotEntity knotEntity;
     private FloatingActionButton completeFloatingActionButton;
-    private FloatingActionButton witnessFloatingActionButton1;
-    private FloatingActionButton witnessFloatingActionButton2;
     private RussEntity witness;
     private CompletedKnotEntity completed;
 
+    private CircularImageView witnessCircularImageView1;
+    private CircularImageView witnessCircularImageView2;
 
     private Boolean knotCompleted = false;
 
@@ -89,18 +75,19 @@ public class Knot extends AppCompatActivity {
         checkIfCompleted();
         System.out.println(knotEntity.getKnotId());
         this.fillInData();
-        this.witnessFloatingActionButton1 = findViewById(R.id.add_witness_button1);
-        witnessFloatingActionButton1.setOnClickListener(new View.OnClickListener() {
+        this.witnessCircularImageView1 = findViewById(R.id.add_witness_button1);
+        witnessCircularImageView1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(Knot.this, WitnessSelection.class);
                 intent.putExtra("knotEntity", knotEntity);
+                intent.putExtra("viewResource",1);
                 System.out.println(knotEntity.getKnotId());
                 startActivity(intent);
             }
         });
-        this.witnessFloatingActionButton2 = findViewById(R.id.add_witness_button2);
-        witnessFloatingActionButton2.setOnClickListener(new View.OnClickListener() {
+        this.witnessCircularImageView2 = findViewById(R.id.add_witness_button2);
+        witnessCircularImageView2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(Knot.this, WitnessSelection.class);

@@ -1,9 +1,8 @@
 package com.unnamedsoftware.russesamfunnet;
 
-import android.app.Dialog;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,7 +15,7 @@ import com.facebook.AccessToken;
 import com.unnamedsoftware.russesamfunnet.Entity.KnotEntity;
 import com.unnamedsoftware.russesamfunnet.Entity.RussEntity;
 import com.unnamedsoftware.russesamfunnet.Entity.SchoolEntity;
-import com.unnamedsoftware.russesamfunnet.Search.SearchAdapter;
+import com.unnamedsoftware.russesamfunnet.Search.SearchWitnessAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -29,8 +28,9 @@ import java.util.List;
 public class WitnessSelection extends AppCompatActivity {
 
 
-    List<RussEntity> russEntityList;
-    KnotEntity knotEntity;
+    private List<RussEntity> russEntityList;
+    private KnotEntity knotEntity;
+    private int view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +39,7 @@ public class WitnessSelection extends AppCompatActivity {
         russEntityList = new ArrayList<>();
         Intent intent = getIntent();
         knotEntity = (KnotEntity) intent.getSerializableExtra("knotEntity");
+        view = (int) intent.getSerializableExtra("viewResource");
         System.out.println(knotEntity.getKnotId());
         final EditText editText = findViewById(R.id.search_input);
         editText.addTextChangedListener(new TextWatcher(){
@@ -97,11 +98,11 @@ public class WitnessSelection extends AppCompatActivity {
 
     private void buildList()
     {
-        SearchAdapter searchAdapter;
+        SearchWitnessAdapter searchWitnessAdapter;
 
         RecyclerView recyclerView;
         if(!russEntityList.isEmpty()) {
-            searchAdapter = new SearchAdapter(russEntityList, knotEntity);
+            searchWitnessAdapter = new SearchWitnessAdapter(russEntityList, knotEntity,view);
             recyclerView = findViewById(R.id.saResults);
             if(recyclerView == null)
             {
@@ -113,7 +114,7 @@ public class WitnessSelection extends AppCompatActivity {
             recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
 
 
-            recyclerView.setAdapter(searchAdapter);
+            recyclerView.setAdapter(searchWitnessAdapter);
         }
 
 
