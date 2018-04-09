@@ -5,6 +5,7 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -36,12 +37,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *  https://guides.codepath.com/android/fragment-navigation-drawer
- *
+ * https://guides.codepath.com/android/fragment-navigation-drawer
  */
 
-public class Feed extends AppCompatActivity {
-
+public class Feed extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener
+{
+    private SwipeRefreshLayout swipeRefreshLayout;
     private DrawerLayout drawerLayout;
     private Toolbar toolbar;
     private NavigationView nav;
@@ -65,9 +66,9 @@ public class Feed extends AppCompatActivity {
     JSONArray posts = null;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
-
 
 
         setContentView(R.layout.activity_feed);
@@ -75,7 +76,8 @@ public class Feed extends AppCompatActivity {
         {
             System.out.println(AccessToken.getCurrentAccessToken().getToken());
             url = (getString(R.string.url) + "schoolFeed?accessToken=" + AccessToken.getCurrentAccessToken().getToken() + "&type=facebook");
-        }else {
+        } else
+        {
             System.out.println(((Global) this.getApplication()).getAccessToken());
             url = getString(R.string.url) + "schoolFeed?accessToken=" + ((Global) this.getApplication()).getAccessToken() + "&type=russesamfunnet";
         }
@@ -93,7 +95,7 @@ public class Feed extends AppCompatActivity {
         nav = findViewById(R.id.navList);
         setupDrawerContent(nav);
         drawerLayout.requestLayout();
-        getWindow().setSoftInputMode(       WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         try
         {
@@ -113,20 +115,67 @@ public class Feed extends AppCompatActivity {
         recyclerView.setAdapter(feedAdapter);
 
 
-        Button button = (Button) findViewById(R.id.button_chatbox_send);
-        button.setOnClickListener(new View.OnClickListener() {
+        Button button = findViewById(R.id.button_chatbox_send);
+        button.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view)
+            {
                 sendMessage((EditText) findViewById(R.id.edittext_chatbox));
             }
         });
 
+        // SwipeRefreshLayout
+        swipeRefreshLayout = this.findViewById(R.id.swipe_container);
+        swipeRefreshLayout.setOnRefreshListener(this);
+        swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary,
+                android.R.color.holo_green_dark,
+                android.R.color.holo_orange_dark,
+                android.R.color.holo_blue_dark);
 
+        /**
+         * Showing Swipe Refresh animation on activity create
+         * As animation won't start on onCreate, post runnable is used
+         */
+        swipeRefreshLayout.post(new Runnable()
+        {
+
+            @Override
+            public void run()
+            {
+
+                swipeRefreshLayout.setRefreshing(true);
+
+                // Fetching data from server
+                loadRecyclerViewData();
+            }
+        });
     }
+
+    @Override
+    public void onRefresh()
+    {
+        loadRecyclerViewData();
+    }
+
+    private void loadRecyclerViewData()
+    {
+        swipeRefreshLayout.setRefreshing(true);
+        try
+        {
+            getFeed();
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        swipeRefreshLayout.setRefreshing(false);
+    }
+
 
     public void sendMessage(EditText editText)
     {
-        try {
+        try
+        {
             String message = editText.getText().toString();
             System.out.println(message);
             String urlSend;
@@ -137,7 +186,8 @@ public class Feed extends AppCompatActivity {
                         + "postFeedToSchool?accessToken=" + AccessToken.getCurrentAccessToken().getToken())
                         + "&type=facebook"
                         + "&message=" + message;
-            }else {
+            } else
+            {
                 System.out.println(((Global) this.getApplication()).getAccessToken());
                 urlSend = getString(R.string.url)
                         + "postFeedToSchool?accessToken=" + ((Global) this.getApplication()).getAccessToken()
@@ -146,25 +196,29 @@ public class Feed extends AppCompatActivity {
             }
             editText.setText("");
 
-            try {
-                new JSONObjectParser(new JSONObjectParser.OnPostExecute() {
+            try
+            {
+                new JSONObjectParser(new JSONObjectParser.OnPostExecute()
+                {
                     @Override
-                    public void onPostExecute(JSONObject jsonObject) {
-                        if(jsonObject != null)
+                    public void onPostExecute(JSONObject jsonObject)
+                    {
+                        if (jsonObject != null)
                         {
 
-                            try {
+                            try
+                            {
                                 feedAdapter.clear();
                                 getFeed();
-                            }
-                            catch (Exception e)
+                            } catch (Exception e)
                             {
                                 e.printStackTrace();
                             }
                         }
                     }
                 }).execute(new URL(urlSend));
-            } catch (MalformedURLException e) {
+            } catch (MalformedURLException e)
+            {
                 e.printStackTrace();
             }
 
@@ -177,6 +231,7 @@ public class Feed extends AppCompatActivity {
 
     /**
      * This method designates what happens when a menu item are selected in the navigation drawer.
+     *
      * @param menuItem
      */
     public void selectDrawerItem(MenuItem menuItem)
@@ -200,7 +255,7 @@ public class Feed extends AppCompatActivity {
                 break;
 
             case R.id.group:
-                 startActivity(new Intent(this, GroupList.class));
+                startActivity(new Intent(this, GroupList.class));
                 break;
 
             case R.id.event:
@@ -215,7 +270,7 @@ public class Feed extends AppCompatActivity {
             case R.id.logout:
                 LoginManager.getInstance().logOut();
                 Intent i = getBaseContext().getPackageManager()
-                        .getLaunchIntentForPackage( getBaseContext().getPackageName() );
+                        .getLaunchIntentForPackage(getBaseContext().getPackageName());
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 System.out.println(((Global) this.getApplication()).deleteCache("token"));
                 System.out.println(((Global) this.getApplication()).deleteCache("tokenType"));
@@ -234,21 +289,25 @@ public class Feed extends AppCompatActivity {
     /**
      * Uses the JSONParser to request the feed from the server.
      */
-    private void getFeed() throws IOException {
-        try {
-            new JSONParser(new JSONParser.OnPostExecute() {
+    private void getFeed() throws IOException
+    {
+        try
+        {
+            new JSONParser(new JSONParser.OnPostExecute()
+            {
                 @Override
-                public void onPostExecute(JSONArray jsonArray) {
+                public void onPostExecute(JSONArray jsonArray)
+                {
                     fillFeed(jsonArray);
                 }
             }).execute(new URL(url));
-        } catch (MalformedURLException e) {
+        } catch (MalformedURLException e)
+        {
             e.printStackTrace();
         }
     }
 
     /**
-     *
      * @param jsonArray
      */
     public void fillFeed(JSONArray jsonArray)
@@ -257,7 +316,7 @@ public class Feed extends AppCompatActivity {
         {
             posts = jsonArray;
 
-            for(int i = 0; i < posts.length(); i++)
+            for (int i = 0; i < posts.length(); i++)
             {
                 JSONObject u = posts.getJSONObject(i);
                 JSONObject newRussObject = u.getJSONObject("russId");
@@ -281,14 +340,15 @@ public class Feed extends AppCompatActivity {
                 RussEntity russ = new RussEntity(russId, russStatus, firstName, lastName, email, russPassword, russRole, russYear);
                 String message = u.getString("message");
                 Long feedId = u.getLong("feedId");
-                if(u.getString("type").equals("School")) {
+                if (u.getString("type").equals("School"))
+                {
                     FeedEntity posts = new FeedEntity(feedId, message, russ);
                     feedPosts.add(0, posts);
                 }
             }
             feedAdapter.notifyDataSetChanged();
 
-        }catch (JSONException e)
+        } catch (JSONException e)
         {
             e.printStackTrace();
         }
@@ -338,7 +398,8 @@ public class Feed extends AppCompatActivity {
     }
 
     @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
+    protected void onPostCreate(Bundle savedInstanceState)
+    {
 
         super.onPostCreate(savedInstanceState);
         drawerToggle.syncState();

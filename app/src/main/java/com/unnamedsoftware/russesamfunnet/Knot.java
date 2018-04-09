@@ -2,6 +2,8 @@ package com.unnamedsoftware.russesamfunnet;
 
 import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.NavUtils;
@@ -18,6 +20,7 @@ import com.unnamedsoftware.russesamfunnet.Entity.RussEntity;
 
 import org.json.JSONObject;
 
+import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -37,6 +40,9 @@ public class Knot extends AppCompatActivity
 
     private Boolean knotCompleted = false;
 
+
+    private File userImageFile = new File("/storage/emulated/0/Android/data/com.unnamedsoftware.russesamfunnet/files/Pictures/russesamfunnetProfilePicture.jpg");
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -46,6 +52,7 @@ public class Knot extends AppCompatActivity
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         setTitle("Russesamfunnet");
+        completed = new CompletedKnotEntity();
 
         try
         {
@@ -81,34 +88,32 @@ public class Knot extends AppCompatActivity
         }
 
         checkIfCompleted();
-        System.out.println(knotEntity.getKnotId());
-
-        System.out.println("Starting image setting");
-        if (witness != null)
-        {
-            System.out.println("Witness not null");
-            try
-            {
-                if (completed.getWitnessId1() != null)
-                {
-                    System.out.println("Witness id 1 not null");
-                    completed.getWitnessId1().getProfilePicture();
-                    //TODO: Add real image handling
-                    witnessCircularImageView1.setImageResource(R.drawable.default_user);
-                    System.out.println("Image set");
-                } else if (completed.getWitnessId2() != null)
-                {
-                    completed.getWitnessId2().getProfilePicture();
-                    //TODO: Add real image handling
-                    witnessCircularImageView2.setImageResource(R.drawable.default_user);
-                }
-            } catch (NullPointerException e)
-            {
-                e.printStackTrace();
-            }
-        }
+        knotEntity.getKnotId();
         this.fillInData();
         this.witnessCircularImageView1 = findViewById(R.id.add_witness_button1);
+
+        //-----------------------------------------------------------------------------------------------
+
+        System.out.println("-----------------------------------------------------------------------------------------------ID: " + completed.getWitnessId1());
+        if (completed.getWitnessId1() != null)
+        {
+
+            boolean hasImageOnServer = false;
+            if (!userImageFile.exists())
+            {
+                Bitmap bitmap = BitmapFactory.decodeFile(userImageFile.getAbsolutePath());
+                this.witnessCircularImageView1.setImageBitmap(bitmap);
+            } else if (hasImageOnServer)
+            {
+                new LoadImage(this, witnessCircularImageView1).execute("http://russesamfunnet.no/logos/logo.png");
+            } else
+            {
+                this.witnessCircularImageView1.setImageResource(R.drawable.default_user);
+            }
+        }
+
+        //-----------------------------------------------------------------------------------------------
+
         witnessCircularImageView1.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -288,7 +293,6 @@ public class Knot extends AppCompatActivity
     {
         try
         {
-            completed = new CompletedKnotEntity();
 
             RussEntity russ = getRussEntityFromJson((JSONObject) jsonObject.get("russId"));
             KnotEntity knot = getKnotEntityFromJson((JSONObject) jsonObject.get("knotId"));
@@ -420,6 +424,7 @@ public class Knot extends AppCompatActivity
     {
         //onBackPressed();
         NavUtils.navigateUpFromSameTask(this);
+        Knot.this.finish();
         return true;
     }
 
