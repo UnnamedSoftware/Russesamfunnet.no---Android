@@ -169,9 +169,9 @@ public class SchoolRegisterActivity extends AppCompatActivity
                         if(jsonObject.getString("loginStatus").equals("Login success")) {
                             ((Global) getApplication()).setAccessToken(jsonObject.getString("accessToken"), "russesamfunnet");
                             goToFeed();
-                        }else
-                        {
-                            //do something else
+                        }else if(jsonObject.getString("loginStatus").equals("User successfully registered")) {
+                            ((Global) getApplication()).setAccessToken(jsonObject.getString("accessToken"), "russesamfunnet");
+                            goToFeed();
                         }
                     }catch (Exception e)
                     {
