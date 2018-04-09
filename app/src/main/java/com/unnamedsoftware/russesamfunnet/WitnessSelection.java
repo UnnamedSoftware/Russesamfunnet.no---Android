@@ -39,7 +39,6 @@ public class WitnessSelection extends AppCompatActivity {
         russEntityList = new ArrayList<>();
         Intent intent = getIntent();
         knotEntity = (KnotEntity) intent.getSerializableExtra("knotEntity");
-        view = (int) intent.getSerializableExtra("viewResource");
         System.out.println(knotEntity.getKnotId());
         final EditText editText = findViewById(R.id.search_input);
         editText.addTextChangedListener(new TextWatcher(){
@@ -102,7 +101,7 @@ public class WitnessSelection extends AppCompatActivity {
 
         RecyclerView recyclerView;
         if(!russEntityList.isEmpty()) {
-            searchWitnessAdapter = new SearchWitnessAdapter(russEntityList, knotEntity,view);
+            searchWitnessAdapter = new SearchWitnessAdapter(russEntityList, knotEntity);
             recyclerView = findViewById(R.id.saResults);
             if(recyclerView == null)
             {

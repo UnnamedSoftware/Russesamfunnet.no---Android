@@ -147,7 +147,10 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-        <activity android:name=".WitnessSelection"></activity>
+        <activity android:name=".WitnessSelection"
+            android:windowSoftInputMode="adjustResize"
+            android:label="@string/app_name"
+            android:parentActivityName=".Knot"/>
     </application>
 
 </manifest>

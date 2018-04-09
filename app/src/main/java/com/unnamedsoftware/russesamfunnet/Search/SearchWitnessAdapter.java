@@ -2,8 +2,6 @@ package com.unnamedsoftware.russesamfunnet.Search;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,13 +9,11 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.mikhaellopez.circularimageview.CircularImageView;
 import com.unnamedsoftware.russesamfunnet.Entity.KnotEntity;
 import com.unnamedsoftware.russesamfunnet.Entity.RussEntity;
 import com.unnamedsoftware.russesamfunnet.Knot;
 import com.unnamedsoftware.russesamfunnet.R;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,14 +31,11 @@ public class SearchWitnessAdapter extends RecyclerView.Adapter<SearchWitnessAdap
     private List<RussEntity> dataSet = null;
     private ArrayList<RussEntity> arrayList;
     private KnotEntity knotEntity;
-    private int view;
 
-    public SearchWitnessAdapter(List<RussEntity> dataSet, KnotEntity knotEntity, int view)
+    public SearchWitnessAdapter(List<RussEntity> dataSet, KnotEntity knotEntity)
     {
         this.knotEntity = knotEntity;
         this.dataSet = dataSet;
-        this.view = view;
-        //layoutInflater = LayoutInflater.from(this.context);
         this.arrayList = new ArrayList<>();
         arrayList.addAll(dataSet);
     }
@@ -51,7 +44,6 @@ public class SearchWitnessAdapter extends RecyclerView.Adapter<SearchWitnessAdap
     {
         private TextView name;
         RelativeLayout layout;
-        private CircularImageView witnessCircularImageView;
 
         public ViewHolder(final View itemLayoutView)
         {
@@ -82,17 +74,6 @@ public class SearchWitnessAdapter extends RecyclerView.Adapter<SearchWitnessAdap
             @Override
             public void onClick(View v)
             {
-                //TODO: Replace with the chosen russ's profile picture
-                File userImageFile = new File("/storage/emulated/0/Android/data/com.unnamedsoftware.russesamfunnet/files/Pictures/russesamfunnetProfilePicture.jpg");
-                Bitmap bitmap = BitmapFactory.decodeFile(userImageFile.getAbsolutePath());
-                if(userImageFile != null)
-                {
-                    holder.witnessCircularImageView.setImageBitmap(bitmap);
-                }else
-                {
-                    holder.witnessCircularImageView.setImageResource(R.drawable.default_user);
-                }
-
                 Intent intent = new Intent(v.getContext(), Knot.class);
                 intent.putExtra("knot_entity", knotEntity);
                 intent.putExtra("witness", witness);
@@ -107,6 +88,4 @@ public class SearchWitnessAdapter extends RecyclerView.Adapter<SearchWitnessAdap
     {
         return arrayList.size();
     }
-
-
 }
