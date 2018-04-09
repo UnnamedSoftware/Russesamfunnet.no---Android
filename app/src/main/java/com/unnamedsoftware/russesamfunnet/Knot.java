@@ -94,9 +94,10 @@ public class Knot extends AppCompatActivity
 
         //-----------------------------------------------------------------------------------------------
 
-        System.out.println("-----------------------------------------------------------------------------------------------ID: " + completed.getWitnessId1());
+
         if (completed.getWitnessId1() != null)
         {
+
 
             boolean hasImageOnServer = false;
             if (!userImageFile.exists())
@@ -192,6 +193,18 @@ public class Knot extends AppCompatActivity
 
             }
         });
+        try{
+            if(completed != null)
+            {
+                System.out.println("Success");
+            }
+            System.out.println("-----------------------------------------------------------------------------------------------ID: " + completed.getWitnessId1().getRussId());
+            System.out.println("-----------------------------------------------------------------------------------------------ID: " + completed.getWitnessId2().getRussId());
+
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 
     public void setWitness(String url)
@@ -298,13 +311,15 @@ public class Knot extends AppCompatActivity
             KnotEntity knot = getKnotEntityFromJson((JSONObject) jsonObject.get("knotId"));
             Long completedId = jsonObject.getLong("completedId");
             RussEntity witness1 = getRussEntityFromJson((JSONObject) jsonObject.get("witnessId1"));
-            RussEntity witness2 = getRussEntityFromJson((JSONObject) jsonObject.get("witnessId1"));
-
+            RussEntity witness2 = getRussEntityFromJson((JSONObject) jsonObject.get("witnessId2"));
+            System.out.println(witness1.getRussId());
             completed.setCompletedId(completedId);
             completed.setKnotId(knot);
             completed.setRussId(russ);
             completed.setWitnessId1(witness1);
             completed.setWitnessId2(witness2);
+            System.out.println("-----------------------------------------------------------------------------------------------ID: " + completed.getWitnessId1().getRussId());
+
         } catch (Exception e)
         {
             e.printStackTrace();
