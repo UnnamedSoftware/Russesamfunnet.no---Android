@@ -262,7 +262,8 @@ public class UserProfile extends AppCompatActivity
 
             for(int i = 0; i < jsonArray.length(); i++)
             {
-                JSONObject knotsJSONObject = jsonArray.getJSONObject(i);
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                JSONObject knotsJSONObject = jsonObject.getJSONObject("knotId");
                 Long knotID = knotsJSONObject.getLong("knotId");
                 String title = knotsJSONObject.getString("knotName");
                 String description = knotsJSONObject.getString("knotDetails");
