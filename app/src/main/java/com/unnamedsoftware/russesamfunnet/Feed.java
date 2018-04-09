@@ -163,8 +163,9 @@ public class Feed extends AppCompatActivity implements SwipeRefreshLayout.OnRefr
         swipeRefreshLayout.setRefreshing(true);
         try
         {
+            feedAdapter.clear();
             getFeed();
-        } catch (IOException e)
+        } catch (Exception e)
         {
             e.printStackTrace();
         }

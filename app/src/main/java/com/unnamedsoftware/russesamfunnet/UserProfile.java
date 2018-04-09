@@ -75,13 +75,13 @@ public class UserProfile extends AppCompatActivity
 
 
         boolean hasImageOnServer = true;
-        if(!userImageFile.exists())
+        if (!userImageFile.exists())
         {
             Bitmap bitmap = BitmapFactory.decodeFile(userImageFile.getAbsolutePath());
             this.userImage.setImageBitmap(bitmap);
         } else if (hasImageOnServer)
         {
-            new LoadImage(this,userImage).execute("http://russesamfunnet.no/logos/logo.png");
+            new LoadImage(this, userImage).execute("http://russesamfunnet.no/logos/logo.png");
         } else
         {
             this.userImage.setImageResource(R.drawable.default_user);
@@ -182,7 +182,6 @@ public class UserProfile extends AppCompatActivity
     }
 
 
-
     /**
      * Enlarges and rotates the russ card when clicked.
      */
@@ -225,7 +224,7 @@ public class UserProfile extends AppCompatActivity
 
         try
         {
-            if(userImageFile.exists())
+            if (userImageFile.exists())
             {
                 System.out.println("Found image");
                 Bitmap bitmap = BitmapFactory.decodeFile(userImageFile.getAbsolutePath());
@@ -257,18 +256,25 @@ public class UserProfile extends AppCompatActivity
      */
     private void userProfilePicturePressed(View view)
     {
-        Intent intent = new Intent(this,CropImage.class);
-        startActivityForResult(intent, 1);
+        if (((Global) this.getApplication()).getRussId() == russ.getRussId())
+        {
+            Intent intent = new Intent(this, CropImage.class);
+            startActivityForResult(intent, 1);
+        }
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
 
-        if (requestCode == 1) {
-            if(resultCode == Activity.RESULT_OK){
-                String result=data.getStringExtra("result");
+        if (requestCode == 1)
+        {
+            if (resultCode == Activity.RESULT_OK)
+            {
+                String result = data.getStringExtra("result");
             }
-            if (resultCode == Activity.RESULT_CANCELED) {
+            if (resultCode == Activity.RESULT_CANCELED)
+            {
                 //Write your code if there's no result
                 finish();
                 startActivity(getIntent());
