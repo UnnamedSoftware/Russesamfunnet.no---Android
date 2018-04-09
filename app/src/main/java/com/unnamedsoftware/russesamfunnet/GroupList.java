@@ -11,10 +11,19 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
+import com.facebook.AccessToken;
 import com.unnamedsoftware.russesamfunnet.Entity.GroupEntity;
+import com.unnamedsoftware.russesamfunnet.Entity.KnotEntity;
 import com.unnamedsoftware.russesamfunnet.RecyclerView.GroupListAdapter;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +40,6 @@ public class GroupList extends AppCompatActivity
     private List<GroupEntity> groupEntityList = new ArrayList<>();
     private RecyclerView recyclerView;
     private GroupListAdapter groupListAdapter;
-    private String url;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -60,8 +68,7 @@ public class GroupList extends AppCompatActivity
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
-
-        dummy();
+        getGroups();
 
         this.recyclerView = findViewById(R.id.glaGroup);
         this.groupListAdapter = new GroupListAdapter(groupEntityList);
@@ -87,26 +94,95 @@ public class GroupList extends AppCompatActivity
             @Override
             public void onClick(View view)
             {
-                dialog.dismiss();
+                EditText editText = findViewById(R.id.group);
+                String groupName = editText.getText().toString();
+                String url = "";
+                if (AccessToken.getCurrentAccessToken() != null)
+                {
+                    System.out.println(AccessToken.getCurrentAccessToken().getToken());
+                    url = (getString(R.string.url) + "createGroup?accessToken=" + AccessToken.getCurrentAccessToken().getToken() + "&type=facebook&groupName="+groupName);
+                }else {
+                    url = getString(R.string.url) + "createGroup?accessToken=" + ((Global) getApplication()).getAccessToken() + "&type=russesamfunnet&groupName="+groupName;
+                }
+                System.out.println(url);
+                sendCreateGroup(url);
+
             }
         });
 
         dialog.show();
+
     }
 
-
-    private void dummy()
+    private void sendCreateGroup(String url)
     {
-        GroupEntity group = new GroupEntity(1, "Data vg3");
-        groupEntityList.add(group);
-        group = new GroupEntity(2, "Cult of conflict");
-        groupEntityList.add(group);
-        group = new GroupEntity(3, "Gjengen");
-        groupEntityList.add(group);
-        group = new GroupEntity(4, "Sy klubben");
-        groupEntityList.add(group);
-        group = new GroupEntity(5, "Borgund elektro linje");
-        groupEntityList.add(group);
+        try {
+            new JSONObjectParser(new JSONObjectParser.OnPostExecute() {
+                @Override
+                public void onPostExecute(JSONObject jsonObject) {
+                    try{
+                        if(jsonObject.getString("response").equals("true")) {
+                            getGroups();
+                        } else {
+                            System.out.println(jsonObject.getString("response"));
+                        }
+                    }catch (Exception e)
+                    {
+                        e.printStackTrace();
+                    }
+                }
+            }).execute(new URL(url));
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
     }
+
+    private void getGroups()
+    {
+        String url = "";
+        if (AccessToken.getCurrentAccessToken() != null)
+        {
+            System.out.println(AccessToken.getCurrentAccessToken().getToken());
+            url = (getString(R.string.url) + "groups?accessToken=" + AccessToken.getCurrentAccessToken().getToken() + "&type=facebook");
+        }else {
+            url = getString(R.string.url) + "groups?accessToken=" + ((Global) this.getApplication()).getAccessToken() + "&type=russesamfunnet";
+        }
+        try {
+            new JSONParser(new JSONParser.OnPostExecute() {
+                @Override
+                public void onPostExecute(JSONArray jsonArray) {
+                    try{
+                        fillGroupList(jsonArray);
+                    }catch (Exception e)
+                    {
+                        e.printStackTrace();
+                    }
+                }
+            }).execute(new URL(url));
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void fillGroupList(JSONArray jsonArray)
+    {
+        try
+        {
+
+            for(int i = 0; i < jsonArray.length(); i++)
+            {
+                JSONObject group = jsonArray.getJSONObject(i).getJSONObject("groupId");
+                Long groupId = group.getLong("groupId");
+                String groupName = group.getString("groupName");
+
+                groupEntityList.add(new GroupEntity(groupId, groupName));
+            }
+            this.groupListAdapter.notifyDataSetChanged();
+        }catch (JSONException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
 
 }

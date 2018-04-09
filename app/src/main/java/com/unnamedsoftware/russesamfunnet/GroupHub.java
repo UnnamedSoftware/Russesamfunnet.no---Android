@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -39,7 +40,7 @@ import java.util.List;
 public class GroupHub extends AppCompatActivity
 {
     private String groupName;
-    private Integer groupID;
+    private Long groupID;
     private FloatingActionButton floatingActionButton;
 
     private RecyclerView recyclerViewRuss;
@@ -64,7 +65,7 @@ public class GroupHub extends AppCompatActivity
             Intent intent = getIntent();
             Bundle bundle = intent.getExtras();
             this.groupName = (String) bundle.get("groupName");
-            this.groupID = (Integer) bundle.get("groupID");
+            this.groupID = (Long) bundle.get("groupID");
         } catch (NullPointerException e)
         {
             e.printStackTrace();
@@ -84,12 +85,17 @@ public class GroupHub extends AppCompatActivity
         if (AccessToken.getCurrentAccessToken() != null)
         {
             System.out.println(AccessToken.getCurrentAccessToken().getToken());
-            url = (getString(R.string.url) + "groupFeed?accessToken=" + AccessToken.getCurrentAccessToken().getToken() + "&type=facebook" + groupID);
+            url = (getString(R.string.url) + "groupFeed?accessToken=" + AccessToken.getCurrentAccessToken().getToken() + "&type=facebook&groupId=" + groupID);
         }else {
             System.out.println(((Global) this.getApplication()).getAccessToken());
-            url = (getString(R.string.url) + "groupFeed?accessToken=" + ((Global) this.getApplication()).getAccessToken() + "&type=russesamfunnet" + groupID);
+            url = (getString(R.string.url) + "groupFeed?accessToken=" + ((Global) this.getApplication()).getAccessToken() + "&type=russesamfunnet&groupId=" + groupID);
         }
-
+        try {
+            getFeed();
+        }  catch (Exception e)
+        {
+            e.printStackTrace();
+        }
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -124,15 +130,15 @@ public class GroupHub extends AppCompatActivity
         recyclerViewRuss.setItemAnimator(new DefaultItemAnimator());
         //recyclerViewRuss.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.HORIZONTAL));
         recyclerViewRuss.setAdapter(groupHubUserListAdapter);
-/*
+
         this.recyclerViewFeed = findViewById(R.id.ghuFeed);
         this.feedAdapter = new FeedAdapter(feedEntityList);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerViewFeed.setLayoutManager(layoutManager);
         recyclerViewFeed.setItemAnimator(new DefaultItemAnimator());
-        recyclerViewFeed.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
+        //recyclerViewFeed.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         recyclerViewFeed.setAdapter(feedAdapter);
-*/
+
         Button button = findViewById(R.id.group_button_chatbox_send);
         button.setOnClickListener(new View.OnClickListener()
         {
@@ -162,14 +168,16 @@ public class GroupHub extends AppCompatActivity
                 urlSend = (getString(R.string.url)
                         + "postFeedToGroup?accessToken=" + AccessToken.getCurrentAccessToken().getToken())
                         + "&type=facebook"
-                        + "&message=" + message;
+                        + "&message=" + message
+                        + "&groupId=" + groupID;
             } else
             {
                 System.out.println(((Global) this.getApplication()).getAccessToken());
                 urlSend = getString(R.string.url)
                         + "postFeedToGroup?accessToken=" + ((Global) this.getApplication()).getAccessToken()
                         + "&type=russesamfunnet"
-                        + "&message=" + message;
+                        + "&message=" + message
+                        + "&groupId=" + groupID;
             }
             editText.setText("");
 
@@ -249,7 +257,7 @@ public class GroupHub extends AppCompatActivity
                 Integer russYear = Integer.valueOf(newRussObject.getString("russYear"));
 
                 JSONObject jsonObject = u.getJSONObject("groupId");
-                Integer groupID = Integer.valueOf(jsonObject.getString("groupId"));
+                Long groupID = Long.valueOf(jsonObject.getString("groupId"));
                 String groupName = jsonObject.getString("groupName");
 
                 GroupEntity groupEntity = new GroupEntity(groupID, groupName);
