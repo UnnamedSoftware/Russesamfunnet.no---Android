@@ -263,6 +263,7 @@ public class GroupHub extends AppCompatActivity implements SwipeRefreshLayout.On
 
     private void getFeed() throws IOException
     {
+
         try
         {
             new JSONParser(new JSONParser.OnPostExecute()
@@ -288,6 +289,7 @@ public class GroupHub extends AppCompatActivity implements SwipeRefreshLayout.On
         JSONArray posts;
         try
         {
+            feedEntityList.clear();
             posts = jsonArray;
 
             for(int i = 0; i < posts.length(); i++)
