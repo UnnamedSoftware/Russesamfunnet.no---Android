@@ -51,6 +51,7 @@ public class UserProfile extends AppCompatActivity
     private CircularImageView userImage;
     private ImageView russCard;
     private File userImageFile = new File("/storage/emulated/0/Android/data/com.unnamedsoftware.russesamfunnet/files/Pictures/russesamfunnetProfilePicture.jpg");
+    private File russCardFile = new File("/storage/emulated/0/Android/data/com.unnamedsoftware.russesamfunnet/files/Pictures/russesamfunnetRussCard.jpg");
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -61,7 +62,17 @@ public class UserProfile extends AppCompatActivity
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        boolean hasImageOnServer = false;
         this.russCard = findViewById(R.id.russCard);
+        if (!russCardFile.exists())
+        {
+            Bitmap bitmap = BitmapFactory.decodeFile(russCardFile.getAbsolutePath());
+            this.russCard.setImageBitmap(bitmap);
+        } else if (hasImageOnServer)
+        {
+            new LoadImage(this, russCard).execute("http://russesamfunnet.no/logos/logo.png");
+        }
+
         this.russCard.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -70,11 +81,17 @@ public class UserProfile extends AppCompatActivity
                 userRussCardClicked(view);
             }
         });
+        this.russCard.setOnLongClickListener(new View.OnLongClickListener()
+        {
+            @Override
+            public boolean onLongClick(View view)
+            {
+                userRussCardPressed(view);
+                return true;
+            }
+        });
 
         this.userImage = findViewById(R.id.userProfilePicture);
-
-
-        boolean hasImageOnServer = true;
         if (!userImageFile.exists())
         {
             Bitmap bitmap = BitmapFactory.decodeFile(userImageFile.getAbsolutePath());
@@ -82,11 +99,7 @@ public class UserProfile extends AppCompatActivity
         } else if (hasImageOnServer)
         {
             new LoadImage(this, userImage).execute("http://russesamfunnet.no/logos/logo.png");
-        } else
-        {
-            this.userImage.setImageResource(R.drawable.default_user);
         }
-
 
         this.userImage.setOnClickListener(new View.OnClickListener()
         {
@@ -96,7 +109,7 @@ public class UserProfile extends AppCompatActivity
                 userProfilePictureClicked(view);
             }
         });
-        userImage.setOnLongClickListener(new View.OnLongClickListener()
+        this.userImage.setOnLongClickListener(new View.OnLongClickListener()
         {
             @Override
             public boolean onLongClick(View view)
@@ -190,18 +203,26 @@ public class UserProfile extends AppCompatActivity
         System.out.println("I've been pressed");
         final Dialog dialog = new Dialog(view.getContext());
         dialog.setContentView(R.layout.user_russ_card_clicked_dialog);
-        ImageView userRussCardEnlarged = dialog.findViewById(R.id.userRussCardEnlarged);
+        ImageView userProfileEnlarged = dialog.findViewById(R.id.userRussCardEnlarged);
+
         try
         {
-            userRussCardEnlarged.setImageResource(R.drawable.russ_card);
-            userRussCardEnlarged.setRotation(270);
-
+            if (russCardFile.exists())
+            {
+                System.out.println("Found image");
+                Bitmap bitmap = BitmapFactory.decodeFile(russCardFile.getAbsolutePath());
+                userProfileEnlarged.setImageBitmap(bitmap);
+            } else
+            {
+                System.out.println("Could not find image");
+                userProfileEnlarged.setImageResource(R.drawable.russ_card);
+            }
         } catch (NullPointerException e)
         {
             e.printStackTrace();
         }
 
-        userRussCardEnlarged.setOnClickListener(new View.OnClickListener()
+        userProfileEnlarged.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View view)
@@ -262,6 +283,12 @@ public class UserProfile extends AppCompatActivity
             startActivityForResult(intent, 1);
         }
     }
+
+    private void userRussCardPressed(View view)
+    {
+        startActivityForResult(new Intent(this, RussCardCamera.class), 1);
+    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
