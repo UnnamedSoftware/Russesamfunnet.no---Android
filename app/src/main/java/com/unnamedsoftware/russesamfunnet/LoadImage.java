@@ -37,7 +37,7 @@ public class LoadImage extends AsyncTask<String, Void, Bitmap>
         // Create a progressdialog
         progressDialog = new ProgressDialog(context);
         // Set progressdialog title
-        progressDialog.setTitle("Download Image Tutorial");
+        progressDialog.setTitle("Laster bilde");
         // Set progressdialog message
         progressDialog.setMessage("Loading...");
         progressDialog.setIndeterminate(false);
