@@ -101,7 +101,7 @@ public class WitnessSelection extends AppCompatActivity {
 
         RecyclerView recyclerView;
         if(!russEntityList.isEmpty()) {
-            searchWitnessAdapter = new SearchWitnessAdapter(russEntityList, knotEntity);
+            searchWitnessAdapter = new SearchWitnessAdapter(russEntityList, knotEntity, ((Global)this.getApplication()).getRussId());
             recyclerView = findViewById(R.id.saResults);
             if(recyclerView == null)
             {

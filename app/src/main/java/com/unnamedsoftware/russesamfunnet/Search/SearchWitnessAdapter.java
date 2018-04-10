@@ -32,11 +32,14 @@ public class SearchWitnessAdapter extends RecyclerView.Adapter<SearchWitnessAdap
     private ArrayList<RussEntity> arrayList;
     private KnotEntity knotEntity;
 
-    public SearchWitnessAdapter(List<RussEntity> dataSet, KnotEntity knotEntity)
+    private Long userID ;
+
+    public SearchWitnessAdapter(List<RussEntity> dataSet, KnotEntity knotEntity, Long userID)
     {
         this.knotEntity = knotEntity;
         this.dataSet = dataSet;
         this.arrayList = new ArrayList<>();
+        this.userID = userID;
         arrayList.addAll(dataSet);
     }
 
@@ -68,19 +71,22 @@ public class SearchWitnessAdapter extends RecyclerView.Adapter<SearchWitnessAdap
     public void onBindViewHolder(final ViewHolder holder, int position)
     {
         final RussEntity witness = arrayList.get(position);
-        holder.name.setText(witness.getFirstName() + " " + witness.getLastName());
-        holder.itemView.setOnClickListener(new View.OnClickListener()
+        if (witness.getRussId() != userID)
         {
-            @Override
-            public void onClick(View v)
+            holder.name.setText(witness.getFirstName() + " " + witness.getLastName());
+            holder.itemView.setOnClickListener(new View.OnClickListener()
             {
-                Intent intent = new Intent(v.getContext(), Knot.class);
-                intent.putExtra("knot_entity", knotEntity);
-                intent.putExtra("witness", witness);
-                System.out.println(knotEntity.getKnotId());
-                v.getContext().startActivity(intent);
-            }
-        });
+                @Override
+                public void onClick(View v)
+                {
+                    Intent intent = new Intent(v.getContext(), Knot.class);
+                    intent.putExtra("knot_entity", knotEntity);
+                    intent.putExtra("witness", witness);
+                    System.out.println(knotEntity.getKnotId());
+                    v.getContext().startActivity(intent);
+                }
+            });
+        }
     }
 
     @Override
