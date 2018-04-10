@@ -64,10 +64,11 @@ public class UserProfile extends AppCompatActivity
 
         boolean hasImageOnServer = false;
         this.russCard = findViewById(R.id.russCard);
-        if (!russCardFile.exists())
+
+        if (russCardFile.exists())
         {
-            Bitmap bitmap = BitmapFactory.decodeFile(russCardFile.getAbsolutePath());
-            this.russCard.setImageBitmap(bitmap);
+            Bitmap russCardBitmap = BitmapFactory.decodeFile(russCardFile.getAbsolutePath());
+            this.russCard.setImageBitmap(russCardBitmap);
         } else if (hasImageOnServer)
         {
             new LoadImage(this, russCard).execute("http://russesamfunnet.no/logos/logo.png");
@@ -92,10 +93,10 @@ public class UserProfile extends AppCompatActivity
         });
 
         this.userImage = findViewById(R.id.userProfilePicture);
-        if (!userImageFile.exists())
+        if (userImageFile.exists())
         {
-            Bitmap bitmap = BitmapFactory.decodeFile(userImageFile.getAbsolutePath());
-            this.userImage.setImageBitmap(bitmap);
+            Bitmap userImageBitmap = BitmapFactory.decodeFile(userImageFile.getAbsolutePath());
+            this.userImage.setImageBitmap(userImageBitmap);
         } else if (hasImageOnServer)
         {
             new LoadImage(this, userImage).execute("http://russesamfunnet.no/logos/logo.png");
@@ -204,7 +205,6 @@ public class UserProfile extends AppCompatActivity
         final Dialog dialog = new Dialog(view.getContext());
         dialog.setContentView(R.layout.user_russ_card_clicked_dialog);
         ImageView userProfileEnlarged = dialog.findViewById(R.id.userRussCardEnlarged);
-
         try
         {
             if (russCardFile.exists())

@@ -17,6 +17,7 @@ import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.system.ErrnoException;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.theartofdev.edmodo.cropper.CropImageView;
@@ -39,13 +40,15 @@ public class RussCardCamera extends AppCompatActivity
     private Bitmap cropped;
     private String currentPhotoPath;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crop_image);
         cropImageView = findViewById(R.id.CropImageView);
+
+        Button button = findViewById(R.id.chooseDifferent);
+        button.setText("Ta nytt bilde");
 
         startActivityForResult(getPickImageChooserIntent(), 200);
     }
