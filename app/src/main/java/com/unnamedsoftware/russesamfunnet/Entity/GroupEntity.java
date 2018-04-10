@@ -10,10 +10,10 @@ import java.io.Serializable;
 
 public class GroupEntity extends Entity implements Serializable
 {
-    private Integer groupID;
+    private Long groupID;
     private String groupName;
 
-    public GroupEntity(Integer groupID, String groupName)
+    public GroupEntity(Long groupID, String groupName)
     {
         this.groupID = groupID;
         this.groupName = groupName;
@@ -25,9 +25,9 @@ public class GroupEntity extends Entity implements Serializable
         return this.groupName;
     }
 
-    public Integer getGroupID(){return this.groupID;}
+    public Long getGroupID(){return this.groupID;}
 
-    public void setGroupID(Integer groupID) {
+    public void setGroupID(Long groupID) {
         this.groupID = groupID;
     }
 

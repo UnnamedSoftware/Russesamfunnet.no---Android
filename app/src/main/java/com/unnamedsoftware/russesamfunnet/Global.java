@@ -181,21 +181,21 @@ public class Global extends Application
      * Holds the current group name, for use in the toolbar in group hub and scoreboard.
      */
     private String groupName;
-    private Integer groupID;
+    private Long groupID;
 
     /**
      * Uses the received string to change the current group id
      *
      * @param newGroupID
      */
-    public void setGroupID(Integer newGroupID){this.groupID = newGroupID;}
+    public void setGroupID(Long newGroupID){this.groupID = newGroupID;}
 
     /**
      * Returns the current (last accessed) group id
      *
      * @return the current (last accessed) group id
      */
-    public Integer getGroupID()
+    public Long getGroupID()
     {
         return groupID;
     }
