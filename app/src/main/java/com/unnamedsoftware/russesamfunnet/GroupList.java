@@ -109,6 +109,7 @@ public class GroupList extends AppCompatActivity
                 System.out.println(url);
                 sendCreateGroup(url);
                 groupEntityList.clear();
+                dialog.cancel();
                 getGroups();
 
             }
