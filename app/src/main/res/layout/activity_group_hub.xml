@@ -16,16 +16,15 @@
     <!-- Profile pictures -->
     <include
         layout="@layout/content_group_hub_users"
-        android:orientation="horizontal"
         android:layout_width="320dp"
-        android:layout_height="98dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        app:layout_constraintBottom_toTopOf="@+id/view2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/view_all_members"
@@ -38,29 +37,26 @@
         android:layout_marginTop="8dp"
         android:clickable="true"
         app:backgroundTint="@color/colorPrimaryDark"
-        app:layout_constraintBottom_toTopOf="@+id/view2"
+        app:layout_constraintBottom_toTopOf="@+id/recycler_view_feed"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/include3"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
         app:layout_constraintVertical_bias="0.26"
         app:srcCompat="@drawable/ic_more_horiz_white_48dp" />
 
     <!-- Messages -->
-    <View
-        android:id="@+id/view2"
+    <include
+        layout="@layout/content_feed"
         android:layout_width="wrap_content"
-        android:layout_height="451dp"
-        android:layout_marginBottom="56dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintTop_toBottomOf="@+id/view_all_members" />
 
 
-    </View>
+
 
 
 

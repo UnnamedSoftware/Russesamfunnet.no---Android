@@ -3,6 +3,7 @@ package com.unnamedsoftware.russesamfunnet;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
@@ -87,14 +88,15 @@ public class GroupList extends AppCompatActivity
         final Dialog dialog = new Dialog(this);
         dialog.setTitle("Grupper");
         dialog.setContentView(R.layout.group_list_dialog);
-
+        final EditText editText = (EditText) dialog.findViewById(R.id.group);
         Button addNewGroupButton = dialog.findViewById(R.id.addNewGroupButton);
         addNewGroupButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View view)
             {
-                EditText editText = findViewById(R.id.group);
+                //EditText editText = findViewById(R.id.group);
+
                 String groupName = editText.getText().toString();
                 String url = "";
                 if (AccessToken.getCurrentAccessToken() != null)
@@ -106,6 +108,8 @@ public class GroupList extends AppCompatActivity
                 }
                 System.out.println(url);
                 sendCreateGroup(url);
+                groupEntityList.clear();
+                getGroups();
 
             }
         });
