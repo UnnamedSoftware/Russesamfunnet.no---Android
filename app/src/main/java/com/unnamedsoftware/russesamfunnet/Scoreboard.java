@@ -63,14 +63,6 @@ public class Scoreboard extends AppCompatActivity
             url = getString(R.string.url) + "scoreboardTop10?accessToken=" + ((Global) this.getApplication()).getAccessToken() + "&type=russesamfunnet";
         }
 
-        try
-        {
-            getRussId();
-        } catch (IOException e)
-        {
-            e.printStackTrace();
-        }
-
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         setTitle("Russesamfunnet - Scoreboard");
@@ -175,43 +167,4 @@ public class Scoreboard extends AppCompatActivity
         return true;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.CUPCAKE)
-    private void getRussId() throws IOException
-    {
-        String newUrl;
-        if (AccessToken.getCurrentAccessToken() != null)
-        {
-            System.out.println(AccessToken.getCurrentAccessToken().getToken());
-            newUrl = (getString(R.string.url) + "userRuss?accessToken=" + AccessToken.getCurrentAccessToken().getToken() + "&type=facebook");
-        } else
-        {
-            newUrl = getString(R.string.url) + "userRuss?accessToken=" + ((Global) this.getApplication()).getAccessToken() + "&type=russesamfunnet";
-        }
-        try
-        {
-            new JSONObjectParser(new JSONObjectParser.OnPostExecute()
-            {
-                @Override
-                public void onPostExecute(JSONObject jsonObject)
-                {
-                    try
-                    {
-                        System.out.println("Russ id: " + jsonObject.getLong("russId"));
-                        setRussID(jsonObject.getLong("russId"));
-                    } catch (Exception e)
-                    {
-                        e.printStackTrace();
-                    }
-                }
-            }).execute(new URL(newUrl));
-        } catch (MalformedURLException e)
-        {
-            e.printStackTrace();
-        }
-    }
-
-    private void setRussID(Long id)
-    {
-        ((Global) this.getApplication()).setRussId(id);
-    }
 }

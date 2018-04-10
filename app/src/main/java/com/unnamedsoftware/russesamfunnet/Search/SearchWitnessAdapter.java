@@ -32,14 +32,11 @@ public class SearchWitnessAdapter extends RecyclerView.Adapter<SearchWitnessAdap
     private ArrayList<RussEntity> arrayList;
     private KnotEntity knotEntity;
 
-    private Long userID ;
-
-    public SearchWitnessAdapter(List<RussEntity> dataSet, KnotEntity knotEntity, Long userID)
+    public SearchWitnessAdapter(List<RussEntity> dataSet, KnotEntity knotEntity)
     {
         this.knotEntity = knotEntity;
         this.dataSet = dataSet;
         this.arrayList = new ArrayList<>();
-        this.userID = userID;
         arrayList.addAll(dataSet);
     }
 
@@ -71,8 +68,6 @@ public class SearchWitnessAdapter extends RecyclerView.Adapter<SearchWitnessAdap
     public void onBindViewHolder(final ViewHolder holder, int position)
     {
         final RussEntity witness = arrayList.get(position);
-        if (witness.getRussId() != userID)
-        {
             holder.name.setText(witness.getFirstName() + " " + witness.getLastName());
             holder.itemView.setOnClickListener(new View.OnClickListener()
             {
@@ -87,7 +82,7 @@ public class SearchWitnessAdapter extends RecyclerView.Adapter<SearchWitnessAdap
                 }
             });
         }
-    }
+
 
     @Override
     public int getItemCount()
