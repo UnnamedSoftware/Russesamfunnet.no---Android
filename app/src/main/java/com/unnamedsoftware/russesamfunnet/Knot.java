@@ -90,53 +90,7 @@ public class Knot extends AppCompatActivity
         checkIfCompleted();
         knotEntity.getKnotId();
         this.fillInData();
-        this.witnessCircularImageView1 = findViewById(R.id.add_witness_button1);
 
-        //-----------------------------------------------------------------------------------------------
-
-
-        if (completed.getWitnessId1() != null)
-        {
-
-
-            boolean hasImageOnServer = false;
-            if (!userImageFile.exists())
-            {
-                Bitmap bitmap = BitmapFactory.decodeFile(userImageFile.getAbsolutePath());
-                this.witnessCircularImageView1.setImageBitmap(bitmap);
-            } else if (hasImageOnServer)
-            {
-                new LoadImage(this, witnessCircularImageView1).execute("http://russesamfunnet.no/logos/logo.png");
-            } else
-            {
-                this.witnessCircularImageView1.setImageResource(R.drawable.default_user);
-            }
-        }
-
-        //-----------------------------------------------------------------------------------------------
-
-        witnessCircularImageView1.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                Intent intent = new Intent(Knot.this, WitnessSelection.class);
-                intent.putExtra("knotEntity", knotEntity);
-                System.out.println(knotEntity.getKnotId());
-                startActivity(intent);
-            }
-        });
-        this.witnessCircularImageView2 = findViewById(R.id.add_witness_button2);
-        witnessCircularImageView2.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                Intent intent = new Intent(Knot.this, WitnessSelection.class);
-                intent.putExtra("knotEntity", knotEntity);
-                startActivity(intent);
-            }
-        });
         this.completeFloatingActionButton = findViewById(R.id.complete_button);
         completeFloatingActionButton.setOnClickListener(new View.OnClickListener()
         {
@@ -193,8 +147,9 @@ public class Knot extends AppCompatActivity
 
             }
         });
-        try{
-            if(completed != null)
+        try
+        {
+            if (completed != null)
             {
                 System.out.println("Success");
             }
@@ -205,7 +160,32 @@ public class Knot extends AppCompatActivity
         {
             e.printStackTrace();
         }
+
+        this.witnessCircularImageView1 = findViewById(R.id.add_witness_button1);
+        witnessCircularImageView1.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                Intent intent = new Intent(Knot.this, WitnessSelection.class);
+                intent.putExtra("knotEntity", knotEntity);
+                System.out.println(knotEntity.getKnotId());
+                startActivity(intent);
+            }
+        });
+        this.witnessCircularImageView2 = findViewById(R.id.add_witness_button2);
+        witnessCircularImageView2.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                Intent intent = new Intent(Knot.this, WitnessSelection.class);
+                intent.putExtra("knotEntity", knotEntity);
+                startActivity(intent);
+            }
+        });
     }
+
 
     public void setWitness(String url)
     {
@@ -254,6 +234,7 @@ public class Knot extends AppCompatActivity
                 {
                     if (jsonObject != null)
                     {
+                        System.out.println("Fill completed data");
                         fillCompletedData(jsonObject);
                     }
                 }
@@ -306,7 +287,6 @@ public class Knot extends AppCompatActivity
     {
         try
         {
-
             RussEntity russ = getRussEntityFromJson((JSONObject) jsonObject.get("russId"));
             KnotEntity knot = getKnotEntityFromJson((JSONObject) jsonObject.get("knotId"));
             Long completedId = jsonObject.getLong("completedId");
@@ -320,9 +300,58 @@ public class Knot extends AppCompatActivity
             completed.setWitnessId2(witness2);
             System.out.println("-----------------------------------------------------------------------------------------------ID: " + completed.getWitnessId1().getRussId());
 
+            System.out.println("************************************************** " + completed.getWitnessId1().getRussId());
         } catch (Exception e)
         {
             e.printStackTrace();
+        }
+
+        updateWitnessPhoto();
+
+    }
+
+    private void updateWitnessPhoto() throws NullPointerException
+    {
+        if (completed.getWitnessId1().getRussId() != null)
+        {
+            System.out.println("************************************************** " + completed.getWitnessId1().getRussId());
+            boolean hasImageOnServer = false;
+
+            TextView witnessName = findViewById(R.id.witness1Name);
+            witnessName.setText(completed.getWitnessId1().getSearchName());
+
+            if (!userImageFile.exists())
+            {
+                Bitmap bitmap = BitmapFactory.decodeFile(userImageFile.getAbsolutePath());
+                this.witnessCircularImageView1.setImageBitmap(bitmap);
+            } else if (hasImageOnServer)
+            {
+                new LoadImage(this, witnessCircularImageView1).execute("http://russesamfunnet.no/logos/logo.png");
+            } else
+            {
+                this.witnessCircularImageView1.setImageResource(R.drawable.default_user);
+            }
+        }
+
+        if (completed.getWitnessId2().getRussId() != null)
+        {
+            System.out.println("************************************************** " + completed.getWitnessId2().getRussId());
+            boolean hasImageOnServer = true;
+            TextView witnessName = findViewById(R.id.witness2Name);
+            witnessName.setText(completed.getWitnessId2().getSearchName());
+
+
+            if (!userImageFile.exists())
+            {
+                Bitmap bitmap = BitmapFactory.decodeFile(userImageFile.getAbsolutePath());
+                this.witnessCircularImageView2.setImageBitmap(bitmap);
+            } else if (hasImageOnServer)
+            {
+                new LoadImage(this, witnessCircularImageView2).execute("http://russesamfunnet.no/logos/logo.png");
+            } else
+            {
+                this.witnessCircularImageView2.setImageResource(R.drawable.default_user);
+            }
         }
     }
 

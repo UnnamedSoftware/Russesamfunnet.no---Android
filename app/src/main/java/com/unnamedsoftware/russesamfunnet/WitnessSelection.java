@@ -25,7 +25,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WitnessSelection extends AppCompatActivity {
+public class WitnessSelection extends AppCompatActivity
+{
 
 
     private List<RussEntity> russEntityList;
@@ -33,7 +34,8 @@ public class WitnessSelection extends AppCompatActivity {
     private int view;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search_dialog);
         russEntityList = new ArrayList<>();
@@ -41,19 +43,23 @@ public class WitnessSelection extends AppCompatActivity {
         knotEntity = (KnotEntity) intent.getSerializableExtra("knotEntity");
         System.out.println(knotEntity.getKnotId());
         final EditText editText = findViewById(R.id.search_input);
-        editText.addTextChangedListener(new TextWatcher(){
+        editText.addTextChangedListener(new TextWatcher()
+        {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2)
+            {
 
             }
 
             @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2)
+            {
                 getWitnesses(editText.getText().toString());
             }
 
             @Override
-            public void afterTextChanged(Editable editable) {
+            public void afterTextChanged(Editable editable)
+            {
 
             }
 
@@ -61,7 +67,8 @@ public class WitnessSelection extends AppCompatActivity {
         getWitnesses("");
     }
 
-    public void getWitnesses(String parameter) {
+    public void getWitnesses(String parameter)
+    {
         String url;
         if (AccessToken.getCurrentAccessToken() != null)
         {
@@ -69,18 +76,23 @@ public class WitnessSelection extends AppCompatActivity {
                     + "searchForRussByName?accessToken=" + AccessToken.getCurrentAccessToken().getToken())
                     + "&type=facebook"
                     + "&parameter=" + parameter;
-        }else {
+        } else
+        {
             url = (getString(R.string.url)
                     + "searchForRussByName?accessToken=" + ((Global) this.getApplication()).getAccessToken())
                     + "&type=russesamfunnet"
                     + "&parameter=" + parameter;
         }
         System.out.println(url);
-        try {
-            new JSONParser(new JSONParser.OnPostExecute() {
+        try
+        {
+            new JSONParser(new JSONParser.OnPostExecute()
+            {
                 @Override
-                public void onPostExecute(JSONArray jsonArray) {
-                    try {
+                public void onPostExecute(JSONArray jsonArray)
+                {
+                    try
+                    {
                         fillWitnessListSuggestions(jsonArray);
 
                     } catch (Exception e)
@@ -89,7 +101,8 @@ public class WitnessSelection extends AppCompatActivity {
                     }
                 }
             }).execute(new URL(url));
-        } catch (MalformedURLException e) {
+        } catch (MalformedURLException e)
+        {
             e.printStackTrace();
         }
 
@@ -100,10 +113,11 @@ public class WitnessSelection extends AppCompatActivity {
         SearchWitnessAdapter searchWitnessAdapter;
 
         RecyclerView recyclerView;
-        if(!russEntityList.isEmpty()) {
+        if (!russEntityList.isEmpty())
+        {
             searchWitnessAdapter = new SearchWitnessAdapter(russEntityList, knotEntity);
             recyclerView = findViewById(R.id.saResults);
-            if(recyclerView == null)
+            if (recyclerView == null)
             {
                 System.out.println("null");
             }
@@ -119,11 +133,13 @@ public class WitnessSelection extends AppCompatActivity {
 
     }
 
-    private void fillWitnessListSuggestions(JSONArray jsonArray) {
+    private void fillWitnessListSuggestions(JSONArray jsonArray)
+    {
         List<RussEntity> witnessSuggestions = new ArrayList<>();
-        for(int i = 0; i < jsonArray.length() ; i++)
+        for (int i = 0; i < jsonArray.length(); i++)
         {
-            try {
+            try
+            {
 
                 JSONObject newRussObject = jsonArray.getJSONObject(i);
 
@@ -144,8 +160,12 @@ public class WitnessSelection extends AppCompatActivity {
 
                 SchoolEntity school = new SchoolEntity(schoolId, schoolName, schoolStatus);
                 RussEntity russ = new RussEntity(russId, russStatus, firstName, lastName, email, russPassword, russRole, russYear);
-                witnessSuggestions.add(russ);
-            } catch (Exception e) {
+                if (!russ.getRussId().equals(((Global) this.getApplication()).getRussId()))
+                {
+                    witnessSuggestions.add(russ);
+                }
+            } catch (Exception e)
+            {
                 e.printStackTrace();
             }
         }

@@ -2,7 +2,9 @@ package com.unnamedsoftware.russesamfunnet;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -114,6 +116,13 @@ public class Feed extends AppCompatActivity implements SwipeRefreshLayout.OnRefr
         recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         recyclerView.setAdapter(feedAdapter);
 
+        try
+        {
+            getRussId();
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        }
 
         Button button = findViewById(R.id.button_chatbox_send);
         button.setOnClickListener(new View.OnClickListener()
@@ -412,4 +421,45 @@ public class Feed extends AppCompatActivity implements SwipeRefreshLayout.OnRefr
         super.onConfigurationChanged(newConfig);
         drawerToggle.onConfigurationChanged(newConfig);
     }
+
+    @RequiresApi(api = Build.VERSION_CODES.CUPCAKE)
+    private void getRussId() throws IOException
+    {
+        String newUrl;
+        if (AccessToken.getCurrentAccessToken() != null)
+        {
+            System.out.println(AccessToken.getCurrentAccessToken().getToken());
+            newUrl = (getString(R.string.url) + "userRuss?accessToken=" + AccessToken.getCurrentAccessToken().getToken() + "&type=facebook");
+        } else
+        {
+            newUrl = getString(R.string.url) + "userRuss?accessToken=" + ((Global) this.getApplication()).getAccessToken() + "&type=russesamfunnet";
+        }
+        try
+        {
+            new JSONObjectParser(new JSONObjectParser.OnPostExecute()
+            {
+                @Override
+                public void onPostExecute(JSONObject jsonObject)
+                {
+                    try
+                    {
+                        System.out.println("Russ id: " + jsonObject.getLong("russId"));
+                        setRussID(jsonObject.getLong("russId"));
+                    } catch (Exception e)
+                    {
+                        e.printStackTrace();
+                    }
+                }
+            }).execute(new URL(newUrl));
+        } catch (MalformedURLException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    private void setRussID(Long id)
+    {
+        ((Global) this.getApplication()).setRussId(id);
+    }
 }
+
