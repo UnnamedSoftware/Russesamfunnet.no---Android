@@ -51,9 +51,8 @@ public class Login extends AppCompatActivity
             facebookLoginCheck(getString(R.string.url) + "facebookLogin?accessToken=" + AccessToken.getCurrentAccessToken().getToken());
         } else if(((Global) getApplication()).getAccessToken() != null)
         {
-            //Use for auto-login with our token
-            //russesamfunnLoginCheck(getString(R.string.url) + "russesamfunnLogin?accessToken=" + ((Global) getApplication()).getAccessToken());
-            finishServerCom();
+           // Use for auto-login with our token
+            russesamfunnLoginCheck(getString(R.string.url) + "russesamfunnLogin?accessToken=" + ((Global) getApplication()).getAccessToken());
         }
 
 
@@ -100,6 +99,35 @@ public class Login extends AppCompatActivity
                         exception.fillInStackTrace();
                     }
                 });
+    }
+
+    private void russesamfunnLoginCheck(String url) {
+        try
+        {
+            new JSONObjectParser(new JSONObjectParser.OnPostExecute() {
+                @Override
+                public void onPostExecute(JSONObject jsonObject) {
+                    try {
+                        if (jsonObject.getString("loginStatus").equals("Login success")) {
+                            System.out.println(jsonObject.get("loginStatus"));
+                            finishServerCom();
+                        } else if(jsonObject.getString("loginStatus").equals("User not in db")){
+                            System.out.println(jsonObject.get("loginStatus"));
+
+                        } else{
+                            System.out.println(jsonObject.getString("loginStatus"));
+                            Toast.makeText(Login.this, "Login failed", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        e.fillInStackTrace();
+                    }
+                }
+            }).execute(new URL(url));
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
     }
 
 
