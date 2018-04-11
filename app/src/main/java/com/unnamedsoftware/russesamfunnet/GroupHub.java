@@ -137,7 +137,7 @@ public class GroupHub extends AppCompatActivity implements SwipeRefreshLayout.On
         recyclerViewRuss.setAdapter(groupHubUserListAdapter);
 
         this.recyclerViewFeed = findViewById(R.id.recycler_view_feed);
-        this.feedAdapter = new FeedAdapter(feedEntityList,this);
+        this.feedAdapter = new FeedAdapter(feedEntityList,this,getDeleteURL(),((Global)this.getApplication()).getRussId());
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerViewFeed.setLayoutManager(layoutManager);
         recyclerViewFeed.setItemAnimator(new DefaultItemAnimator());
@@ -347,8 +347,18 @@ public class GroupHub extends AppCompatActivity implements SwipeRefreshLayout.On
         russEntityList.add(russEntity);
     }
 
-    private void dummyChat()
+    private String getDeleteURL()
     {
+        String newUrl;
+        if (AccessToken.getCurrentAccessToken() != null)
+        {
+            System.out.println(AccessToken.getCurrentAccessToken().getToken());
+            newUrl = (getString(R.string.url) + "deleteMessage?accessToken=" + AccessToken.getCurrentAccessToken().getToken() + "&type=facebook&feedId=");
 
+        } else
+        {
+            newUrl = getString(R.string.url) + "deleteMessage?accessToken=" + ((Global) this.getApplication()).getAccessToken() + "&type=russesamfunnet&feedId=";
+        }
+        return newUrl;
     }
 }

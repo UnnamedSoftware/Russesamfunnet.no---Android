@@ -15,8 +15,14 @@ import android.widget.Toast;
 
 import com.mikhaellopez.circularimageview.CircularImageView;
 import com.unnamedsoftware.russesamfunnet.Entity.FeedEntity;
+import com.unnamedsoftware.russesamfunnet.JSONObjectParser;
 import com.unnamedsoftware.russesamfunnet.R;
 
+import org.json.JSONObject;
+
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -27,6 +33,8 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>
 {
     private List<FeedEntity> posts;
     private Context context;
+    private String url;
+    private Long userID;
 
     public class ViewHolder extends RecyclerView.ViewHolder
     {
@@ -44,10 +52,12 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>
         }
     }
 
-    public FeedAdapter(List<FeedEntity> feedPosts, Context context)
+    public FeedAdapter(List<FeedEntity> feedPosts, Context context, String url, Long userID)
     {
         this.posts = feedPosts;
         this.context = context;
+        this.url = url;
+        this.userID = userID;
     }
 
     @Override
@@ -59,9 +69,10 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position)
+    public void onBindViewHolder(ViewHolder holder, final int position)
     {
-        FeedEntity feedPost = posts.get(position);
+        final FeedEntity feedPost = posts.get(position);
+        final Long russid = feedPost.getRussId().getRussId();
         final View view = holder.relativeLayout;
         holder.poster.setText(feedPost.getPoster());
         holder.post.setText(feedPost.getMessage());
@@ -70,7 +81,9 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>
             @Override
             public boolean onLongClick(View v)
             {
-                optionMenu(view);
+                final Long id = feedPost.getFeedId();
+                System.out.println(id);
+                optionMenu(view, id, position - 1, russid);
                 return false;
             }
         });
@@ -97,14 +110,42 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>
     }
 
 
-    private void optionMenu(View view)
+    private void optionMenu(View view, Long id, int p, Long russID)
     {
-        Vibrator vibe = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE) ;
+        final Long feedID = id;
+        final int position = p;
+        Vibrator vibe = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
         vibe.vibrate(50);
-        PopupMenu popup = new PopupMenu(this.context,view);
+
+        System.out.println("+++++++++++++++++++++++++" +russID);
+        System.out.println("+++++++++++++++++++++++++" +userID);
+        if (russID == userID)
+        {
+            PopupMenu popup = new PopupMenu(this.context, view);
+            popup.setGravity(Gravity.RIGHT);
+            popup.getMenuInflater()
+                    .inflate(R.menu.option_menu_feed, popup.getMenu());
+
+            popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
+            {
+                public boolean onMenuItemClick(MenuItem item)
+                {
+                    switch (item.getItemId())
+                    {
+                        case R.id.RemoveMessage:
+                            deletePost(feedID, position);
+                            break;
+                    }
+                    return true;
+                }
+            });
+            popup.show();
+        } else
+    {
+        PopupMenu popup = new PopupMenu(this.context, view);
         popup.setGravity(Gravity.RIGHT);
         popup.getMenuInflater()
-                .inflate(R.menu.option_menu_feed, popup.getMenu());
+                .inflate(R.menu.option_menu_feed_not_user_message, popup.getMenu());
 
         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
         {
@@ -115,16 +156,51 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>
                     case R.id.Rapporter:
                         Toast.makeText(context, "One", Toast.LENGTH_SHORT).show();
                         break;
-
-                    case R.id.RemoveMessage:
-                        Toast.makeText(context, "Two", Toast.LENGTH_SHORT).show();
-                        break;
                 }
                 return true;
             }
         });
         popup.show();
     }
+    }
 
-
+    private void deletePost(Long postId, int position)
+    {
+        String newUrl = this.url + postId;
+        System.out.println(newUrl);
+        try
+        {
+            new JSONObjectParser(new JSONObjectParser.OnPostExecute()
+            {
+                @Override
+                public void onPostExecute(JSONObject jsonObject)
+                {
+                    if (jsonObject != null)
+                    {
+                        try
+                        {
+                            System.out.println(jsonObject.getString("response"));
+                        } catch (Exception e)
+                        {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }).execute(new URL(newUrl));
+        } catch (MalformedURLException e)
+        {
+            e.printStackTrace();
+        }
+        Iterator it = posts.iterator();
+        while (it.hasNext())
+        {
+            FeedEntity feedEntity = (FeedEntity) it.next();
+            if (feedEntity.getFeedId().equals(postId))
+            {
+                posts.remove(feedEntity);
+                notifyDataSetChanged();
+                return;
+            }
+        }
+    }
 }

@@ -100,7 +100,7 @@ public class Feed extends AppCompatActivity implements SwipeRefreshLayout.OnRefr
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         recyclerView = findViewById(R.id.recycler_view_feed);
-        feedAdapter = new FeedAdapter(feedPosts,this);
+        feedAdapter = new FeedAdapter(feedPosts,this,getDeleteURL(),((Global)this.getApplication()).getRussId());
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -453,32 +453,19 @@ public class Feed extends AppCompatActivity implements SwipeRefreshLayout.OnRefr
         ((Global) this.getApplication()).setRussId(id);
     }
 
-    private void deleteFeed(Long feedId) {
+    private String getDeleteURL()
+    {
         String newUrl;
         if (AccessToken.getCurrentAccessToken() != null)
         {
             System.out.println(AccessToken.getCurrentAccessToken().getToken());
-            newUrl = (getString(R.string.url) + "deleteMessage?accessToken=" + AccessToken.getCurrentAccessToken().getToken() + "&type=facebook&feedId=" + feedId);
+            newUrl = (getString(R.string.url) + "deleteMessage?accessToken=" + AccessToken.getCurrentAccessToken().getToken() + "&type=facebook&feedId=");
+
         } else
         {
-            newUrl = getString(R.string.url) + "deleteMessage?accessToken=" + ((Global) this.getApplication()).getAccessToken() + "&type=russesamfunnet&feedId=" + feedId;
+            newUrl = getString(R.string.url) + "deleteMessage?accessToken=" + ((Global) this.getApplication()).getAccessToken() + "&type=russesamfunnet&feedId=";
         }
-        try {
-            new JSONObjectParser(new JSONObjectParser.OnPostExecute() {
-                @Override
-                public void onPostExecute(JSONObject jsonObject) {
-                    if (jsonObject != null) {
-                        try {
-                            System.out.println(jsonObject.getString("response"));
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-            }).execute(new URL(newUrl));
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
+        return newUrl;
     }
 }
 
