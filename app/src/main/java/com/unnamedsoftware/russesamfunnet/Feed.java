@@ -452,5 +452,33 @@ public class Feed extends AppCompatActivity implements SwipeRefreshLayout.OnRefr
     {
         ((Global) this.getApplication()).setRussId(id);
     }
+
+    private void deleteFeed(Long feedId) {
+        String newUrl;
+        if (AccessToken.getCurrentAccessToken() != null)
+        {
+            System.out.println(AccessToken.getCurrentAccessToken().getToken());
+            newUrl = (getString(R.string.url) + "deleteMessage?accessToken=" + AccessToken.getCurrentAccessToken().getToken() + "&type=facebook&feedId=" + feedId);
+        } else
+        {
+            newUrl = getString(R.string.url) + "deleteMessage?accessToken=" + ((Global) this.getApplication()).getAccessToken() + "&type=russesamfunnet&feedId=" + feedId;
+        }
+        try {
+            new JSONObjectParser(new JSONObjectParser.OnPostExecute() {
+                @Override
+                public void onPostExecute(JSONObject jsonObject) {
+                    if (jsonObject != null) {
+                        try {
+                            System.out.println(jsonObject.getString("response"));
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }).execute(new URL(newUrl));
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+    }
 }
 
