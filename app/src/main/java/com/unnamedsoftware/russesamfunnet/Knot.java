@@ -243,25 +243,39 @@ public class Knot extends AppCompatActivity {
 
     public void fillCompletedData(JSONObject jsonObject) {
         try {
-            RussEntity russ = getRussEntityFromJson((JSONObject) jsonObject.get("russId"));
-            KnotEntity knot = getKnotEntityFromJson((JSONObject) jsonObject.get("knotId"));
+            JSONObject russObj = (JSONObject) jsonObject.get("russId");
+            RussEntity russ = getRussEntityFromJson(russObj);
+            JSONObject knotObj = (JSONObject) jsonObject.get("knotId");
+            KnotEntity knot = getKnotEntityFromJson(knotObj);
             Long completedId = jsonObject.getLong("completedId");
-            RussEntity witness1 = getRussEntityFromJson((JSONObject) jsonObject.get("witnessId1"));
-            RussEntity witness2 = getRussEntityFromJson((JSONObject) jsonObject.get("witnessId2"));
-            System.out.println(witness1.getRussId());
+            try{
+                JSONObject witness1Obj = (JSONObject) jsonObject.get("witnessId1");
+                RussEntity witness1 = getRussEntityFromJson(witness1Obj);
+                completed.setWitnessId1(witness1);
+                System.out.println(witness1.getRussId());
+            }catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+            try{
+                JSONObject witness2Obj = (JSONObject) jsonObject.get("witnessId2");
+                RussEntity witness2 = getRussEntityFromJson(witness2Obj);
+                completed.setWitnessId2(witness2);
+            }catch (Exception e)
+            {
+                e.printStackTrace();
+            }
             completed.setCompletedId(completedId);
             completed.setKnotId(knot);
             completed.setRussId(russ);
-            completed.setWitnessId1(witness1);
-            completed.setWitnessId2(witness2);
+
             System.out.println("-----------------------------------------------------------------------------------------------ID: " + completed.getWitnessId1().getRussId());
 
-            System.out.println("************************************************** " + completed.getWitnessId1().getRussId());
+            System.out.println("************************************************** " + completed.getWitnessId2().getRussId());
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        //updateWitnessPhoto();
+         updateWitnessPhoto();
 
     }
 
@@ -288,6 +302,7 @@ public class Knot extends AppCompatActivity {
                     if (jsonObject != null) {
                         try {
                             System.out.println(jsonObject.getString("response"));
+                            getCompletedKnot();
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -299,39 +314,44 @@ public class Knot extends AppCompatActivity {
         }
     }
 
-    private void updateWitnessPhoto() throws NullPointerException {
-        if (completed.getWitnessId1().getRussId() != null) {
-            System.out.println("************************************************** " + completed.getWitnessId1().getRussId());
-            boolean hasImageOnServer = false;
+    private void updateWitnessPhoto(){
+        try {
+            if (completed.getWitnessId1().getRussId() != null) {
+                System.out.println("************************************************** " + completed.getWitnessId1().getRussId());
+                boolean hasImageOnServer = false;
 
-            TextView witnessName = findViewById(R.id.witness1Name);
-            witnessName.setText(completed.getWitnessId1().getSearchName());
+                TextView witnessName = findViewById(R.id.witness1Name);
+                witnessName.setText(completed.getWitnessId1().getSearchName());
 
-            if (!userImageFile.exists()) {
-                Bitmap bitmap = BitmapFactory.decodeFile(userImageFile.getAbsolutePath());
-                this.witnessCircularImageView1.setImageBitmap(bitmap);
-            } else if (hasImageOnServer) {
-                new LoadImage(this, witnessCircularImageView1).execute("http://russesamfunnet.no/logos/logo.png");
-            } else {
-                this.witnessCircularImageView1.setImageResource(R.drawable.default_user);
+                if (!userImageFile.exists()) {
+                    Bitmap bitmap = BitmapFactory.decodeFile(userImageFile.getAbsolutePath());
+                    this.witnessCircularImageView1.setImageBitmap(bitmap);
+                } else if (hasImageOnServer) {
+                    new LoadImage(this, witnessCircularImageView1).execute("http://russesamfunnet.no/logos/logo.png");
+                } else {
+                    this.witnessCircularImageView1.setImageResource(R.drawable.default_user);
+                }
             }
-        }
 
-        if (completed.getWitnessId2().getRussId() != null) {
-            System.out.println("************************************************** " + completed.getWitnessId2().getRussId());
-            boolean hasImageOnServer = true;
-            TextView witnessName = findViewById(R.id.witness2Name);
-            witnessName.setText(completed.getWitnessId2().getSearchName());
+            if (completed.getWitnessId2().getRussId() != null) {
+                System.out.println("************************************************** " + completed.getWitnessId2().getRussId());
+                boolean hasImageOnServer = true;
+                TextView witnessName = findViewById(R.id.witness2Name);
+                witnessName.setText(completed.getWitnessId2().getSearchName());
 
 
-            if (!userImageFile.exists()) {
-                Bitmap bitmap = BitmapFactory.decodeFile(userImageFile.getAbsolutePath());
-                this.witnessCircularImageView2.setImageBitmap(bitmap);
-            } else if (hasImageOnServer) {
-                new LoadImage(this, witnessCircularImageView2).execute("http://russesamfunnet.no/logos/logo.png");
-            } else {
-                this.witnessCircularImageView2.setImageResource(R.drawable.default_user);
+                if (!userImageFile.exists()) {
+                    Bitmap bitmap = BitmapFactory.decodeFile(userImageFile.getAbsolutePath());
+                    this.witnessCircularImageView2.setImageBitmap(bitmap);
+                } else if (hasImageOnServer) {
+                    new LoadImage(this, witnessCircularImageView2).execute("http://russesamfunnet.no/logos/logo.png");
+                } else {
+                    this.witnessCircularImageView2.setImageResource(R.drawable.default_user);
+                }
             }
+        } catch (Exception e)
+        {
+            e.printStackTrace();
         }
     }
 
