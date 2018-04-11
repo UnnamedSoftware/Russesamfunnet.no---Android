@@ -99,15 +99,6 @@ public class Feed extends AppCompatActivity implements SwipeRefreshLayout.OnRefr
         drawerLayout.requestLayout();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
-        try
-        {
-            getFeed();
-        } catch (IOException e)
-        {
-            e.printStackTrace();
-        }
-
-
         recyclerView = findViewById(R.id.recycler_view_feed);
         feedAdapter = new FeedAdapter(feedPosts,this);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
