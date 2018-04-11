@@ -4,9 +4,6 @@
     <item  android:id="@+id/Rapporter"
         android:title="@string/rapporter" />
 
-    <item  android:id="@+id/SlettMelding"
+    <item  android:id="@+id/RemoveMessage"
         android:title="@string/slettMelding"/>
-
-    <item  android:id="@+id/SlettBruker"
-        android:title="@string/slettBruker"/>
 </menu>
