@@ -3,6 +3,7 @@ package com.unnamedsoftware.russesamfunnet;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.widget.Button;
 
 /**
  * Created by Alexander Eilert Berg on 25.01.2018.
@@ -10,6 +11,8 @@ import android.support.v7.widget.Toolbar;
 
 public class Settings extends AppCompatActivity
 {
+
+    private Button button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -23,7 +26,6 @@ public class Settings extends AppCompatActivity
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-
     }
 
     @Override

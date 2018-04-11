@@ -137,7 +137,7 @@ public class GroupHub extends AppCompatActivity implements SwipeRefreshLayout.On
         recyclerViewRuss.setAdapter(groupHubUserListAdapter);
 
         this.recyclerViewFeed = findViewById(R.id.recycler_view_feed);
-        this.feedAdapter = new FeedAdapter(feedEntityList);
+        this.feedAdapter = new FeedAdapter(feedEntityList,this);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerViewFeed.setLayoutManager(layoutManager);
         recyclerViewFeed.setItemAnimator(new DefaultItemAnimator());

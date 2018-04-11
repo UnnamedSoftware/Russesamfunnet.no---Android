@@ -109,7 +109,7 @@ public class Feed extends AppCompatActivity implements SwipeRefreshLayout.OnRefr
 
 
         recyclerView = findViewById(R.id.recycler_view_feed);
-        feedAdapter = new FeedAdapter(feedPosts);
+        feedAdapter = new FeedAdapter(feedPosts,this);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());

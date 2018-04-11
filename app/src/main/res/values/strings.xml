@@ -3,7 +3,7 @@
     <string name="app_name">Russesamfunnet</string>
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
-
+    <!-- Navigation Drawer -->
     <string name="scoreboard">Scoreboard</string>
     <string name="profile">Brukerprofil</string>
     <string name="knotList">Knuteliste</string>
@@ -16,6 +16,11 @@
 
     <string name="facebook_app_id">291199641408779</string>
     <string name="fb_login_protocol_scheme">fb291199641408779</string>
+
+    <!-- Long press dialog -->
+    <string name="rapporter">Rapporter</string>
+    <string name="slettMelding">Slett Melding</string>
+    <string name="slettBruker">Slett Bruker</string>
 
     <!-- SERVER URL -->
     <string name="url">http://158.38.101.146:8080/</string>

@@ -97,6 +97,4 @@
                 app:layout_constraintTop_toBottomOf="@+id/GPSOption" />
         </LinearLayout>
     </ScrollView>
-
-
 </LinearLayout>
