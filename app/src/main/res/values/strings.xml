@@ -20,7 +20,8 @@
     <!-- Long press dialog -->
     <string name="rapporter">Rapporter</string>
     <string name="slettMelding">Slett Melding</string>
-    <string name="slettBruker">Slett Bruker</string>
+    <string name="fjernBruker">Fjern Bruker</string>
+    <string name="leggTilBruker">Legg Til Bruker</string>
 
     <!-- SERVER URL -->
     <string name="url">http://158.38.101.146:8080/</string>

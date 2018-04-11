@@ -104,7 +104,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>
         PopupMenu popup = new PopupMenu(this.context,view);
         popup.setGravity(Gravity.RIGHT);
         popup.getMenuInflater()
-                .inflate(R.menu.option_menu, popup.getMenu());
+                .inflate(R.menu.option_menu_feed, popup.getMenu());
 
         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
         {
@@ -116,12 +116,8 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>
                         Toast.makeText(context, "One", Toast.LENGTH_SHORT).show();
                         break;
 
-                    case R.id.SlettMelding:
+                    case R.id.RemoveMessage:
                         Toast.makeText(context, "Two", Toast.LENGTH_SHORT).show();
-                        break;
-
-                    case R.id.SlettBruker:
-                        Toast.makeText(context, "Three", Toast.LENGTH_SHORT).show();
                         break;
                 }
                 return true;
