@@ -33,30 +33,25 @@
         android:id="@+id/russCard"
         android:layout_width="366dp"
         android:layout_height="178dp"
-        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.482"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userProfilePicture"
-        app:layout_constraintVertical_bias="0.0"/>
+        app:layout_constraintTop_toBottomOf="@+id/userProfilePicture" />
 
     <include
         android:id="@+id/user_knot_list"
         layout="@layout/content_user_knot_list"
         android:layout_width="match_parent"
-        android:layout_height="274dp"
-        android:layout_marginBottom="8dp"
+        android:layout_height="0dp"
         android:layout_marginTop="8dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/russCard"
-        app:layout_constraintVertical_bias="0.00999999" />
+        app:layout_constraintTop_toBottomOf="@+id/russCard" />
 
 </android.support.constraint.ConstraintLayout>
