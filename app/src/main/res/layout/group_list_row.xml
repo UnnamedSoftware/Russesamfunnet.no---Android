@@ -4,9 +4,13 @@
     android:id="@+id/glaGroupListRowLayout"
     android:layout_width="match_parent"
     android:layout_height="55dp"
-    android:layout_marginTop="5dp"
-    android:layout_marginBottom="5dp"
-    android:background="@drawable/event_layer_list_background"
+
+    android:layout_marginLeft="6dp"
+    android:layout_marginRight="6dp"
+    android:layout_marginTop="4dp"
+    android:layout_marginBottom="4dp"
+
+    android:background="@drawable/group_list_row"
     android:clickable="true"
     android:focusable="true"
     android:orientation="vertical">
@@ -17,7 +21,6 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_alignParentStart="true"
-        android:textColor="@android:color/black"
         android:layout_marginStart="16dp"
         android:textSize="24sp"
         android:textStyle="bold"

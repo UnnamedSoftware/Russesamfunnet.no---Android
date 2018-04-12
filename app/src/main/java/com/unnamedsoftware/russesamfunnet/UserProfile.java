@@ -286,7 +286,10 @@ public class UserProfile extends AppCompatActivity
 
     private void userRussCardPressed(View view)
     {
-        startActivityForResult(new Intent(this, RussCardCamera.class), 1);
+        if (((Global) this.getApplication()).getRussId() == russ.getRussId())
+        {
+            startActivityForResult(new Intent(this, RussCardCamera.class), 1);
+        }
     }
 
 
