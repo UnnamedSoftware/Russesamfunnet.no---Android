@@ -1,11 +1,13 @@
 package com.unnamedsoftware.russesamfunnet;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
@@ -53,6 +55,7 @@ public class UserProfile extends AppCompatActivity
     private File userImageFile = new File("/storage/emulated/0/Android/data/com.unnamedsoftware.russesamfunnet/files/Pictures/russesamfunnetProfilePicture.jpg");
     private File russCardFile = new File("/storage/emulated/0/Android/data/com.unnamedsoftware.russesamfunnet/files/Pictures/russesamfunnetRussCard.jpg");
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -193,6 +196,17 @@ public class UserProfile extends AppCompatActivity
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         recyclerView.setAdapter(knotListAdapter);
+
+
+//Swipe func.
+        ConstraintLayout constraintLayout = findViewById(R.id.userProfileLayout);
+        constraintLayout.setOnTouchListener(new OnSwipeTouchListener(this)
+        {
+            public void onSwipeRight()
+            {
+                onBackPressed();
+            }
+        });
     }
 
 

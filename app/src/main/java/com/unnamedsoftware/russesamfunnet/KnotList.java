@@ -1,12 +1,15 @@
 package com.unnamedsoftware.russesamfunnet;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 
 import com.facebook.AccessToken;
 import com.unnamedsoftware.russesamfunnet.Entity.KnotEntity;
@@ -44,6 +47,7 @@ public class KnotList extends AppCompatActivity
 
     JSONArray knots = null;
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,6 +89,17 @@ public class KnotList extends AppCompatActivity
             e.printStackTrace();
         }
 
+
+//Swipe func.
+        ConstraintLayout constraintLayout = findViewById(R.id.KnotListLayout);
+        constraintLayout.setOnTouchListener(new OnSwipeTouchListener(this)
+        {
+            public void onSwipeRight()
+            {
+                onBackPressed();
+            }
+        });
+
     }
 
     /**
@@ -120,6 +135,7 @@ public class KnotList extends AppCompatActivity
                 knotEntities.add(knot);
             }
             this.knotListAdapter.notifyDataSetChanged();
+            findViewById(R.id.loadingPanel).setVisibility(View.GONE);
         }catch (JSONException e)
         {
             e.printStackTrace();

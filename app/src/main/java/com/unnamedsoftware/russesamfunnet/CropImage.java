@@ -74,7 +74,6 @@ public class CropImage extends AppCompatActivity
         outStream.flush();
         outStream.close();
         System.out.println("------------------------------------------------------ " + outFile.toString() + " ------------------------------------------------------");
-        Toast.makeText(this, "Profile image changed!", Toast.LENGTH_SHORT).show();
 
         Intent returnIntent = new Intent();
         setResult(Activity.RESULT_CANCELED, returnIntent);

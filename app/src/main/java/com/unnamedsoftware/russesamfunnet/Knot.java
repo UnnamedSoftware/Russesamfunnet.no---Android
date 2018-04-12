@@ -1,10 +1,12 @@
 package com.unnamedsoftware.russesamfunnet;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
@@ -28,7 +30,8 @@ import java.net.URL;
  * Created by Alexander Eilert Berg on 29.01.2018.
  */
 
-public class Knot extends AppCompatActivity {
+public class Knot extends AppCompatActivity
+{
     private KnotEntity knotEntity;
     private FloatingActionButton completeFloatingActionButton;
     private RussEntity witness;
@@ -42,8 +45,10 @@ public class Knot extends AppCompatActivity {
 
     private File userImageFile = new File("/storage/emulated/0/Android/data/com.unnamedsoftware.russesamfunnet/files/Pictures/russesamfunnetProfilePicture.jpg");
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_knot);
 
@@ -51,26 +56,30 @@ public class Knot extends AppCompatActivity {
         setSupportActionBar(toolbar);
         setTitle("Russesamfunnet");
         completed = new CompletedKnotEntity();
-
-        try {
+        try
+        {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
-        } catch (Exception e) {
+        } catch (Exception e)
+        {
             System.out.println(e.fillInStackTrace());
         }
 
         Intent i = getIntent();
         knotEntity = (KnotEntity) i.getSerializableExtra("knot_entity");
         witness = (RussEntity) i.getSerializableExtra("witness");
-        if (witness != null) {
-            if (AccessToken.getCurrentAccessToken() != null) {
+        if (witness != null)
+        {
+            if (AccessToken.getCurrentAccessToken() != null)
+            {
                 String url = (getString(R.string.url)
                         + "addWitness?accessToken=" + AccessToken.getCurrentAccessToken().getToken())
                         + "&type=facebook"
                         + "&knotId=" + knotEntity.getKnotId()
                         + "&witnessId=" + witness.getRussId();
                 setWitness(url);
-            } else {
+            } else
+            {
                 String url = (getString(R.string.url)
                         + "addWitness?accessToken=" + ((Global) getApplication()).getAccessToken())
                         + "&type=russesamfunnet"
@@ -85,15 +94,19 @@ public class Knot extends AppCompatActivity {
         this.fillInData();
 
         this.completeFloatingActionButton = findViewById(R.id.complete_button);
-        completeFloatingActionButton.setOnClickListener(new View.OnClickListener() {
+        completeFloatingActionButton.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view)
+            {
                 //Check if knot is completed
-                if (knotCompleted == false) {
+                if (knotCompleted == false)
+                {
                     completeFloatingActionButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorKnotCompleted)));
                     completeFloatingActionButton.setImageResource(R.drawable.ic_check_black_48dp);
                     knotCompleted = true;
-                    if (AccessToken.getCurrentAccessToken() != null) {
+                    if (AccessToken.getCurrentAccessToken() != null)
+                    {
                         String url = (getString(R.string.url)
                                 + "registerCompletedKnot?accessToken=" + AccessToken.getCurrentAccessToken().getToken())
                                 + "&type=facebook"
@@ -102,7 +115,8 @@ public class Knot extends AppCompatActivity {
                                 + "&witness2=0";
                         completeKnot(url);
                         getCompletedKnot();
-                    } else {
+                    } else
+                    {
                         String url = (getString(R.string.url)
                                 + "registerCompletedKnot?accessToken=" + ((Global) getApplication()).getAccessToken())
                                 + "&type=russesamfunnet"
@@ -111,17 +125,20 @@ public class Knot extends AppCompatActivity {
                                 + "&witness2=0";
                         completeKnot(url);
                     }
-                } else if (knotCompleted == true) {
+                } else if (knotCompleted == true)
+                {
                     completeFloatingActionButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorKnotNotCompleted)));
                     completeFloatingActionButton.setImageResource(R.drawable.ic_close_black_48dp);
                     knotCompleted = false;
-                    if (AccessToken.getCurrentAccessToken() != null) {
+                    if (AccessToken.getCurrentAccessToken() != null)
+                    {
                         String url = (getString(R.string.url)
                                 + "unRegisterCompletedKnot?accessToken=" + AccessToken.getCurrentAccessToken().getToken())
                                 + "&type=facebook"
                                 + "&knotId=" + knotEntity.getKnotId();
                         completeKnot(url);
-                    } else {
+                    } else
+                    {
                         String url = (getString(R.string.url)
                                 + "unRegisterCompletedKnot?accessToken=" + ((Global) getApplication()).getAccessToken())
                                 + "&type=russesamfunnet"
@@ -132,21 +149,26 @@ public class Knot extends AppCompatActivity {
 
             }
         });
-        try {
-            if (completed != null) {
+        try
+        {
+            if (completed != null)
+            {
                 System.out.println("Success");
             }
             System.out.println("-----------------------------------------------------------------------------------------------ID: " + completed.getWitnessId1().getRussId());
             System.out.println("-----------------------------------------------------------------------------------------------ID: " + completed.getWitnessId2().getRussId());
 
-        } catch (Exception e) {
+        } catch (Exception e)
+        {
             e.printStackTrace();
         }
 
         this.witnessCircularImageView1 = findViewById(R.id.add_witness_button1);
-        witnessCircularImageView1.setOnClickListener(new View.OnClickListener() {
+        witnessCircularImageView1.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view)
+            {
                 Intent intent = new Intent(Knot.this, WitnessSelection.class);
                 intent.putExtra("knotEntity", knotEntity);
                 System.out.println(knotEntity.getKnotId());
@@ -154,63 +176,93 @@ public class Knot extends AppCompatActivity {
             }
         });
         this.witnessCircularImageView2 = findViewById(R.id.add_witness_button2);
-        witnessCircularImageView2.setOnClickListener(new View.OnClickListener() {
+        witnessCircularImageView2.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view)
+            {
                 Intent intent = new Intent(Knot.this, WitnessSelection.class);
                 intent.putExtra("knotEntity", knotEntity);
                 startActivity(intent);
             }
         });
+
+        //Swipe func.
+        ConstraintLayout constraintLayout = findViewById(R.id.KnotLayout);
+        constraintLayout.setOnTouchListener(new OnSwipeTouchListener(Knot.this)
+        {
+            public void onSwipeRight()
+            {
+                onBackPressed();
+            }
+        });
+
+
     }
 
 
-    public void setWitness(String url) {
-        try {
-            new JSONObjectParser(new JSONObjectParser.OnPostExecute() {
+    public void setWitness(String url)
+    {
+        try
+        {
+            new JSONObjectParser(new JSONObjectParser.OnPostExecute()
+            {
                 @Override
-                public void onPostExecute(JSONObject jsonObject) {
-                    if (jsonObject != null) {
+                public void onPostExecute(JSONObject jsonObject)
+                {
+                    if (jsonObject != null)
+                    {
                     }
                 }
             }).execute(new URL(url));
-        } catch (MalformedURLException e) {
+        } catch (MalformedURLException e)
+        {
             e.printStackTrace();
         }
     }
 
-    public void getCompletedKnot() {
+    public void getCompletedKnot()
+    {
         String url;
-        if (AccessToken.getCurrentAccessToken() != null) {
+        if (AccessToken.getCurrentAccessToken() != null)
+        {
             url = (getString(R.string.url)
                     + "getCompletedKnot?accessToken=" + AccessToken.getCurrentAccessToken().getToken())
                     + "&type=facebook"
                     + "&knotId=" + knotEntity.getKnotId();
 
-        } else {
+        } else
+        {
             url = (getString(R.string.url)
                     + "getCompletedKnot?accessToken=" + ((Global) getApplication()).getAccessToken())
                     + "&type=russesamfunnet"
                     + "&knotId=" + knotEntity.getKnotId();
         }
         System.out.println(url);
-        try {
-            new JSONObjectParser(new JSONObjectParser.OnPostExecute() {
+        try
+        {
+            new JSONObjectParser(new JSONObjectParser.OnPostExecute()
+            {
                 @Override
-                public void onPostExecute(JSONObject jsonObject) {
-                    if (jsonObject != null) {
+                public void onPostExecute(JSONObject jsonObject)
+                {
+                    if (jsonObject != null)
+                    {
                         System.out.println("Fill completed data");
                         fillCompletedData(jsonObject);
                     }
                 }
             }).execute(new URL(url));
-        } catch (MalformedURLException e) {
+        } catch (MalformedURLException e)
+        {
             e.printStackTrace();
         }
     }
 
-    public RussEntity getRussEntityFromJson(JSONObject jsonObject) {
-        try {
+    public RussEntity getRussEntityFromJson(JSONObject jsonObject)
+    {
+        try
+        {
             Long russId = jsonObject.getLong("russId");
             String russStatus = jsonObject.getString("russStatus");
             String firstName = jsonObject.getString("firstName");
@@ -221,47 +273,55 @@ public class Knot extends AppCompatActivity {
             int russYear = Integer.valueOf(jsonObject.getString("russYear"));
 
             return new RussEntity(russId, russStatus, firstName, lastName, email, russPassword, russRole, russYear);
-        } catch (Exception e) {
+        } catch (Exception e)
+        {
             e.printStackTrace();
             return null;
         }
     }
 
-    public KnotEntity getKnotEntityFromJson(JSONObject jsonObject) {
-        try {
+    public KnotEntity getKnotEntityFromJson(JSONObject jsonObject)
+    {
+        try
+        {
             Long knotID = jsonObject.getLong("knotId");
             String title = jsonObject.getString("knotName");
             String description = jsonObject.getString("knotDetails");
 
             return new KnotEntity(knotID, title, description);
 
-        } catch (Exception e) {
+        } catch (Exception e)
+        {
             e.printStackTrace();
             return null;
         }
     }
 
-    public void fillCompletedData(JSONObject jsonObject) {
-        try {
+    public void fillCompletedData(JSONObject jsonObject)
+    {
+        try
+        {
             JSONObject russObj = (JSONObject) jsonObject.get("russId");
             RussEntity russ = getRussEntityFromJson(russObj);
             JSONObject knotObj = (JSONObject) jsonObject.get("knotId");
             KnotEntity knot = getKnotEntityFromJson(knotObj);
             Long completedId = jsonObject.getLong("completedId");
-            try{
+            try
+            {
                 JSONObject witness1Obj = (JSONObject) jsonObject.get("witnessId1");
                 RussEntity witness1 = getRussEntityFromJson(witness1Obj);
                 completed.setWitnessId1(witness1);
                 System.out.println(witness1.getRussId());
-            }catch (Exception e)
+            } catch (Exception e)
             {
                 e.printStackTrace();
             }
-            try{
+            try
+            {
                 JSONObject witness2Obj = (JSONObject) jsonObject.get("witnessId2");
                 RussEntity witness2 = getRussEntityFromJson(witness2Obj);
                 completed.setWitnessId2(witness2);
-            }catch (Exception e)
+            } catch (Exception e)
             {
                 e.printStackTrace();
             }
@@ -272,80 +332,101 @@ public class Knot extends AppCompatActivity {
             System.out.println("-----------------------------------------------------------------------------------------------ID: " + completed.getWitnessId1().getRussId());
 
             System.out.println("************************************************** " + completed.getWitnessId2().getRussId());
-        } catch (Exception e) {
+        } catch (Exception e)
+        {
             e.printStackTrace();
         }
-         updateWitnessPhoto();
+        updateWitnessPhoto();
 
     }
 
-    private void removeWitness(Long witnessId) {
+    private void removeWitness(Long witnessId)
+    {
         String removeUrl = "";
-        if (AccessToken.getCurrentAccessToken() != null) {
+        if (AccessToken.getCurrentAccessToken() != null)
+        {
             removeUrl = (getString(R.string.url)
                     + "removeWitness?accessToken=" + AccessToken.getCurrentAccessToken().getToken())
                     + "&type=facebook"
                     + "&knotId=" + knotEntity.getKnotId()
                     + "&witnessId=" + witnessId;
 
-        } else {
+        } else
+        {
             removeUrl = (getString(R.string.url)
                     + "removeWitness?accessToken=" + ((Global) getApplication()).getAccessToken())
                     + "&type=russesamfunnet"
                     + "&knotId=" + knotEntity.getKnotId()
                     + "&witnessId=" + witnessId;
         }
-        try {
-            new JSONObjectParser(new JSONObjectParser.OnPostExecute() {
+        try
+        {
+            new JSONObjectParser(new JSONObjectParser.OnPostExecute()
+            {
                 @Override
-                public void onPostExecute(JSONObject jsonObject) {
-                    if (jsonObject != null) {
-                        try {
+                public void onPostExecute(JSONObject jsonObject)
+                {
+                    if (jsonObject != null)
+                    {
+                        try
+                        {
                             System.out.println(jsonObject.getString("response"));
                             getCompletedKnot();
-                        } catch (Exception e) {
+                        } catch (Exception e)
+                        {
                             e.printStackTrace();
                         }
                     }
                 }
             }).execute(new URL(removeUrl));
-        } catch (MalformedURLException e) {
+        } catch (MalformedURLException e)
+        {
             e.printStackTrace();
         }
     }
 
-    private void updateWitnessPhoto(){
-        try {
-            if (completed.getWitnessId1().getRussId() != null) {
+    private void updateWitnessPhoto()
+    {
+        try
+        {
+            if (completed.getWitnessId1().getRussId() != null)
+            {
                 System.out.println("************************************************** " + completed.getWitnessId1().getRussId());
                 boolean hasImageOnServer = false;
 
                 TextView witnessName = findViewById(R.id.witness1Name);
                 witnessName.setText(completed.getWitnessId1().getSearchName());
 
-                if (!userImageFile.exists()) {
+                if (!userImageFile.exists())
+                {
                     Bitmap bitmap = BitmapFactory.decodeFile(userImageFile.getAbsolutePath());
                     this.witnessCircularImageView1.setImageBitmap(bitmap);
-                } else if (hasImageOnServer) {
+                } else if (hasImageOnServer)
+                {
                     new LoadImage(this, witnessCircularImageView1).execute("http://russesamfunnet.no/logos/logo.png");
-                } else {
+                } else
+                {
                     this.witnessCircularImageView1.setImageResource(R.drawable.default_user);
                 }
             }
 
-            if (completed.getWitnessId2().getRussId() != null) {
+            if (completed.getWitnessId2().getRussId() != null)
+            {
                 System.out.println("************************************************** " + completed.getWitnessId2().getRussId());
                 boolean hasImageOnServer = true;
                 TextView witnessName = findViewById(R.id.witness2Name);
                 witnessName.setText(completed.getWitnessId2().getSearchName());
 
 
-                if (!userImageFile.exists()) {
+                if (!userImageFile.exists())
+                {
                     Bitmap bitmap = BitmapFactory.decodeFile(userImageFile.getAbsolutePath());
                     this.witnessCircularImageView2.setImageBitmap(bitmap);
-                } else if (hasImageOnServer) {
+                } else if (hasImageOnServer)
+                {
                     new LoadImage(this, witnessCircularImageView2).execute("http://russesamfunnet.no/logos/logo.png");
-                } else {
+                } else
+                {
                     this.witnessCircularImageView2.setImageResource(R.drawable.default_user);
                 }
             }
@@ -355,48 +436,60 @@ public class Knot extends AppCompatActivity {
         }
     }
 
-    public void checkIfCompleted() {
+    public void checkIfCompleted()
+    {
         String url = "";
-        if (AccessToken.getCurrentAccessToken() != null) {
+        if (AccessToken.getCurrentAccessToken() != null)
+        {
             url = (getString(R.string.url)
                     + "checkIfCompleted?accessToken=" + AccessToken.getCurrentAccessToken().getToken())
                     + "&type=facebook"
                     + "&knotId=" + knotEntity.getKnotId();
-        } else {
+        } else
+        {
             url = (getString(R.string.url)
                     + "checkIfCompleted?accessToken=" + ((Global) this.getApplication()).getAccessToken())
                     + "&type=russesamfunnet"
                     + "&knotId=" + knotEntity.getKnotId();
             completeKnot(url);
         }
-        try {
-            new JSONObjectParser(new JSONObjectParser.OnPostExecute() {
+        try
+        {
+            new JSONObjectParser(new JSONObjectParser.OnPostExecute()
+            {
                 @Override
-                public void onPostExecute(JSONObject jsonObject) {
-                    try {
-                        if (jsonObject.getString("response").equals("true")) {
+                public void onPostExecute(JSONObject jsonObject)
+                {
+                    try
+                    {
+                        if (jsonObject.getString("response").equals("true"))
+                        {
                             completeFloatingActionButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorKnotCompleted)));
                             completeFloatingActionButton.setImageResource(R.drawable.ic_check_black_48dp);
                             setKnotCompleted(true);
                             getCompletedKnot();
-                        } else {
+                        } else
+                        {
                             completeFloatingActionButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorKnotNotCompleted)));
                             completeFloatingActionButton.setImageResource(R.drawable.ic_close_black_48dp);
                             System.out.println("No");
                             setKnotCompleted(false);
                         }
-                    } catch (Exception e) {
+                    } catch (Exception e)
+                    {
                         e.printStackTrace();
                     }
                 }
             }).execute(new URL(url));
-        } catch (MalformedURLException e) {
+        } catch (MalformedURLException e)
+        {
             e.printStackTrace();
         }
 
     }
 
-    public void setKnotCompleted(Boolean bol) {
+    public void setKnotCompleted(Boolean bol)
+    {
         knotCompleted = bol;
     }
 
@@ -406,32 +499,42 @@ public class Knot extends AppCompatActivity {
      */
 
 
-    public void completeKnot(String url) {
+    public void completeKnot(String url)
+    {
         System.out.println(url);
-        try {
-            new JSONObjectParser(new JSONObjectParser.OnPostExecute() {
+        try
+        {
+            new JSONObjectParser(new JSONObjectParser.OnPostExecute()
+            {
                 @Override
-                public void onPostExecute(JSONObject jsonObject) {
-                    try {
+                public void onPostExecute(JSONObject jsonObject)
+                {
+                    try
+                    {
                         JSONObject knot = jsonObject.getJSONObject("knotId");
                         JSONObject russ = jsonObject.getJSONObject("russId");
                         System.out.println(russ.getString("firstName") + " completed " + knot.getString("knotName"));
-                    } catch (Exception e) {
-                        try {
+                    } catch (Exception e)
+                    {
+                        try
+                        {
                             System.out.println(jsonObject.getString("response"));
-                        } catch (Exception em) {
+                        } catch (Exception em)
+                        {
                             em.printStackTrace();
                         }
                     }
                 }
             }).execute(new URL(url));
-        } catch (MalformedURLException e) {
+        } catch (MalformedURLException e)
+        {
             e.printStackTrace();
         }
 
     }
 
-    private void fillInData() {
+    private void fillInData()
+    {
 
         TextView textViewTitle = findViewById(R.id.knot_name);
         textViewTitle.setText(knotEntity.getDetails());
@@ -442,7 +545,8 @@ public class Knot extends AppCompatActivity {
 
 
     @Override
-    public boolean onSupportNavigateUp() {
+    public boolean onSupportNavigateUp()
+    {
         //onBackPressed();
         NavUtils.navigateUpFromSameTask(this);
         Knot.this.finish();
@@ -450,7 +554,8 @@ public class Knot extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed() {
+    public void onBackPressed()
+    {
         Intent intent = new Intent(Knot.this, KnotList.class);
         Knot.this.finish();
         startActivity(intent);

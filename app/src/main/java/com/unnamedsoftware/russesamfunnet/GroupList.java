@@ -1,7 +1,9 @@
 package com.unnamedsoftware.russesamfunnet;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -40,6 +42,7 @@ public class GroupList extends AppCompatActivity
     private RecyclerView recyclerView;
     private GroupListAdapter groupListAdapter;
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -76,6 +79,16 @@ public class GroupList extends AppCompatActivity
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         recyclerView.setAdapter(groupListAdapter);
+
+        //Swipe func.
+        ConstraintLayout constraintLayout = findViewById(R.id.GroupListLayout);
+        constraintLayout.setOnTouchListener(new OnSwipeTouchListener(this)
+        {
+            public void onSwipeRight()
+            {
+                onBackPressed();
+            }
+        });
     }
 
     /**
@@ -181,6 +194,7 @@ public class GroupList extends AppCompatActivity
                 groupEntityList.add(new GroupEntity(groupId, groupName));
             }
             this.groupListAdapter.notifyDataSetChanged();
+            findViewById(R.id.loadingPanel).setVisibility(View.GONE);
         }catch (JSONException e)
         {
             e.printStackTrace();

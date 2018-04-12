@@ -1,7 +1,9 @@
 package com.unnamedsoftware.russesamfunnet;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -56,6 +58,7 @@ public class GroupHub extends AppCompatActivity implements SwipeRefreshLayout.On
     private String url;
 
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -176,6 +179,17 @@ public class GroupHub extends AppCompatActivity implements SwipeRefreshLayout.On
 
                 // Fetching data from server
                 loadRecyclerViewData();
+            }
+        });
+
+
+//Swipe func.
+        ConstraintLayout constraintLayout = findViewById(R.id.GroupHubLayout);
+        constraintLayout.setOnTouchListener(new OnSwipeTouchListener(this)
+        {
+            public void onSwipeRight()
+            {
+                onBackPressed();
             }
         });
     }
@@ -322,7 +336,7 @@ public class GroupHub extends AppCompatActivity implements SwipeRefreshLayout.On
                 }
             }
             feedAdapter.notifyDataSetChanged();
-
+            findViewById(R.id.loadingPanel).setVisibility(View.GONE);
         }catch (JSONException e)
         {
             e.printStackTrace();

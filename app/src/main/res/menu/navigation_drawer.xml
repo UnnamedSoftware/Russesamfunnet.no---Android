@@ -25,10 +25,12 @@
                 android:id="@+id/group"
                 android:icon="@drawable/ic_group_black_24dp"
                 android:title="@string/group" />
+<!--
             <item
                 android:id="@+id/event"
                 android:icon="@drawable/ic_event_black_18dp"
                 android:title="@string/event" />
+-->
     </group>
 
     <group

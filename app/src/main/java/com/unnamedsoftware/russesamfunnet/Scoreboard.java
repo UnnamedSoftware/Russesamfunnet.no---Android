@@ -1,8 +1,10 @@
 package com.unnamedsoftware.russesamfunnet;
 
+import android.annotation.SuppressLint;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
@@ -48,6 +50,7 @@ public class Scoreboard extends AppCompatActivity
     /**
      * @param savedInstanceState
      */
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -85,6 +88,16 @@ public class Scoreboard extends AppCompatActivity
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         recyclerView.setAdapter(scoreboardAdapter);
+
+        //Swipe func.
+        ConstraintLayout constraintLayout = findViewById(R.id.ScoreboardLayout);
+        constraintLayout.setOnTouchListener(new OnSwipeTouchListener(this)
+        {
+            public void onSwipeRight()
+            {
+                onBackPressed();
+            }
+        });
     }
 
     /**

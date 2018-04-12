@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:id="@+id/SettingsLayout"
     app:layout_constraintTop_toTopOf="parent">
 
     <!-- ActionBar -->
@@ -12,89 +13,92 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <LinearLayout
+        <TextView
+            android:id="@+id/generalOption"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:shadowColor="@color/colorPrimaryDark"
 
-            <TextView
-                android:id="@+id/generalOption"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Generelt"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="2"
+            android:text="Generelt"
 
-                android:shadowColor="@color/colorPrimaryDark"
-                android:shadowDx="1"
-                android:shadowDy="1"
-                android:shadowRadius="2"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.496"
+            app:layout_constraintStart_toStartOf="parent" />
 
-                android:textAlignment="center"
-                android:textAllCaps="true"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.496"
-                app:layout_constraintStart_toStartOf="parent" />
+        <TextView
+            android:id="@+id/userOption"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Bruker"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.496"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/generalOption" />
 
-            <TextView
-                android:id="@+id/userOption"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Bruker"
-                android:textAlignment="center"
-                android:textAllCaps="true"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.496"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/generalOption" />
+        <TextView
+            android:id="@+id/privacyOption"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Personvern"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.496"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/userOption" />
+        <!--
+                    <TextView
+                        android:id="@+id/GPSOption"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="GPS"
+                        android:textAlignment="center"
+                        android:textAllCaps="true"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.496"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/privacyOption" />
 
-            <TextView
-                android:id="@+id/privacyOption"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Personvern"
-                android:textAlignment="center"
-                android:textAllCaps="true"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.496"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/userOption" />
+                    <TextView
+                        android:id="@+id/notificationOption"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Varslinger"
+                        android:textAlignment="center"
+                        android:textAllCaps="true"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.496"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/GPSOption" /> -->
+    <RelativeLayout
+        android:id="@+id/loadingPanel"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center">
 
-            <TextView
-                android:id="@+id/GPSOption"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="GPS"
-                android:textAlignment="center"
-                android:textAllCaps="true"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.496"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/privacyOption" />
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:indeterminateTint="@color/colorPrimary" />
+    </RelativeLayout>
 
-            <TextView
-                android:id="@+id/notificationOption"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Varslinger"
-                android:textAlignment="center"
-                android:textAllCaps="true"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.496"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/GPSOption" />
-        </LinearLayout>
-    </ScrollView>
+
 </LinearLayout>
