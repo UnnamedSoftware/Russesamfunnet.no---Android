@@ -64,6 +64,7 @@ public class UserProfile extends AppCompatActivity
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        findViewById(R.id.toolbar).bringToFront();
 
         boolean hasImageOnServer = false;
         this.russCard = findViewById(R.id.russCard);
