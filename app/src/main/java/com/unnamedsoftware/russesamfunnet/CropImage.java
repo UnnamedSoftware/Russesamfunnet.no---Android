@@ -77,6 +77,7 @@ public class CropImage extends AppCompatActivity
 
         Intent returnIntent = new Intent();
         setResult(Activity.RESULT_CANCELED, returnIntent);
+        findViewById(R.id.loadingPanel).setVisibility(View.GONE);
         finish();
     }
 

@@ -371,6 +371,7 @@ public class UserProfile extends AppCompatActivity
                 knotEntities.add(knot);
             }
             this.knotListAdapter.notifyDataSetChanged();
+            findViewById(R.id.loadingPanel).setVisibility(View.GONE);
         } catch (JSONException e)
         {
             e.printStackTrace();

@@ -11,6 +11,7 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 
 import com.facebook.AccessToken;
 import com.unnamedsoftware.russesamfunnet.Entity.RussEntity;
@@ -167,6 +168,7 @@ public class Scoreboard extends AppCompatActivity
                 userList.add(user);
             }
             scoreboardAdapter.notifyDataSetChanged();
+            findViewById(R.id.loadingPanel).setVisibility(View.GONE);
         } catch (Exception e)
         {
             e.printStackTrace();
