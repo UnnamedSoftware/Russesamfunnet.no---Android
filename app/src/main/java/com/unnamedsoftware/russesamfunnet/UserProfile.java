@@ -131,6 +131,22 @@ public class UserProfile extends AppCompatActivity
         try
         {
             Long russId = bundle.getLong("russ_entity");
+            System.out.println(russId);
+            if(russId != 0) {
+                if (AccessToken.getCurrentAccessToken() != null) {
+                    System.out.println(AccessToken.getCurrentAccessToken().getToken());
+                    completedURL = (getString(R.string.url) + "completedKnotsOtherRuss?accessToken=" + AccessToken.getCurrentAccessToken().getToken() + "&type=facebook&russId=" + russId);
+                } else {
+                    completedURL = getString(R.string.url) + "completedKnotsOtherRuss?accessToken=" + ((Global) this.getApplication()).getAccessToken() + "&type=russesamfunnet&russId=" + russId;
+                }
+            } else {
+                if (AccessToken.getCurrentAccessToken() != null) {
+                    System.out.println(AccessToken.getCurrentAccessToken().getToken());
+                    completedURL = (getString(R.string.url) + "completedKnots?accessToken=" + AccessToken.getCurrentAccessToken().getToken() + "&type=facebook");
+                } else {
+                    completedURL = getString(R.string.url) + "completedKnots?accessToken=" + ((Global) this.getApplication()).getAccessToken() + "&type=russesamfunnet";
+                }
+            }
             if (russId != 0)
             {
                 if (AccessToken.getCurrentAccessToken() != null)
@@ -146,6 +162,7 @@ public class UserProfile extends AppCompatActivity
                             + "&type=russesamfunnet"
                             + "&russId=" + russId;
                 }
+
             } else if (AccessToken.getCurrentAccessToken() != null)
             {
                 System.out.println(AccessToken.getCurrentAccessToken().getToken());
@@ -156,6 +173,7 @@ public class UserProfile extends AppCompatActivity
                 System.out.println(((Global) this.getApplication()).getAccessToken());
                 url = getString(R.string.url) + "userRuss?accessToken=" + ((Global) this.getApplication()).getAccessToken() + "&type=russesamfunnet";
             }
+
             System.out.println(url);
         } catch (Exception e)
         {
@@ -169,16 +187,10 @@ public class UserProfile extends AppCompatActivity
                 System.out.println(((Global) this.getApplication()).getAccessToken());
                 url = getString(R.string.url) + "userRuss?accessToken=" + ((Global) this.getApplication()).getAccessToken() + "&type=russesamfunnet";
             }
+
         }
 
-        if (AccessToken.getCurrentAccessToken() != null)
-        {
-            System.out.println(AccessToken.getCurrentAccessToken().getToken());
-            completedURL = (getString(R.string.url) + "completedKnots?accessToken=" + AccessToken.getCurrentAccessToken().getToken() + "&type=facebook");
-        } else
-        {
-            completedURL = getString(R.string.url) + "completedKnots?accessToken=" + ((Global) this.getApplication()).getAccessToken() + "&type=russesamfunnet";
-        }
+
 
         try
         {
