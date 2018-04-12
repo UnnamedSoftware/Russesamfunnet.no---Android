@@ -6,6 +6,16 @@
     android:layout_height="match_parent">
 
     <!-- ActionBar -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
     <include
         layout="@layout/toolbar"
         android:layout_width="match_parent"
@@ -41,18 +51,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/userProfilePicture" />
 
-    <include
-        android:id="@+id/user_knot_list"
-        layout="@layout/content_user_knot_list"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="8dp"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/russCard" />
+            <include
+                android:id="@+id/user_knot_list"
+                layout="@layout/content_user_knot_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/russCard" />
 
     <RelativeLayout
         android:id="@+id/loadingPanel"
@@ -66,5 +75,7 @@
             android:indeterminate="true"
             android:indeterminateTint="@color/colorPrimary" />
     </RelativeLayout>
+        </android.support.constraint.ConstraintLayout>
+    </ScrollView>
 
 </android.support.constraint.ConstraintLayout>
