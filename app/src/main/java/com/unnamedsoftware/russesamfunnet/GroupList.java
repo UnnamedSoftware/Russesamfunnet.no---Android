@@ -3,7 +3,6 @@ package com.unnamedsoftware.russesamfunnet;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
@@ -16,7 +15,6 @@ import android.widget.EditText;
 
 import com.facebook.AccessToken;
 import com.unnamedsoftware.russesamfunnet.Entity.GroupEntity;
-import com.unnamedsoftware.russesamfunnet.Entity.KnotEntity;
 import com.unnamedsoftware.russesamfunnet.RecyclerView.GroupListAdapter;
 
 import org.json.JSONArray;
@@ -72,7 +70,7 @@ public class GroupList extends AppCompatActivity
         getGroups();
 
         this.recyclerView = findViewById(R.id.glaGroup);
-        this.groupListAdapter = new GroupListAdapter(groupEntityList);
+        this.groupListAdapter = new GroupListAdapter(groupEntityList, this);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());

@@ -1,12 +1,18 @@
 package com.unnamedsoftware.russesamfunnet.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
+import android.os.Vibrator;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.unnamedsoftware.russesamfunnet.Entity.GroupEntity;
 import com.unnamedsoftware.russesamfunnet.GroupHub;
@@ -21,7 +27,7 @@ import java.util.List;
 public class GroupListAdapter extends RecyclerView.Adapter<GroupListAdapter.ViewHolder>
 {
     private List<GroupEntity> groupEntitiesList;
-
+    private Context context;
 
     public class ViewHolder extends RecyclerView.ViewHolder
     {
@@ -37,7 +43,11 @@ public class GroupListAdapter extends RecyclerView.Adapter<GroupListAdapter.View
     }
 
 
-    public GroupListAdapter(List<GroupEntity> groupEntityList){this.groupEntitiesList = groupEntityList;}
+    public GroupListAdapter(List<GroupEntity> groupEntityList, Context context)
+    {
+        this.groupEntitiesList = groupEntityList;
+        this.context = context;
+    }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
@@ -52,6 +62,7 @@ public class GroupListAdapter extends RecyclerView.Adapter<GroupListAdapter.View
     public void onBindViewHolder(ViewHolder holder, int position)
     {
         final GroupEntity groupEntity = groupEntitiesList.get(position);
+        final View view = holder.itemView;
         holder.groupName.setText(groupEntity.getSearchName());
 
         holder.itemView.setOnClickListener(new View.OnClickListener()
@@ -65,9 +76,73 @@ public class GroupListAdapter extends RecyclerView.Adapter<GroupListAdapter.View
                 v.getContext().startActivity(intent);
             }
         });
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener()
+        {
+            @Override
+            public boolean onLongClick(View v)
+            {
+                optionMenu(view);
+                return false;
+            }
+        });
     }
 
     @Override
-    public int getItemCount() {return groupEntitiesList.size();}
+    public int getItemCount()
+    {
+        return groupEntitiesList.size();
+    }
 
+    private void optionMenu(View view)
+    {
+        Vibrator vibe = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+        vibe.vibrate(50);
+
+        /*System.out.println("+++++++++++++++++++++++++" + russID);
+        System.out.println("+++++++++++++++++++++++++" + userID);
+        russID == userID*/
+        if (true)
+        {
+            PopupMenu popup = new PopupMenu(this.context, view);
+            popup.setGravity(Gravity.RIGHT);
+            popup.getMenuInflater()
+                    .inflate(R.menu.option_menu_add_user, popup.getMenu());
+
+            popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
+            {
+                public boolean onMenuItemClick(MenuItem item)
+                {
+                    switch (item.getItemId())
+                    {
+                        case R.id.AddUser:
+
+                            break;
+                    }
+                    return true;
+                }
+            });
+            popup.show();
+        } else
+        {
+            PopupMenu popup = new PopupMenu(this.context, view);
+            popup.setGravity(Gravity.RIGHT);
+            popup.getMenuInflater()
+                    .inflate(R.menu.option_menu_feed_not_user_message, popup.getMenu());
+
+            popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
+            {
+                public boolean onMenuItemClick(MenuItem item)
+                {
+                    switch (item.getItemId())
+                    {
+                        case R.id.Rapporter:
+                            Toast.makeText(context, "One", Toast.LENGTH_SHORT).show();
+                            break;
+                    }
+                    return true;
+                }
+            });
+            popup.show();
+        }
+    }
 }

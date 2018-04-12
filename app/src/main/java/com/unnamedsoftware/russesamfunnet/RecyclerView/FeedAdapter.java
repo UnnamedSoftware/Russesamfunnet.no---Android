@@ -117,8 +117,8 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>
         Vibrator vibe = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
         vibe.vibrate(50);
 
-        System.out.println("+++++++++++++++++++++++++" +russID);
-        System.out.println("+++++++++++++++++++++++++" +userID);
+        System.out.println("+++++++++++++++++++++++++" + russID);
+        System.out.println("+++++++++++++++++++++++++" + userID);
         if (russID == userID)
         {
             PopupMenu popup = new PopupMenu(this.context, view);
@@ -141,27 +141,27 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>
             });
             popup.show();
         } else
-    {
-        PopupMenu popup = new PopupMenu(this.context, view);
-        popup.setGravity(Gravity.RIGHT);
-        popup.getMenuInflater()
-                .inflate(R.menu.option_menu_feed_not_user_message, popup.getMenu());
-
-        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
         {
-            public boolean onMenuItemClick(MenuItem item)
+            PopupMenu popup = new PopupMenu(this.context, view);
+            popup.setGravity(Gravity.RIGHT);
+            popup.getMenuInflater()
+                    .inflate(R.menu.option_menu_feed_not_user_message, popup.getMenu());
+
+            popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
             {
-                switch (item.getItemId())
+                public boolean onMenuItemClick(MenuItem item)
                 {
-                    case R.id.Rapporter:
-                        Toast.makeText(context, "One", Toast.LENGTH_SHORT).show();
-                        break;
+                    switch (item.getItemId())
+                    {
+                        case R.id.Rapporter:
+                            Toast.makeText(context, "One", Toast.LENGTH_SHORT).show();
+                            break;
+                    }
+                    return true;
                 }
-                return true;
-            }
-        });
-        popup.show();
-    }
+            });
+            popup.show();
+        }
     }
 
     private void deletePost(Long postId, int position)
