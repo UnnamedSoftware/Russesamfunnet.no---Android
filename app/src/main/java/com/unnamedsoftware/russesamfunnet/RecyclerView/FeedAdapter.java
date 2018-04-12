@@ -1,6 +1,7 @@
 package com.unnamedsoftware.russesamfunnet.RecyclerView;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Vibrator;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
@@ -17,6 +18,7 @@ import com.mikhaellopez.circularimageview.CircularImageView;
 import com.unnamedsoftware.russesamfunnet.Entity.FeedEntity;
 import com.unnamedsoftware.russesamfunnet.JSONObjectParser;
 import com.unnamedsoftware.russesamfunnet.R;
+import com.unnamedsoftware.russesamfunnet.UserProfile;
 
 import org.json.JSONObject;
 
@@ -85,6 +87,16 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>
                 System.out.println(id);
                 optionMenu(view, id, position - 1, russid);
                 return false;
+            }
+        });
+        holder.itemView.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Intent intent = new Intent(v.getContext(), UserProfile.class);
+                intent.putExtra("russ_entity", russid);
+                v.getContext().startActivity(intent);
             }
         });
     }
