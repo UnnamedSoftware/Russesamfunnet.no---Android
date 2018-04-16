@@ -225,14 +225,14 @@ public class SchoolRegisterActivity extends AppCompatActivity
         }
         builder.setTitle("Vilkår for Tjenesten")
                 .setMessage(termsOfService)
-                .setPositiveButton("Avslå", new DialogInterface.OnClickListener()
+                .setNegativeButton("Avslå", new DialogInterface.OnClickListener()
                 {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i)
                     {
                     }
                 })
-                .setNegativeButton("Aksepter", new DialogInterface.OnClickListener()
+                .setPositiveButton("Aksepter", new DialogInterface.OnClickListener()
                 {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i)
