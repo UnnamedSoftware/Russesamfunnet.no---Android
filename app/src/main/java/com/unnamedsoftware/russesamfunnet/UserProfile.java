@@ -19,6 +19,7 @@ import android.widget.ImageView;
 
 import com.facebook.AccessToken;
 import com.mikhaellopez.circularimageview.CircularImageView;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.unnamedsoftware.russesamfunnet.Entity.KnotEntity;
 import com.unnamedsoftware.russesamfunnet.Entity.RussEntity;
 import com.unnamedsoftware.russesamfunnet.RecyclerView.KnotListAdapter;
@@ -52,7 +53,7 @@ public class UserProfile extends AppCompatActivity
 
     private CircularImageView userImage;
     private ImageView russCard;
-    private File userImageFile = new File("/storage/emulated/0/Android/data/com.unnamedsoftware.russesamfunnet/files/Pictures/russesamfunnetProfilePicture.jpg");
+    //private File userImageFile = new File("/storage/emulated/0/Android/data/com.unnamedsoftware.russesamfunnet/files/Pictures/russesamfunnetProfilePicture.jpg");
     private File russCardFile = new File("/storage/emulated/0/Android/data/com.unnamedsoftware.russesamfunnet/files/Pictures/russesamfunnetRussCard.jpg");
 
     @SuppressLint("ClickableViewAccessibility")
@@ -97,14 +98,15 @@ public class UserProfile extends AppCompatActivity
         });
 
         this.userImage = findViewById(R.id.userProfilePicture);
-        if (userImageFile.exists())
+        String userImageURI = "";
+        ((Global) this.getApplication()).getImageLoader().loadImage(userImageURI, new SimpleImageLoadingListener()
         {
-            Bitmap userImageBitmap = BitmapFactory.decodeFile(userImageFile.getAbsolutePath());
-            this.userImage.setImageBitmap(userImageBitmap);
-        } else if (hasImageOnServer)
-        {
-            new LoadImage(this, userImage).execute("http://russesamfunnet.no/logos/logo.png");
-        }
+            @Override
+            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage)
+            {
+                userImage.setImageBitmap(loadedImage);
+            }
+        });
 
         this.userImage.setOnClickListener(new View.OnClickListener()
         {
@@ -133,18 +135,24 @@ public class UserProfile extends AppCompatActivity
         {
             Long russId = bundle.getLong("russ_entity");
             System.out.println(russId);
-            if(russId != 0) {
-                if (AccessToken.getCurrentAccessToken() != null) {
+            if (russId != 0)
+            {
+                if (AccessToken.getCurrentAccessToken() != null)
+                {
                     System.out.println(AccessToken.getCurrentAccessToken().getToken());
                     completedURL = (getString(R.string.url) + "completedKnotsOtherRuss?accessToken=" + AccessToken.getCurrentAccessToken().getToken() + "&type=facebook&russId=" + russId);
-                } else {
+                } else
+                {
                     completedURL = getString(R.string.url) + "completedKnotsOtherRuss?accessToken=" + ((Global) this.getApplication()).getAccessToken() + "&type=russesamfunnet&russId=" + russId;
                 }
-            } else {
-                if (AccessToken.getCurrentAccessToken() != null) {
+            } else
+            {
+                if (AccessToken.getCurrentAccessToken() != null)
+                {
                     System.out.println(AccessToken.getCurrentAccessToken().getToken());
                     completedURL = (getString(R.string.url) + "completedKnots?accessToken=" + AccessToken.getCurrentAccessToken().getToken() + "&type=facebook");
-                } else {
+                } else
+                {
                     completedURL = getString(R.string.url) + "completedKnots?accessToken=" + ((Global) this.getApplication()).getAccessToken() + "&type=russesamfunnet";
                 }
             }
@@ -190,8 +198,6 @@ public class UserProfile extends AppCompatActivity
             }
 
         }
-
-
 
         try
         {
@@ -268,20 +274,19 @@ public class UserProfile extends AppCompatActivity
         System.out.println("I've been pressed");
         final Dialog dialog = new Dialog(view.getContext());
         dialog.setContentView(R.layout.user_profile_picture_clicked_dialog);
-        ImageView userProfileEnlarged = dialog.findViewById(R.id.userProfilePictureEnlarged);
+        final ImageView userProfileEnlarged = dialog.findViewById(R.id.userProfilePictureEnlarged);
 
         try
         {
-            if (userImageFile.exists())
+            String userImageURI = "";
+            ((Global) this.getApplication()).getImageLoader().loadImage(userImageURI, new SimpleImageLoadingListener()
             {
-                System.out.println("Found image");
-                Bitmap bitmap = BitmapFactory.decodeFile(userImageFile.getAbsolutePath());
-                userProfileEnlarged.setImageBitmap(bitmap);
-            } else
-            {
-                System.out.println("Could not find image");
-                userProfileEnlarged.setImageResource(R.drawable.default_user);
-            }
+                @Override
+                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage)
+                {
+                    userProfileEnlarged.setImageBitmap(loadedImage);
+                }
+            });
         } catch (NullPointerException e)
         {
             e.printStackTrace();

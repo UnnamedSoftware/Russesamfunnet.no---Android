@@ -2,6 +2,9 @@ package com.unnamedsoftware.russesamfunnet;
 
 import android.app.Application;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -13,7 +16,7 @@ import java.io.IOException;
 /**
  * Holds a collection of global variables.
  * Stores tokens used in server communication in the cache of the application
- *
+ * <p>
  * Created by HallvardPC on 23.02.2018.
  * Version 2 (19.03.2018) by Alexander Eilert Berg
  */
@@ -29,15 +32,38 @@ public class Global extends Application
 
     /**
      * Sets the russ ID
+     *
      * @param russId
      */
-    public void setRussId(Long russId){this.russId = russId;}
+    public void setRussId(Long russId)
+    {
+        this.russId = russId;
+    }
 
     /**
      * Returns the russ ID
+     *
      * @return The russ ID
      */
-    public Long getRussId(){return this.russId;}
+    public Long getRussId()
+    {
+        return this.russId;
+    }
+
+
+    //--- Image Loader ---
+
+    private ImageLoader imageLoader;
+
+    public ImageLoader getImageLoader(){return this.imageLoader;}
+
+
+    public void createInitialImageLoader()
+    {
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this).build();
+        ImageLoader.getInstance().init(config);
+        this.imageLoader = ImageLoader.getInstance();
+    }
 
 
     //--- Token ---
@@ -54,13 +80,19 @@ public class Global extends Application
     {
         if (accessToken == null)
         {
-            if(DEBUG) {System.out.println("Access token is empty");}
-                try
+            if (DEBUG)
+            {
+                System.out.println("Access token is empty");
+            }
+            try
             {
                 FileReader fileReader = new FileReader(getCache("token"));
                 BufferedReader bufferedReader = new BufferedReader(fileReader);
                 accessToken = bufferedReader.readLine();
-                if(DEBUG) {System.out.println("BufferReader line: " + accessToken);}
+                if (DEBUG)
+                {
+                    System.out.println("BufferReader line: " + accessToken);
+                }
             } catch (FileNotFoundException e)
             {
                 e.printStackTrace();
@@ -74,6 +106,7 @@ public class Global extends Application
 
     /**
      * Returns the token type from the cache.
+     *
      * @return The token type from the cache.
      */
     public String getTokenType()
@@ -129,7 +162,6 @@ public class Global extends Application
 
     /**
      * Deletes the file with the given name
-     *
      */
     public String deleteCache(String fileName)
     {
@@ -139,10 +171,12 @@ public class Global extends Application
         {
             Boolean successCheck = file.delete();
 
-            if(successCheck == true){
+            if (successCheck == true)
+            {
                 return "File successfully deleted.";
             }
-        } else {
+        } else
+        {
             return "There is no file with that name.";
         }
         return "The file was not deleted.";
@@ -188,7 +222,10 @@ public class Global extends Application
      *
      * @param newGroupID
      */
-    public void setGroupID(Long newGroupID){this.groupID = newGroupID;}
+    public void setGroupID(Long newGroupID)
+    {
+        this.groupID = newGroupID;
+    }
 
     /**
      * Returns the current (last accessed) group id

@@ -41,7 +41,7 @@
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintTop_toBottomOf="@+id/toolbar"
             app:layout_constraintVertical_bias="0.26"
-            app:srcCompat="@drawable/ic_more_horiz_white_48dp" />
+            app:srcCompat="@drawable/ic_scoreboard" />
 
     <LinearLayout
         android:id="@+id/feed_posts"
@@ -101,7 +101,7 @@
             android:layout_marginRight="16dp"
             android:layout_weight="1"
             android:background="@android:color/transparent"
-            android:hint="Enter message"
+            android:hint="Skriv melding"
             android:maxLines="6" />
 
         <Button

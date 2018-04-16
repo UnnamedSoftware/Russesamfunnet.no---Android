@@ -3,9 +3,10 @@
     package="com.unnamedsoftware.russesamfunnet">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.VIBRATE" />
+
     <uses-feature android:name="android.hardware.camera" />
 
     <application
@@ -91,6 +92,15 @@
                 android:value=".Feed" />
         </activity>
         <activity
+            android:name=".AddUserToGroup"
+            android:label="@string/app_name"
+            android:parentActivityName=".GroupList">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".GroupList" />
+        </activity>
+
+        <activity
             android:name=".GroupHub"
             android:label="@string/app_name"
             android:parentActivityName=".GroupList"
@@ -108,7 +118,8 @@
                 android:value=".GroupHub" />
         </activity>
 
-        <activity android:name=".CropImage"
+        <activity
+            android:name=".CropImage"
             android:label="@string/app_name"
             android:parentActivityName=".UserProfile">
             <meta-data
@@ -116,7 +127,8 @@
                 android:value=".UserProfile" />
         </activity>
 
-        <activity android:name=".RussCardCamera"
+        <activity
+            android:name=".RussCardCamera"
             android:label="@string/app_name"
             android:parentActivityName=".UserProfile">
             <meta-data
@@ -125,10 +137,11 @@
         </activity>
 
 
-        <activity android:name=".BirthdayRegisterActivity"
-            android:windowSoftInputMode="adjustResize"
+        <activity
+            android:name=".BirthdayRegisterActivity"
             android:label="@string/app_name"
-            android:parentActivityName=".Register"/>
+            android:parentActivityName=".Register"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".SchoolRegisterActivity"
             android:label="@string/app_name"
@@ -155,10 +168,11 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-        <activity android:name=".WitnessSelection"
-            android:windowSoftInputMode="adjustResize"
+        <activity
+            android:name=".WitnessSelection"
             android:label="@string/app_name"
-            android:parentActivityName=".Knot"/>
+            android:parentActivityName=".Knot"
+            android:windowSoftInputMode="adjustResize" />
     </application>
 
 

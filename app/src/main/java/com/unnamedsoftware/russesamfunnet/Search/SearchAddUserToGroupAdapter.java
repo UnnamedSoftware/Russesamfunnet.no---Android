@@ -10,7 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.unnamedsoftware.russesamfunnet.Entity.RussEntity;
-import com.unnamedsoftware.russesamfunnet.Knot;
+import com.unnamedsoftware.russesamfunnet.GroupList;
 import com.unnamedsoftware.russesamfunnet.R;
 
 import java.util.ArrayList;
@@ -68,7 +68,7 @@ public class SearchAddUserToGroupAdapter extends RecyclerView.Adapter<SearchAddU
             @Override
             public void onClick(View v)
             {
-                Intent intent = new Intent(v.getContext(), Knot.class);
+                Intent intent = new Intent(v.getContext(), GroupList.class);
                 v.getContext().startActivity(intent);
             }
         });
