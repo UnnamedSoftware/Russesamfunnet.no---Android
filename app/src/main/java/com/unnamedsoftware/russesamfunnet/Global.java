@@ -60,7 +60,6 @@ public class Global extends Application
 
     public void createInitialImageLoader()
     {
-        imageLoader.destroy();
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this).build();
         ImageLoader.getInstance().init(config);
         this.imageLoader = ImageLoader.getInstance();
