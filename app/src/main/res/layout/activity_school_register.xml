@@ -62,19 +62,33 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.17000002" />
 
-    <include
-        android:id="@+id/schoolRegistration"
-        layout="@layout/content_school_list"
-        android:layout_width="329dp"
-        android:layout_height="407dp"
-        android:layout_margin="8dp"
+    <LinearLayout
+        android:id="@+id/feed_posts"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:minHeight="48dp"
+        android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/registerButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.89" />
+        app:layout_constraintTop_toBottomOf="@+id/municipalitySpinner">
+
+
+        <include
+            android:id="@+id/schoolRegistration"
+            layout="@layout/content_school_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/municipalitySpinner" />
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
