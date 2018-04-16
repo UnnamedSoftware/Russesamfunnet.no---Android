@@ -80,15 +80,17 @@ public class GroupList extends AppCompatActivity
         recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         recyclerView.setAdapter(groupListAdapter);
 
-        //Swipe func.
-        ConstraintLayout constraintLayout = findViewById(R.id.GroupListLayout);
-        constraintLayout.setOnTouchListener(new OnSwipeTouchListener(this)
-        {
-            public void onSwipeRight()
-            {
-                onBackPressed();
-            }
-        });
+/**
+ //Swipe func.
+ ConstraintLayout constraintLayout = findViewById(R.id.KnotLayout);
+ constraintLayout.setOnTouchListener(new OnSwipeTouchListener(Knot.this)
+ {
+ public void onSwipeRight()
+ {
+ onBackPressed();
+ }
+ });
+ */
     }
 
     /**

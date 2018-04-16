@@ -89,17 +89,17 @@ public class KnotList extends AppCompatActivity
             e.printStackTrace();
         }
 
-
-//Swipe func.
-        ConstraintLayout constraintLayout = findViewById(R.id.KnotListLayout);
-        constraintLayout.setOnTouchListener(new OnSwipeTouchListener(this)
-        {
-            public void onSwipeRight()
-            {
-                onBackPressed();
-            }
-        });
-
+/**
+ //Swipe func.
+ ConstraintLayout constraintLayout = findViewById(R.id.KnotLayout);
+ constraintLayout.setOnTouchListener(new OnSwipeTouchListener(Knot.this)
+ {
+ public void onSwipeRight()
+ {
+ onBackPressed();
+ }
+ });
+ */
     }
 
     /**

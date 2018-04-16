@@ -186,7 +186,7 @@ public class Knot extends AppCompatActivity
                 startActivity(intent);
             }
         });
-
+/**
         //Swipe func.
         ConstraintLayout constraintLayout = findViewById(R.id.KnotLayout);
         constraintLayout.setOnTouchListener(new OnSwipeTouchListener(Knot.this)
@@ -196,7 +196,7 @@ public class Knot extends AppCompatActivity
                 onBackPressed();
             }
         });
-
+*/
 
     }
 

@@ -211,15 +211,17 @@ public class UserProfile extends AppCompatActivity
         recyclerView.setAdapter(knotListAdapter);
 
 
-//Swipe func.
-        ConstraintLayout constraintLayout = findViewById(R.id.userProfileLayout);
-        constraintLayout.setOnTouchListener(new OnSwipeTouchListener(this)
-        {
-            public void onSwipeRight()
-            {
-                onBackPressed();
-            }
-        });
+/**
+ //Swipe func.
+ ConstraintLayout constraintLayout = findViewById(R.id.KnotLayout);
+ constraintLayout.setOnTouchListener(new OnSwipeTouchListener(Knot.this)
+ {
+ public void onSwipeRight()
+ {
+ onBackPressed();
+ }
+ });
+ */
     }
 
 
