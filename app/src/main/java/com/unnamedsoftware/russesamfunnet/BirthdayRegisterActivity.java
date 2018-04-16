@@ -45,7 +45,7 @@ public class BirthdayRegisterActivity extends AppCompatActivity
 
         this.day[0] = String.valueOf(1);
         this.month[0] = String.valueOf(1);
-        this.year[0] = Integer.toString(getYear() - 17);
+        this.year[0] = Integer.toString(getYear() - 30);
 
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
