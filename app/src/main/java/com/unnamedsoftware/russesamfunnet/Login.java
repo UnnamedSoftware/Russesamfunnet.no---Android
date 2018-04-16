@@ -110,6 +110,7 @@ public class Login extends AppCompatActivity
                     try {
                         if (jsonObject.getString("loginStatus").equals("Login success")) {
                             System.out.println(jsonObject.get("loginStatus"));
+                            ((Global) getApplication()).setRussId(jsonObject.getLong("russId"));
                             finishServerCom();
                         } else if(jsonObject.getString("loginStatus").equals("User not in db")){
                             System.out.println(jsonObject.get("loginStatus"));
