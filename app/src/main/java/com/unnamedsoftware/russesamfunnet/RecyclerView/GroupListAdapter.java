@@ -14,6 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.unnamedsoftware.russesamfunnet.AddUserToGroup;
 import com.unnamedsoftware.russesamfunnet.Entity.GroupEntity;
 import com.unnamedsoftware.russesamfunnet.GroupHub;
 import com.unnamedsoftware.russesamfunnet.R;
@@ -93,7 +94,7 @@ public class GroupListAdapter extends RecyclerView.Adapter<GroupListAdapter.View
         return groupEntitiesList.size();
     }
 
-    private void optionMenu(View view)
+    private void optionMenu(final View view)
     {
         Vibrator vibe = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
         vibe.vibrate(50);
@@ -115,7 +116,7 @@ public class GroupListAdapter extends RecyclerView.Adapter<GroupListAdapter.View
                     switch (item.getItemId())
                     {
                         case R.id.AddUser:
-
+                            view.getContext().startActivity(new Intent(view.getContext(), AddUserToGroup.class));
                             break;
                     }
                     return true;

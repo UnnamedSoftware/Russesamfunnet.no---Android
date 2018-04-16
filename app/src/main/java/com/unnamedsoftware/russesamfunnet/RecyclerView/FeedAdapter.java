@@ -59,6 +59,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>
         this.posts = feedPosts;
         this.context = context;
         this.url = url;
+        System.out.println("--- From feed to feedAdapter: " + userID);
         this.userID = userID;
     }
 
@@ -131,7 +132,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>
 
         System.out.println("+++++++++++++++++++++++++" + russID);
         System.out.println("+++++++++++++++++++++++++" + userID);
-        if (russID == userID)
+        if (russID.equals(userID))
         {
             PopupMenu popup = new PopupMenu(this.context, view);
             popup.setGravity(Gravity.RIGHT);

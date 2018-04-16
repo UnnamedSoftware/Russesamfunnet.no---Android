@@ -497,8 +497,6 @@ public class Knot extends AppCompatActivity
     /**
      * Displays the dialog for searching
      */
-
-
     public void completeKnot(String url)
     {
         System.out.println(url);
