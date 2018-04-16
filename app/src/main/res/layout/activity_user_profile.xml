@@ -21,37 +21,36 @@
             android:orientation="vertical">
 
 
-
-
             <com.mikhaellopez.circularimageview.CircularImageView
-        android:id="@+id/userProfilePicture"
-        android:layout_width="127dp"
-        android:layout_height="125dp"
-        android:layout_marginEnd="92dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="64dp"
-        app:civ_border_color="#EEEEEE"
-        app:civ_border_width="4dp"
-        app:civ_shadow="true"
-        app:civ_shadow_color="@color/colorPrimary"
-        app:civ_shadow_radius="10"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.728"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
-    <!---android:src="@drawable/default_user" -->
+                android:id="@+id/userProfilePicture"
+                android:layout_width="127dp"
+                android:layout_height="125dp"
+                android:layout_marginEnd="92dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="64dp"
+                android:src="@drawable/default_user"
+                app:civ_border_color="#EEEEEE"
+                app:civ_border_width="4dp"
+                app:civ_shadow="true"
+                app:civ_shadow_color="@color/colorPrimary"
+                app:civ_shadow_radius="10"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.728"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+            <!---android:src="@drawable/default_user" -->
 
-    <ImageView
-        android:id="@+id/russCard"
-        android:layout_width="366dp"
-        android:layout_height="178dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.482"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userProfilePicture" />
+            <ImageView
+                android:id="@+id/russCard"
+                android:layout_width="366dp"
+                android:layout_height="178dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.482"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/userProfilePicture" />
 
             <include
                 android:id="@+id/user_knot_list"
@@ -65,18 +64,18 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/russCard" />
 
-    <RelativeLayout
-        android:id="@+id/loadingPanel"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center">
+            <RelativeLayout
+                android:id="@+id/loadingPanel"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center">
 
-        <ProgressBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:indeterminate="true"
-            android:indeterminateTint="@color/colorPrimary" />
-    </RelativeLayout>
+                <ProgressBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:indeterminate="true"
+                    android:indeterminateTint="@color/colorPrimary" />
+            </RelativeLayout>
         </android.support.constraint.ConstraintLayout>
     </ScrollView>
 

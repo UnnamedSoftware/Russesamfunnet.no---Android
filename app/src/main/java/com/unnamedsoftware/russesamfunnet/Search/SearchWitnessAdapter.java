@@ -81,7 +81,6 @@ public class SearchWitnessAdapter extends RecyclerView.Adapter<SearchWitnessAdap
             });
         }
 
-
     @Override
     public int getItemCount()
     {

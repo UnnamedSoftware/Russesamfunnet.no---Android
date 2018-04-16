@@ -267,6 +267,7 @@ public class Login extends AppCompatActivity
 
     private void finishServerCom()
     {
+        ((Global) this.getApplication()).createInitialImageLoader();
         startActivity(new Intent(Login.this, Feed.class));
         finish();
     }
