@@ -89,16 +89,17 @@ public class Scoreboard extends AppCompatActivity
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         recyclerView.setAdapter(scoreboardAdapter);
-
-        //Swipe func.
-        ConstraintLayout constraintLayout = findViewById(R.id.ScoreboardLayout);
-        constraintLayout.setOnTouchListener(new OnSwipeTouchListener(this)
-        {
-            public void onSwipeRight()
-            {
-                onBackPressed();
-            }
-        });
+/**
+ //Swipe func.
+ ConstraintLayout constraintLayout = findViewById(R.id.KnotLayout);
+ constraintLayout.setOnTouchListener(new OnSwipeTouchListener(Knot.this)
+ {
+ public void onSwipeRight()
+ {
+ onBackPressed();
+ }
+ });
+ */
     }
 
     /**
@@ -107,6 +108,7 @@ public class Scoreboard extends AppCompatActivity
     @RequiresApi(api = Build.VERSION_CODES.CUPCAKE)
     private void getRussScoreboard() throws IOException
     {
+        System.out.println(url);
         try
         {
             new JSONParser(new JSONParser.OnPostExecute()
