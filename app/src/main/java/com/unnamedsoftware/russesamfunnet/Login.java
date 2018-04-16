@@ -230,6 +230,7 @@ public class Login extends AppCompatActivity
      */
     private void toServer(View view, String userEmailString, String userPasswordString)
     {
+        System.out.println("In toServer Method");
         //String passwordSHA = org.apache.commons.codec.digest.DigestUtils.sha256Hex(userPasswordString);
         String hash = new String(Hex.encodeHex(DigestUtils.sha256(userPasswordString)));
         String url = getString(R.string.url) + "loginToken?email=" + userEmailString + "&password=" + hash;
@@ -241,6 +242,8 @@ public class Login extends AppCompatActivity
                     try {
                         if (jsonObject.getString("loginStatus").equals("Login success")) {
                             System.out.println("Success");
+                            System.out.println(jsonObject.getLong("russId"));
+                            ((Global) getApplication()).setRussId(jsonObject.getLong("russId"));
                             ((Global) getApplication()).setAccessToken(jsonObject.getString("accessToken"), "russesamfunnet");
                             finishServerCom();
                         } else if(jsonObject.getString("loginStatus").equals("User not in db")){

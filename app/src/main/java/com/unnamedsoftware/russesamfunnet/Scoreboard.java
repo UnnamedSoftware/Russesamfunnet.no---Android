@@ -108,6 +108,7 @@ public class Scoreboard extends AppCompatActivity
     @RequiresApi(api = Build.VERSION_CODES.CUPCAKE)
     private void getRussScoreboard() throws IOException
     {
+        System.out.println(url);
         try
         {
             new JSONParser(new JSONParser.OnPostExecute()

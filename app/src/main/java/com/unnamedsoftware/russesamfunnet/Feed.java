@@ -87,7 +87,7 @@ public class Feed extends AppCompatActivity implements SwipeRefreshLayout.OnRefr
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         setTitle("Russesamfunnet - Feed");
-
+/**
         try
         {
             System.out.println("Trying to get RussID");
@@ -97,7 +97,7 @@ public class Feed extends AppCompatActivity implements SwipeRefreshLayout.OnRefr
             System.out.println("***Something went wrong***");
             e.printStackTrace();
         }
-
+*/
         drawerLayout = findViewById(R.id.navigationDrawer);
         drawerToggle = setUpDrawerToggle();
 

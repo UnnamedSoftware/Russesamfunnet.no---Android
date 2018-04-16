@@ -306,7 +306,7 @@ public class UserProfile extends AppCompatActivity
      */
     private void userProfilePicturePressed(View view)
     {
-        if (((Global) this.getApplication()).getRussId() == russ.getRussId())
+        if (((Global) this.getApplication()).getRussId().equals(russ.getRussId()))
         {
             Intent intent = new Intent(this, CropImage.class);
             startActivityForResult(intent, 1);
@@ -315,7 +315,7 @@ public class UserProfile extends AppCompatActivity
 
     private void userRussCardPressed(View view)
     {
-        if (((Global) this.getApplication()).getRussId() == russ.getRussId())
+        if (((Global) this.getApplication()).getRussId().equals(russ.getRussId()))
         {
             startActivityForResult(new Intent(this, RussCardCamera.class), 1);
         }
