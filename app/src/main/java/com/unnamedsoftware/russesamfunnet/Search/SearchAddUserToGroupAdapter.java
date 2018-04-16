@@ -9,10 +9,16 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.facebook.AccessToken;
 import com.unnamedsoftware.russesamfunnet.Entity.RussEntity;
 import com.unnamedsoftware.russesamfunnet.GroupList;
+import com.unnamedsoftware.russesamfunnet.JSONObjectParser;
 import com.unnamedsoftware.russesamfunnet.R;
 
+import org.json.JSONObject;
+
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,12 +32,16 @@ public class SearchAddUserToGroupAdapter extends RecyclerView.Adapter<SearchAddU
 
     private List<RussEntity> dataSet = null;
     private ArrayList<RussEntity> arrayList;
+    private Long groupID;
+    private String token;
 
-    public SearchAddUserToGroupAdapter(List<RussEntity> dataSet)
+    public SearchAddUserToGroupAdapter(List<RussEntity> dataSet, Long groupId, String token)
     {
         this.dataSet = dataSet;
         this.arrayList = new ArrayList<>();
         arrayList.addAll(dataSet);
+        this.groupID = groupId;
+        this.token = token;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder
@@ -68,6 +78,37 @@ public class SearchAddUserToGroupAdapter extends RecyclerView.Adapter<SearchAddU
             @Override
             public void onClick(View v)
             {
+                System.out.println(" ¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨ " + groupID);
+                System.out.println(" ¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨ " + russEntity.getRussId());
+                String url = "";
+
+                if (AccessToken.getCurrentAccessToken() != null)
+                {
+                    url = "http://158.38.101.146:8080/addGroupMember?accessToken=" + AccessToken.getCurrentAccessToken().getToken() + "&type=facebook";
+                } else
+                {
+                    url = "http://158.38.101.146:8080/addGroupMember?accessToken=" + token + "&type=russesamfunnet";
+                }
+
+                url = url + "facebook&groupId=" + groupID + "&russId=" + russEntity.getRussId();
+
+                System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" + url);
+
+                try
+                {
+                    new JSONObjectParser(new JSONObjectParser.OnPostExecute()
+                    {
+                        @Override
+                        public void onPostExecute(JSONObject jsonObject)
+                        {
+                            if (jsonObject != null){}
+                        }
+                    }).execute(new URL(url));
+                } catch (MalformedURLException e)
+                {
+                    e.printStackTrace();
+                }
+
                 Intent intent = new Intent(v.getContext(), GroupList.class);
                 v.getContext().startActivity(intent);
             }

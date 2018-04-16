@@ -82,7 +82,7 @@ public class GroupListAdapter extends RecyclerView.Adapter<GroupListAdapter.View
             @Override
             public boolean onLongClick(View v)
             {
-                optionMenu(view);
+                optionMenu(view, groupEntity.getGroupID());
                 return false;
             }
         });
@@ -94,7 +94,7 @@ public class GroupListAdapter extends RecyclerView.Adapter<GroupListAdapter.View
         return groupEntitiesList.size();
     }
 
-    private void optionMenu(final View view)
+    private void optionMenu(final View view, final Long groupID)
     {
         Vibrator vibe = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
         vibe.vibrate(50);
@@ -102,6 +102,7 @@ public class GroupListAdapter extends RecyclerView.Adapter<GroupListAdapter.View
         /*System.out.println("+++++++++++++++++++++++++" + russID);
         System.out.println("+++++++++++++++++++++++++" + userID);
         russID == userID*/
+
         if (true)
         {
             PopupMenu popup = new PopupMenu(this.context, view);
@@ -116,7 +117,9 @@ public class GroupListAdapter extends RecyclerView.Adapter<GroupListAdapter.View
                     switch (item.getItemId())
                     {
                         case R.id.AddUser:
-                            view.getContext().startActivity(new Intent(view.getContext(), AddUserToGroup.class));
+                            Intent intent = new Intent(view.getContext(), AddUserToGroup.class);
+                            intent.putExtra("groupID", groupID);
+                            view.getContext().startActivity(intent);
                             break;
                     }
                     return true;

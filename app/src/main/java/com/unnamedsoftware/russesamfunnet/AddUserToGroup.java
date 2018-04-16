@@ -30,7 +30,7 @@ import java.util.List;
 public class AddUserToGroup extends AppCompatActivity
 {
 
-
+private Long groupID;
     private List<RussEntity> russEntityList;
     private int view;
 
@@ -40,7 +40,11 @@ public class AddUserToGroup extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search_dialog);
         russEntityList = new ArrayList<>();
+
         Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        this.groupID = (Long) bundle.get("groupID");
+
         final EditText editText = findViewById(R.id.search_input);
         editText.addTextChangedListener(new TextWatcher()
         {
@@ -114,7 +118,7 @@ public class AddUserToGroup extends AppCompatActivity
         RecyclerView recyclerView;
         if (!russEntityList.isEmpty())
         {
-            searchAddUserToGroupAdapter = new SearchAddUserToGroupAdapter(russEntityList);
+            searchAddUserToGroupAdapter = new SearchAddUserToGroupAdapter(russEntityList,groupID,((Global) this.getApplication()).getAccessToken());
             recyclerView = findViewById(R.id.saResults);
             if (recyclerView == null)
             {
