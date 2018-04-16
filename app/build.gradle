@@ -35,11 +35,7 @@ dependencies {
     implementation 'com.android.support:design:26.1.0'
     // https://mvnrepository.com/artifact/commons-codec/commons-codec
     implementation group: 'commons-codec', name: 'commons-codec', version: '1.10'
-
-
     implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
-
-
     implementation 'com.facebook.android:facebook-android-sdk:4.31.0'
     implementation 'com.theartofdev.edmodo:android-image-cropper:1.1.+'
 }

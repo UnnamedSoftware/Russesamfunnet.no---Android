@@ -88,11 +88,20 @@ public class Feed extends AppCompatActivity implements SwipeRefreshLayout.OnRefr
         setSupportActionBar(toolbar);
         setTitle("Russesamfunnet - Feed");
 
+        try
+        {
+            System.out.println("Trying to get RussID");
+            getRussId();
+        } catch (IOException e)
+        {
+            System.out.println("***Something went wrong***");
+            e.printStackTrace();
+        }
+
         drawerLayout = findViewById(R.id.navigationDrawer);
         drawerToggle = setUpDrawerToggle();
 
         drawerLayout.addDrawerListener(drawerToggle);
-
 
         nav = findViewById(R.id.navList);
         setupDrawerContent(nav);
@@ -106,14 +115,6 @@ public class Feed extends AppCompatActivity implements SwipeRefreshLayout.OnRefr
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         recyclerView.setAdapter(feedAdapter);
-
-        try
-        {
-            getRussId();
-        } catch (IOException e)
-        {
-            e.printStackTrace();
-        }
 
         Button button = findViewById(R.id.button_chatbox_send);
         button.setOnClickListener(new View.OnClickListener()
