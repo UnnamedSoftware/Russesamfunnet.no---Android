@@ -9,11 +9,12 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Parcelable;
 import android.provider.MediaStore;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.system.ErrnoException;
 import android.view.View;
@@ -21,11 +22,16 @@ import android.widget.Toast;
 
 import com.theartofdev.edmodo.cropper.CropImageView;
 
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,13 +45,17 @@ public class CropImage extends AppCompatActivity
     private Uri cropImageUri;
     private Bitmap cropped;
     private String currentPhotoPath;
+    private String sourceFileUri;
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crop_image);
         cropImageView = findViewById(R.id.CropImageView);
+
+        sourceFileUri = "/data/user/0/com.unnamedsoftware.russesamfunnet/cache/" + ((Global) this.getApplication()).getRussId() + "profilePicture" + ".jpg";
 
         startActivityForResult(getPickImageChooserIntent(), 200);
     }
@@ -53,53 +63,36 @@ public class CropImage extends AppCompatActivity
     /**
      * Crop the image and set it back to the  cropping view.
      */
-    public void onCropImageClick(View view) {
-        this.cropped =  cropImageView.getCroppedImage(500, 500);
+    public void onCropImageClick(View view)
+    {
+        this.cropped = cropImageView.getCroppedImage(500, 500);
         if (cropped != null)
             cropImageView.setImageBitmap(cropped);
     }
 
 
-    public void onApproveImage(View view) throws IOException
-    {
-        Bitmap bitmap = cropImageView.getCroppedImage();
-
-        FileOutputStream outStream = null;
-        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        storageDir.mkdirs();
-        String fileName = String.format("russesamfunnetProfilePicture.jpg", System.currentTimeMillis());
-        File outFile = new File(storageDir, fileName);
-        outStream = new FileOutputStream(outFile);
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outStream);
-        outStream.flush();
-        outStream.close();
-        System.out.println("------------------------------------------------------ " + outFile.toString() + " ------------------------------------------------------");
-
-        Intent returnIntent = new Intent();
-        setResult(Activity.RESULT_CANCELED, returnIntent);
-        finish();
-    }
-
-
-
     /**
      * On load image button click, start pick  image chooser activity.
      */
-    public void onLoadImageClick(View view) {
+    public void onLoadImageClick(View view)
+    {
         startActivityForResult(getPickImageChooserIntent(), 200);
     }
 
     @Override
-    protected void onActivityResult(int  requestCode, int resultCode, Intent data) {
-        if (resultCode == Activity.RESULT_OK) {
-            Uri imageUri =  getPickImageResultUri(data);
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        if (resultCode == Activity.RESULT_OK)
+        {
+            Uri imageUri = getPickImageResultUri(data);
 
             // For API >= 23 we need to check specifically that we have permissions to read external storage,
             // but we don't know if we need to for the URI so the simplest is to try open the stream and see if we get error.
             boolean requirePermissions = false;
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&
                     checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED &&
-                    isUriRequiresPermissions(imageUri)) {
+                    isUriRequiresPermissions(imageUri))
+            {
 
                 // request permissions and handle the result in onRequestPermissionsResult()
                 requirePermissions = true;
@@ -107,17 +100,21 @@ public class CropImage extends AppCompatActivity
                 requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 0);
             }
 
-            if (!requirePermissions) {
+            if (!requirePermissions)
+            {
                 cropImageView.setImageUriAsync(imageUri);
             }
         }
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-        if (cropImageUri != null && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults)
+    {
+        if (cropImageUri != null && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+        {
             cropImageView.setImageUriAsync(cropImageUri);
-        } else {
+        } else
+        {
             Toast.makeText(this, "Required permissions are not granted", Toast.LENGTH_LONG).show();
         }
     }
@@ -127,42 +124,48 @@ public class CropImage extends AppCompatActivity
      * The source can be camera's  (ACTION_IMAGE_CAPTURE) or gallery's (ACTION_GET_CONTENT).<br/>
      * All possible sources are added to the  intent chooser.
      */
-    public Intent getPickImageChooserIntent() {
+    public Intent getPickImageChooserIntent()
+    {
 
 // Determine Uri of camera image to  save.
-        Uri outputFileUri =  getCaptureImageOutputUri();
+        Uri outputFileUri = getCaptureImageOutputUri();
 
         List<Intent> allIntents = new ArrayList<>();
-        PackageManager packageManager =  getPackageManager();
+        PackageManager packageManager = getPackageManager();
 
 // collect all camera intents
-        Intent captureIntent = new  Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-        List<ResolveInfo> listCam =  packageManager.queryIntentActivities(captureIntent, 0);
-        for (ResolveInfo res : listCam) {
-            Intent intent = new  Intent(captureIntent);
+        Intent captureIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+        List<ResolveInfo> listCam = packageManager.queryIntentActivities(captureIntent, 0);
+        for (ResolveInfo res : listCam)
+        {
+            Intent intent = new Intent(captureIntent);
             intent.setComponent(new ComponentName(res.activityInfo.packageName, res.activityInfo.name));
             intent.setPackage(res.activityInfo.packageName);
-            if (outputFileUri != null) {
+            if (outputFileUri != null)
+            {
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
             }
             allIntents.add(intent);
         }
 
 // collect all gallery intents
-        Intent galleryIntent = new  Intent(Intent.ACTION_GET_CONTENT);
+        Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
         galleryIntent.setType("image/*");
-        List<ResolveInfo> listGallery =  packageManager.queryIntentActivities(galleryIntent, 0);
-        for (ResolveInfo res : listGallery) {
-            Intent intent = new  Intent(galleryIntent);
-            intent.setComponent(new  ComponentName(res.activityInfo.packageName, res.activityInfo.name));
+        List<ResolveInfo> listGallery = packageManager.queryIntentActivities(galleryIntent, 0);
+        for (ResolveInfo res : listGallery)
+        {
+            Intent intent = new Intent(galleryIntent);
+            intent.setComponent(new ComponentName(res.activityInfo.packageName, res.activityInfo.name));
             intent.setPackage(res.activityInfo.packageName);
             allIntents.add(intent);
         }
 
 // the main intent is the last in the list
-        Intent mainIntent =  allIntents.get(allIntents.size() - 1);
-        for (Intent intent : allIntents) {
-            if  (intent.getComponent().getClassName().equals("com.android.documentsui.DocumentsActivity"))  {
+        Intent mainIntent = allIntents.get(allIntents.size() - 1);
+        for (Intent intent : allIntents)
+        {
+            if (intent.getComponent().getClassName().equals("com.android.documentsui.DocumentsActivity"))
+            {
                 mainIntent = intent;
                 break;
             }
@@ -170,10 +173,10 @@ public class CropImage extends AppCompatActivity
         allIntents.remove(mainIntent);
 
 // Create a chooser from the main  intent
-        Intent chooserIntent =  Intent.createChooser(mainIntent, "Select source");
+        Intent chooserIntent = Intent.createChooser(mainIntent, "Select source");
 
 // Add all other intents
-        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS,  allIntents.toArray(new Parcelable[allIntents.size()]));
+        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, allIntents.toArray(new Parcelable[allIntents.size()]));
 
         return chooserIntent;
     }
@@ -181,10 +184,12 @@ public class CropImage extends AppCompatActivity
     /**
      * Get URI to image received from capture  by camera.
      */
-    private Uri getCaptureImageOutputUri() {
+    private Uri getCaptureImageOutputUri()
+    {
         Uri outputFileUri = null;
         File getImage = getExternalCacheDir();
-        if (getImage != null) {
+        if (getImage != null)
+        {
             outputFileUri = Uri.fromFile(new File(getImage.getPath(), "pickImageResult.jpeg"));
         }
         return outputFileUri;
@@ -196,30 +201,179 @@ public class CropImage extends AppCompatActivity
      *
      * @param data the returned data of the  activity result
      */
-    public Uri getPickImageResultUri(Intent  data) {
+    public Uri getPickImageResultUri(Intent data)
+    {
         boolean isCamera = true;
-        if (data != null && data.getData() != null) {
+        if (data != null && data.getData() != null)
+        {
             String action = data.getAction();
-            isCamera = action != null  && action.equals(MediaStore.ACTION_IMAGE_CAPTURE);
+            isCamera = action != null && action.equals(MediaStore.ACTION_IMAGE_CAPTURE);
         }
-        return isCamera ?  getCaptureImageOutputUri() : data.getData();
+        return isCamera ? getCaptureImageOutputUri() : data.getData();
     }
 
     /**
      * Test if we can open the given Android URI to test if permission required error is thrown.<br>
      */
-    public boolean isUriRequiresPermissions(Uri uri) {
-        try {
+    public boolean isUriRequiresPermissions(Uri uri)
+    {
+        try
+        {
             ContentResolver resolver = getContentResolver();
             InputStream stream = resolver.openInputStream(uri);
             stream.close();
             return false;
-        } catch (FileNotFoundException e) {
-            if (e.getCause() instanceof ErrnoException) {
+        } catch (FileNotFoundException e)
+        {
+            if (e.getCause() instanceof ErrnoException)
+            {
                 return true;
             }
-        } catch (Exception e) {
+        } catch (Exception e)
+        {
         }
         return false;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void onApproveImage(View view)
+    {
+        Bitmap bitmap = cropImageView.getCroppedImage();
+       /* ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+        byte[] bitmapdata = stream.toByteArray();
+*/
+        String fileName = String.format(((Global) this.getApplication()).getRussId() + "profilePicture" + ".jpg", System.currentTimeMillis());
+        //File file = new File(this.getCacheDir(), fileName);
+
+
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        File file = new File(view.getContext().getCacheDir(), fileName);
+        try
+        {
+            FileOutputStream fo = new FileOutputStream(file);
+            fo.write(bytes.toByteArray());
+            fo.flush();
+            fo.close();
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+
+        System.out.println(file.getPath());
+
+        new UploadFileAsync().execute();
+
+
+        Intent returnIntent = new Intent();
+        setResult(Activity.RESULT_CANCELED, returnIntent);
+        finish();
+    }
+
+    private class UploadFileAsync extends AsyncTask<String, Void, String>
+    {
+
+        @Override
+        protected String doInBackground(String... params)
+        {
+            try
+            {
+                HttpURLConnection conn = null;
+                DataOutputStream dos = null;
+                String lineEnd = "\r\n";
+                String twoHyphens = "--";
+                String boundary = "*****";
+                int bytesRead, bytesAvailable, bufferSize;
+                byte[] buffer;
+                int maxBufferSize = 1 * 1024 * 1024;
+                File sourceFile = new File(sourceFileUri);
+
+                if (sourceFile.isFile())
+                {
+                    try
+                    {
+                        String upLoadServerUri = "http://158.38.101.162:8080/upload/";
+
+                        // open a URL connection to the Servlet
+                        FileInputStream fileInputStream = new FileInputStream(
+                                sourceFile);
+                        URL url = new URL(upLoadServerUri);
+
+                        // Open a HTTP connection to the URL
+                        conn = (HttpURLConnection) url.openConnection();
+                        conn.setDoInput(true); // Allow Inputs
+                        conn.setDoOutput(true); // Allow Outputs
+                        conn.setUseCaches(false); // Don't use a Cached Copy
+                        conn.setRequestMethod("POST");
+                        conn.setRequestProperty("Connection", "Keep-Alive");
+                        conn.setRequestProperty("ENCTYPE",
+                                "multipart/form-data");
+                        conn.setRequestProperty("Content-Type",
+                                "multipart/form-data;boundary=" + boundary);
+                        conn.setRequestProperty("bill", sourceFileUri);
+
+                        dos = new DataOutputStream(conn.getOutputStream());
+
+                        dos.writeBytes(twoHyphens + boundary + lineEnd);
+                        dos.writeBytes("Content-Disposition: form-data; name=\"bill\";filename=\""
+                                + sourceFileUri + "\"" + lineEnd);
+
+                        dos.writeBytes(lineEnd);
+
+                        // create a buffer of maximum size
+                        bytesAvailable = fileInputStream.available();
+
+                        bufferSize = Math.min(bytesAvailable, maxBufferSize);
+                        buffer = new byte[bufferSize];
+
+                        // read file and write it into form...
+                        bytesRead = fileInputStream.read(buffer, 0, bufferSize);
+
+                        while (bytesRead > 0)
+                        {
+                            dos.write(buffer, 0, bufferSize);
+                            bytesAvailable = fileInputStream.available();
+                            bufferSize = Math
+                                    .min(bytesAvailable, maxBufferSize);
+                            bytesRead = fileInputStream.read(buffer, 0, bufferSize);
+                        }
+                        // close the streams //
+                        fileInputStream.close();
+                        dos.flush();
+                        dos.close();
+
+                    } catch (Exception e)
+                    {
+                        // dialog.dismiss();
+                        e.printStackTrace();
+                    }
+                }
+
+
+            } catch (Exception ex)
+            {
+                // dialog.dismiss();
+
+                ex.printStackTrace();
+            }
+            return "Executed";
+        }
+
+        @Override
+        protected void onPostExecute(String result)
+        {
+
+        }
+
+        @Override
+        protected void onPreExecute()
+        {
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values)
+        {
+        }
     }
 }

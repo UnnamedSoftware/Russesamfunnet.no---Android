@@ -3,7 +3,6 @@ package com.unnamedsoftware.russesamfunnet;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.os.Bundle;
-import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -129,7 +128,6 @@ public class GroupList extends AppCompatActivity
         });
 
         dialog.show();
-
     }
 
     private void sendCreateGroup(String url)

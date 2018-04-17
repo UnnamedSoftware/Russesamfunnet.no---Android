@@ -1,5 +1,6 @@
 package com.unnamedsoftware.russesamfunnet.RecyclerView;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Vibrator;
@@ -10,14 +11,16 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.mikhaellopez.circularimageview.CircularImageView;
 import com.unnamedsoftware.russesamfunnet.Entity.FeedEntity;
 import com.unnamedsoftware.russesamfunnet.JSONObjectParser;
 import com.unnamedsoftware.russesamfunnet.R;
+import com.unnamedsoftware.russesamfunnet.Report;
 import com.unnamedsoftware.russesamfunnet.UserProfile;
 
 import org.json.JSONObject;
@@ -123,7 +126,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>
     }
 
 
-    private void optionMenu(View view, Long id, int p, Long russID)
+    private void optionMenu(View view, Long id, int p, final Long russID)
     {
         final Long feedID = id;
         final int position = p;
@@ -167,7 +170,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>
                     switch (item.getItemId())
                     {
                         case R.id.Rapporter:
-                            Toast.makeText(context, "One", Toast.LENGTH_SHORT).show();
+                            reportPost(russID);
                             break;
                     }
                     return true;
@@ -176,6 +179,26 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>
             popup.show();
         }
     }
+
+    private void reportPost(final Long russID)
+    {
+        final Dialog dialog = new Dialog(context);
+        dialog.setContentView(R.layout.report_dialog);
+        final EditText editText = dialog.findViewById(R.id.reportMessage);
+        Button submitButton = dialog.findViewById(R.id.buttonSubmit);
+        submitButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Report report = new Report();
+                report.sendEmail(editText.getText().toString(), userID, russID, context);
+                dialog.cancel();
+            }
+        });
+        dialog.show();
+    }
+
 
     private void deletePost(Long postId, int position)
     {

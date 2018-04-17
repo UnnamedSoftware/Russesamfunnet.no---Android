@@ -90,7 +90,7 @@ public class SearchAddUserToGroupAdapter extends RecyclerView.Adapter<SearchAddU
                     url = "http://158.38.101.146:8080/addGroupMember?accessToken=" + token + "&type=russesamfunnet";
                 }
 
-                url = url + "facebook&groupId=" + groupID + "&russId=" + russEntity.getRussId();
+                url = url + "&groupId=" + groupID + "&russId=" + russEntity.getRussId();
 
                 System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" + url);
 

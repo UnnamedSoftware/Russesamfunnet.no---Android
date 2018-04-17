@@ -8,8 +8,8 @@
         android:id="@+id/linearLayout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:gravity="center_horizontal"
+        android:orientation="horizontal"
         android:padding="6dp"
         android:weightSum="2">
 
@@ -17,21 +17,22 @@
             android:id="@+id/chooseDifferent"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp"
             android:layout_weight="1"
             android:onClick="onLoadImageClick"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
             android:text="Velg annet" />
 
         <Button
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:onClick="onCropImageClick"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
-            android:layout_weight="1"
-            android:onClick="onApproveImage"
-            android:text="Godkjenn"/>
+            android:text="Beskjære bildet" />
     </LinearLayout>
+
 
     <com.theartofdev.edmodo.cropper.CropImageView
         android:id="@+id/CropImageView"
@@ -43,7 +44,9 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="onCropImageClick"
-        android:text="Beskjære bildet" />
+        android:onClick="onApproveImage"
+        android:text="Godkjenn" />
+
+
 
 </LinearLayout>

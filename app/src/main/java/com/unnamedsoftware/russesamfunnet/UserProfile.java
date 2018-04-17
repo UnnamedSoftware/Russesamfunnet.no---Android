@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
@@ -97,8 +96,9 @@ public class UserProfile extends AppCompatActivity
             }
         });
 
+
         this.userImage = findViewById(R.id.userProfilePicture);
-        String userImageURI = "";
+        String userImageURI = "http://158.38.101.162:8080/files/" + ((Global) this.getApplication()).getRussId() + "profilePicture" + ".jpg";
         ((Global) this.getApplication()).getImageLoader().loadImage(userImageURI, new SimpleImageLoadingListener()
         {
             @Override
