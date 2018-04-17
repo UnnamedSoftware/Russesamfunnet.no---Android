@@ -111,6 +111,7 @@ public class Login extends AppCompatActivity
                         if (jsonObject.getString("loginStatus").equals("Login success")) {
                             System.out.println(jsonObject.get("loginStatus"));
                             ((Global) getApplication()).setRussId(jsonObject.getLong("russId"));
+                            System.out.println("russId has been set to: " + ((Global) getApplication()).getRussId());
                             finishServerCom();
                         } else if(jsonObject.getString("loginStatus").equals("User not in db")){
                             System.out.println(jsonObject.get("loginStatus"));
@@ -148,6 +149,8 @@ public class Login extends AppCompatActivity
                     try {
                         if (jsonObject.getString("loginStatus").equals("Login success")) {
                             System.out.println(jsonObject.get("loginStatus"));
+                            ((Global) getApplication()).setRussId(jsonObject.getLong("userId"));
+                            System.out.println("russId has been set to: " + ((Global) getApplication()).getRussId());
                             finishServerCom();
                         } else if(jsonObject.getString("loginStatus").equals("User not in db")){
                             System.out.println(jsonObject.get("loginStatus"));

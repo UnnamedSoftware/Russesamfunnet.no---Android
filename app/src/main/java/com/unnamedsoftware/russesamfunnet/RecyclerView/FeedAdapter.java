@@ -36,7 +36,9 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>
     private List<FeedEntity> posts;
     private Context context;
     private String url;
+    private Long groupId = null;
     private Long userID;
+    private String removeUserUrl;
 
     public class ViewHolder extends RecyclerView.ViewHolder
     {
@@ -52,6 +54,17 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>
             userImage = view.findViewById(R.id.userProfilePicture);
             relativeLayout = view.findViewById(R.id.feedPostRow);
         }
+    }
+
+    public FeedAdapter(List<FeedEntity> feedPosts, Context context, String url, Long userID, Long groupId, String removeUserUrl)
+    {
+        this.removeUserUrl = removeUserUrl;
+        this.groupId = groupId;
+        this.posts = feedPosts;
+        this.context = context;
+        this.url = url;
+        System.out.println("--- From feed to feedAdapter: " + userID);
+        this.userID = userID;
     }
 
     public FeedAdapter(List<FeedEntity> feedPosts, Context context, String url, Long userID)
@@ -123,7 +136,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>
     }
 
 
-    private void optionMenu(View view, Long id, int p, Long russID)
+    private void optionMenu(View view, Long id, int p, final Long russID)
     {
         final Long feedID = id;
         final int position = p;
@@ -132,7 +145,62 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>
 
         System.out.println("+++++++++++++++++++++++++" + russID);
         System.out.println("+++++++++++++++++++++++++" + userID);
-        if (russID.equals(userID))
+        if(groupId != null)
+        {
+            System.out.println(russID);
+            System.out.println(userID);
+            if (russID.equals(userID))
+            {
+                PopupMenu popup = new PopupMenu(this.context, view);
+                popup.setGravity(Gravity.RIGHT);
+                popup.getMenuInflater()
+                        .inflate(R.menu.option_menu_group_feed, popup.getMenu());
+
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
+                {
+                    public boolean onMenuItemClick(MenuItem item)
+                    {
+                        switch (item.getItemId())
+                        {
+                            case R.id.LeaveGroup:
+                                removeFromGroup(userID);
+                            break;
+
+                            case R.id.RemoveMessage:
+                                deletePost(feedID, position);
+                                break;
+                        }
+                        return true;
+                    }
+                });
+                popup.show();
+            } else
+            {
+                PopupMenu popup = new PopupMenu(this.context, view);
+                popup.setGravity(Gravity.RIGHT);
+                popup.getMenuInflater()
+                        .inflate(R.menu.option_menu_group_feed_not_user_message, popup.getMenu());
+
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
+                {
+                    public boolean onMenuItemClick(MenuItem item)
+                    {
+                        switch (item.getItemId())
+                        {
+                            case R.id.RemoveUser:
+                                removeFromGroup(russID);
+                                break;
+
+                            case R.id.Rapporter:
+                                Toast.makeText(context, "One", Toast.LENGTH_SHORT).show();
+                                break;
+                        }
+                        return true;
+                    }
+                });
+                popup.show();
+            }
+        }else if (russID.equals(userID))
         {
             PopupMenu popup = new PopupMenu(this.context, view);
             popup.setGravity(Gravity.RIGHT);
@@ -175,6 +243,38 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>
             });
             popup.show();
         }
+    }
+
+    private void removeFromGroup(Long russId)
+    {
+        String removeUrl = removeUserUrl + russId;
+
+        System.out.println(removeUrl);
+        try
+        {
+            new JSONObjectParser(new JSONObjectParser.OnPostExecute()
+            {
+                @Override
+                public void onPostExecute(JSONObject jsonObject)
+                {
+                    if (jsonObject != null)
+                    {
+                        try
+                        {
+                            System.out.println(jsonObject.getString("response"));
+                        } catch (Exception e)
+                        {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }).execute(new URL(removeUrl));
+        } catch (MalformedURLException e)
+        {
+            e.printStackTrace();
+        }
+
+
     }
 
     private void deletePost(Long postId, int position)

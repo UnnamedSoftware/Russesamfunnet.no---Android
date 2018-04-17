@@ -140,9 +140,10 @@ public class GroupHub extends AppCompatActivity implements SwipeRefreshLayout.On
         recyclerViewRuss.setItemAnimator(new DefaultItemAnimator());
         //recyclerViewRuss.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.HORIZONTAL));
         recyclerViewRuss.setAdapter(groupHubUserListAdapter);
-
+        Long russId = ((Global)this.getApplication()).getRussId();
+        System.out.println("--------------------------------------------------------" + russId);
         this.recyclerViewFeed = findViewById(R.id.recycler_view_feed);
-        this.feedAdapter = new FeedAdapter(feedEntityList,this,getDeleteURL(),((Global)this.getApplication()).getRussId());
+        this.feedAdapter = new FeedAdapter(feedEntityList,this,getDeleteURL(),russId, groupID, getRemoveUrl());
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerViewFeed.setLayoutManager(layoutManager);
         recyclerViewFeed.setItemAnimator(new DefaultItemAnimator());
@@ -457,6 +458,21 @@ public class GroupHub extends AppCompatActivity implements SwipeRefreshLayout.On
         } else
         {
             newUrl = getString(R.string.url) + "deleteMessage?accessToken=" + ((Global) this.getApplication()).getAccessToken() + "&type=russesamfunnet&feedId=";
+        }
+        return newUrl;
+    }
+
+    private String getRemoveUrl()
+    {
+        String newUrl;
+        if (AccessToken.getCurrentAccessToken() != null)
+        {
+            System.out.println(AccessToken.getCurrentAccessToken().getToken());
+            newUrl = (getString(R.string.url) + "removeGroupMember?accessToken=" + AccessToken.getCurrentAccessToken().getToken() + "&type=facebook&groupId=" + groupID + "&russId=");
+
+        } else
+        {
+            newUrl = getString(R.string.url) + "removeGroupMember?accessToken=" + ((Global) this.getApplication()).getAccessToken() + "&type=russesamfunnetgroupId=" + groupID +"&russId=";
         }
         return newUrl;
     }
