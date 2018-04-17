@@ -20,6 +20,8 @@ import com.facebook.AccessToken;
 import com.unnamedsoftware.russesamfunnet.Entity.FeedEntity;
 import com.unnamedsoftware.russesamfunnet.Entity.GroupEntity;
 import com.unnamedsoftware.russesamfunnet.Entity.RussEntity;
+import com.unnamedsoftware.russesamfunnet.Entity.SchoolEntity;
+import com.unnamedsoftware.russesamfunnet.Entity.ScoreboardEntity;
 import com.unnamedsoftware.russesamfunnet.RecyclerView.FeedAdapter;
 import com.unnamedsoftware.russesamfunnet.RecyclerView.GroupHubUserListAdapter;
 
@@ -49,7 +51,7 @@ public class GroupHub extends AppCompatActivity implements SwipeRefreshLayout.On
 
     private RecyclerView recyclerViewRuss;
     private RecyclerView recyclerViewFeed;
-
+    private List<ScoreboardEntity> scoreboardEntityList = new ArrayList<>();
     private List<RussEntity> russEntityList = new ArrayList<>();
     private List<FeedEntity> feedEntityList = new ArrayList<>();
     private GroupHubUserListAdapter groupHubUserListAdapter;
@@ -122,7 +124,7 @@ public class GroupHub extends AppCompatActivity implements SwipeRefreshLayout.On
         });
 
       //  dummyChat();
-        dummyTop3();
+        getTop3();
 
         System.out.println(getSupportActionBar());
         if (getSupportActionBar() != null)
@@ -138,9 +140,10 @@ public class GroupHub extends AppCompatActivity implements SwipeRefreshLayout.On
         recyclerViewRuss.setItemAnimator(new DefaultItemAnimator());
         //recyclerViewRuss.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.HORIZONTAL));
         recyclerViewRuss.setAdapter(groupHubUserListAdapter);
-
+        Long russId = ((Global)this.getApplication()).getRussId();
+        System.out.println("--------------------------------------------------------" + russId);
         this.recyclerViewFeed = findViewById(R.id.recycler_view_feed);
-        this.feedAdapter = new FeedAdapter(feedEntityList,this,getDeleteURL(),((Global)this.getApplication()).getRussId());
+        this.feedAdapter = new FeedAdapter(feedEntityList,this,getDeleteURL(),russId, groupID, getRemoveUrl());
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerViewFeed.setLayoutManager(layoutManager);
         recyclerViewFeed.setItemAnimator(new DefaultItemAnimator());
@@ -345,6 +348,87 @@ public class GroupHub extends AppCompatActivity implements SwipeRefreshLayout.On
         }
     }
 
+    private void getTop3()
+        {
+           String scoreboardurl;
+            if (AccessToken.getCurrentAccessToken() != null)
+            {
+                System.out.println(AccessToken.getCurrentAccessToken().getToken());
+                scoreboardurl = (getString(R.string.url) + "scoreboardGroupTop3?accessToken=" + AccessToken.getCurrentAccessToken().getToken() + "&type=facebook&groupId=" + groupID);
+            }else {
+                System.out.println(((Global) this.getApplication()).getAccessToken());
+                scoreboardurl = (getString(R.string.url) + "scoreboardGroupTop3?accessToken=" + ((Global) this.getApplication()).getAccessToken() + "&type=russesamfunnet&groupId=" + groupID);
+            }
+
+            try
+            {
+                new JSONParser(new JSONParser.OnPostExecute()
+                {
+                    @Override
+                    public void onPostExecute(JSONArray jsonArray) throws JSONException
+                    {
+                        addScoreboardToList(jsonArray);
+                    }
+                }).execute(new URL(scoreboardurl));
+            } catch (MalformedURLException e)
+            {
+                e.printStackTrace();
+            }
+        }
+
+        private void addScoreboardToList(JSONArray jsonArray){
+
+            JSONArray users = null;
+            try
+            {
+                users = jsonArray;
+                if (jsonArray == null) System.out.println("Scoreboard DEADBEEF");
+                System.out.println("Hi?");
+                System.out.println(users.length());
+                int length = users.length();
+                for(int i = 0; i < length && i<= 3; i++)
+                {
+                    JSONObject u = users.getJSONObject(i);
+
+                    Integer scoreboardId = Integer.valueOf(u.getString("scoreboardId"));
+                    Integer points = Integer.valueOf(u.getString("points"));
+                    Integer position = Integer.valueOf(u.getString("position"));
+
+
+                    JSONObject newRussObject = u.getJSONObject("russId");
+
+                    Long russId = Long.valueOf(newRussObject.getString("russId"));
+                    String russStatus = newRussObject.getString("russStatus");
+                    String firstName = newRussObject.getString("firstName");
+                    String lastName = newRussObject.getString("lastName");
+                    String email = newRussObject.getString("email");
+                    String russPassword = newRussObject.getString("russPassword");
+                    String profilePicture = newRussObject.getString("profilePicture");
+                    String russCard = newRussObject.getString("russCard");
+                    String russRole = newRussObject.getString("russRole");
+                    Integer russYear = Integer.valueOf(newRussObject.getString("russYear"));
+                    JSONObject newSchoolObject = newRussObject.getJSONObject("schoolId");
+                    Integer schoolId = Integer.valueOf(newSchoolObject.getString("schoolId"));
+                    String schoolName = newSchoolObject.getString("schoolName");
+                    String schoolStatus = newSchoolObject.getString("schoolStatus");
+
+                    SchoolEntity school = new SchoolEntity(schoolId, schoolName, schoolStatus);
+                    RussEntity russ = new RussEntity(russId, russStatus, firstName, lastName, email, russPassword, russRole, russYear);
+                    System.out.println(russId);
+                    ScoreboardEntity user = new ScoreboardEntity(scoreboardId, points, position, russ);
+                    scoreboardEntityList.add(user);
+                    russEntityList.add(russ);
+                }
+                groupHubUserListAdapter.notifyDataSetChanged();
+                findViewById(R.id.loadingPanel).setVisibility(View.GONE);
+            }catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+
+        }
+
+
 
     /**
      * Long russId, String russStatus, String firstName,
@@ -374,6 +458,21 @@ public class GroupHub extends AppCompatActivity implements SwipeRefreshLayout.On
         } else
         {
             newUrl = getString(R.string.url) + "deleteMessage?accessToken=" + ((Global) this.getApplication()).getAccessToken() + "&type=russesamfunnet&feedId=";
+        }
+        return newUrl;
+    }
+
+    private String getRemoveUrl()
+    {
+        String newUrl;
+        if (AccessToken.getCurrentAccessToken() != null)
+        {
+            System.out.println(AccessToken.getCurrentAccessToken().getToken());
+            newUrl = (getString(R.string.url) + "removeGroupMember?accessToken=" + AccessToken.getCurrentAccessToken().getToken() + "&type=facebook&groupId=" + groupID + "&russId=");
+
+        } else
+        {
+            newUrl = getString(R.string.url) + "removeGroupMember?accessToken=" + ((Global) this.getApplication()).getAccessToken() + "&type=russesamfunnetgroupId=" + groupID +"&russId=";
         }
         return newUrl;
     }

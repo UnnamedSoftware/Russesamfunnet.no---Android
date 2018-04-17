@@ -53,6 +53,15 @@ public class GroupScoreboardMembersList extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_scoreboard);
 
+        if (AccessToken.getCurrentAccessToken() != null)
+        {
+            System.out.println(AccessToken.getCurrentAccessToken().getToken());
+            url = (getString(R.string.url) + "groupScoreboard?accessToken=" + AccessToken.getCurrentAccessToken().getToken() + "&type=facebook&groupId=" + ((Global) this.getApplication()).getGroupID());
+        } else
+        {
+            url = getString(R.string.url) + "groupScoreboard?accessToken=" + ((Global) this.getApplication()).getAccessToken() + "&type=russesamfunnet&groupId=" + ((Global) this.getApplication()).getGroupID();
+        }
+
         this.groupName = ((Global) this.getApplication()).getGroupName();
 
         Toolbar toolbar = findViewById(R.id.toolbar);

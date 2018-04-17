@@ -76,13 +76,13 @@ private Long groupID;
         if (AccessToken.getCurrentAccessToken() != null)
         {
             url = (getString(R.string.url)
-                    + "searchForRussByName?accessToken=" + AccessToken.getCurrentAccessToken().getToken())
+                    + "searchForRussByNameOutsideSchool?accessToken=" + AccessToken.getCurrentAccessToken().getToken())
                     + "&type=facebook"
                     + "&parameter=" + parameter;
         } else
         {
             url = (getString(R.string.url)
-                    + "searchForRussByName?accessToken=" + ((Global) this.getApplication()).getAccessToken())
+                    + "searchForRussByNameOutsideSchool?accessToken=" + ((Global) this.getApplication()).getAccessToken())
                     + "&type=russesamfunnet"
                     + "&parameter=" + parameter;
         }

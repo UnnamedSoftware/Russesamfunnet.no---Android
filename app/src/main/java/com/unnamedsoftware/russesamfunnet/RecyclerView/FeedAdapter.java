@@ -1,6 +1,5 @@
 package com.unnamedsoftware.russesamfunnet.RecyclerView;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Vibrator;
@@ -11,16 +10,14 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.mikhaellopez.circularimageview.CircularImageView;
 import com.unnamedsoftware.russesamfunnet.Entity.FeedEntity;
 import com.unnamedsoftware.russesamfunnet.JSONObjectParser;
 import com.unnamedsoftware.russesamfunnet.R;
-import com.unnamedsoftware.russesamfunnet.Report;
 import com.unnamedsoftware.russesamfunnet.UserProfile;
 
 import org.json.JSONObject;
@@ -39,7 +36,9 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>
     private List<FeedEntity> posts;
     private Context context;
     private String url;
+    private Long groupId = null;
     private Long userID;
+    private String removeUserUrl;
 
     public class ViewHolder extends RecyclerView.ViewHolder
     {
@@ -55,6 +54,17 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>
             userImage = view.findViewById(R.id.userProfilePicture);
             relativeLayout = view.findViewById(R.id.feedPostRow);
         }
+    }
+
+    public FeedAdapter(List<FeedEntity> feedPosts, Context context, String url, Long userID, Long groupId, String removeUserUrl)
+    {
+        this.removeUserUrl = removeUserUrl;
+        this.groupId = groupId;
+        this.posts = feedPosts;
+        this.context = context;
+        this.url = url;
+        System.out.println("--- From feed to feedAdapter: " + userID);
+        this.userID = userID;
     }
 
     public FeedAdapter(List<FeedEntity> feedPosts, Context context, String url, Long userID)
@@ -135,7 +145,62 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>
 
         System.out.println("+++++++++++++++++++++++++" + russID);
         System.out.println("+++++++++++++++++++++++++" + userID);
-        if (russID.equals(userID))
+        if(groupId != null)
+        {
+            System.out.println(russID);
+            System.out.println(userID);
+            if (russID.equals(userID))
+            {
+                PopupMenu popup = new PopupMenu(this.context, view);
+                popup.setGravity(Gravity.RIGHT);
+                popup.getMenuInflater()
+                        .inflate(R.menu.option_menu_group_feed, popup.getMenu());
+
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
+                {
+                    public boolean onMenuItemClick(MenuItem item)
+                    {
+                        switch (item.getItemId())
+                        {
+                            case R.id.LeaveGroup:
+                                removeFromGroup(userID);
+                            break;
+
+                            case R.id.RemoveMessage:
+                                deletePost(feedID, position);
+                                break;
+                        }
+                        return true;
+                    }
+                });
+                popup.show();
+            } else
+            {
+                PopupMenu popup = new PopupMenu(this.context, view);
+                popup.setGravity(Gravity.RIGHT);
+                popup.getMenuInflater()
+                        .inflate(R.menu.option_menu_group_feed_not_user_message, popup.getMenu());
+
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
+                {
+                    public boolean onMenuItemClick(MenuItem item)
+                    {
+                        switch (item.getItemId())
+                        {
+                            case R.id.RemoveUser:
+                                removeFromGroup(russID);
+                                break;
+
+                            case R.id.Rapporter:
+                                Toast.makeText(context, "One", Toast.LENGTH_SHORT).show();
+                                break;
+                        }
+                        return true;
+                    }
+                });
+                popup.show();
+            }
+        }else if (russID.equals(userID))
         {
             PopupMenu popup = new PopupMenu(this.context, view);
             popup.setGravity(Gravity.RIGHT);
@@ -170,7 +235,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>
                     switch (item.getItemId())
                     {
                         case R.id.Rapporter:
-                            reportPost(russID);
+                            Toast.makeText(context, "One", Toast.LENGTH_SHORT).show();
                             break;
                     }
                     return true;
@@ -180,25 +245,37 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>
         }
     }
 
-    private void reportPost(final Long russID)
+    private void removeFromGroup(Long russId)
     {
-        final Dialog dialog = new Dialog(context);
-        dialog.setContentView(R.layout.report_dialog);
-        final EditText editText = dialog.findViewById(R.id.reportMessage);
-        Button submitButton = dialog.findViewById(R.id.buttonSubmit);
-        submitButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                Report report = new Report();
-                report.sendEmail(editText.getText().toString(), userID, russID, context);
-                dialog.cancel();
-            }
-        });
-        dialog.show();
-    }
+        String removeUrl = removeUserUrl + russId;
 
+        System.out.println(removeUrl);
+        try
+        {
+            new JSONObjectParser(new JSONObjectParser.OnPostExecute()
+            {
+                @Override
+                public void onPostExecute(JSONObject jsonObject)
+                {
+                    if (jsonObject != null)
+                    {
+                        try
+                        {
+                            System.out.println(jsonObject.getString("response"));
+                        } catch (Exception e)
+                        {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }).execute(new URL(removeUrl));
+        } catch (MalformedURLException e)
+        {
+            e.printStackTrace();
+        }
+
+
+    }
 
     private void deletePost(Long postId, int position)
     {

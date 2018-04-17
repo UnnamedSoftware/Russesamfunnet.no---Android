@@ -17,9 +17,11 @@ import android.provider.MediaStore;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.system.ErrnoException;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.android.volley.toolbox.HttpResponse;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.io.ByteArrayOutputStream;
@@ -40,7 +42,6 @@ import java.util.List;
  */
 public class CropImage extends AppCompatActivity
 {
-
     private CropImageView cropImageView;
     private Uri cropImageUri;
     private Bitmap cropped;
@@ -58,8 +59,22 @@ public class CropImage extends AppCompatActivity
         sourceFileUri = "/data/user/0/com.unnamedsoftware.russesamfunnet/cache/" + ((Global) this.getApplication()).getRussId() + "profilePicture" + ".jpg";
 
         startActivityForResult(getPickImageChooserIntent(), 200);
+
+    }
+/**
+    private void sendPic(){
+        HttpResponse response = Unirest.post("http://158.38.101.162:8080/upload")
+                .header("content-type", "multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW")
+                .header("cache-control", "no-cache")
+                .header("postman-token", "5f7d1fd4-f1ea-95cc-218e-3970333bb1ea")
+                .body("------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition:" +
+                        " form-data; name=\"file\"; filename=\"132008.jpg\"\r\nContent-Type:" +
+                        " image/jpeg\r\n\r\n\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition:" +
+                        " form-data; name=\"name\"\r\n\r\n132008.jpg\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW--")
+                .asString();
     }
 
+*/
     /**
      * Crop the image and set it back to the  cropping view.
      */

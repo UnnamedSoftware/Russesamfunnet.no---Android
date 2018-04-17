@@ -20,7 +20,8 @@
     <!-- Long press dialog -->
     <string name="rapporter">Rapporter</string>
     <string name="slettMelding">Slett Melding</string>
-    <string name="fjernBruker">Fjern Bruker</string>
+    <string name="fjernBruker">Fjern Bruker Fra Gruppe</string>
+    <string name="forlatGruppe">Forlat Gruppen</string>
     <string name="leggTilBruker">Legg Til Bruker</string>
 
     <!-- SERVER URL -->
