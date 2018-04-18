@@ -19,11 +19,12 @@
         android:id="@+id/glaGroupName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
         android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
         android:layout_marginStart="16dp"
+        android:text="TEST TEST TEST"
+        android:textColor="@color/colorBlack"
         android:textSize="24sp"
-        android:textStyle="bold"
-        android:text="TEST TEST TEST"/>
+        android:textStyle="bold" />
 
 </RelativeLayout>

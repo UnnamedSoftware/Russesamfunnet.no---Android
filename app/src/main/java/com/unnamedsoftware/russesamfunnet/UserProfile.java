@@ -158,7 +158,7 @@ public class UserProfile extends AppCompatActivity
                     completedURL = getString(R.string.url) + "completedKnots?accessToken=" + ((Global) this.getApplication()).getAccessToken() + "&type=russesamfunnet";
                 }
             }
-            if (russId != 0)
+            if (russId != 0 && russId != ((Global) this.getApplication()).getRussId())
             {
                 isOtherRuss = true;
                 if (AccessToken.getCurrentAccessToken() != null)
@@ -455,7 +455,7 @@ public class UserProfile extends AppCompatActivity
                 TextView knotTitle = findViewById(R.id.KnuterText);
                 russName.setText(russ.getFirstName() + " " + russ.getLastName());
                 if (isOtherRuss) {
-                    knotTitle.setText(russ.getFirstName() + " sine knuter");
+                    knotTitle.setText(russ.getFirstName() +"s knuter");
                 } else {
                     knotTitle.setText("Dine knuter");
                 }
