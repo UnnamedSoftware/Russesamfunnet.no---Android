@@ -13,7 +13,6 @@ import android.widget.EditText;
  */
 public class ReportABug extends AppCompatActivity
 {
-    private Long userID = ((Global) this.getApplication()).getRussId();
     private Context context = this;
 
     @Override
@@ -21,6 +20,8 @@ public class ReportABug extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report_a_bug);
+
+        final Long userID = ((Global) this.getApplication()).getRussId();
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
