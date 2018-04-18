@@ -15,6 +15,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.facebook.AccessToken;
 import com.mikhaellopez.circularimageview.CircularImageView;
@@ -44,6 +45,7 @@ public class UserProfile extends AppCompatActivity
     String url = null;
     String completedURL = null;
     RussEntity russ;
+    Boolean isOtherRuss = false;
 
     private KnotListAdapter knotListAdapter;
     private JSONArray jsonArray = null;
@@ -68,7 +70,7 @@ public class UserProfile extends AppCompatActivity
 
         boolean hasImageOnServer = false;
         this.russCard = findViewById(R.id.russCard);
-
+        getSupportActionBar().setTitle("Brukerprofil");
         if (russCardFile.exists())
         {
             Bitmap russCardBitmap = BitmapFactory.decodeFile(russCardFile.getAbsolutePath());
@@ -158,8 +160,10 @@ public class UserProfile extends AppCompatActivity
             }
             if (russId != 0)
             {
+                isOtherRuss = true;
                 if (AccessToken.getCurrentAccessToken() != null)
                 {
+
                     url = getString(R.string.url)
                             + "getOtherRuss?accessToken=" + AccessToken.getCurrentAccessToken().getToken()
                             + "&type=facebook"
@@ -207,6 +211,8 @@ public class UserProfile extends AppCompatActivity
         {
             e.printStackTrace();
         }
+
+
 
         this.recyclerView = findViewById(R.id.recycler_view_user_knot_list);
         this.knotListAdapter = new KnotListAdapter(knotEntities);
@@ -444,7 +450,21 @@ public class UserProfile extends AppCompatActivity
 
             russ = new RussEntity(russId, russStatus, firstName, lastName, email, russPassword, russRole, russYear);
 
-            getSupportActionBar().setTitle(russ.getFirstName() + " " + russ.getLastName());
+            try {
+                TextView russName = findViewById(R.id.russName);
+                TextView knotTitle = findViewById(R.id.KnuterText);
+                russName.setText(russ.getFirstName() + " " + russ.getLastName());
+                if (isOtherRuss) {
+                    knotTitle.setText(russ.getFirstName() + " sine knuter");
+                } else {
+                    knotTitle.setText("Dine knuter");
+                }
+            } catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+
+
         } catch (JSONException e)
         {
             e.printStackTrace();

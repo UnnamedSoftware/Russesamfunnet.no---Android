@@ -86,7 +86,7 @@ public class Feed extends AppCompatActivity implements SwipeRefreshLayout.OnRefr
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        setTitle("Russesamfunnet - Feed");
+        getSupportActionBar().setTitle("Russesamfunnet");
 /**
         try
         {
