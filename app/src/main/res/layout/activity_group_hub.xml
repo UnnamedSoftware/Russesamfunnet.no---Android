@@ -14,41 +14,44 @@
             android:layout_height="wrap_content" />
 
         <!-- Profile pictures -->
-        <include
-            layout="@layout/content_group_hub_users"
-            android:layout_width="320dp"
-            android:layout_height="70dp"
-            android:layout_marginTop="16dp"
-            android:orientation="horizontal"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+    <include
+        layout="@layout/content_group_hub_users"
+        android:layout_width="320dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/view_all_members"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_margin="16dp"
-            android:layout_marginBottom="9dp"
-            android:layout_marginEnd="7dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="8dp"
-            android:clickable="true"
-            app:backgroundTint="@color/colorPrimaryDark"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar"
-            app:layout_constraintVertical_bias="0.26"
-            app:srcCompat="@drawable/ic_scoreboard" />
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/view_all_members"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_margin="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="8dp"
+        android:clickable="true"
+        app:backgroundTint="@color/colorPrimaryDark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:srcCompat="@drawable/ic_scoreboard" />
+
+    <View
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="8dp"
+        android:background="@android:color/darker_gray"
+        app:layout_constraintTop_toBottomOf="@+id/view_all_members" />
 
     <LinearLayout
         android:id="@+id/feed_posts"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="64dp"
-        android:background="#ffffff"
         android:minHeight="48dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
