@@ -63,7 +63,7 @@ public class KnotList extends AppCompatActivity
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        setTitle("Russesamfunnet - Knute liste");
+        getSupportActionBar().setTitle("Russesamfunnet - Knuteliste");
 
         if(getSupportActionBar() != null)
         {
