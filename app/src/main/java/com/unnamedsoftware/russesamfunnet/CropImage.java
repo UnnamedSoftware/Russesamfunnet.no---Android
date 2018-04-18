@@ -9,7 +9,6 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -17,23 +16,17 @@ import android.provider.MediaStore;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.system.ErrnoException;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.android.volley.toolbox.HttpResponse;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,19 +55,19 @@ public class CropImage extends AppCompatActivity
 
     }
 /**
-    private void sendPic(){
-        HttpResponse response = Unirest.post("http://158.38.101.162:8080/upload")
-                .header("content-type", "multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW")
-                .header("cache-control", "no-cache")
-                .header("postman-token", "5f7d1fd4-f1ea-95cc-218e-3970333bb1ea")
-                .body("------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition:" +
-                        " form-data; name=\"file\"; filename=\"132008.jpg\"\r\nContent-Type:" +
-                        " image/jpeg\r\n\r\n\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition:" +
-                        " form-data; name=\"name\"\r\n\r\n132008.jpg\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW--")
-                .asString();
-    }
+ private void sendPic(){
+ HttpResponse response = Unirest.post("http://158.38.101.162:8080/upload")
+ .header("content-type", "multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW")
+ .header("cache-control", "no-cache")
+ .header("postman-token", "5f7d1fd4-f1ea-95cc-218e-3970333bb1ea")
+ .body("------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition:" +
+ " form-data; name=\"file\"; filename=\"132008.jpg\"\r\nContent-Type:" +
+ " image/jpeg\r\n\r\n\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition:" +
+ " form-data; name=\"name\"\r\n\r\n132008.jpg\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW--")
+ .asString();
+ }
 
-*/
+ */
     /**
      * Crop the image and set it back to the  cropping view.
      */
@@ -278,7 +271,15 @@ public class CropImage extends AppCompatActivity
 
         System.out.println(file.getPath());
 
-        new UploadFileAsync().execute();
+        String url = "http://158.38.101.162:8080/upload/";
+        try
+        {
+            UploadImage uploadImage = new UploadImage();
+            uploadImage.uploadImage(file, fileName, url);
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        }
 
 
         Intent returnIntent = new Intent();
@@ -286,109 +287,6 @@ public class CropImage extends AppCompatActivity
         finish();
     }
 
-    private class UploadFileAsync extends AsyncTask<String, Void, String>
-    {
-
-        @Override
-        protected String doInBackground(String... params)
-        {
-            try
-            {
-                HttpURLConnection conn = null;
-                DataOutputStream dos = null;
-                String lineEnd = "\r\n";
-                String twoHyphens = "--";
-                String boundary = "*****";
-                int bytesRead, bytesAvailable, bufferSize;
-                byte[] buffer;
-                int maxBufferSize = 1 * 1024 * 1024;
-                File sourceFile = new File(sourceFileUri);
-
-                if (sourceFile.isFile())
-                {
-                    try
-                    {
-                        String upLoadServerUri = "http://158.38.101.162:8080/upload/";
-
-                        // open a URL connection to the Servlet
-                        FileInputStream fileInputStream = new FileInputStream(
-                                sourceFile);
-                        URL url = new URL(upLoadServerUri);
-
-                        // Open a HTTP connection to the URL
-                        conn = (HttpURLConnection) url.openConnection();
-                        conn.setDoInput(true); // Allow Inputs
-                        conn.setDoOutput(true); // Allow Outputs
-                        conn.setUseCaches(false); // Don't use a Cached Copy
-                        conn.setRequestMethod("POST");
-                        conn.setRequestProperty("Connection", "Keep-Alive");
-                        conn.setRequestProperty("ENCTYPE",
-                                "multipart/form-data");
-                        conn.setRequestProperty("Content-Type",
-                                "multipart/form-data;boundary=" + boundary);
-                        conn.setRequestProperty("bill", sourceFileUri);
-
-                        dos = new DataOutputStream(conn.getOutputStream());
-
-                        dos.writeBytes(twoHyphens + boundary + lineEnd);
-                        dos.writeBytes("Content-Disposition: form-data; name=\"bill\";filename=\""
-                                + sourceFileUri + "\"" + lineEnd);
-
-                        dos.writeBytes(lineEnd);
-
-                        // create a buffer of maximum size
-                        bytesAvailable = fileInputStream.available();
-
-                        bufferSize = Math.min(bytesAvailable, maxBufferSize);
-                        buffer = new byte[bufferSize];
-
-                        // read file and write it into form...
-                        bytesRead = fileInputStream.read(buffer, 0, bufferSize);
-
-                        while (bytesRead > 0)
-                        {
-                            dos.write(buffer, 0, bufferSize);
-                            bytesAvailable = fileInputStream.available();
-                            bufferSize = Math
-                                    .min(bytesAvailable, maxBufferSize);
-                            bytesRead = fileInputStream.read(buffer, 0, bufferSize);
-                        }
-                        // close the streams //
-                        fileInputStream.close();
-                        dos.flush();
-                        dos.close();
-
-                    } catch (Exception e)
-                    {
-                        // dialog.dismiss();
-                        e.printStackTrace();
-                    }
-                }
 
 
-            } catch (Exception ex)
-            {
-                // dialog.dismiss();
-
-                ex.printStackTrace();
-            }
-            return "Executed";
-        }
-
-        @Override
-        protected void onPostExecute(String result)
-        {
-
-        }
-
-        @Override
-        protected void onPreExecute()
-        {
-        }
-
-        @Override
-        protected void onProgressUpdate(Void... values)
-        {
-        }
-    }
 }
