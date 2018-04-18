@@ -264,8 +264,8 @@ public class Feed extends AppCompatActivity implements SwipeRefreshLayout.OnRefr
                 startActivity(new Intent(this, Events.class));
                 break;
 */
-            case R.id.settings:
-                intent = new Intent(this, Settings.class);
+            case R.id.bugReport:
+                intent = new Intent(this, ReportABug.class);
                 this.startActivity(intent);
                 break;
 
