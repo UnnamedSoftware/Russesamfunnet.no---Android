@@ -455,7 +455,7 @@ public class UserProfile extends AppCompatActivity
                 TextView knotTitle = findViewById(R.id.KnuterText);
                 russName.setText(russ.getFirstName() + " " + russ.getLastName());
                 if (isOtherRuss) {
-                    knotTitle.setText(russ.getFirstName() + " sine knuter");
+                    knotTitle.setText(russ.getFirstName() +"s knuter");
                 } else {
                     knotTitle.setText("Dine knuter");
                 }
