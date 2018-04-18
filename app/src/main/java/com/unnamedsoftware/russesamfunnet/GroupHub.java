@@ -472,7 +472,7 @@ public class GroupHub extends AppCompatActivity implements SwipeRefreshLayout.On
 
         } else
         {
-            newUrl = getString(R.string.url) + "removeGroupMember?accessToken=" + ((Global) this.getApplication()).getAccessToken() + "&type=russesamfunnetgroupId=" + groupID +"&russId=";
+            newUrl = getString(R.string.url) + "removeGroupMember?accessToken=" + ((Global) this.getApplication()).getAccessToken() + "&type=russesamfunnet&groupId=" + groupID +"&russId=";
         }
         return newUrl;
     }

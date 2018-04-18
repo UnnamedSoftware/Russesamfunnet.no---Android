@@ -80,7 +80,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:background="@color/colorPrimaryDark"
-        android:text="Log inn"
+        android:text="Logg inn"
         android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
