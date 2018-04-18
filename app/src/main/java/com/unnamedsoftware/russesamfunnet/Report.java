@@ -2,7 +2,6 @@ package com.unnamedsoftware.russesamfunnet;
 
 import android.app.Activity;
 import android.content.Context;
-import android.util.Log;
 
 import com.creativityapps.gmailbackgroundlibrary.BackgroundMail;
 
@@ -11,16 +10,29 @@ import com.creativityapps.gmailbackgroundlibrary.BackgroundMail;
  */
 public class Report extends Activity
 {
-    public void sendEmail(String message, long userID, long russID, Context context)
+    public void reportUser(String message, long userID, long russID, Context context)
     {
-        Log.i("Send email", "");
-
         BackgroundMail.newBuilder(context)
                 .withUsername("russesamfunnetuserreport@gmail.com")
                 .withPassword("bacheloridata")
                 .withMailto("russesamfunnet@gmail.com")
                 .withType(BackgroundMail.TYPE_PLAIN)
                 .withSubject("Report from: " + userID + " on " + russID)
+                .withBody(message)
+                .send();
+
+            finish();
+    }
+
+
+    public void reportBug(String message, long userID, Context context)
+    {
+        BackgroundMail.newBuilder(context)
+                .withUsername("russesamfunnetuserreport@gmail.com")
+                .withPassword("bacheloridata")
+                .withMailto("russesamfunnet@gmail.com")
+                .withType(BackgroundMail.TYPE_PLAIN)
+                .withSubject("Bug report from: " + userID)
                 .withBody(message)
                 .withOnSuccessCallback(new BackgroundMail.OnSuccessCallback() {
                     @Override
@@ -36,6 +48,6 @@ public class Report extends Activity
                 })
                 .send();
 
-            finish();
+        finish();
     }
 }

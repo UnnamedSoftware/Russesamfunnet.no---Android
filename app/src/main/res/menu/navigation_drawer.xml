@@ -37,9 +37,9 @@
         android:id="@+id/menu_bottom"
         android:checkableBehavior="none">
             <item
-                android:id="@+id/settings"
+                android:id="@+id/bugReport"
                 android:icon="@drawable/ic_settings_black_24dp"
-                android:title="@string/settings" />
+                android:title="@string/bug_report" />
 
             <item
                 android:id="@+id/logout"

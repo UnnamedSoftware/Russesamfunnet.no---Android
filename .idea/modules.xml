@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://C:\Users\Hallvard\Documents\Russesamfunnet.no---Android87\Russesamfunnet.no---Android.iml" filepath="C:\Users\Hallvard\Documents\Russesamfunnet.no---Android87\Russesamfunnet.no---Android.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Russesamfunnet.no---Android87.iml" filepath="$PROJECT_DIR$/Russesamfunnet.no---Android87.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

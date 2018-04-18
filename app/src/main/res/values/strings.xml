@@ -10,7 +10,8 @@
     <string name="group">Grupper</string>
     <string name="event">Arrangementer</string>
     <string name="settings">Instillinger</string>
-    <string name="logout">Log ut</string>
+    <string name="bug_report">Rapporter en bug</string>
+    <string name="logout">Logg ut</string>
     <string name="app_label">Russesamfunnet</string>
     <string name="search_hint">Søk Skole</string>
 

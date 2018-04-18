@@ -332,7 +332,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>
             public void onClick(View v)
             {
                 Report report = new Report();
-                report.sendEmail(editText.getText().toString(), userID, russID, context);
+                report.reportUser(editText.getText().toString(), userID, russID, context);
                 dialog.cancel();
             }
         });

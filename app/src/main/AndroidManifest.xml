@@ -76,7 +76,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Feed" />
         </activity>
-
+        <activity
+            android:name=".ReportABug"
+            android:label="@string/app_name"
+            android:parentActivityName=".Feed">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Feed" />
+        </activity>
         <activity
             android:name=".Events"
             android:label="@string/app_name"
