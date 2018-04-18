@@ -12,7 +12,7 @@
     android:id="@+id/feedPostRow">
 
     <com.mikhaellopez.circularimageview.CircularImageView
-        android:id="@+id/userProfilePicture"
+        android:id="@+id/feedUserProfilePicture"
         android:layout_width="65dp"
         android:layout_height="65dp"
         android:layout_alignParentStart="true"

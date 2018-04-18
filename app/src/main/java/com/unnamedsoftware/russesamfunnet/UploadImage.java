@@ -28,8 +28,6 @@ public class UploadImage extends AsyncTask
                 .addFormDataPart("file", imageName, RequestBody.create(MEDIA_TYPE_JPEG, image))
                 .build();
 
-        System.out.println("requestBody: " + requestBody);
-
         Request request = new Request.Builder().url(url)
                 .post(requestBody).build();
 

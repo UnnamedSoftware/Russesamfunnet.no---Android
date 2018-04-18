@@ -109,7 +109,7 @@ public class Feed extends AppCompatActivity implements SwipeRefreshLayout.OnRefr
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         recyclerView = findViewById(R.id.recycler_view_feed);
-        feedAdapter = new FeedAdapter(feedPosts,this,getDeleteURL(),((Global)this.getApplication()).getRussId());
+        feedAdapter = new FeedAdapter(feedPosts,this,getDeleteURL(),((Global)this.getApplication()).getRussId(),((Global)this.getApplication()).getImageLoader());
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());

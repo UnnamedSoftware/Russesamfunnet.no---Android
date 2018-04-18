@@ -3,7 +3,6 @@ package com.unnamedsoftware.russesamfunnet;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -143,7 +142,7 @@ public class GroupHub extends AppCompatActivity implements SwipeRefreshLayout.On
         Long russId = ((Global)this.getApplication()).getRussId();
         System.out.println("--------------------------------------------------------" + russId);
         this.recyclerViewFeed = findViewById(R.id.recycler_view_feed);
-        this.feedAdapter = new FeedAdapter(feedEntityList,this,getDeleteURL(),russId, groupID, getRemoveUrl());
+        this.feedAdapter = new FeedAdapter(feedEntityList,this,getDeleteURL(),russId, groupID, getRemoveUrl(),(((Global) this.getApplication()).getImageLoader()));
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerViewFeed.setLayoutManager(layoutManager);
         recyclerViewFeed.setItemAnimator(new DefaultItemAnimator());

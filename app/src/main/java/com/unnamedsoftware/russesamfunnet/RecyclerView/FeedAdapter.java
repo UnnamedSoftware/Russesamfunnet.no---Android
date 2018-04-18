@@ -17,6 +17,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.mikhaellopez.circularimageview.CircularImageView;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.unnamedsoftware.russesamfunnet.Entity.FeedEntity;
 import com.unnamedsoftware.russesamfunnet.JSONObjectParser;
 import com.unnamedsoftware.russesamfunnet.R;
@@ -42,6 +43,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>
     private Long groupId = null;
     private Long userID;
     private String removeUserUrl;
+    private ImageLoader imageLoader;
 
     public class ViewHolder extends RecyclerView.ViewHolder
     {
@@ -54,12 +56,12 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>
             super(view);
             poster = view.findViewById(R.id.rvPoster);
             post = view.findViewById(R.id.rvPost);
-            userImage = view.findViewById(R.id.userProfilePicture);
+            userImage = view.findViewById(R.id.feedUserProfilePicture);
             relativeLayout = view.findViewById(R.id.feedPostRow);
         }
     }
 
-    public FeedAdapter(List<FeedEntity> feedPosts, Context context, String url, Long userID, Long groupId, String removeUserUrl)
+    public FeedAdapter(List<FeedEntity> feedPosts, Context context, String url, Long userID, Long groupId, String removeUserUrl, ImageLoader imageLoader)
     {
         this.removeUserUrl = removeUserUrl;
         this.groupId = groupId;
@@ -68,15 +70,17 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>
         this.url = url;
         System.out.println("--- From feed to feedAdapter: " + userID);
         this.userID = userID;
+        this.imageLoader = imageLoader;
     }
 
-    public FeedAdapter(List<FeedEntity> feedPosts, Context context, String url, Long userID)
+    public FeedAdapter(List<FeedEntity> feedPosts, Context context, String url, Long userID, ImageLoader imageLoader)
     {
         this.posts = feedPosts;
         this.context = context;
         this.url = url;
         System.out.println("--- From feed to feedAdapter: " + userID);
         this.userID = userID;
+        this.imageLoader = imageLoader;
     }
 
     @Override
@@ -93,8 +97,20 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>
         final FeedEntity feedPost = posts.get(position);
         final Long russid = feedPost.getRussId().getRussId();
         final View view = holder.relativeLayout;
+        final CircularImageView imageView = holder.userImage;
         holder.poster.setText(feedPost.getPoster());
         holder.post.setText(feedPost.getMessage());
+
+        String userImageURI = "http://158.38.101.162:8080/files/" + feedPost.getRussId() + "profilePicture" + ".jpg";
+        /*imageLoader.loadImage(userImageURI, new SimpleImageLoadingListener()
+        {
+            @Override
+            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage)
+            {
+                imageView.setImageBitmap(loadedImage);
+            }
+        });*/
+
         holder.relativeLayout.setOnLongClickListener(new View.OnLongClickListener()
         {
             @Override

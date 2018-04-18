@@ -254,7 +254,6 @@ public class CropImage extends AppCompatActivity
         String fileName = String.format(((Global) this.getApplication()).getRussId() + "profilePicture" + ".jpg", System.currentTimeMillis());
         //File file = new File(this.getCacheDir(), fileName);
 
-
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
         File file = new File(view.getContext().getCacheDir(), fileName);
@@ -275,12 +274,8 @@ public class CropImage extends AppCompatActivity
         UploadImage uploadImage = new UploadImage();
         uploadImage.uploadImage(file, fileName, url);
 
-
         Intent returnIntent = new Intent();
         setResult(Activity.RESULT_CANCELED, returnIntent);
         finish();
     }
-
-
-
 }
