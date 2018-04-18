@@ -50,7 +50,7 @@ public class GroupList extends AppCompatActivity
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        setTitle("Gruppe liste");
+        setTitle("Gruppeliste");
 
         this.floatingActionButton = findViewById(R.id.add_group);
         floatingActionButton.setOnClickListener(new View.OnClickListener()
