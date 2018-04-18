@@ -19,7 +19,7 @@ import okhttp3.Response;
  */
 public class UploadImage extends AsyncTask
 {
-    public void uploadImage(File image, String imageName, String url) throws IOException
+    public void uploadImage(File image, String imageName, String url)
     {
         final MediaType MEDIA_TYPE_JPEG = MediaType.parse("image/jpeg");
         OkHttpClient client = new OkHttpClient();
