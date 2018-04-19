@@ -97,6 +97,7 @@ public class Login extends AppCompatActivity
                     @Override
                     public void onError(FacebookException exception) {
                         exception.fillInStackTrace();
+                        Toast.makeText(Login.this, "Login failed", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
