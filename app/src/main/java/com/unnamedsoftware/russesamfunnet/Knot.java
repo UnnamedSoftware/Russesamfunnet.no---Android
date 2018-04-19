@@ -145,6 +145,14 @@ public class Knot extends AppCompatActivity
                                 + "&knotId=" + knotEntity.getKnotId();
                         completeKnot(url);
                     }
+                    witnessCircularImageView1.setImageResource(R.drawable.ic_add_white_48dp);
+                    witnessCircularImageView2.setImageResource(R.drawable.ic_add_white_48dp);
+                    TextView witnessName = findViewById(R.id.witness1Name);
+                    TextView witnessName2 = findViewById(R.id.witness2Name);
+                    witnessName.setText("");
+                    witnessName2.setText("");
+                    completed = null;
+
                 }
 
             }
