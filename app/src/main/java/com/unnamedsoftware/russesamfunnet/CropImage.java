@@ -269,11 +269,14 @@ public class CropImage extends AppCompatActivity
         }
 
         System.out.println(file.getPath());
-
+/*
         String url = "http://158.38.101.162:8080/upload/";
         UploadImage uploadImage = new UploadImage();
         uploadImage.uploadImage(file, fileName, url);
 
+
+
+*/
         Intent returnIntent = new Intent();
         setResult(Activity.RESULT_CANCELED, returnIntent);
         finish();

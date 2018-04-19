@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -28,7 +27,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -54,8 +52,9 @@ public class UserProfile extends AppCompatActivity
 
     private CircularImageView userImage;
     private ImageView russCard;
-    //private File userImageFile = new File("/storage/emulated/0/Android/data/com.unnamedsoftware.russesamfunnet/files/Pictures/russesamfunnetProfilePicture.jpg");
-    private File russCardFile = new File("/storage/emulated/0/Android/data/com.unnamedsoftware.russesamfunnet/files/Pictures/russesamfunnetRussCard.jpg");
+
+    private String profilePictureURL;
+    private String russCardURL;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -71,14 +70,17 @@ public class UserProfile extends AppCompatActivity
         boolean hasImageOnServer = false;
         this.russCard = findViewById(R.id.russCard);
         getSupportActionBar().setTitle("Brukerprofil");
-        if (russCardFile.exists())
+
+        try
         {
-            Bitmap russCardBitmap = BitmapFactory.decodeFile(russCardFile.getAbsolutePath());
-            this.russCard.setImageBitmap(russCardBitmap);
-        } else if (hasImageOnServer)
+            getUserRuss();
+            getCompletedKnots();
+        } catch (Exception e)
         {
-            new LoadImage(this, russCard).execute("http://russesamfunnet.no/logos/logo.png");
+            e.printStackTrace();
         }
+
+
 
         this.russCard.setOnClickListener(new View.OnClickListener()
         {
@@ -100,15 +102,18 @@ public class UserProfile extends AppCompatActivity
 
 
         this.userImage = findViewById(R.id.userProfilePicture);
-        String userImageURI = "http://158.38.101.162:8080/files/" + ((Global) this.getApplication()).getRussId() + "profilePicture" + ".jpg";
-        ((Global) this.getApplication()).getImageLoader().loadImage(userImageURI, new SimpleImageLoadingListener()
+
+        if (profilePictureURL != null)
         {
-            @Override
-            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage)
+            ((Global) this.getApplication()).getImageLoader().loadImage(profilePictureURL, new SimpleImageLoadingListener()
             {
-                userImage.setImageBitmap(loadedImage);
-            }
-        });
+                @Override
+                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage)
+                {
+                    userImage.setImageBitmap(loadedImage);
+                }
+            });
+        }
 
         this.userImage.setOnClickListener(new View.OnClickListener()
         {
@@ -203,17 +208,6 @@ public class UserProfile extends AppCompatActivity
 
         }
 
-        try
-        {
-            getUserRuss();
-            getCompletedKnots();
-        } catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-
-
-
         this.recyclerView = findViewById(R.id.recycler_view_user_knot_list);
         this.knotListAdapter = new KnotListAdapter(knotEntities);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
@@ -248,7 +242,7 @@ public class UserProfile extends AppCompatActivity
         ImageView userProfileEnlarged = dialog.findViewById(R.id.userRussCardEnlarged);
         try
         {
-            if (russCardFile.exists())
+            /*if (russCardFile.exists())
             {
                 System.out.println("Found image");
                 Bitmap bitmap = BitmapFactory.decodeFile(russCardFile.getAbsolutePath());
@@ -257,7 +251,7 @@ public class UserProfile extends AppCompatActivity
             {
                 System.out.println("Could not find image");
                 userProfileEnlarged.setImageResource(R.drawable.russ_card);
-            }
+            }*/
         } catch (NullPointerException e)
         {
             e.printStackTrace();
@@ -446,6 +440,8 @@ public class UserProfile extends AppCompatActivity
             String email = user.getString("email");
             String russPassword = user.getString("russPassword");
             String russRole = user.getString("russRole");
+            this.profilePictureURL = user.getString("profilePicture");
+            this.russCardURL = user.getString("russCard");
             int russYear = Integer.valueOf(user.getString("russYear"));
 
             russ = new RussEntity(russId, russStatus, firstName, lastName, email, russPassword, russRole, russYear);
