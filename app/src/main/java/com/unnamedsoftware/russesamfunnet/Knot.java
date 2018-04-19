@@ -403,7 +403,7 @@ public class Knot extends AppCompatActivity
                 boolean hasImageOnServer = false;
 
                 TextView witnessName = findViewById(R.id.witness1Name);
-                witnessName.setText(completed.getWitnessId1().getSearchName());
+                witnessName.setText(completed.getWitnessId1().getFirstName());
 
                 if (!userImageFile.exists())
                 {
@@ -423,7 +423,7 @@ public class Knot extends AppCompatActivity
                 System.out.println("************************************************** " + completed.getWitnessId2().getRussId());
                 boolean hasImageOnServer = true;
                 TextView witnessName = findViewById(R.id.witness2Name);
-                witnessName.setText(completed.getWitnessId2().getSearchName());
+                witnessName.setText(completed.getWitnessId2().getFirstName());
 
 
                 if (!userImageFile.exists())
