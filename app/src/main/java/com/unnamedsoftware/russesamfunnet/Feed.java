@@ -1,5 +1,7 @@
 package com.unnamedsoftware.russesamfunnet;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Build;
@@ -265,8 +267,7 @@ public class Feed extends AppCompatActivity implements SwipeRefreshLayout.OnRefr
                 break;
 */
             case R.id.bugReport:
-                intent = new Intent(this, ReportABug.class);
-                this.startActivity(intent);
+                reportPost();
                 break;
 
             case R.id.logout:
@@ -467,6 +468,27 @@ public class Feed extends AppCompatActivity implements SwipeRefreshLayout.OnRefr
             newUrl = getString(R.string.url) + "deleteMessage?accessToken=" + ((Global) this.getApplication()).getAccessToken() + "&type=russesamfunnet&feedId=";
         }
         return newUrl;
+    }
+
+    private void reportPost()
+    {
+        final Long userID = ((Global) this.getApplication()).getRussId();
+        final Context context = this;
+        final Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.report_bug_dialog);
+        final EditText editText = dialog.findViewById(R.id.reportMessage);
+        Button submitButton = dialog.findViewById(R.id.buttonSubmit);
+        submitButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Report report = new Report();
+                report.reportBug(editText.getText().toString(),userID,context);
+                dialog.cancel();
+            }
+        });
+        dialog.show();
     }
 }
 

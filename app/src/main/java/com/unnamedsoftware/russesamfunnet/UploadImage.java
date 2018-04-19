@@ -102,15 +102,6 @@ public class UploadImage extends AbstractAsyncTask<UploadImage.PostData, Integer
         String name;
         String fileName;
 
-        public void PostData(URL url,InputStream inputStream,String name, String fileName)
-        {
-            this.url = url;
-            this.inputStream = inputStream;
-            this.name = name;
-            this.fileName = fileName;
-
-        }
-
         public URL getUrl()
         {
             return url;

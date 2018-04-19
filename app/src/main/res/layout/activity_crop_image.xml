@@ -47,6 +47,4 @@
         android:onClick="onApproveImage"
         android:text="Godkjenn" />
 
-
-
 </LinearLayout>

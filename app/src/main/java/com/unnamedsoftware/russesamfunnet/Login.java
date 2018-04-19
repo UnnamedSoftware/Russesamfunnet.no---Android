@@ -97,7 +97,7 @@ public class Login extends AppCompatActivity
                     @Override
                     public void onError(FacebookException exception) {
                         exception.fillInStackTrace();
-                        Toast.makeText(Login.this, "Login failed", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Login.this, "Login failed", Toast.LENGTH_LONG).show();
                     }
                 });
     }
@@ -119,7 +119,7 @@ public class Login extends AppCompatActivity
 
                         } else{
                             System.out.println(jsonObject.getString("loginStatus"));
-                            Toast.makeText(Login.this, "Login failed", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Login.this, "Login failed", Toast.LENGTH_LONG).show();
                         }
                     }
                     catch (Exception e)
@@ -161,7 +161,7 @@ public class Login extends AppCompatActivity
 
                         } else{
                             System.out.println(jsonObject.getString("loginStatus"));
-                            Toast.makeText(Login.this, "Login failed", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Login.this, "Login failed", Toast.LENGTH_LONG).show();
                         }
                     }
                     catch (Exception e)
@@ -191,14 +191,14 @@ public class Login extends AppCompatActivity
                                         if (InputAnalyzer.isInputFieldEmpty(findViewById(R.id.userEmail)))
                                         {
                                             InputAnalyzer.drawRedBorder(findViewById(R.id.userEmail));
-                                            Toast.makeText(Login.this, "Please enter email", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(Login.this, "Please enter email", Toast.LENGTH_LONG).show();
                                         } else if (!InputAnalyzer.isUserEmailValid(findViewById(R.id.userEmail)))
                                         {
-                                            Toast.makeText(Login.this, "Please enter a valid email", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(Login.this, "Please enter a valid email", Toast.LENGTH_LONG).show();
                                         } else if (InputAnalyzer.isInputFieldEmpty(findViewById(R.id.userPassword)))
                                         {
                                             InputAnalyzer.drawRedBorder(findViewById(R.id.userPassword));
-                                            Toast.makeText(Login.this, "Please enter password", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(Login.this, "Please enter password", Toast.LENGTH_LONG).show();
                                         } else
                                         {
                                             userRegistered(view);
@@ -256,7 +256,7 @@ public class Login extends AppCompatActivity
 
                         } else{
                             System.out.println(jsonObject.getString("loginStatus"));
-                            Toast.makeText(Login.this, "Login failed", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Login.this, "Login failed", Toast.LENGTH_LONG).show();
                         }
                     }
                     catch (Exception e)

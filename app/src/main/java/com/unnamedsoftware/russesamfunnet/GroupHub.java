@@ -385,7 +385,7 @@ public class GroupHub extends AppCompatActivity implements SwipeRefreshLayout.On
                 System.out.println("Hi?");
                 System.out.println(users.length());
                 int length = users.length();
-                for(int i = 0; i < length && i<= 3; i++)
+                for(int i = 0; i < length && i<= 2; i++)
                 {
                     JSONObject u = users.getJSONObject(i);
 

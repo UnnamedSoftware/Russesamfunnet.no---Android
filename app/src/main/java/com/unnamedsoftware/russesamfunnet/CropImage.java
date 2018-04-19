@@ -21,12 +21,13 @@ import android.widget.Toast;
 
 import com.theartofdev.edmodo.cropper.CropImageView;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -247,36 +248,40 @@ public class CropImage extends AppCompatActivity
     public void onApproveImage(View view)
     {
         Bitmap bitmap = cropImageView.getCroppedImage();
-       /* ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
         byte[] bitmapdata = stream.toByteArray();
-*/
-        String fileName = String.format(((Global) this.getApplication()).getRussId() + "profilePicture" + ".jpg", System.currentTimeMillis());
-        //File file = new File(this.getCacheDir(), fileName);
 
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-        File file = new File(view.getContext().getCacheDir(), fileName);
+        ByteArrayInputStream bs = new ByteArrayInputStream(bitmapdata);
+
+        String url = "http://158.38.101.162:8080/upload/";
+
         try
         {
-            FileOutputStream fo = new FileOutputStream(file);
-            fo.write(bytes.toByteArray());
-            fo.flush();
-            fo.close();
-        } catch (IOException e)
+            executePost(bs);
+        } catch (MalformedURLException e)
+        {
+            e.printStackTrace();
+        } catch (FileNotFoundException e)
         {
             e.printStackTrace();
         }
 
-        System.out.println(file.getPath());
-/*
-        String url = "http://158.38.101.162:8080/upload/";
-        UploadImage uploadImage = new UploadImage();
-        uploadImage.uploadImage(file, fileName, url);
+
+    }
+
+    private void executePost(InputStream is) throws MalformedURLException, FileNotFoundException
+    {
+        String fileName = String.format(((Global) this.getApplication()).getRussId() + "profilePicture" + ".jpg", System.currentTimeMillis());
+        new UploadImage(status -> loadThumbnails()).execute(
+                new UploadImage.PostData(new URL(PhotoService.POST), is, "file", fileName)
+        );
 
 
+    }
 
-*/
+    private void loadThumbnails()
+    {
         Intent returnIntent = new Intent();
         setResult(Activity.RESULT_CANCELED, returnIntent);
         finish();

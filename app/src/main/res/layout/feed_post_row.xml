@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RelativeLayout
+<android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="10dp"
     android:layout_marginTop="10dp"
     android:clickable="true"
     android:focusable="true"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:id="@+id/feedPostRow">
 
     <com.mikhaellopez.circularimageview.CircularImageView
@@ -24,8 +25,7 @@
         app:civ_shadow="true"
         app:civ_shadow_color="@color/colorPrimary"
         app:civ_shadow_radius="10"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.043"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -34,16 +34,24 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
+        android:layout_marginTop="8dp"
         android:layout_toEndOf="@+id/userProfilePicture"
+        android:text="Hallvard"
         android:textSize="14sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/feedUserProfilePicture"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/rvPost"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/rvPoster"
+        android:layout_marginTop="4dp"
         android:layout_toEndOf="@+id/userProfilePicture"
-        android:textSize="12sp" />
+        android:text="Hurdidur"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@+id/feedUserProfilePicture"
+        app:layout_constraintTop_toBottomOf="@+id/rvPoster" />
 
-</RelativeLayout>
+</android.support.constraint.ConstraintLayout>

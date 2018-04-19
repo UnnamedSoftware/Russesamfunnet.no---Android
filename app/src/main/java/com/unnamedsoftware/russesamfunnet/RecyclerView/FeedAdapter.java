@@ -3,8 +3,8 @@ package com.unnamedsoftware.russesamfunnet.RecyclerView;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Vibrator;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
@@ -14,12 +14,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.mikhaellopez.circularimageview.CircularImageView;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.unnamedsoftware.russesamfunnet.Entity.FeedEntity;
 import com.unnamedsoftware.russesamfunnet.JSONObjectParser;
 import com.unnamedsoftware.russesamfunnet.R;
@@ -51,7 +49,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>
     {
         private TextView poster, post;
         private CircularImageView userImage;
-        private RelativeLayout relativeLayout;
+        private ConstraintLayout linearLayout;
 
         public ViewHolder(View view)
         {
@@ -59,7 +57,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>
             poster = view.findViewById(R.id.rvPoster);
             post = view.findViewById(R.id.rvPost);
             userImage = view.findViewById(R.id.feedUserProfilePicture);
-            relativeLayout = view.findViewById(R.id.feedPostRow);
+            linearLayout = view.findViewById(R.id.feedPostRow);
         }
     }
 
@@ -98,11 +96,11 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>
     {
         final FeedEntity feedPost = posts.get(position);
         final Long russid = feedPost.getRussId().getRussId();
-        final View view = holder.relativeLayout;
-        final CircularImageView imageView = holder.userImage;
+        final View view = holder.linearLayout;
+       // final CircularImageView imageView = holder.userImage;
         holder.poster.setText(feedPost.getPoster());
         holder.post.setText(feedPost.getMessage());
-
+/*
         if (feedPost.getRussId().getProfilePicture() != null)
         {
             imageLoader.loadImage(feedPost.getRussId().getProfilePicture(), new SimpleImageLoadingListener()
@@ -113,8 +111,8 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>
                     imageView.setImageBitmap(loadedImage);
                 }
             });
-        }
-        holder.relativeLayout.setOnLongClickListener(new View.OnLongClickListener()
+        }*/
+        holder.linearLayout.setOnLongClickListener(new View.OnLongClickListener()
         {
             @Override
             public boolean onLongClick(View v)
