@@ -145,6 +145,14 @@ public class Knot extends AppCompatActivity
                                 + "&knotId=" + knotEntity.getKnotId();
                         completeKnot(url);
                     }
+                    witnessCircularImageView1.setImageResource(R.drawable.ic_add_white_48dp);
+                    witnessCircularImageView2.setImageResource(R.drawable.ic_add_white_48dp);
+                    TextView witnessName = findViewById(R.id.witness1Name);
+                    TextView witnessName2 = findViewById(R.id.witness2Name);
+                    witnessName.setText("");
+                    witnessName2.setText("");
+                    completed = null;
+
                 }
 
             }
@@ -395,7 +403,7 @@ public class Knot extends AppCompatActivity
                 boolean hasImageOnServer = false;
 
                 TextView witnessName = findViewById(R.id.witness1Name);
-                witnessName.setText(completed.getWitnessId1().getSearchName());
+                witnessName.setText(completed.getWitnessId1().getFirstName());
 
                 if (!userImageFile.exists())
                 {
@@ -415,7 +423,7 @@ public class Knot extends AppCompatActivity
                 System.out.println("************************************************** " + completed.getWitnessId2().getRussId());
                 boolean hasImageOnServer = true;
                 TextView witnessName = findViewById(R.id.witness2Name);
-                witnessName.setText(completed.getWitnessId2().getSearchName());
+                witnessName.setText(completed.getWitnessId2().getFirstName());
 
 
                 if (!userImageFile.exists())

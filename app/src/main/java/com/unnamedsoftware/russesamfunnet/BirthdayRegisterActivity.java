@@ -131,7 +131,7 @@ public class BirthdayRegisterActivity extends AppCompatActivity
     private void chooseDate()
     {
         final Dialog dialog = new Dialog(this);
-        dialog.setTitle("Fødsels dato");
+        dialog.setTitle("Fødselsdato");
         dialog.setContentView(R.layout.datepicker);
 
         Button confirm = dialog.findViewById(R.id.confirmButton);
