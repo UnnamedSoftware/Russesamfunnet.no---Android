@@ -72,13 +72,13 @@ public class GroupList extends AppCompatActivity
         getGroups();
 
         this.recyclerView = findViewById(R.id.glaGroup);
-        this.groupListAdapter = new GroupListAdapter(groupEntityList, this);
+        this.groupListAdapter = new GroupListAdapter(groupEntityList, this, ((Global) this.getApplication()).getRussId(), removeUserUrl());
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         recyclerView.setAdapter(groupListAdapter);
-
+    }
 /**
  //Swipe func.
  ConstraintLayout constraintLayout = findViewById(R.id.KnotLayout);
@@ -90,7 +90,7 @@ public class GroupList extends AppCompatActivity
  }
  });
  */
-    }
+
 
     /**
      * Displays the dialog for joining or creating new groups
@@ -114,9 +114,10 @@ public class GroupList extends AppCompatActivity
                 if (AccessToken.getCurrentAccessToken() != null)
                 {
                     System.out.println(AccessToken.getCurrentAccessToken().getToken());
-                    url = (getString(R.string.url) + "createGroup?accessToken=" + AccessToken.getCurrentAccessToken().getToken() + "&type=facebook&groupName="+groupName);
-                }else {
-                    url = getString(R.string.url) + "createGroup?accessToken=" + ((Global) getApplication()).getAccessToken() + "&type=russesamfunnet&groupName="+groupName;
+                    url = (getString(R.string.url) + "createGroup?accessToken=" + AccessToken.getCurrentAccessToken().getToken() + "&type=facebook&groupName=" + groupName);
+                } else
+                {
+                    url = getString(R.string.url) + "createGroup?accessToken=" + ((Global) getApplication()).getAccessToken() + "&type=russesamfunnet&groupName=" + groupName;
                 }
                 System.out.println(url);
                 sendCreateGroup(url);
@@ -132,23 +133,30 @@ public class GroupList extends AppCompatActivity
 
     private void sendCreateGroup(String url)
     {
-        try {
-            new JSONObjectParser(new JSONObjectParser.OnPostExecute() {
+        try
+        {
+            new JSONObjectParser(new JSONObjectParser.OnPostExecute()
+            {
                 @Override
-                public void onPostExecute(JSONObject jsonObject) {
-                    try{
-                        if(jsonObject.getString("response").equals("true")) {
+                public void onPostExecute(JSONObject jsonObject)
+                {
+                    try
+                    {
+                        if (jsonObject.getString("response").equals("true"))
+                        {
                             getGroups();
-                        } else {
+                        } else
+                        {
                             System.out.println(jsonObject.getString("response"));
                         }
-                    }catch (Exception e)
+                    } catch (Exception e)
                     {
                         e.printStackTrace();
                     }
                 }
             }).execute(new URL(url));
-        } catch (MalformedURLException e) {
+        } catch (MalformedURLException e)
+        {
             e.printStackTrace();
         }
     }
@@ -160,22 +168,28 @@ public class GroupList extends AppCompatActivity
         {
             System.out.println(AccessToken.getCurrentAccessToken().getToken());
             url = (getString(R.string.url) + "groups?accessToken=" + AccessToken.getCurrentAccessToken().getToken() + "&type=facebook");
-        }else {
+        } else
+        {
             url = getString(R.string.url) + "groups?accessToken=" + ((Global) this.getApplication()).getAccessToken() + "&type=russesamfunnet";
         }
-        try {
-            new JSONParser(new JSONParser.OnPostExecute() {
+        try
+        {
+            new JSONParser(new JSONParser.OnPostExecute()
+            {
                 @Override
-                public void onPostExecute(JSONArray jsonArray) {
-                    try{
+                public void onPostExecute(JSONArray jsonArray)
+                {
+                    try
+                    {
                         fillGroupList(jsonArray);
-                    }catch (Exception e)
+                    } catch (Exception e)
                     {
                         e.printStackTrace();
                     }
                 }
             }).execute(new URL(url));
-        } catch (MalformedURLException e) {
+        } catch (MalformedURLException e)
+        {
             e.printStackTrace();
         }
     }
@@ -185,7 +199,7 @@ public class GroupList extends AppCompatActivity
         try
         {
 
-            for(int i = 0; i < jsonArray.length(); i++)
+            for (int i = 0; i < jsonArray.length(); i++)
             {
                 JSONObject group = jsonArray.getJSONObject(i).getJSONObject("groupId");
                 Long groupId = group.getLong("groupId");
@@ -195,11 +209,26 @@ public class GroupList extends AppCompatActivity
             }
             this.groupListAdapter.notifyDataSetChanged();
             findViewById(R.id.loadingPanel).setVisibility(View.GONE);
-        }catch (JSONException e)
+        } catch (JSONException e)
         {
             e.printStackTrace();
         }
     }
 
+    private String removeUserUrl()
+    {
+        String newUrl;
+        if (AccessToken.getCurrentAccessToken() != null)
+        {
+            System.out.println(AccessToken.getCurrentAccessToken().getToken());
+            newUrl = (getString(R.string.url) + "removeGroupMember?accessToken=" + AccessToken.getCurrentAccessToken().getToken());
+
+        } else
+        {
+            newUrl = getString(R.string.url) + "removeGroupMember?accessToken=" + ((Global) this.getApplication()).getAccessToken();
+            System.out.println("New url: " + newUrl);
+        }
+        return newUrl;
+    }
 
 }

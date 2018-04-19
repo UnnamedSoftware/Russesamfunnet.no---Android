@@ -21,7 +21,7 @@ public class UploadImage extends AsyncTask
 {
     public void uploadImage(File image, String imageName, String url)
     {
-        final MediaType MEDIA_TYPE_JPEG = MediaType.parse("image/jpeg");
+        final MediaType MEDIA_TYPE_JPEG = MediaType.parse("image/*");
         OkHttpClient client = new OkHttpClient();
 
         RequestBody requestBody = new MultipartBody.Builder().setType(MultipartBody.FORM)

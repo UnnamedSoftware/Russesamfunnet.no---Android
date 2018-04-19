@@ -3,6 +3,7 @@ package com.unnamedsoftware.russesamfunnet.RecyclerView;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Vibrator;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 
 import com.mikhaellopez.circularimageview.CircularImageView;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.unnamedsoftware.russesamfunnet.Entity.FeedEntity;
 import com.unnamedsoftware.russesamfunnet.JSONObjectParser;
 import com.unnamedsoftware.russesamfunnet.R;
@@ -101,16 +103,17 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>
         holder.poster.setText(feedPost.getPoster());
         holder.post.setText(feedPost.getMessage());
 
-        String userImageURI = "http://158.38.101.162:8080/files/" + feedPost.getRussId() + "profilePicture" + ".jpg";
-        /*imageLoader.loadImage(userImageURI, new SimpleImageLoadingListener()
+        if (feedPost.getRussId().getProfilePicture() != null)
         {
-            @Override
-            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage)
+            imageLoader.loadImage(feedPost.getRussId().getProfilePicture(), new SimpleImageLoadingListener()
             {
-                imageView.setImageBitmap(loadedImage);
-            }
-        });*/
-
+                @Override
+                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage)
+                {
+                    imageView.setImageBitmap(loadedImage);
+                }
+            });
+        }
         holder.relativeLayout.setOnLongClickListener(new View.OnLongClickListener()
         {
             @Override
@@ -164,7 +167,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>
 
         System.out.println("+++++++++++++++++++++++++" + russID);
         System.out.println("+++++++++++++++++++++++++" + userID);
-        if(groupId != null)
+        if (groupId != null)
         {
             System.out.println(russID);
             System.out.println(userID);
@@ -183,7 +186,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>
                         {
                             case R.id.LeaveGroup:
                                 removeFromGroup(userID);
-                            break;
+                                break;
 
                             case R.id.RemoveMessage:
                                 deletePost(feedID, position);
@@ -219,7 +222,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>
                 });
                 popup.show();
             }
-        }else if (russID.equals(userID))
+        } else if (russID.equals(userID))
         {
             PopupMenu popup = new PopupMenu(this.context, view);
             popup.setGravity(Gravity.RIGHT);

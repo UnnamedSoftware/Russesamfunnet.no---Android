@@ -14,11 +14,18 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.AccessToken;
 import com.unnamedsoftware.russesamfunnet.AddUserToGroup;
 import com.unnamedsoftware.russesamfunnet.Entity.GroupEntity;
 import com.unnamedsoftware.russesamfunnet.GroupHub;
+import com.unnamedsoftware.russesamfunnet.JSONObjectParser;
 import com.unnamedsoftware.russesamfunnet.R;
 
+import org.json.JSONObject;
+
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -29,6 +36,8 @@ public class GroupListAdapter extends RecyclerView.Adapter<GroupListAdapter.View
 {
     private List<GroupEntity> groupEntitiesList;
     private Context context;
+    private Long userID;
+    private String removeUserUrl;
 
     public class ViewHolder extends RecyclerView.ViewHolder
     {
@@ -44,10 +53,12 @@ public class GroupListAdapter extends RecyclerView.Adapter<GroupListAdapter.View
     }
 
 
-    public GroupListAdapter(List<GroupEntity> groupEntityList, Context context)
+    public GroupListAdapter(List<GroupEntity> groupEntityList, Context context, Long userID,String removeUserUrl)
     {
+        this.removeUserUrl = removeUserUrl;
         this.groupEntitiesList = groupEntityList;
         this.context = context;
+        this.userID = userID;
     }
 
     @Override
@@ -121,6 +132,11 @@ public class GroupListAdapter extends RecyclerView.Adapter<GroupListAdapter.View
                             intent.putExtra("groupID", groupID);
                             view.getContext().startActivity(intent);
                             break;
+
+                        case R.id.LeaveGroup:
+                            removeFromGroup(userID, groupID);
+                            updateList(groupID);
+                            break;
                     }
                     return true;
                 }
@@ -142,6 +158,11 @@ public class GroupListAdapter extends RecyclerView.Adapter<GroupListAdapter.View
                         case R.id.Rapporter:
                             Toast.makeText(context, "One", Toast.LENGTH_SHORT).show();
                             break;
+
+                        case R.id.LeaveGroup:
+                            removeFromGroup(userID, groupID);
+                            updateList(groupID);
+                            break;
                     }
                     return true;
                 }
@@ -149,4 +170,69 @@ public class GroupListAdapter extends RecyclerView.Adapter<GroupListAdapter.View
             popup.show();
         }
     }
+
+    private void removeFromGroup(Long russId, Long groupID)
+    {
+        String removeUrl = getRemoveUrl(groupID) + russId;
+
+        System.out.println("Remove URL: " + removeUrl);
+        try
+        {
+            new JSONObjectParser(new JSONObjectParser.OnPostExecute()
+            {
+                @Override
+                public void onPostExecute(JSONObject jsonObject)
+                {
+                    if (jsonObject != null)
+                    {
+                        try
+                        {
+                            System.out.println(jsonObject.getString("response"));
+                        } catch (Exception e)
+                        {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }).execute(new URL(removeUrl));
+        } catch (MalformedURLException e)
+        {
+            e.printStackTrace();
+        }
+
+
+    }
+
+    private String getRemoveUrl(Long groupID)
+    {
+        String url;
+        if (AccessToken.getCurrentAccessToken() != null)
+        {
+            System.out.println(AccessToken.getCurrentAccessToken().getToken());
+            url = this.removeUserUrl  + "&type=facebook&groupId=" + groupID + "&russId=";
+
+        } else
+        {
+            url = this.removeUserUrl + "&type=russesamfunnet&groupId=" + groupID +"&russId=";
+        }
+        return url;
+    }
+
+    private void updateList(Long groupID)
+    {
+        Iterator it = groupEntitiesList.iterator();
+        while (it.hasNext())
+        {
+            GroupEntity groupEntity = (GroupEntity) it.next();
+            if (groupEntity.getGroupID().equals(groupID))
+            {
+                groupEntitiesList.remove(groupEntity);
+                notifyDataSetChanged();
+                return;
+            }
+        }
+    }
+
+
+
 }
