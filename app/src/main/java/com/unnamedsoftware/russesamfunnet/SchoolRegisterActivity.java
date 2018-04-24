@@ -64,6 +64,7 @@ public class SchoolRegisterActivity extends AppCompatActivity
     private String email;
     private String password;
     private String dateString;
+    String school = null;
 
     @SuppressLint("WrongViewCast")
     @Override
@@ -123,12 +124,12 @@ public class SchoolRegisterActivity extends AppCompatActivity
             @Override
             public void onClick(View view)
             {
-                String school = schoolAdapter.getSchoolName();
+                school = schoolAdapter.getSchoolName();
 
 
                 try{
                     System.out.println("Ta-daaaa");
-                    registerRuss(dateString, school);
+                    displayTermsOfService();
                 } catch (Exception e)
                 {
                     e.printStackTrace();
@@ -184,10 +185,8 @@ public class SchoolRegisterActivity extends AppCompatActivity
                     try {
                         if(jsonObject.getString("loginStatus").equals("Login success")) {
                             ((Global) getApplication()).setAccessToken(jsonObject.getString("accessToken"), "russesamfunnet");
-                            displayTermsOfService();
                         }else if(jsonObject.getString("loginStatus").equals("User successfully registered")) {
                             ((Global) getApplication()).setAccessToken(jsonObject.getString("accessToken"), "russesamfunnet");
-                            displayTermsOfService();
                         }
                     }catch (Exception e)
                     {
@@ -237,7 +236,14 @@ public class SchoolRegisterActivity extends AppCompatActivity
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i)
                     {
-                        goToFeed();
+                        try {
+                            registerRuss(dateString, school);
+                            goToFeed();
+                        } catch (Exception e)
+                        {
+                            e.printStackTrace();
+                        }
+
                     }
                 })
                 .setIcon(android.R.drawable.ic_dialog_alert)

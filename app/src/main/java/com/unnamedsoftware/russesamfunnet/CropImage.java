@@ -243,7 +243,7 @@ public class CropImage extends AppCompatActivity
         }
         return false;
     }
-
+/**
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void onApproveImage(View view)
     {
@@ -269,7 +269,8 @@ public class CropImage extends AppCompatActivity
 
 
     }
-
+    *>/
+/**
     private void executePost(InputStream is) throws MalformedURLException, FileNotFoundException
     {
         String fileName = String.format(((Global) this.getApplication()).getRussId() + "profilePicture" + ".jpg", System.currentTimeMillis());
@@ -279,7 +280,7 @@ public class CropImage extends AppCompatActivity
 
 
     }
-
+*/
     private void loadThumbnails()
     {
         Intent returnIntent = new Intent();
