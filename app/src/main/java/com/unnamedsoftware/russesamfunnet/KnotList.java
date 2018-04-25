@@ -2,7 +2,6 @@ package com.unnamedsoftware.russesamfunnet;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
@@ -73,7 +72,7 @@ public class KnotList extends AppCompatActivity
 
 
         this.recyclerView = findViewById(R.id.recycler_view_knot_list);
-        this.knotListAdapter = new KnotListAdapter(knotEntities);
+        this.knotListAdapter = new KnotListAdapter(knotEntities, this);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -130,8 +129,8 @@ public class KnotList extends AppCompatActivity
                 Long knotID = Long.valueOf(knotsJSONObject.getString("knotId"));
                 String title = knotsJSONObject.getString("knotName");
                 String description = knotsJSONObject.getString("knotDetails");
-
-                KnotEntity knot = new KnotEntity(knotID,title,description);
+                Boolean completed = knotsJSONObject.getBoolean("completed");
+                KnotEntity knot = new KnotEntity(knotID,title,description,completed);
                 knotEntities.add(knot);
             }
             this.knotListAdapter.notifyDataSetChanged();

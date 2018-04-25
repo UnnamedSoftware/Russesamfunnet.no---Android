@@ -1,6 +1,9 @@
 package com.unnamedsoftware.russesamfunnet.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,21 +23,25 @@ import java.util.List;
 public class KnotListAdapter extends RecyclerView.Adapter<KnotListAdapter.ViewHolder>
 {
     private List<KnotEntity> knotEntityList;
+    private Context context;
 
     public class ViewHolder extends RecyclerView.ViewHolder
     {
         private TextView title;
+        private FloatingActionButton completeKnotView;
 
         public ViewHolder(final View itemLayoutView)
         {
             super(itemLayoutView);
-            title = itemLayoutView.findViewById(R.id.rvTitle);
+            this.title = itemLayoutView.findViewById(R.id.rvTitle);
+            this.completeKnotView = itemLayoutView.findViewById(R.id.completeKnotView);
         }
     }
 
-    public KnotListAdapter(List<KnotEntity> knotList)
+    public KnotListAdapter(List<KnotEntity> knotList, Context context)
     {
         this.knotEntityList = knotList;
+        this.context = context;
     }
 
     @Override
@@ -50,6 +57,19 @@ public class KnotListAdapter extends RecyclerView.Adapter<KnotListAdapter.ViewHo
         final int pos = position;
         KnotEntity knotEntity = knotEntityList.get(position);
         holder.title.setText(knotEntity.getTitle());
+
+        if(knotEntity.getCompleted())
+        {
+            holder.completeKnotView.setImageResource(R.drawable.ic_check_black_48dp);
+            holder.completeKnotView.setBackgroundTintList(ColorStateList.valueOf(context.getResources().getColor(R.color.colorKnotCompleted)));
+
+        }else
+        {
+            holder.completeKnotView.setImageResource(R.drawable.ic_close_black_48dp);
+            holder.completeKnotView.setBackgroundTintList(ColorStateList.valueOf(context.getResources().getColor(R.color.colorKnotNotCompleted)));
+        }
+
+
         holder.itemView.setOnClickListener(new View.OnClickListener()
     {
         @Override
@@ -57,7 +77,7 @@ public class KnotListAdapter extends RecyclerView.Adapter<KnotListAdapter.ViewHo
         {
             KnotEntity knotEntity = knotEntityList.get(pos);
             Intent intent = new Intent(v.getContext(), Knot.class);
-            intent.putExtra("knot_entity", new KnotEntity(knotEntity.getKnotId(), knotEntity.getDetails(), knotEntity.getTitle()));
+            intent.putExtra("knot_entity", new KnotEntity(knotEntity.getKnotId(), knotEntity.getDetails(), knotEntity.getTitle(),knotEntity.getCompleted()));
             v.getContext().startActivity(intent);
         }
     });

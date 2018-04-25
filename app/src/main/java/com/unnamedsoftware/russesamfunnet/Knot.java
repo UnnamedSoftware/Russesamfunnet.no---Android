@@ -99,7 +99,7 @@ public class Knot extends AppCompatActivity
             public void onClick(View view)
             {
                 //Check if knot is completed
-                if (knotCompleted == false)
+                if (!knotCompleted)
                 {
                     completeFloatingActionButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorKnotCompleted)));
                     completeFloatingActionButton.setImageResource(R.drawable.ic_check_black_48dp);
@@ -124,7 +124,7 @@ public class Knot extends AppCompatActivity
                                 + "&witness2=0";
                         completeKnot(url);
                     }
-                } else if (knotCompleted == true)
+                } else if (knotCompleted)
                 {
                     completeFloatingActionButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorKnotNotCompleted)));
                     completeFloatingActionButton.setImageResource(R.drawable.ic_close_black_48dp);
@@ -296,8 +296,8 @@ public class Knot extends AppCompatActivity
             Long knotID = jsonObject.getLong("knotId");
             String title = jsonObject.getString("knotName");
             String description = jsonObject.getString("knotDetails");
-
-            return new KnotEntity(knotID, title, description);
+            boolean completed = jsonObject.getBoolean("completed");
+            return new KnotEntity(knotID, title, description,completed);
 
         } catch (Exception e)
         {

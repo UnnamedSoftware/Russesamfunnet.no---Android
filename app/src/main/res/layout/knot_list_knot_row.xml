@@ -11,31 +11,26 @@
     android:focusable="true"
     android:orientation="vertical">
 
-    <com.mikhaellopez.circularimageview.CircularImageView
-        android:id="@+id/circularKnotView"
-        android:layout_width="65dp"
-        android:layout_height="65dp"
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/completeKnotView"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_alignParentStart="true"
         android:layout_centerVertical="true"
         android:layout_marginStart="11dp"
-        android:src="@drawable/knot"
-        app:civ_border_color="#EEEEEE"
-        app:civ_border_width="4dp"
-        app:civ_shadow="true"
-        app:civ_shadow_color="@color/colorPrimary"
-        app:civ_shadow_radius="10"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.043"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
         android:id="@+id/rvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
         android:layout_centerVertical="true"
-        android:layout_toEndOf="@+id/circularKnotView"
+        android:layout_marginStart="89dp"
+        android:text="tkenewkgmwpg"
         android:textColor="@android:color/black"
         android:textSize="24sp" />
-
 </RelativeLayout>

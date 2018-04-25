@@ -14,6 +14,7 @@ public class KnotEntity extends Entity implements Serializable {
     private String details;
     private SchoolEntity schoolId;
     private String title;
+    private boolean completed;
 
 
     //private String status;
@@ -25,10 +26,11 @@ public class KnotEntity extends Entity implements Serializable {
         this.knotId = knotId;
     }
 
-    public KnotEntity(Long knotId, String title, String details) {
+    public KnotEntity(Long knotId, String title, String details, Boolean completed) {
         this.knotId = knotId;
         this.details = details;
         this.title = title;
+        this.completed = completed;
     }
 
     public String getTitle() {
@@ -63,7 +65,15 @@ public class KnotEntity extends Entity implements Serializable {
         this.schoolId = schoolId;
     }
 
+    public boolean getCompleted()
+    {
+        return completed;
+    }
 
+    public void setCompleted(boolean completed)
+    {
+        this.completed = completed;
+    }
 
     @Override
     public int hashCode() {

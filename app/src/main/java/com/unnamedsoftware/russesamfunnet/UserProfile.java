@@ -195,7 +195,7 @@ public class UserProfile extends AppCompatActivity
 
 
         this.recyclerView = findViewById(R.id.recycler_view_user_knot_list);
-        this.knotListAdapter = new KnotListAdapter(knotEntities);
+        this.knotListAdapter = new KnotListAdapter(knotEntities,this);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -381,8 +381,9 @@ public class UserProfile extends AppCompatActivity
                 Long knotID = knotsJSONObject.getLong("knotId");
                 String title = knotsJSONObject.getString("knotName");
                 String description = knotsJSONObject.getString("knotDetails");
+                Boolean completed = knotsJSONObject.getBoolean("completed");
 
-                KnotEntity knot = new KnotEntity(knotID, title, description);
+                KnotEntity knot = new KnotEntity(knotID, title, description,completed);
                 knotEntities.add(knot);
             }
             this.knotListAdapter.notifyDataSetChanged();
