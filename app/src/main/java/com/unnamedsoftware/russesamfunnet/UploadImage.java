@@ -1,125 +1,92 @@
 package com.unnamedsoftware.russesamfunnet;
 
-import android.util.Log;
+import android.os.AsyncTask;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
+import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 /**
  * Created by Alexander Eilert Berg on 18.04.2018.
  */
-public class UploadImage extends AbstractAsyncTask<UploadImage.PostData, Integer, String>
+public class UploadImage extends AsyncTask<Void,Void,Boolean>
 {
-    private final static String BOUNDARY = "*****";
-    private final static String CRLF = "\r\n";
+    OkHttpClient client;
+    Request request;
+    File file;
+    String url;
 
-    public UploadImage(OnPostExecute<String> callback)
+    public UploadImage(File file, String url)
     {
-        super(callback);
+        this.file = file;
+        this.url = url;
     }
+
 
     @Override
-    protected String doInBackground(PostData... pictures)
+    protected Boolean doInBackground(Void... voids)
     {
-        StringBuilder result = new StringBuilder();
-
-
-        for (PostData pd : pictures)
+        try
         {
-            try
-            {
-                // Setup request
-                HttpURLConnection con = (HttpURLConnection) pd.getUrl().openConnection();
-                con.setDoOutput(true);
-                con.setUseCaches(false);
-                con.setRequestMethod("POST");
-                con.setRequestProperty("Cache-Control", "no-cache");
-                con.setRequestProperty("Connection", "Keep-Alive");
-                con.setRequestProperty("Content-Type", "multipart/form-data; boundary=" + BOUNDARY);
+            client = new OkHttpClient();
 
-                // Start content wrapper
-                DataOutputStream daos = new DataOutputStream(con.getOutputStream());
-                daos.writeBytes("--" + BOUNDARY + CRLF);
-                daos.writeBytes("Content-Type: image/jpeg");
-                daos.writeBytes(CRLF);
-                daos.writeBytes("Content-Disposition: form-data; name=\"" +
-                        pd.getName() + "\"; filename=\"" +
-                        pd.getFileName() + "\"" + CRLF);
-                daos.writeBytes(CRLF);
-                daos.flush();
+            RequestBody requestBody = new MultipartBody.Builder()
+                    .setType(MultipartBody.FORM)
+                    .addFormDataPart("file", file.getName(),
+                            RequestBody.create(MediaType.parse("image/png"), file))
+                    .addFormDataPart("name",file.getName())
+                    .build();
 
-                // Copy stream
-                int len;
-                try (InputStream is = new BufferedInputStream(pd.getInputStream()))
-                {
-                    byte[] buff = new byte[2048];
-                    while ((len = is.read(buff)) != -1)
-                    {
-                        daos.write(buff, 0, len);
-                    }
-                }
+            request = new Request.Builder()
+                    .url(url)
+                    .header("Content-Type", "multipart/form-data")
+                    .post(requestBody)
+                    .build();
 
-                // End content wrapper
-                daos.writeBytes(CRLF);
-                daos.writeBytes("--" + BOUNDARY + "--" + CRLF);
+            System.out.println("--- 4 ---");
+            System.out.println(file.getName());
+            System.out.println(request.headers());
+            System.out.println(request.url());
+            System.out.println(request.toString());
 
-                // Flush buffers
-                daos.close();
-
-                // Get response
-                if (con.getResponseCode() == HttpURLConnection.HTTP_OK)
-                {
-                    BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream()));
-                    char[] cbuff = new char[1024];
-                    while ((len = br.read(cbuff)) != -1)
-                    {
-                        result.append(cbuff, 0, len);
-                    }
-                    br.close();
-                }
-
-                con.disconnect();
-            } catch (IOException e)
+            client.newCall(request).enqueue(new Callback()
             {
 
-                Log.e("PostPicture", "doInBackground: ", e);
-            }
+                @Override
+                public void onFailure(Call call, IOException e)
+                {
+                    System.out.println("----------------------------- Failure -----------------------------");
+                    System.out.println(call.toString());
+                    e.printStackTrace();                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException
+                {
+                    // Upload successful
+                    System.out.println("Upload complete");
+                }
+            });
+
+            System.out.println("--- 5 ---");
+
+           return true;
+        } catch (Exception ex)
+        {
+            // Handle the error
         }
 
-        return result.toString();
+        System.out.println("--- 6 ---");
+
+         return false;
     }
 
-    public static class PostData
-    {
-        URL url;
-        InputStream inputStream;
-        String name;
-        String fileName;
-
-        public URL getUrl()
-        {
-            return url;
-        }
-
-        public InputStream getInputStream()
-        {
-            return inputStream;
-        }
-
-        public String getName()
-        {
-            return name;
-        }
-
-        public String getFileName()
-        {
-            return fileName;
-        }
-    }
 }
+

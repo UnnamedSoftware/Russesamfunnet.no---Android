@@ -21,13 +21,12 @@ import android.widget.Toast;
 
 import com.theartofdev.edmodo.cropper.CropImageView;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,8 +38,8 @@ public class CropImage extends AppCompatActivity
     private CropImageView cropImageView;
     private Uri cropImageUri;
     private Bitmap cropped;
-    private String currentPhotoPath;
-    private String sourceFileUri;
+    private String url;
+    private File file;
 
 
     @Override
@@ -49,8 +48,6 @@ public class CropImage extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crop_image);
         cropImageView = findViewById(R.id.CropImageView);
-
-        sourceFileUri = "/data/user/0/com.unnamedsoftware.russesamfunnet/cache/" + ((Global) this.getApplication()).getRussId() + "profilePicture" + ".jpg";
 
         startActivityForResult(getPickImageChooserIntent(), 200);
 
@@ -249,16 +246,48 @@ public class CropImage extends AppCompatActivity
     {
         Bitmap bitmap = cropImageView.getCroppedImage();
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
         byte[] bitmapdata = stream.toByteArray();
 
-        ByteArrayInputStream bs = new ByteArrayInputStream(bitmapdata);
+        String filename = String.format(((Global) this.getApplication()).getRussId() + "profilePicture.png");
 
-        String url = "http://158.38.101.162:8080/upload/";
-
+        this.file = new File(this.getCacheDir(), filename);
         try
         {
-            executePost(bs);
+            file.createNewFile();
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+
+        try (FileOutputStream fos = new FileOutputStream(file))
+        {
+            fos.write(bitmapdata);
+            fos.flush();
+            fos.close();
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+
+        System.out.println("+++++++++++++++++++File path: " + file.getPath());
+
+        this.url = "http://158.38.101.162:8080/upload/";
+
+        UploadImage uploadImage = new UploadImage(file, url);
+        uploadImage.execute();
+
+        Intent returnIntent = new Intent();
+        setResult(Activity.RESULT_CANCELED, returnIntent);
+        finish();
+
+
+
+        /*
+        try
+        {
+            URL url = new URL(string);
+            executePost(url,bs);
         } catch (MalformedURLException e)
         {
             e.printStackTrace();
@@ -266,19 +295,19 @@ public class CropImage extends AppCompatActivity
         {
             e.printStackTrace();
         }
-
-
-    }
-
-    private void executePost(InputStream is) throws MalformedURLException, FileNotFoundException
-    {
-        String fileName = String.format(((Global) this.getApplication()).getRussId() + "profilePicture" + ".jpg", System.currentTimeMillis());
-        new UploadImage(status -> loadThumbnails()).execute(
-                new UploadImage.PostData(new URL(PhotoService.POST), is, "file", fileName)
-        );
-
+*/
 
     }
+
+    /*
+        private void executePost(URL url, InputStream is) throws MalformedURLException, FileNotFoundException
+        {
+            String fileName = String.format(((Global) this.getApplication()).getRussId() + "profilePicture" + ".jpg");
+            new UploadImage(status -> loadThumbnails()).execute(
+                    new UploadImage.PostData(url, is, "file", fileName)
+            );
+        }
+    */
 
     private void loadThumbnails()
     {

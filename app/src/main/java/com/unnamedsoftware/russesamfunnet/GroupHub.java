@@ -331,7 +331,7 @@ public class GroupHub extends AppCompatActivity implements SwipeRefreshLayout.On
                 String groupName = jsonObject.getString("groupName");
 
                 GroupEntity groupEntity = new GroupEntity(groupID, groupName);
-                RussEntity russ = new RussEntity(russId, russStatus, firstName, lastName, email, russPassword, russRole, russYear);
+                RussEntity russ = new RussEntity(russId, russStatus, firstName, lastName, email, russPassword, russRole, russYear,profilePicture,russCard);
                 String message = u.getString("message");
                 Long feedId = u.getLong("feedId");
                 if(u.getString("type").equals("Group")) {
@@ -412,7 +412,7 @@ public class GroupHub extends AppCompatActivity implements SwipeRefreshLayout.On
                     String schoolStatus = newSchoolObject.getString("schoolStatus");
 
                     SchoolEntity school = new SchoolEntity(schoolId, schoolName, schoolStatus);
-                    RussEntity russ = new RussEntity(russId, russStatus, firstName, lastName, email, russPassword, russRole, russYear);
+                    RussEntity russ = new RussEntity(russId, russStatus, firstName, lastName, email, russPassword, russRole, russYear,profilePicture,russCard);
                     System.out.println(russId);
                     ScoreboardEntity user = new ScoreboardEntity(scoreboardId, points, position, russ);
                     scoreboardEntityList.add(user);
@@ -426,25 +426,6 @@ public class GroupHub extends AppCompatActivity implements SwipeRefreshLayout.On
             }
 
         }
-
-
-
-    /**
-     * Long russId, String russStatus, String firstName,
-     * String lastName, String email, String russPassword, String russRole, int russYear
-     */
-    private void dummyTop3()
-    {
-        Long id = new Long(8846548);
-        RussEntity russEntity = new RussEntity(id, "russ", "Girts", "Strazdins", "jenw", "lkjh", "efef", 1222);
-        russEntityList.add(russEntity);
-
-        russEntity = new RussEntity(id, "russ", "Svenn", "Valen", "jenw", "lkjh", "efef", 1222);
-        russEntityList.add(russEntity);
-
-        russEntity = new RussEntity(id, "russ", "Julia", "Flowers", "jenw", "lkjh", "efef", 1222);
-        russEntityList.add(russEntity);
-    }
 
     private String getDeleteURL()
     {

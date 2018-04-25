@@ -159,7 +159,7 @@ public class WitnessSelection extends AppCompatActivity
                 String schoolStatus = newSchoolObject.getString("schoolStatus");
 
                 SchoolEntity school = new SchoolEntity(schoolId, schoolName, schoolStatus);
-                RussEntity russ = new RussEntity(russId, russStatus, firstName, lastName, email, russPassword, russRole, russYear);
+                RussEntity russ = new RussEntity(russId, russStatus, firstName, lastName, email, russPassword, russRole, russYear,profilePicture,russCard);
                 if (!russ.getRussId().equals(((Global) this.getApplication()).getRussId()))
                 {
                     witnessSuggestions.add(russ);

@@ -32,7 +32,8 @@ public class RussEntity extends Entity implements Serializable {
         this.russId = russId;
     }
 
-    public RussEntity(Long russId, String russStatus, String firstName, String lastName, String email, String russPassword, String russRole, int russYear) {
+    public RussEntity(Long russId, String russStatus, String firstName, String lastName, String email, String russPassword, String russRole, int russYear, String profilePicture, String russCard)
+    {
         this.russId = russId;
         this.russStatus = russStatus;
         this.firstName = firstName;
@@ -41,6 +42,8 @@ public class RussEntity extends Entity implements Serializable {
         this.russPassword = russPassword;
         this.russRole = russRole;
         this.russYear = russYear;
+        this.profilePicture = profilePicture;
+        this.russCard = russCard;
     }
 
     public Long getRussId() {

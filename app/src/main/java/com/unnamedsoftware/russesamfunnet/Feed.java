@@ -340,7 +340,7 @@ public class Feed extends AppCompatActivity implements SwipeRefreshLayout.OnRefr
                 String schoolStatus = newSchoolObject.getString("schoolStatus");
 
                 SchoolEntity school = new SchoolEntity(schoolId, schoolName, schoolStatus);
-                RussEntity russ = new RussEntity(russId, russStatus, firstName, lastName, email, russPassword, russRole, russYear);
+                RussEntity russ = new RussEntity(russId, russStatus, firstName, lastName, email, russPassword, russRole, russYear,profilePicture,russCard);
                 String message = u.getString("message");
                 Long feedId = u.getLong("feedId");
                 if (u.getString("type").equals("School"))
@@ -438,6 +438,7 @@ public class Feed extends AppCompatActivity implements SwipeRefreshLayout.OnRefr
                     {
                         System.out.println("Russ id: " + jsonObject.getLong("russId"));
                         setRussID(jsonObject.getLong("russId"));
+
                     } catch (Exception e)
                     {
                         e.printStackTrace();

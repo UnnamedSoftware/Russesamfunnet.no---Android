@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
-import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
@@ -191,7 +190,7 @@ public class GroupScoreboardMembersList extends AppCompatActivity
                 String schoolStatus = newSchoolObject.getString("schoolStatus");
 
                 SchoolEntity school = new SchoolEntity(schoolId, schoolName, schoolStatus);
-                RussEntity russ = new RussEntity(russId, russStatus, firstName, lastName, email, russPassword, russRole, russYear);
+                RussEntity russ = new RussEntity(russId, russStatus, firstName, lastName, email, russPassword, russRole, russYear,profilePicture,russCard);
                 System.out.println(russId);
                 ScoreboardEntity user = new ScoreboardEntity(scoreboardId, points, position, russ);
                 scoreboardEntityList.add(user);

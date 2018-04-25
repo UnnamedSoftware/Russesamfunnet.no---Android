@@ -71,6 +71,7 @@ public class UserProfile extends AppCompatActivity
         boolean hasImageOnServer = false;
         this.russCard = findViewById(R.id.russCard);
         getSupportActionBar().setTitle("Brukerprofil");
+
         if (russCardFile.exists())
         {
             Bitmap russCardBitmap = BitmapFactory.decodeFile(russCardFile.getAbsolutePath());
@@ -98,18 +99,7 @@ public class UserProfile extends AppCompatActivity
             }
         });
 
-
         this.userImage = findViewById(R.id.userProfilePicture);
-        String userImageURI = "http://158.38.101.162:8080/files/" + ((Global) this.getApplication()).getRussId() + "profilePicture" + ".jpg";
-        ((Global) this.getApplication()).getImageLoader().loadImage(userImageURI, new SimpleImageLoadingListener()
-        {
-            @Override
-            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage)
-            {
-                userImage.setImageBitmap(loadedImage);
-            }
-        });
-
         this.userImage.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -203,16 +193,6 @@ public class UserProfile extends AppCompatActivity
 
         }
 
-        try
-        {
-            getUserRuss();
-            getCompletedKnots();
-        } catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-
-
 
         this.recyclerView = findViewById(R.id.recycler_view_user_knot_list);
         this.knotListAdapter = new KnotListAdapter(knotEntities);
@@ -221,6 +201,15 @@ public class UserProfile extends AppCompatActivity
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         recyclerView.setAdapter(knotListAdapter);
+
+        try
+        {
+            getUserRuss();
+            getCompletedKnots();
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+        }
 
 
 /**
@@ -448,17 +437,26 @@ public class UserProfile extends AppCompatActivity
             String russRole = user.getString("russRole");
             int russYear = Integer.valueOf(user.getString("russYear"));
 
-            russ = new RussEntity(russId, russStatus, firstName, lastName, email, russPassword, russRole, russYear);
+            String profilePicture = user.getString("profilePicture");
+            String russCard = user.getString("russCard");
 
-            try {
+            russ = new RussEntity(russId, russStatus, firstName, lastName, email, russPassword, russRole, russYear, profilePicture, russCard);
+
+            try
+            {
                 TextView russName = findViewById(R.id.russName);
                 TextView knotTitle = findViewById(R.id.KnuterText);
                 russName.setText(russ.getFirstName() + " " + russ.getLastName());
-                if (isOtherRuss) {
-                    knotTitle.setText(russ.getFirstName() +"s knuter");
-                } else {
+                if (isOtherRuss)
+                {
+                    knotTitle.setText(russ.getFirstName() + "s knuter");
+                } else
+                {
                     knotTitle.setText("Dine knuter");
                 }
+
+                setProfilePicture(profilePicture);
+
             } catch (Exception e)
             {
                 e.printStackTrace();
@@ -470,6 +468,31 @@ public class UserProfile extends AppCompatActivity
             e.printStackTrace();
         }
     }
+
+    private void setProfilePicture(String url)
+    {
+        //String userImageURI = "http://158.38.101.162:8080/files/" + ((Global) this.getApplication()).getRussId() + "profilePicture" + ".jpg";
+
+
+        if (russ.getProfilePicture().isEmpty())
+        {
+            userImage.setImageResource(R.drawable.default_user);
+        } else
+        {
+            String userImageURI = russ.getProfilePicture();
+
+            ((Global) this.getApplication()).getImageLoader().loadImage(userImageURI, new SimpleImageLoadingListener()
+            {
+                @Override
+                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage)
+                {
+                    userImage.setImageBitmap(loadedImage);
+                }
+            });
+        }
+    }
+
+
 
     @Override
     public boolean onSupportNavigateUp()

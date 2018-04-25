@@ -6,7 +6,6 @@ import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
@@ -278,9 +277,11 @@ public class Knot extends AppCompatActivity
             String email = jsonObject.getString("email");
             String russPassword = jsonObject.getString("russPassword");
             String russRole = jsonObject.getString("russRole");
+            String profilePicture = jsonObject.getString("profilePicture");
+            String russCard = jsonObject.getString("russCard");
             int russYear = Integer.valueOf(jsonObject.getString("russYear"));
 
-            return new RussEntity(russId, russStatus, firstName, lastName, email, russPassword, russRole, russYear);
+            return new RussEntity(russId, russStatus, firstName, lastName, email, russPassword, russRole, russYear,profilePicture,russCard);
         } catch (Exception e)
         {
             e.printStackTrace();
