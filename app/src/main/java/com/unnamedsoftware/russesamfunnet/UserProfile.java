@@ -381,9 +381,9 @@ public class UserProfile extends AppCompatActivity
                 Long knotID = knotsJSONObject.getLong("knotId");
                 String title = knotsJSONObject.getString("knotName");
                 String description = knotsJSONObject.getString("knotDetails");
-                Boolean completed = knotsJSONObject.getBoolean("completed");
+                //Boolean completed = knotsJSONObject.getBoolean("completed");
 
-                KnotEntity knot = new KnotEntity(knotID, title, description,completed);
+                KnotEntity knot = new KnotEntity(knotID, title, description,true);
                 knotEntities.add(knot);
             }
             this.knotListAdapter.notifyDataSetChanged();
@@ -472,16 +472,14 @@ public class UserProfile extends AppCompatActivity
 
     private void setProfilePicture(String url)
     {
-        //String userImageURI = "http://158.38.101.162:8080/files/" + ((Global) this.getApplication()).getRussId() + "profilePicture" + ".jpg";
+        String userImageURI = "http://158.38.101.162:8080/files/" + url;
 
 
-        if (russ.getProfilePicture().isEmpty())
+        if (url.isEmpty())
         {
             userImage.setImageResource(R.drawable.default_user);
         } else
         {
-            String userImageURI = russ.getProfilePicture();
-
             ((Global) this.getApplication()).getImageLoader().loadImage(userImageURI, new SimpleImageLoadingListener()
             {
                 @Override

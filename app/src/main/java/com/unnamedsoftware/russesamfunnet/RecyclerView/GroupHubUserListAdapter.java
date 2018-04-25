@@ -41,7 +41,6 @@ public class GroupHubUserListAdapter extends RecyclerView.Adapter<GroupHubUserLi
                 .inflate(R.layout.group_hub_user_row, parent, false);
 
         return new ViewHolder(itemView);
-
     }
 
     @Override

@@ -72,7 +72,7 @@ public class GroupList extends AppCompatActivity
         getGroups();
 
         this.recyclerView = findViewById(R.id.glaGroup);
-        this.groupListAdapter = new GroupListAdapter(groupEntityList, this, ((Global) this.getApplication()).getRussId(), removeUserUrl());
+        this.groupListAdapter = new GroupListAdapter(groupEntityList, this, ((Global) this.getApplication()).getRussId(), removeUserUrl(),((Global) this.getApplication()).getImageLoader());
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -230,5 +230,4 @@ public class GroupList extends AppCompatActivity
         }
         return newUrl;
     }
-
 }
