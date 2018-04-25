@@ -49,6 +49,8 @@ public class CropImage extends AppCompatActivity
         setContentView(R.layout.activity_crop_image);
         cropImageView = findViewById(R.id.CropImageView);
 
+        sourceFileUri = "/data/user/0/com.unnamedsoftware.russesamfunnet/cache/" + ((Global) this.getApplication()).getRussId() + "profilePicture" + ".jpg";
+
         startActivityForResult(getPickImageChooserIntent(), 200);
 
     }
