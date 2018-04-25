@@ -10,8 +10,10 @@ import com.creativityapps.gmailbackgroundlibrary.BackgroundMail;
  */
 public class Report extends Activity
 {
-    public void reportUser(String message, long userID, long russID, Context context)
+    public void reportUser(String reportMessage, String reportedPost, long userID, long russID, Context context)
     {
+        String message = reportMessage + System.lineSeparator() + "Post: " + reportedPost;
+
         BackgroundMail.newBuilder(context)
                 .withUsername("russesamfunnetuserreport@gmail.com")
                 .withPassword("bacheloridata")

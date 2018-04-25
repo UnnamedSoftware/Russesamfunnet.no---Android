@@ -96,6 +96,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>
     {
         final FeedEntity feedPost = posts.get(position);
         final Long russid = feedPost.getRussId().getRussId();
+        final String reportedPost = feedPost.getMessage();
         final View view = holder.linearLayout;
        // final CircularImageView imageView = holder.userImage;
         holder.poster.setText(feedPost.getPoster());
@@ -119,7 +120,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>
             {
                 final Long id = feedPost.getFeedId();
                 System.out.println(id);
-                optionMenu(view, id, position - 1, russid);
+                optionMenu(view, id, position - 1, russid, reportedPost);
                 return false;
             }
         });
@@ -156,9 +157,10 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>
     }
 
 
-    private void optionMenu(View view, Long id, int p, final Long russID)
+    private void optionMenu(View view, Long id, int p, final Long russID, String post)
     {
         final Long feedID = id;
+        final String reportedPost = post;
         final int position = p;
         Vibrator vibe = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
         vibe.vibrate(50);
@@ -212,7 +214,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>
                                 break;
 
                             case R.id.Rapporter:
-                                reportPost(russID);
+                                reportPost(russID,reportedPost);
                                 break;
                         }
                         return true;
@@ -255,7 +257,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>
                     switch (item.getItemId())
                     {
                         case R.id.Rapporter:
-                            reportPost(russID);
+                            reportPost(russID,reportedPost);
                             break;
                     }
                     return true;
@@ -337,8 +339,9 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>
         }
     }
 
-    private void reportPost(final Long russID)
+    private void reportPost(final Long russID, String post)
     {
+        final String reportPost = post;
         final Dialog dialog = new Dialog(context);
         dialog.setContentView(R.layout.report_dialog);
         final EditText editText = dialog.findViewById(R.id.reportMessage);
@@ -349,7 +352,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>
             public void onClick(View v)
             {
                 Report report = new Report();
-                report.reportUser(editText.getText().toString(), userID, russID, context);
+                report.reportUser(editText.getText().toString(),reportPost,userID, russID, context);
                 dialog.cancel();
             }
         });
