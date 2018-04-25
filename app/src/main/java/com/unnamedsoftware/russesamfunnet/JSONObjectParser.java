@@ -3,7 +3,6 @@ package com.unnamedsoftware.russesamfunnet;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -52,7 +51,7 @@ public class JSONObjectParser extends AsyncTask<URL, Void, JSONObject>
  }
  */
             System.out.println("\n line 1 \n");
-            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"), 8);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "ISO-8859-1"), 8);
             System.out.println("\n line 2 \n");
             StringBuilder stringBuilder = new StringBuilder();
             System.out.println("\n line 3 \n");
