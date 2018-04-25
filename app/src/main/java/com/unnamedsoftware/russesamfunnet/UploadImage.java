@@ -37,12 +37,10 @@ public class UploadImage extends AsyncTask<Void,Void,Boolean>
         try
         {
             client = new OkHttpClient();
-
             RequestBody requestBody = new MultipartBody.Builder()
                     .setType(MultipartBody.FORM)
-                    .addFormDataPart("file", file.getName(),
-                            RequestBody.create(MediaType.parse("image/png"), file))
                     .addFormDataPart("name",file.getName())
+                    .addFormDataPart("file", file.getName(), RequestBody.create(MediaType.parse("image/png"), file))
                     .build();
 
             request = new Request.Builder()
@@ -57,6 +55,10 @@ public class UploadImage extends AsyncTask<Void,Void,Boolean>
             System.out.println(request.url());
             System.out.println(request.toString());
 
+         /**   if(client.newCall(request).execute().isSuccessful())
+            {
+                System.out.println("YAY");
+            }*/
             client.newCall(request).enqueue(new Callback()
             {
 
@@ -70,10 +72,17 @@ public class UploadImage extends AsyncTask<Void,Void,Boolean>
                 @Override
                 public void onResponse(Call call, Response response) throws IOException
                 {
+                    System.out.println(response.message());
                     // Upload successful
-                    System.out.println("Upload complete");
+                    if(response.isSuccessful()) {
+                        System.out.println("Upload complete");
+
+                    } else {
+                        System.out.println(":(");
+                    }
                 }
             });
+
 
             System.out.println("--- 5 ---");
 
