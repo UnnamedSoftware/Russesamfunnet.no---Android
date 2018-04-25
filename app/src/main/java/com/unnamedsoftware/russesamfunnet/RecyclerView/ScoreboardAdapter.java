@@ -1,6 +1,7 @@
 package com.unnamedsoftware.russesamfunnet.RecyclerView;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import com.unnamedsoftware.russesamfunnet.Entity.RussEntity;
 import com.unnamedsoftware.russesamfunnet.Entity.ScoreboardEntity;
+import com.unnamedsoftware.russesamfunnet.Global;
 import com.unnamedsoftware.russesamfunnet.R;
 import com.unnamedsoftware.russesamfunnet.UserProfile;
 
@@ -23,7 +25,7 @@ public class ScoreboardAdapter extends RecyclerView.Adapter<ScoreboardAdapter.Vi
 {
     private List<ScoreboardEntity> userList;
 
-    private Long userID ;
+    private Context context;
 
     public class ViewHolder extends RecyclerView.ViewHolder
     {
@@ -40,11 +42,9 @@ public class ScoreboardAdapter extends RecyclerView.Adapter<ScoreboardAdapter.Vi
         }
     }
 
-    public ScoreboardAdapter(List<ScoreboardEntity> userList, Long userId)
+    public ScoreboardAdapter(List<ScoreboardEntity> userList, Context context)
     {
-        System.out.println("SA russ id pre: " + userID);
-        this.userID = userId;
-        System.out.println("SA russ id post: " + userID);
+        this.context = context;
         this.userList = userList;
     }
 
@@ -73,8 +73,8 @@ public class ScoreboardAdapter extends RecyclerView.Adapter<ScoreboardAdapter.Vi
     public void onBindViewHolder(ViewHolder holder, int position)
     {
         final ScoreboardEntity listUser = userList.get(position);
-        System.out.println("----- " + listUser.getRussId().getRussId() + " & " +  userID + " -----");
-        if (listUser.getRussId().getRussId().equals(userID))
+        System.out.println("----- " + listUser.getRussId().getRussId() + " & " + ((Global) context.getApplicationContext()).getRussId() + " -----");
+        if (listUser.getRussId().getRussId().equals(((Global) context.getApplicationContext()).getRussId()))
         {
             holder.layout.setBackgroundResource((R.drawable.user_scoreboard_border));
         }

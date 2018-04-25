@@ -38,9 +38,6 @@ public class GroupScoreboardMembersList extends AppCompatActivity
     private String groupName;
     private String url;
 
-    private Long russId = null;
-
-
     private List<ScoreboardEntity> scoreboardEntityList = new ArrayList<>();
     private RecyclerView recyclerView;
     private ScoreboardAdapter scoreboardAdapter;
@@ -83,7 +80,7 @@ public class GroupScoreboardMembersList extends AppCompatActivity
         }
         
         this.recyclerView = findViewById(R.id.recycler_view_scoreboard);
-        this.scoreboardAdapter = new ScoreboardAdapter(scoreboardEntityList, russId);
+        this.scoreboardAdapter = new ScoreboardAdapter(scoreboardEntityList, this);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -135,7 +132,6 @@ public class GroupScoreboardMembersList extends AppCompatActivity
                 @Override
                 public void onPostExecute(JSONObject jsonObject) {
                     try {
-                        setRussId(jsonObject.getLong("russId"));
                     }catch (Exception e)
                     {
                         e.printStackTrace();
@@ -147,10 +143,6 @@ public class GroupScoreboardMembersList extends AppCompatActivity
         }
     }
 
-    private void setRussId(Long russId)
-    {
-        this.russId = russId;
-    }
 
     public void fillScoreboard(JSONArray jsonArray)
     {
