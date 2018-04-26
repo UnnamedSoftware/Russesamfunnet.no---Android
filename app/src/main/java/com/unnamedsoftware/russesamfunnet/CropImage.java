@@ -22,7 +22,6 @@ import android.widget.Toast;
 import com.facebook.AccessToken;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
