@@ -1,6 +1,7 @@
 package com.unnamedsoftware.russesamfunnet;
 
 import android.annotation.SuppressLint;
+import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -11,8 +12,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.ViewTreeObserver;
 
 import com.facebook.AccessToken;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.unnamedsoftware.russesamfunnet.Entity.RussEntity;
 import com.unnamedsoftware.russesamfunnet.Entity.SchoolEntity;
 import com.unnamedsoftware.russesamfunnet.Entity.ScoreboardEntity;
@@ -25,6 +28,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -36,7 +40,10 @@ public class Scoreboard extends AppCompatActivity
     private List<ScoreboardEntity> userList = new ArrayList<>();
     private RecyclerView recyclerView;
     private ScoreboardAdapter scoreboardAdapter;
+    private HashMap<ScoreboardEntity, Bitmap> scoreboardMap = new HashMap<>();
     private JSONArray jsonArray = null;
+    private HashMap<String, Bitmap> images = new HashMap<>();
+    private Bitmap userImage;
 
     private String url;
 
@@ -82,12 +89,35 @@ public class Scoreboard extends AppCompatActivity
         }
 
         this.recyclerView = findViewById(R.id.recycler_view_scoreboard);
-        this.scoreboardAdapter = new ScoreboardAdapter(userList, ((Global) this.getApplication()).getRussId());
+        this.scoreboardAdapter = new ScoreboardAdapter(userList, ((Global) this.getApplication()).getRussId(), scoreboardMap);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         recyclerView.setAdapter(scoreboardAdapter);
+
+        recyclerView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                if (recyclerViewReadyCallback != null) {
+                    recyclerViewReadyCallback.onLayoutReady();
+                }
+                recyclerView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+            }
+        });
+
+        recyclerViewReadyCallback = new Feed.RecyclerViewReadyCallback() {
+            @Override
+            public void onLayoutReady() {
+                try {
+                    scoreboardAdapter.clear();
+                    getRussScoreboard();
+                } catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+            }
+        };
 /**
  //Swipe func.
  ConstraintLayout constraintLayout = findViewById(R.id.KnotLayout);
@@ -100,6 +130,12 @@ public class Scoreboard extends AppCompatActivity
  });
  */
     }
+    private Feed.RecyclerViewReadyCallback recyclerViewReadyCallback;
+
+    public interface RecyclerViewReadyCallback {
+        void onLayoutReady();
+    }
+
 
     /**
      * Uses the JSONParser to request the scoreboard from the server.
@@ -174,6 +210,37 @@ public class Scoreboard extends AppCompatActivity
         {
             e.printStackTrace();
         }
+    }
+
+    private void setProfilePicture(final ScoreboardEntity scoreboardEntity)
+    {
+        final String url = scoreboardEntity.getRussId().getProfilePicture();
+        System.out.println(url);
+        String userImageURI = "http://158.38.101.162:8080/files/" + url;
+
+        if (!url.equals("null")) {
+            if(images.containsKey(url))
+            {
+                scoreboardMap.put(scoreboardEntity, images.get(url));
+                scoreboardAdapter.notifyDataSetChanged();
+            }
+            ((Global) this.getApplication()).getImageLoader().loadImage(userImageURI, new SimpleImageLoadingListener() {
+                @Override
+                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                    userImage = loadedImage;
+                    System.out.println("TRUE");
+                    images.put(url, userImage);
+                    scoreboardMap.put(scoreboardEntity, userImage);
+                    scoreboardAdapter.notifyDataSetChanged();
+                }
+            });
+        } else {
+            userImage = null;
+            scoreboardMap.put(scoreboardEntity, userImage);
+            scoreboardAdapter.notifyDataSetChanged();
+        }
+
+
     }
 
     @Override
