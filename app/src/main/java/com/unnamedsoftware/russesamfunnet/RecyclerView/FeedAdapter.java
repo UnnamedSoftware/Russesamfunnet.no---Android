@@ -3,6 +3,7 @@ package com.unnamedsoftware.russesamfunnet.RecyclerView;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Vibrator;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.PopupMenu;
@@ -28,6 +29,7 @@ import org.json.JSONObject;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -44,12 +46,14 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>
     private Long userID;
     private String removeUserUrl;
     private ImageLoader imageLoader;
+    private HashMap<FeedEntity, Bitmap> feedMap;
 
     public class ViewHolder extends RecyclerView.ViewHolder
     {
         private TextView poster, post;
         private CircularImageView userImage;
         private ConstraintLayout linearLayout;
+
 
         public ViewHolder(View view)
         {
@@ -61,8 +65,9 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>
         }
     }
 
-    public FeedAdapter(List<FeedEntity> feedPosts, Context context, String url, Long userID, Long groupId, String removeUserUrl, ImageLoader imageLoader)
+    public FeedAdapter(List<FeedEntity> feedPosts, Context context, String url, Long userID, Long groupId, String removeUserUrl, ImageLoader imageLoader, HashMap<FeedEntity, Bitmap> feedMap)
     {
+        this.feedMap = feedMap;
         this.removeUserUrl = removeUserUrl;
         this.groupId = groupId;
         this.posts = feedPosts;
@@ -73,8 +78,9 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>
         this.imageLoader = imageLoader;
     }
 
-    public FeedAdapter(List<FeedEntity> feedPosts, Context context, String url, Long userID, ImageLoader imageLoader)
+    public FeedAdapter(List<FeedEntity> feedPosts, Context context, String url, Long userID, ImageLoader imageLoader, HashMap<FeedEntity, Bitmap> feedMap)
     {
+        this.feedMap = feedMap;
         this.posts = feedPosts;
         this.context = context;
         this.url = url;
@@ -100,6 +106,16 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>
        // final CircularImageView imageView = holder.userImage;
         holder.poster.setText(feedPost.getPoster());
         holder.post.setText(feedPost.getMessage());
+        try {
+            if (feedMap.get(feedPost) != null) {
+                holder.userImage.setImageBitmap(feedMap.get(feedPost));
+            } else {
+                holder.userImage.setImageResource(R.drawable.default_user);
+            }
+        } catch (Exception e)
+        {
+
+        }
 /*
         if (feedPost.getRussId().getProfilePicture() != null)
         {
