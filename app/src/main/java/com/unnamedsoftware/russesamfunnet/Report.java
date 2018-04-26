@@ -22,7 +22,6 @@ public class Report extends Activity
                 .withSubject("Report from: " + userID + " on " + russID)
                 .withBody(message)
                 .send();
-
             finish();
     }
 

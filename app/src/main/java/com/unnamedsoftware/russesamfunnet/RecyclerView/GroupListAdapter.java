@@ -19,8 +19,6 @@ import com.mikhaellopez.circularimageview.CircularImageView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.unnamedsoftware.russesamfunnet.AddUserToGroup;
 import com.unnamedsoftware.russesamfunnet.Entity.GroupEntity;
-import com.unnamedsoftware.russesamfunnet.Entity.RussEntity;
-import com.unnamedsoftware.russesamfunnet.Entity.ScoreboardEntity;
 import com.unnamedsoftware.russesamfunnet.GetTop3Scoreboard;
 import com.unnamedsoftware.russesamfunnet.GroupHub;
 import com.unnamedsoftware.russesamfunnet.JSONObjectParser;
@@ -95,14 +93,14 @@ public class GroupListAdapter extends RecyclerView.Adapter<GroupListAdapter.View
         holder.groupName.setText(groupEntity.getSearchName());
 
 
-        List<ScoreboardEntity> scoreboardTop3 = getTop3Scoreboard.getTop3();
+       /* List<ScoreboardEntity> scoreboardTop3 = getTop3Scoreboard.getTop3();
 
         while (scoreboardTop3.iterator().hasNext())
         {
             RussEntity russ = scoreboardTop3.iterator().next().getRussId();
             System.out.println("Top: " + russ.getSearchName());
 
-        }
+        }*/
 
         holder.itemView.setOnClickListener(new View.OnClickListener()
         {
