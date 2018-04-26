@@ -2,6 +2,7 @@ package com.unnamedsoftware.russesamfunnet;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -12,10 +13,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.facebook.AccessToken;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.unnamedsoftware.russesamfunnet.Entity.FeedEntity;
 import com.unnamedsoftware.russesamfunnet.Entity.GroupEntity;
 import com.unnamedsoftware.russesamfunnet.Entity.RussEntity;
@@ -32,6 +35,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -55,6 +59,9 @@ public class GroupHub extends AppCompatActivity implements SwipeRefreshLayout.On
     private List<FeedEntity> feedEntityList = new ArrayList<>();
     private GroupHubUserListAdapter groupHubUserListAdapter;
     private FeedAdapter feedAdapter;
+    private HashMap<FeedEntity, Bitmap> feedMap = new HashMap<>();
+    private Bitmap userImage;
+    private HashMap<String, Bitmap> images = new HashMap<>();
 
     private String url;
 
@@ -142,12 +149,29 @@ public class GroupHub extends AppCompatActivity implements SwipeRefreshLayout.On
         Long russId = ((Global)this.getApplication()).getRussId();
         System.out.println("--------------------------------------------------------" + russId);
         this.recyclerViewFeed = findViewById(R.id.recycler_view_feed);
-        this.feedAdapter = new FeedAdapter(feedEntityList,this,getDeleteURL(),russId, groupID, getRemoveUrl(),(((Global) this.getApplication()).getImageLoader()));
+        this.feedAdapter = new FeedAdapter(feedEntityList,this,getDeleteURL(),russId, groupID, getRemoveUrl(),(((Global) this.getApplication()).getImageLoader()), feedMap);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerViewFeed.setLayoutManager(layoutManager);
         recyclerViewFeed.setItemAnimator(new DefaultItemAnimator());
         recyclerViewFeed.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         recyclerViewFeed.setAdapter(feedAdapter);
+
+        recyclerViewFeed.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                if (recyclerViewReadyCallback != null) {
+                    recyclerViewReadyCallback.onLayoutReady();
+                }
+                recyclerViewFeed.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+            }
+        });
+
+        recyclerViewReadyCallback = new Feed.RecyclerViewReadyCallback() {
+            @Override
+            public void onLayoutReady() {
+                loadRecyclerViewData();
+            }
+        };
 
         Button button = findViewById(R.id.group_button_chatbox_send);
         button.setOnClickListener(new View.OnClickListener()
@@ -196,6 +220,11 @@ public class GroupHub extends AppCompatActivity implements SwipeRefreshLayout.On
  }
  });
  */
+    }
+    private Feed.RecyclerViewReadyCallback recyclerViewReadyCallback;
+
+    public interface RecyclerViewReadyCallback {
+        void onLayoutReady();
     }
 
     @Override
@@ -337,6 +366,7 @@ public class GroupHub extends AppCompatActivity implements SwipeRefreshLayout.On
                 if(u.getString("type").equals("Group")) {
                     FeedEntity post = new FeedEntity(feedId, message, russ);
                     feedEntityList.add(0, post);
+                    setProfilePicture(post);
                 }
             }
             feedAdapter.notifyDataSetChanged();
@@ -345,6 +375,48 @@ public class GroupHub extends AppCompatActivity implements SwipeRefreshLayout.On
         {
             e.printStackTrace();
         }
+    }
+
+    private void setProfilePicture(final FeedEntity feedEntity)
+    {
+        String url = feedEntity.getRussId().getProfilePicture();
+        System.out.println(url);
+        String userImageURI = "http://158.38.101.162:8080/files/" + url;
+
+        if (!url.equals("null")) {
+            if(images.containsKey(url))
+            {
+                feedMap.put(feedEntity, images.get(url));
+                feedAdapter.notifyDataSetChanged();
+            }
+            ((Global) this.getApplication()).getImageLoader().loadImage(userImageURI, new SimpleImageLoadingListener() {
+                @Override
+                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                    userImage = loadedImage;
+                    try {
+                        feedMap.put(feedEntity, userImage);
+                        feedAdapter.notifyDataSetChanged();
+                    } catch (Exception e)
+                    {
+                        e.printStackTrace();
+                    }
+
+
+                }
+            });
+
+        } else {
+            userImage = null;
+            try {
+                feedMap.put(feedEntity, userImage);
+                feedAdapter.notifyDataSetChanged();
+            } catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+        }
+
+
     }
 
     private void getTop3()
@@ -417,6 +489,7 @@ public class GroupHub extends AppCompatActivity implements SwipeRefreshLayout.On
                     ScoreboardEntity user = new ScoreboardEntity(scoreboardId, points, position, russ);
                     scoreboardEntityList.add(user);
                     russEntityList.add(russ);
+
                 }
                 groupHubUserListAdapter.notifyDataSetChanged();
                 findViewById(R.id.loadingPanel).setVisibility(View.GONE);

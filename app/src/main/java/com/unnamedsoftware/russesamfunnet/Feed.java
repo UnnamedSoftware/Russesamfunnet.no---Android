@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -21,6 +22,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,9 +30,12 @@ import android.widget.TextView;
 
 import com.facebook.AccessToken;
 import com.facebook.login.LoginManager;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.unnamedsoftware.russesamfunnet.Entity.FeedEntity;
+import com.unnamedsoftware.russesamfunnet.Entity.GroupEntity;
 import com.unnamedsoftware.russesamfunnet.Entity.RussEntity;
 import com.unnamedsoftware.russesamfunnet.Entity.SchoolEntity;
+import com.unnamedsoftware.russesamfunnet.Entity.ScoreboardEntity;
 import com.unnamedsoftware.russesamfunnet.RecyclerView.FeedAdapter;
 
 import org.json.JSONArray;
@@ -41,6 +46,8 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -60,6 +67,9 @@ public class Feed extends AppCompatActivity implements SwipeRefreshLayout.OnRefr
     private RecyclerView recyclerView;
     private FeedAdapter feedAdapter;
     private JSONArray jsonArray = null;
+    private Bitmap userImage;
+    private HashMap<FeedEntity, Bitmap> feedMap = new HashMap<>();
+    private HashMap<String, Bitmap> images = new HashMap<>();
 
     private String url;
     private EditText chatBox;
@@ -116,12 +126,31 @@ public class Feed extends AppCompatActivity implements SwipeRefreshLayout.OnRefr
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         recyclerView = findViewById(R.id.recycler_view_feed);
-        feedAdapter = new FeedAdapter(feedPosts, this, getDeleteURL(), ((Global) this.getApplication()).getRussId(), ((Global) this.getApplication()).getImageLoader());
+        feedAdapter = new FeedAdapter(feedPosts,this,getDeleteURL(),((Global)this.getApplication()).getRussId(),((Global)this.getApplication()).getImageLoader(), feedMap);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         recyclerView.setAdapter(feedAdapter);
+
+        recyclerView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                if (recyclerViewReadyCallback != null) {
+                    recyclerViewReadyCallback.onLayoutReady();
+                }
+                recyclerView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+            }
+        });
+
+        recyclerViewReadyCallback = new RecyclerViewReadyCallback() {
+            @Override
+            public void onLayoutReady() {
+                loadRecyclerViewData();
+            }
+        };
+
+
 
         this.chatBox = findViewById(R.id.edittext_chatbox);
         chatBox.addTextChangedListener(new TextWatcher()
@@ -179,6 +208,11 @@ public class Feed extends AppCompatActivity implements SwipeRefreshLayout.OnRefr
                 loadRecyclerViewData();
             }
         });
+    }
+    private RecyclerViewReadyCallback recyclerViewReadyCallback;
+
+    public interface RecyclerViewReadyCallback {
+        void onLayoutReady();
     }
 
     @Override
@@ -372,7 +406,8 @@ public class Feed extends AppCompatActivity implements SwipeRefreshLayout.OnRefr
                 if (u.getString("type").equals("School"))
                 {
                     FeedEntity posts = new FeedEntity(feedId, message, russ);
-                    feedPosts.add(0, posts);
+                    feedPosts.add(0,posts);
+                    setProfilePicture(posts);
                 }
             }
             feedAdapter.notifyDataSetChanged();
@@ -382,6 +417,37 @@ public class Feed extends AppCompatActivity implements SwipeRefreshLayout.OnRefr
             e.printStackTrace();
         }
     }
+
+    private void setProfilePicture(final FeedEntity feedEntity)
+    {
+            final String url = feedEntity.getRussId().getProfilePicture();
+            System.out.println(url);
+            String userImageURI = "http://158.38.101.162:8080/files/" + url;
+
+            if (!url.equals("null")) {
+                if(images.containsKey(url))
+                {
+                    feedMap.put(feedEntity, images.get(url));
+                    feedAdapter.notifyDataSetChanged();
+                }
+                ((Global) this.getApplication()).getImageLoader().loadImage(userImageURI, new SimpleImageLoadingListener() {
+                    @Override
+                    public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                        userImage = loadedImage;
+                        System.out.println("TRUE");
+                        images.put(url, userImage);
+                        feedMap.put(feedEntity, userImage);
+                        feedAdapter.notifyDataSetChanged();
+                    }
+                });
+            } else {
+                userImage = null;
+                    feedMap.put(feedEntity, userImage);
+                    feedAdapter.notifyDataSetChanged();
+            }
+
+
+        }
 
 
     @Override

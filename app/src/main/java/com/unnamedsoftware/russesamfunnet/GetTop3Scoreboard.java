@@ -21,6 +21,7 @@ public class GetTop3Scoreboard
 {
     private Context context;
     private Long groupID;
+    List<ScoreboardEntity> scoreboardEntityList;
 
     public GetTop3Scoreboard(Long groupID, Context context)
     {
@@ -57,13 +58,12 @@ public class GetTop3Scoreboard
         {
             e.printStackTrace();
         }
-
-        //return scoreboardEntityList;
     }
 
     private void addScoreboardToList(JSONArray jsonArray)
     {
-        List<ScoreboardEntity> scoreboardEntityList;
+        scoreboardEntityList.clear();
+
         JSONArray users = null;
         try
         {
@@ -96,13 +96,16 @@ public class GetTop3Scoreboard
                 RussEntity russ = new RussEntity(russId, russStatus, firstName, lastName, email, russPassword, russRole, russYear, profilePicture, russCard);
                 System.out.println(russId);
                 ScoreboardEntity user = new ScoreboardEntity(scoreboardId, points, position, russ);
-              //  scoreboardEntityList.add(user);
+                scoreboardEntityList.add(user);
             }
         } catch (Exception e)
         {
             e.printStackTrace();
         }
-       // return scoreboardEntityList;
+    }
+    public List<ScoreboardEntity> getScoreboardEntityList()
+    {
+        return scoreboardEntityList;
     }
 
 

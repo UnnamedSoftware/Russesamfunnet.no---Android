@@ -19,7 +19,11 @@ import android.system.ErrnoException;
 import android.view.View;
 import android.widget.Toast;
 
+import com.facebook.AccessToken;
 import com.theartofdev.edmodo.cropper.CropImageView;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -27,6 +31,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -259,10 +265,14 @@ public class CropImage extends AppCompatActivity
         System.out.println("+++++++++++++++++++File path: " + file.getPath());
 
         this.url = "http://158.38.101.162:8080/upload/";
-
-        UploadImage uploadImage = new UploadImage(file, url);
-        uploadImage.execute();
-
+        try {
+            UploadImage uploadImage = new UploadImage(file, url);
+            uploadImage.execute();
+            setImageName();
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+        }
         Intent returnIntent = new Intent();
         setResult(Activity.RESULT_CANCELED, returnIntent);
         finish();
@@ -283,6 +293,34 @@ public class CropImage extends AppCompatActivity
         }
 */
 
+    }
+
+    private void setImageName() throws IOException
+    {
+        String newUrl;
+        if (AccessToken.getCurrentAccessToken() != null)
+        {
+            System.out.println(AccessToken.getCurrentAccessToken().getToken());
+            newUrl = (getString(R.string.url) + "setProfilePicture?accessToken=" + AccessToken.getCurrentAccessToken().getToken() + "&type=facebook&pictureName=" + file.getName());
+        } else
+        {
+            System.out.println(((Global) this.getApplication()).getAccessToken());
+            newUrl = getString(R.string.url) + "setProfilePicture?accessToken=" + ((Global) this.getApplication()).getAccessToken() + "&type=russesamfunnet&pictureName=" + file.getName();
+        }
+        try
+        {
+            new JSONObjectParser(new JSONObjectParser.OnPostExecute()
+            {
+                @Override
+                public void onPostExecute(JSONObject jsonObject)
+                {
+
+                }
+            }).execute(new URL(newUrl));
+        } catch (MalformedURLException e)
+        {
+            e.printStackTrace();
+        }
     }
 
     /*
