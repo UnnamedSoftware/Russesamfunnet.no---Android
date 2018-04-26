@@ -67,14 +67,14 @@ public class Login extends AppCompatActivity
                 startActivity(new Intent(Login.this, Register.class));
             }
         });
-/*
-        Button dummyButton = findViewById(R.id.dummyButton);
+
+  /*      Button dummyButton = findViewById(R.id.dummyButton);
         dummyButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View view)
             {
-                startActivity(new Intent(Login.this, GroupList.class));
+                startActivity(new Intent(Login.this, .class));
             }
         });
 */

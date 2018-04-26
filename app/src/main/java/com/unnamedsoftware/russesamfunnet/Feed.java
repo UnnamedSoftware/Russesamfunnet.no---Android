@@ -18,12 +18,15 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.facebook.AccessToken;
 import com.facebook.login.LoginManager;
@@ -69,6 +72,8 @@ public class Feed extends AppCompatActivity implements SwipeRefreshLayout.OnRefr
     private HashMap<String, Bitmap> images = new HashMap<>();
 
     private String url;
+    private EditText chatBox;
+
 
     // JSON Node names
     private static final String TAG_feed = "feed";
@@ -100,16 +105,16 @@ public class Feed extends AppCompatActivity implements SwipeRefreshLayout.OnRefr
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Russesamfunnet");
 /**
-        try
-        {
-            System.out.println("Trying to get RussID");
-            getRussId();
-        } catch (IOException e)
-        {
-            System.out.println("***Something went wrong***");
-            e.printStackTrace();
-        }
-*/
+ try
+ {
+ System.out.println("Trying to get RussID");
+ getRussId();
+ } catch (IOException e)
+ {
+ System.out.println("***Something went wrong***");
+ e.printStackTrace();
+ }
+ */
         drawerLayout = findViewById(R.id.navigationDrawer);
         drawerToggle = setUpDrawerToggle();
 
@@ -147,15 +152,36 @@ public class Feed extends AppCompatActivity implements SwipeRefreshLayout.OnRefr
 
 
 
+        this.chatBox = findViewById(R.id.edittext_chatbox);
+        chatBox.addTextChangedListener(new TextWatcher()
+        {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+            @Override
+            public void afterTextChanged(Editable editable)
+            {
+                String currentText = editable.toString();
+                int currentLength = currentText.length();
+                TextView charCount = findViewById(R.id.charCount);
+                charCount.setText(String.valueOf(currentLength));
+            }
+        });
+
+
         Button button = findViewById(R.id.button_chatbox_send);
         button.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View view)
             {
-                sendMessage((EditText) findViewById(R.id.edittext_chatbox));
+                sendMessage(chatBox);
             }
         });
+
 
         // SwipeRefreshLayout
         swipeRefreshLayout = this.findViewById(R.id.swipe_container);
@@ -374,7 +400,7 @@ public class Feed extends AppCompatActivity implements SwipeRefreshLayout.OnRefr
                 String schoolStatus = newSchoolObject.getString("schoolStatus");
 
                 SchoolEntity school = new SchoolEntity(schoolId, schoolName, schoolStatus);
-                RussEntity russ = new RussEntity(russId, russStatus, firstName, lastName, email, russPassword, russRole, russYear,profilePicture,russCard);
+                RussEntity russ = new RussEntity(russId, russStatus, firstName, lastName, email, russPassword, russRole, russYear, profilePicture, russCard);
                 String message = u.getString("message");
                 Long feedId = u.getLong("feedId");
                 if (u.getString("type").equals("School"))
@@ -551,7 +577,7 @@ public class Feed extends AppCompatActivity implements SwipeRefreshLayout.OnRefr
             public void onClick(View v)
             {
                 Report report = new Report();
-                report.reportBug(editText.getText().toString(),userID,context);
+                report.reportBug(editText.getText().toString(), userID, context);
                 dialog.cancel();
             }
         });

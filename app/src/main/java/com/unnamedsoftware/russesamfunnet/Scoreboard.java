@@ -89,7 +89,7 @@ public class Scoreboard extends AppCompatActivity
         }
 
         this.recyclerView = findViewById(R.id.recycler_view_scoreboard);
-        this.scoreboardAdapter = new ScoreboardAdapter(userList, ((Global) this.getApplication()).getRussId(), scoreboardMap);
+        this.scoreboardAdapter = new ScoreboardAdapter(userList, this, scoreboardMap);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());

@@ -183,6 +183,10 @@
             android:label="@string/app_name"
             android:parentActivityName=".Knot"
             android:windowSoftInputMode="adjustResize" />
+
+
+
+        <activity android:name=".Example"></activity>
     </application>
 
 

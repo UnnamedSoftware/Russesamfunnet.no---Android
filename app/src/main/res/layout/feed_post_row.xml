@@ -47,6 +47,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/rvPoster"
         android:layout_marginTop="4dp"
+        android:maxLength="280"
         android:layout_toEndOf="@+id/userProfilePicture"
         android:text="Hurdidur"
         android:textSize="12sp"

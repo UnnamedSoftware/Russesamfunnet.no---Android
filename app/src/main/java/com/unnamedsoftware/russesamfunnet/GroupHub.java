@@ -12,10 +12,13 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.facebook.AccessToken;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
@@ -51,6 +54,7 @@ public class GroupHub extends AppCompatActivity implements SwipeRefreshLayout.On
     private Long groupID;
     private FloatingActionButton floatingActionButton;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private EditText chatBox;
 
     private RecyclerView recyclerViewRuss;
     private RecyclerView recyclerViewFeed;
@@ -173,15 +177,36 @@ public class GroupHub extends AppCompatActivity implements SwipeRefreshLayout.On
             }
         };
 
-        Button button = findViewById(R.id.group_button_chatbox_send);
+
+        this.chatBox = findViewById(R.id.edittext_chatbox);
+        chatBox.addTextChangedListener(new TextWatcher()
+        {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+            @Override
+            public void afterTextChanged(Editable editable)
+            {
+                String currentText = editable.toString();
+                int currentLength = currentText.length();
+                TextView groupCharCount = findViewById(R.id.groupCharCount);
+                groupCharCount.setText(String.valueOf(currentLength));
+            }
+        });
+
+        Button button = findViewById(R.id.button_chatbox_send);
         button.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View view)
             {
-                sendMessage((EditText) findViewById(R.id.group_edittext_chatbox));
+                sendMessage(chatBox);
             }
         });
+
 
         swipeRefreshLayout = this.findViewById(R.id.swipe_container);
         swipeRefreshLayout.setOnRefreshListener(this);
