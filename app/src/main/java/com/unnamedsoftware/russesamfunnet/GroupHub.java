@@ -59,6 +59,7 @@ public class GroupHub extends AppCompatActivity implements SwipeRefreshLayout.On
     private RecyclerView recyclerViewRuss;
     private RecyclerView recyclerViewFeed;
     private List<ScoreboardEntity> scoreboardEntityList = new ArrayList<>();
+    private HashMap<RussEntity, Bitmap> scoreboardMap = new HashMap<>();
     private List<RussEntity> russEntityList = new ArrayList<>();
     private List<FeedEntity> feedEntityList = new ArrayList<>();
     private GroupHubUserListAdapter groupHubUserListAdapter;
@@ -144,7 +145,7 @@ public class GroupHub extends AppCompatActivity implements SwipeRefreshLayout.On
         }
 
         this.recyclerViewRuss = findViewById(R.id.ghuUsers);
-        this.groupHubUserListAdapter = new GroupHubUserListAdapter(russEntityList);
+        this.groupHubUserListAdapter = new GroupHubUserListAdapter(russEntityList, scoreboardMap);
         LinearLayoutManager horizontalLayoutManager = new LinearLayoutManager(GroupHub.this, LinearLayoutManager.HORIZONTAL, false);
         recyclerViewRuss.setLayoutManager(horizontalLayoutManager);
         recyclerViewRuss.setItemAnimator(new DefaultItemAnimator());
@@ -178,7 +179,7 @@ public class GroupHub extends AppCompatActivity implements SwipeRefreshLayout.On
         };
 
 
-        this.chatBox = findViewById(R.id.edittext_chatbox);
+        this.chatBox = findViewById(R.id.group_edittext_chatbox);
         chatBox.addTextChangedListener(new TextWatcher()
         {
             @Override
@@ -197,7 +198,7 @@ public class GroupHub extends AppCompatActivity implements SwipeRefreshLayout.On
             }
         });
 
-        Button button = findViewById(R.id.button_chatbox_send);
+        Button button = findViewById(R.id.group_button_chatbox_send);
         button.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -514,6 +515,7 @@ public class GroupHub extends AppCompatActivity implements SwipeRefreshLayout.On
                     ScoreboardEntity user = new ScoreboardEntity(scoreboardId, points, position, russ);
                     scoreboardEntityList.add(user);
                     russEntityList.add(russ);
+                    setProfilePicture(russ);
 
                 }
                 groupHubUserListAdapter.notifyDataSetChanged();
@@ -524,6 +526,37 @@ public class GroupHub extends AppCompatActivity implements SwipeRefreshLayout.On
             }
 
         }
+
+    private void setProfilePicture(final RussEntity russEntity)
+    {
+        final String url = russEntity.getProfilePicture();
+        System.out.println(url);
+        String userImageURI = "http://158.38.101.162:8080/files/" + url;
+
+        if (!url.equals("null")) {
+            if(images.containsKey(url))
+            {
+                scoreboardMap.put(russEntity, images.get(url));
+                groupHubUserListAdapter.notifyDataSetChanged();
+            }
+            ((Global) this.getApplication()).getImageLoader().loadImage(userImageURI, new SimpleImageLoadingListener() {
+                @Override
+                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                    userImage = loadedImage;
+                    System.out.println("TRUE");
+                    images.put(url, userImage);
+                    scoreboardMap.put(russEntity, userImage);
+                    groupHubUserListAdapter.notifyDataSetChanged();
+                }
+            });
+        } else {
+            userImage = null;
+            scoreboardMap.put(russEntity, userImage);
+            groupHubUserListAdapter.notifyDataSetChanged();
+        }
+
+
+    }
 
     private String getDeleteURL()
     {

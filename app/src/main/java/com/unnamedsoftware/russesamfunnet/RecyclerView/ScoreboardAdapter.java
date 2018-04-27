@@ -56,6 +56,11 @@ public class ScoreboardAdapter extends RecyclerView.Adapter<ScoreboardAdapter.Vi
         this.context = context;
         this.userList = userList;
     }
+    public ScoreboardAdapter(List<ScoreboardEntity> userList, Context context)
+    {
+        this.context = context;
+        this.userList = userList;
+    }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -115,13 +120,14 @@ public class ScoreboardAdapter extends RecyclerView.Adapter<ScoreboardAdapter.Vi
 
     public void clear()
     {
+        scoreboardMap.clear();
         final int size = userList.size();
         if (size > 0)
         {
             for (int i = 0; i < size; i++)
             {
-                userList.remove(0);
-                scoreboardMap.clear();
+                userList.remove(i);
+
             }
 
             notifyDataSetChanged();

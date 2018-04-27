@@ -95,7 +95,7 @@ public class Scoreboard extends AppCompatActivity
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         recyclerView.setAdapter(scoreboardAdapter);
-
+/**
         recyclerView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
@@ -111,6 +111,8 @@ public class Scoreboard extends AppCompatActivity
             public void onLayoutReady() {
                 try {
                     scoreboardAdapter.clear();
+                    scoreboardMap.clear();
+                    userList.clear();
                     getRussScoreboard();
                 } catch (Exception e)
                 {
@@ -118,6 +120,9 @@ public class Scoreboard extends AppCompatActivity
                 }
             }
         };
+ */
+
+
 /**
  //Swipe func.
  ConstraintLayout constraintLayout = findViewById(R.id.KnotLayout);
@@ -203,6 +208,7 @@ public class Scoreboard extends AppCompatActivity
                 System.out.println(russId);
                 ScoreboardEntity user = new ScoreboardEntity(scoreboardId, points, position, russ);
                 userList.add(user);
+                setProfilePicture(user);
             }
             scoreboardAdapter.notifyDataSetChanged();
             findViewById(R.id.loadingPanel).setVisibility(View.GONE);

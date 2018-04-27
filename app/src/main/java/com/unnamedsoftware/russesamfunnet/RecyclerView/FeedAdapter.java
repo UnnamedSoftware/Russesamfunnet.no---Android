@@ -160,16 +160,20 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>
 
     public void clear()
     {
+        //feedMap.clear();
+        posts.clear();/**
         final int size = posts.size();
         if (size > 0)
         {
             for (int i = 0; i < size; i++)
             {
                 posts.remove(0);
+
             }
 
-            notifyDataSetChanged();
-        }
+
+        }*/
+        notifyDataSetChanged();
     }
 
 

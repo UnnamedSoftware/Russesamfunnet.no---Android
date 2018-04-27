@@ -1,6 +1,7 @@
 package com.unnamedsoftware.russesamfunnet;
 
 import android.annotation.SuppressLint;
+import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -13,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.facebook.AccessToken;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.unnamedsoftware.russesamfunnet.Entity.RussEntity;
 import com.unnamedsoftware.russesamfunnet.Entity.SchoolEntity;
 import com.unnamedsoftware.russesamfunnet.Entity.ScoreboardEntity;
@@ -25,6 +27,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -36,6 +39,9 @@ import java.util.List;
 public class GroupScoreboardMembersList extends AppCompatActivity
 {
     private String groupName;
+    private HashMap<ScoreboardEntity, Bitmap> scoreboardMap = new HashMap<>();
+    private Bitmap userImage;
+    private HashMap<String, Bitmap> images = new HashMap<>();
     private String url;
 
     private List<ScoreboardEntity> scoreboardEntityList = new ArrayList<>();
@@ -80,7 +86,7 @@ public class GroupScoreboardMembersList extends AppCompatActivity
         }
         
         this.recyclerView = findViewById(R.id.recycler_view_scoreboard);
-        this.scoreboardAdapter = new ScoreboardAdapter(scoreboardEntityList, this);
+        this.scoreboardAdapter = new ScoreboardAdapter(scoreboardEntityList, this, scoreboardMap);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -186,6 +192,7 @@ public class GroupScoreboardMembersList extends AppCompatActivity
                 System.out.println(russId);
                 ScoreboardEntity user = new ScoreboardEntity(scoreboardId, points, position, russ);
                 scoreboardEntityList.add(user);
+                setProfilePicture(user);
             }
             scoreboardAdapter.notifyDataSetChanged();
             findViewById(R.id.loadingPanel).setVisibility(View.GONE);
@@ -193,6 +200,37 @@ public class GroupScoreboardMembersList extends AppCompatActivity
         {
             e.printStackTrace();
         }
+    }
+
+    private void setProfilePicture(final ScoreboardEntity scoreboardEntity)
+    {
+        final String url = scoreboardEntity.getRussId().getProfilePicture();
+        System.out.println(url);
+        String userImageURI = "http://158.38.101.162:8080/files/" + url;
+
+        if (!url.equals("null")) {
+            if(images.containsKey(url))
+            {
+                scoreboardMap.put(scoreboardEntity, images.get(url));
+                scoreboardAdapter.notifyDataSetChanged();
+            }
+            ((Global) this.getApplication()).getImageLoader().loadImage(userImageURI, new SimpleImageLoadingListener() {
+                @Override
+                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                    userImage = loadedImage;
+                    System.out.println("TRUE");
+                    images.put(url, userImage);
+                    scoreboardMap.put(scoreboardEntity, userImage);
+                    scoreboardAdapter.notifyDataSetChanged();
+                }
+            });
+        } else {
+            userImage = null;
+            scoreboardMap.put(scoreboardEntity, userImage);
+            scoreboardAdapter.notifyDataSetChanged();
+        }
+
+
     }
 
 }
