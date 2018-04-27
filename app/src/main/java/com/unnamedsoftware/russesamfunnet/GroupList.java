@@ -46,6 +46,7 @@ public class GroupList extends AppCompatActivity
     private List<GroupEntity> groupEntityList = new ArrayList<>();
     private RecyclerView recyclerView;
     Bitmap userImage;
+    private HashMap<String, Bitmap> images = new HashMap<>();
     private GroupListAdapter groupListAdapter;
     private HashMap<GroupEntity, List<Bitmap>> scoreboardMap = new HashMap<>();
 
@@ -176,10 +177,10 @@ public class GroupList extends AppCompatActivity
         if (AccessToken.getCurrentAccessToken() != null)
         {
             System.out.println(AccessToken.getCurrentAccessToken().getToken());
-            url = (getString(R.string.url) + "groups?accessToken=" + AccessToken.getCurrentAccessToken().getToken() + "&type=facebook");
+            url = (getString(R.string.url) + "groupsWithScoreboard?accessToken=" + AccessToken.getCurrentAccessToken().getToken() + "&type=facebook");
         } else
         {
-            url = getString(R.string.url) + "groups?accessToken=" + ((Global) this.getApplication()).getAccessToken() + "&type=russesamfunnet";
+            url = getString(R.string.url) + "groupsWithScoreboard?accessToken=" + ((Global) this.getApplication()).getAccessToken() + "&type=russesamfunnet";
         }
         try
         {
@@ -210,21 +211,49 @@ public class GroupList extends AppCompatActivity
 
             for (int i = 0; i < jsonArray.length(); i++)
             {
-                JSONObject group = jsonArray.getJSONObject(i).getJSONObject("groupId");
+                List<ScoreboardEntity> result = new ArrayList<>();
+                JSONObject group = jsonArray.getJSONObject(i).getJSONObject("group");
                 Long groupId = group.getLong("groupId");
                 String groupName = group.getString("groupName");
+                try {
+                for(int t = 0; t <= 2; t++) {
+                    JSONObject u = jsonArray.getJSONObject(i).getJSONArray("scoreboard").getJSONObject(t);
+                    Integer scoreboardId = Integer.valueOf(u.getString("scoreboardId"));
+                    Integer points = Integer.valueOf(u.getString("points"));
+                    Integer position = Integer.valueOf(u.getString("position"));
 
-                groupEntityList.add(new GroupEntity(groupId, groupName));
+                    JSONObject newRussObject = u.getJSONObject("russId");
+
+                    Long russId = Long.valueOf(newRussObject.getString("russId"));
+                    String russStatus = newRussObject.getString("russStatus");
+                    String firstName = newRussObject.getString("firstName");
+                    String lastName = newRussObject.getString("lastName");
+                    String email = newRussObject.getString("email");
+                    String russPassword = newRussObject.getString("russPassword");
+                    String profilePicture = newRussObject.getString("profilePicture");
+                    String russCard = newRussObject.getString("russCard");
+                    String russRole = newRussObject.getString("russRole");
+                    Integer russYear = Integer.valueOf(newRussObject.getString("russYear"));
+
+                    RussEntity russ = new RussEntity(russId, russStatus, firstName, lastName, email, russPassword, russRole, russYear, profilePicture, russCard);
+                    System.out.println(russId);
+                    ScoreboardEntity user = new ScoreboardEntity(scoreboardId, points, position, russ);
+                    result.add(user);
+                }
+                }catch (Exception e) {
+                    }
+                GroupEntity groupEntity = new GroupEntity(groupId, groupName);
+                groupEntityList.add(groupEntity);
+                setProfilePicture(result, groupEntity);
             }
             this.groupListAdapter.notifyDataSetChanged();
-            top3Scoreboard();
             findViewById(R.id.loadingPanel).setVisibility(View.GONE);
         } catch (JSONException e)
         {
             e.printStackTrace();
         }
     }
-
+/**
     public void top3Scoreboard()
     {
         Iterator it = groupEntityList.iterator();
@@ -235,7 +264,8 @@ public class GroupList extends AppCompatActivity
             getTop3(groupEntity.getGroupID(), groupEntity);
         }
     }
-
+ */
+/**
     public void getTop3(Long groupID, final GroupEntity groupEntity)
     {
         String url;
@@ -266,7 +296,8 @@ public class GroupList extends AppCompatActivity
             e.printStackTrace();
         }
     }
-
+ */
+/**
     public void addToScoreboardMap(GroupEntity groupEntity, JSONArray jsonArray)
     {
         List<ScoreboardEntity> result = new ArrayList<>();
@@ -309,21 +340,29 @@ public class GroupList extends AppCompatActivity
         setProfilePicture(result, groupEntity);
 
     }
-
+*/
     private void setProfilePicture(List<ScoreboardEntity> scoreboardEntities, final GroupEntity groupEntity)
     {
         Iterator it = scoreboardEntities.iterator();
         while(it.hasNext()) {
             ScoreboardEntity scoreboardEntity = (ScoreboardEntity) it.next();
-            String url = scoreboardEntity.getRussId().getProfilePicture();
+            final String url = scoreboardEntity.getRussId().getProfilePicture();
             System.out.println(url);
             String userImageURI = "http://158.38.101.162:8080/files/" + url;
 
             if (!url.equals("null")) {
+                if(images.containsKey(url))
+                {
+                    List<Bitmap> bitmap = scoreboardMap.get(groupEntity);
+                    bitmap.add(images.get(url));
+                    scoreboardMap.put(groupEntity, bitmap);
+                    groupListAdapter.notifyDataSetChanged();
+                } else {
                 ((Global) this.getApplication()).getImageLoader().loadImage(userImageURI, new SimpleImageLoadingListener() {
                     @Override
                     public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
                         userImage = loadedImage;
+                        images.put(url, loadedImage);
                         try {
                             List<Bitmap> bitmap = scoreboardMap.get(groupEntity);
                             bitmap.add(userImage);
@@ -336,7 +375,7 @@ public class GroupList extends AppCompatActivity
 
 
                     }
-                });
+                });}
 
             } else {
                 userImage = null;
@@ -347,7 +386,6 @@ public class GroupList extends AppCompatActivity
                     groupListAdapter.notifyDataSetChanged();
                 } catch (Exception e)
                 {
-                    e.printStackTrace();
                 }
             }
 
