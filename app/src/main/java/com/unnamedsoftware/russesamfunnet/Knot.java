@@ -15,7 +15,9 @@ import android.widget.TextView;
 
 import com.facebook.AccessToken;
 import com.mikhaellopez.circularimageview.CircularImageView;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.unnamedsoftware.russesamfunnet.Entity.CompletedKnotEntity;
+import com.unnamedsoftware.russesamfunnet.Entity.FeedEntity;
 import com.unnamedsoftware.russesamfunnet.Entity.KnotEntity;
 import com.unnamedsoftware.russesamfunnet.Entity.RussEntity;
 
@@ -35,6 +37,7 @@ public class Knot extends AppCompatActivity
     private FloatingActionButton completeFloatingActionButton;
     private RussEntity witness;
     private CompletedKnotEntity completed;
+    Bitmap userImage;
 
     private CircularImageView witnessCircularImageView1;
     private CircularImageView witnessCircularImageView2;
@@ -401,43 +404,18 @@ public class Knot extends AppCompatActivity
             if (completed.getWitnessId1().getRussId() != null)
             {
                 System.out.println("************************************************** " + completed.getWitnessId1().getRussId());
-                boolean hasImageOnServer = false;
+                setProfilePicture(completed.getWitnessId1(), 1);
 
                 TextView witnessName = findViewById(R.id.witness1Name);
                 witnessName.setText(completed.getWitnessId1().getFirstName());
-
-                if (!userImageFile.exists())
-                {
-                    Bitmap bitmap = BitmapFactory.decodeFile(userImageFile.getAbsolutePath());
-                    this.witnessCircularImageView1.setImageBitmap(bitmap);
-                } else if (hasImageOnServer)
-                {
-                    new LoadImage(this, witnessCircularImageView1).execute("http://russesamfunnet.no/logos/logo.png");
-                } else
-                {
-                    this.witnessCircularImageView1.setImageResource(R.drawable.default_user);
-                }
             }
 
             if (completed.getWitnessId2().getRussId() != null)
             {
                 System.out.println("************************************************** " + completed.getWitnessId2().getRussId());
-                boolean hasImageOnServer = true;
+                setProfilePicture(completed.getWitnessId2(), 2);
                 TextView witnessName = findViewById(R.id.witness2Name);
                 witnessName.setText(completed.getWitnessId2().getFirstName());
-
-
-                if (!userImageFile.exists())
-                {
-                    Bitmap bitmap = BitmapFactory.decodeFile(userImageFile.getAbsolutePath());
-                    this.witnessCircularImageView2.setImageBitmap(bitmap);
-                } else if (hasImageOnServer)
-                {
-                    new LoadImage(this, witnessCircularImageView2).execute("http://russesamfunnet.no/logos/logo.png");
-                } else
-                {
-                    this.witnessCircularImageView2.setImageResource(R.drawable.default_user);
-                }
             }
         } catch (Exception e)
         {
@@ -494,6 +472,41 @@ public class Knot extends AppCompatActivity
         {
             e.printStackTrace();
         }
+
+    }
+
+    private void setProfilePicture(final RussEntity russEntity,final int i)
+    {
+        final String url = russEntity.getProfilePicture();
+        System.out.println(url);
+        String userImageURI = "http://158.38.101.162:8080/files/" + url;
+
+        if (!url.equals("null")) {
+            ((Global) this.getApplication()).getImageLoader().loadImage(userImageURI, new SimpleImageLoadingListener() {
+                @Override
+                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                    userImage = loadedImage;
+                    if(i == 1)
+                    {
+                        witnessCircularImageView1.setImageBitmap(loadedImage);
+                    } else
+                    {
+                        witnessCircularImageView2.setImageBitmap(loadedImage);
+                    }
+                    System.out.println("TRUE");
+                }
+            });
+        } else {
+            userImage = null;
+            if(i == 1)
+            {
+                witnessCircularImageView1.setImageResource(R.drawable.default_user);
+            } else
+            {
+                witnessCircularImageView2.setImageResource(R.drawable.default_user);
+            }
+        }
+
 
     }
 
