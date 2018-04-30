@@ -48,7 +48,7 @@ public class GroupList extends AppCompatActivity
     Bitmap userImage;
     private HashMap<String, Bitmap> images = new HashMap<>();
     private GroupListAdapter groupListAdapter;
-    private HashMap<GroupEntity, List<Bitmap>> scoreboardMap = new HashMap<>();
+    private HashMap<GroupEntity, List<ScoreboardEntity>> scoreboardMap = new HashMap<>();
 
 
     @SuppressLint("ClickableViewAccessibility")
@@ -82,7 +82,7 @@ public class GroupList extends AppCompatActivity
         getGroups();
 
         this.recyclerView = findViewById(R.id.glaGroup);
-        this.groupListAdapter = new GroupListAdapter(groupEntityList, this, ((Global) this.getApplication()).getRussId(), removeUserUrl(), scoreboardMap);
+        this.groupListAdapter = new GroupListAdapter(groupEntityList, this, ((Global) this.getApplication()).getRussId(), removeUserUrl(), scoreboardMap, images);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -215,6 +215,7 @@ public class GroupList extends AppCompatActivity
                 JSONObject group = jsonArray.getJSONObject(i).getJSONObject("group");
                 Long groupId = group.getLong("groupId");
                 String groupName = group.getString("groupName");
+                GroupEntity groupEntity = new GroupEntity(groupId, groupName);
                 try {
                 for(int t = 0; t <= 2; t++) {
                     JSONObject u = jsonArray.getJSONObject(i).getJSONArray("scoreboard").getJSONObject(t);
@@ -239,18 +240,18 @@ public class GroupList extends AppCompatActivity
                     System.out.println(russId);
                     ScoreboardEntity user = new ScoreboardEntity(scoreboardId, points, position, russ);
                     result.add(user);
+                    setProfilePicture(user.getRussId(), groupEntity);
                 }
                 }catch (Exception e) {
                     }
-                GroupEntity groupEntity = new GroupEntity(groupId, groupName);
                 groupEntityList.add(groupEntity);
-                scoreboardMap.put(groupEntity, new ArrayList<Bitmap>());
+                scoreboardMap.put(groupEntity, result);
                 Iterator it = result.iterator();
-                while(it.hasNext())
+     /**           while(it.hasNext())
                 {
                     ScoreboardEntity scoreboardEntity = (ScoreboardEntity) it.next();
                     setProfilePicture(scoreboardEntity.getRussId(), groupEntity);
-                }
+                }*/
 
             }
             this.groupListAdapter.notifyDataSetChanged();
@@ -357,20 +358,22 @@ public class GroupList extends AppCompatActivity
             if (!url.equals("null")) {
                 if(images.containsKey(url))
                 {
-                    List<Bitmap> bitmap = scoreboardMap.get(groupEntity);
-                    bitmap.add(images.get(url));
-                    scoreboardMap.put(groupEntity, bitmap);
-                    groupListAdapter.notifyDataSetChanged();
+                    System.out.println("TRUE");
+                  //  List<Bitmap> bitmap = scoreboardMap.get(groupEntity);
+                   // bitmap.add(images.get(url));
+                   // scoreboardMap.put(groupEntity, bitmap);
+                   // groupListAdapter.notifyDataSetChanged();
                 } else {
                 ((Global) this.getApplication()).getImageLoader().loadImage(userImageURI, new SimpleImageLoadingListener() {
                     @Override
                     public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
                         userImage = loadedImage;
+                        System.out.println("TRUE");
                         images.put(url, loadedImage);
                         try {
-                            List<Bitmap> bitmap = scoreboardMap.get(groupEntity);
+                    /**        List<Bitmap> bitmap = scoreboardMap.get(groupEntity);
                             bitmap.add(userImage);
-                            scoreboardMap.put(groupEntity, bitmap);
+                            scoreboardMap.put(groupEntity, bitmap);*/
                             groupListAdapter.notifyDataSetChanged();
                         } catch (Exception e)
                         {
@@ -384,10 +387,10 @@ public class GroupList extends AppCompatActivity
             } else {
                 userImage = null;
                 try {
-                    List<Bitmap> bitmap = scoreboardMap.get(groupEntity);
-                    bitmap.add(userImage);
+             //       List<Bitmap> bitmap = scoreboardMap.get(groupEntity);
+              //      bitmap.add(userImage);
                     images.put(url,null);
-                    scoreboardMap.put(groupEntity, bitmap);
+              //      scoreboardMap.put(groupEntity, bitmap);
                     groupListAdapter.notifyDataSetChanged();
                 } catch (Exception e)
                 {

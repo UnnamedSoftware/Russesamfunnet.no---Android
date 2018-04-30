@@ -29,6 +29,7 @@ import com.unnamedsoftware.russesamfunnet.GroupHub;
 import com.unnamedsoftware.russesamfunnet.JSONObjectParser;
 import com.unnamedsoftware.russesamfunnet.JSONParser;
 import com.unnamedsoftware.russesamfunnet.R;
+import com.unnamedsoftware.russesamfunnet.Scoreboard;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -53,8 +54,9 @@ public class GroupListAdapter extends RecyclerView.Adapter<GroupListAdapter.View
     private String removeUserUrl;
     private List<ScoreboardEntity> scoreboardEntityList = new ArrayList<>();
     private Bitmap userImage;
+    private HashMap<String, Bitmap> images = new HashMap<>();
 
-    private HashMap<GroupEntity, List<Bitmap>> scoreboardMap;
+    private HashMap<GroupEntity, List<ScoreboardEntity>> scoreboardMap;
 
 
     public class ViewHolder extends RecyclerView.ViewHolder
@@ -62,6 +64,7 @@ public class GroupListAdapter extends RecyclerView.Adapter<GroupListAdapter.View
         private TextView groupName;
         private RelativeLayout layout;
         private List<CircularImageView> userTopList;
+
        // private CircularImageView userTop1;
        // private CircularImageView userTop2;
        // private CircularImageView userTop3;
@@ -83,8 +86,9 @@ public class GroupListAdapter extends RecyclerView.Adapter<GroupListAdapter.View
     }
 
 
-    public GroupListAdapter(List<GroupEntity> groupEntityList, Context context, Long userID,String removeUserUrl, HashMap<GroupEntity, List<Bitmap>> scoreboardMap)
+    public GroupListAdapter(List<GroupEntity> groupEntityList, Context context, Long userID,String removeUserUrl, HashMap<GroupEntity, List<ScoreboardEntity>> scoreboardMap, HashMap<String, Bitmap> images)
     {
+        this.images = images;
         this.scoreboardMap = scoreboardMap;
         this.removeUserUrl = removeUserUrl;
         this.groupEntitiesList = groupEntityList;
@@ -110,14 +114,14 @@ public class GroupListAdapter extends RecyclerView.Adapter<GroupListAdapter.View
         holder.groupName.setText(groupEntity.getSearchName());
 
         try {
-            List<Bitmap> scoreboard = scoreboardMap.get(groupEntity);
+            List<ScoreboardEntity> scoreboard = scoreboardMap.get(groupEntity);
             Iterator it = scoreboard.iterator();
             int i = 0;
             while (it.hasNext()) {
                 try {
-                    Bitmap profilePic = (Bitmap) it.next();
-                    if (profilePic != null) {
-                        holder.userTopList.get(i).setImageBitmap(profilePic);
+                    ScoreboardEntity scoreboardEntity = (ScoreboardEntity) it.next();
+                    if (!scoreboardEntity.getRussId().getProfilePicture().equals("null")) {
+                        holder.userTopList.get(i).setImageBitmap(images.get(scoreboardEntity.getRussId().getProfilePicture()));
                     } else {
                         holder.userTopList.get(i).setImageResource(R.drawable.default_user);
                     }
