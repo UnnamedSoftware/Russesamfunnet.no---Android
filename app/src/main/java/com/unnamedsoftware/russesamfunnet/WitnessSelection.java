@@ -1,6 +1,7 @@
 package com.unnamedsoftware.russesamfunnet;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -9,9 +10,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
 import android.widget.EditText;
 
 import com.facebook.AccessToken;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
+import com.unnamedsoftware.russesamfunnet.Entity.FeedEntity;
 import com.unnamedsoftware.russesamfunnet.Entity.KnotEntity;
 import com.unnamedsoftware.russesamfunnet.Entity.RussEntity;
 import com.unnamedsoftware.russesamfunnet.Entity.SchoolEntity;
@@ -23,6 +27,7 @@ import org.json.JSONObject;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class WitnessSelection extends AppCompatActivity
@@ -30,7 +35,10 @@ public class WitnessSelection extends AppCompatActivity
 
 
     private List<RussEntity> russEntityList;
+    SearchWitnessAdapter searchWitnessAdapter;
     private KnotEntity knotEntity;
+    private HashMap<String, Bitmap> images = new HashMap<>();
+    private HashMap<RussEntity, Bitmap> russMap = new HashMap<>();
     private int view;
 
     @Override
@@ -42,6 +50,8 @@ public class WitnessSelection extends AppCompatActivity
         Intent intent = getIntent();
         knotEntity = (KnotEntity) intent.getSerializableExtra("knotEntity");
         System.out.println(knotEntity.getKnotId());
+
+
         final EditText editText = findViewById(R.id.search_input);
         editText.addTextChangedListener(new TextWatcher()
         {
@@ -65,6 +75,19 @@ public class WitnessSelection extends AppCompatActivity
 
         });
         getWitnesses("");
+    }
+
+    private void buildList()
+    {
+        searchWitnessAdapter = new SearchWitnessAdapter(russEntityList, knotEntity, russMap);
+
+        RecyclerView recyclerView;
+        recyclerView = findViewById(R.id.saResults);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
+        recyclerView.setAdapter(searchWitnessAdapter);
     }
 
     public void getWitnesses(String parameter)
@@ -108,34 +131,10 @@ public class WitnessSelection extends AppCompatActivity
 
     }
 
-    private void buildList()
-    {
-        SearchWitnessAdapter searchWitnessAdapter;
-
-        RecyclerView recyclerView;
-        if (!russEntityList.isEmpty())
-        {
-            searchWitnessAdapter = new SearchWitnessAdapter(russEntityList, knotEntity);
-            recyclerView = findViewById(R.id.saResults);
-            if (recyclerView == null)
-            {
-                System.out.println("null");
-            }
-            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-            recyclerView.setLayoutManager(layoutManager);
-            recyclerView.setItemAnimator(new DefaultItemAnimator());
-            recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
-
-
-            recyclerView.setAdapter(searchWitnessAdapter);
-        }
-
-
-    }
 
     private void fillWitnessListSuggestions(JSONArray jsonArray)
     {
-        List<RussEntity> witnessSuggestions = new ArrayList<>();
+        russEntityList.clear();
         for (int i = 0; i < jsonArray.length(); i++)
         {
             try
@@ -162,15 +161,45 @@ public class WitnessSelection extends AppCompatActivity
                 RussEntity russ = new RussEntity(russId, russStatus, firstName, lastName, email, russPassword, russRole, russYear,profilePicture,russCard);
                 if (!russ.getRussId().equals(((Global) this.getApplication()).getRussId()))
                 {
-                    witnessSuggestions.add(russ);
+                    russEntityList.add(russ);
+                    searchWitnessAdapter.notifyDataSetChanged();
+                    setProfilePicture(russ);
                 }
             } catch (Exception e)
             {
                 e.printStackTrace();
             }
         }
-        russEntityList.clear();
-        russEntityList = witnessSuggestions;
         buildList();
+
+    }
+
+    private void setProfilePicture(final RussEntity russEntity)
+    {
+        final String url = russEntity.getProfilePicture();
+        System.out.println(url);
+        String userImageURI = "http://158.38.101.162:8080/files/" + url;
+
+        if (!url.equals("null")) {
+            if(images.containsKey(url))
+            {
+                russMap.put(russEntity, images.get(url));
+                searchWitnessAdapter.notifyDataSetChanged();
+            }
+            ((Global) this.getApplication()).getImageLoader().loadImage(userImageURI, new SimpleImageLoadingListener() {
+                @Override
+                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                    System.out.println("TRUE");
+                    images.put(url, loadedImage);
+                    russMap.put(russEntity, loadedImage);
+                    searchWitnessAdapter.notifyDataSetChanged();
+                }
+            });
+        } else {
+            russMap.put(russEntity, null);
+            searchWitnessAdapter.notifyDataSetChanged();
+        }
+
+
     }
 }

@@ -299,8 +299,7 @@ public class Knot extends AppCompatActivity
             Long knotID = jsonObject.getLong("knotId");
             String title = jsonObject.getString("knotName");
             String description = jsonObject.getString("knotDetails");
-            boolean completed = jsonObject.getBoolean("completed");
-            return new KnotEntity(knotID, title, description,completed);
+            return new KnotEntity(knotID, title, description);
 
         } catch (Exception e)
         {

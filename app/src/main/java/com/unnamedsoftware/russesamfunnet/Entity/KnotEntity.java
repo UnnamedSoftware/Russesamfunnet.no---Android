@@ -33,6 +33,12 @@ public class KnotEntity extends Entity implements Serializable {
         this.completed = completed;
     }
 
+    public KnotEntity(Long knotId, String title, String details) {
+        this.knotId = knotId;
+        this.details = details;
+        this.title = title;
+    }
+
     public String getTitle() {
         return title;
     }

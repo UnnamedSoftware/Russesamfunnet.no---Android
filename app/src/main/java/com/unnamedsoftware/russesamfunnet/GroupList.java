@@ -244,7 +244,14 @@ public class GroupList extends AppCompatActivity
                     }
                 GroupEntity groupEntity = new GroupEntity(groupId, groupName);
                 groupEntityList.add(groupEntity);
-                setProfilePicture(result, groupEntity);
+                scoreboardMap.put(groupEntity, new ArrayList<Bitmap>());
+                Iterator it = result.iterator();
+                while(it.hasNext())
+                {
+                    ScoreboardEntity scoreboardEntity = (ScoreboardEntity) it.next();
+                    setProfilePicture(scoreboardEntity.getRussId(), groupEntity);
+                }
+
             }
             this.groupListAdapter.notifyDataSetChanged();
             findViewById(R.id.loadingPanel).setVisibility(View.GONE);
@@ -341,12 +348,9 @@ public class GroupList extends AppCompatActivity
 
     }
 */
-    private void setProfilePicture(List<ScoreboardEntity> scoreboardEntities, final GroupEntity groupEntity)
+    private void setProfilePicture(RussEntity russEntity, final GroupEntity groupEntity)
     {
-        Iterator it = scoreboardEntities.iterator();
-        while(it.hasNext()) {
-            ScoreboardEntity scoreboardEntity = (ScoreboardEntity) it.next();
-            final String url = scoreboardEntity.getRussId().getProfilePicture();
+            final String url = russEntity.getProfilePicture();
             System.out.println(url);
             String userImageURI = "http://158.38.101.162:8080/files/" + url;
 
@@ -388,9 +392,6 @@ public class GroupList extends AppCompatActivity
                 {
                 }
             }
-
-
-        }
 
 
     }

@@ -2,6 +2,8 @@ package com.unnamedsoftware.russesamfunnet.Search;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.facebook.AccessToken;
+import com.mikhaellopez.circularimageview.CircularImageView;
 import com.unnamedsoftware.russesamfunnet.Entity.RussEntity;
 import com.unnamedsoftware.russesamfunnet.GroupList;
 import com.unnamedsoftware.russesamfunnet.JSONObjectParser;
@@ -20,6 +23,7 @@ import org.json.JSONObject;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -33,10 +37,12 @@ public class SearchAddUserToGroupAdapter extends RecyclerView.Adapter<SearchAddU
     private List<RussEntity> dataSet = null;
     private ArrayList<RussEntity> arrayList;
     private Long groupID;
+    private HashMap<RussEntity, Bitmap> russMap = new HashMap<>();
     private String token;
 
-    public SearchAddUserToGroupAdapter(List<RussEntity> dataSet, Long groupId, String token)
+    public SearchAddUserToGroupAdapter(List<RussEntity> dataSet, Long groupId, String token, HashMap<RussEntity, Bitmap> russMap)
     {
+        this.russMap = russMap;
         this.dataSet = dataSet;
         this.arrayList = new ArrayList<>();
         arrayList.addAll(dataSet);
@@ -47,13 +53,15 @@ public class SearchAddUserToGroupAdapter extends RecyclerView.Adapter<SearchAddU
     public class ViewHolder extends RecyclerView.ViewHolder
     {
         private TextView name;
-        RelativeLayout layout;
+        ConstraintLayout layout;
+        private CircularImageView userImage;
 
         public ViewHolder(final View itemLayoutView)
         {
 
             super(itemLayoutView);
             layout = itemLayoutView.findViewById(R.id.searchRowLayout);
+            userImage = itemLayoutView.findViewById(R.id.userProfilePictureSearchRow);
             name = itemLayoutView.findViewById(R.id.witness_name);
         }
     }
@@ -73,6 +81,16 @@ public class SearchAddUserToGroupAdapter extends RecyclerView.Adapter<SearchAddU
     {
         final RussEntity russEntity = arrayList.get(position);
         holder.name.setText(russEntity.getFirstName() + " " + russEntity.getLastName());
+        try {
+            if (russMap.get(russEntity) != null) {
+                holder.userImage.setImageBitmap(russMap.get(russEntity));
+            } else {
+                holder.userImage.setImageResource(R.drawable.default_user);
+            }
+        } catch (Exception e)
+        {
+
+        }
         holder.itemView.setOnClickListener(new View.OnClickListener()
         {
             @Override

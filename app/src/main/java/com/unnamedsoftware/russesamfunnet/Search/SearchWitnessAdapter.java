@@ -2,6 +2,8 @@ package com.unnamedsoftware.russesamfunnet.Search;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,13 +11,16 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.mikhaellopez.circularimageview.CircularImageView;
 import com.unnamedsoftware.russesamfunnet.Entity.KnotEntity;
 import com.unnamedsoftware.russesamfunnet.Entity.RussEntity;
 import com.unnamedsoftware.russesamfunnet.Knot;
 import com.unnamedsoftware.russesamfunnet.R;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.WeakHashMap;
 
 /**
  * Created by Alexander Eilert Berg on 21.02.2018.
@@ -28,10 +33,12 @@ public class SearchWitnessAdapter extends RecyclerView.Adapter<SearchWitnessAdap
 
     private List<RussEntity> dataSet = null;
     private ArrayList<RussEntity> arrayList;
+    private HashMap<RussEntity, Bitmap> russMap = new HashMap<>();
     private KnotEntity knotEntity;
 
-    public SearchWitnessAdapter(List<RussEntity> dataSet, KnotEntity knotEntity)
+    public SearchWitnessAdapter(List<RussEntity> dataSet, KnotEntity knotEntity, HashMap<RussEntity, Bitmap> russMap)
     {
+        this.russMap = russMap;
         this.knotEntity = knotEntity;
         this.dataSet = dataSet;
         this.arrayList = new ArrayList<>();
@@ -41,13 +48,15 @@ public class SearchWitnessAdapter extends RecyclerView.Adapter<SearchWitnessAdap
     public class ViewHolder extends RecyclerView.ViewHolder
     {
         private TextView name;
-        RelativeLayout layout;
+        private CircularImageView userImage;
+        ConstraintLayout layout;
 
         public ViewHolder(final View itemLayoutView)
         {
 
             super(itemLayoutView);
             layout = itemLayoutView.findViewById(R.id.searchRowLayout);
+            userImage = itemLayoutView.findViewById(R.id.userProfilePictureSearchRow);
             name = itemLayoutView.findViewById(R.id.witness_name);
         }
     }
@@ -67,7 +76,17 @@ public class SearchWitnessAdapter extends RecyclerView.Adapter<SearchWitnessAdap
     {
         final RussEntity witness = arrayList.get(position);
             holder.name.setText(witness.getFirstName() + " " + witness.getLastName());
-            holder.itemView.setOnClickListener(new View.OnClickListener()
+        try {
+            if (russMap.get(witness) != null) {
+                holder.userImage.setImageBitmap(russMap.get(witness));
+            } else {
+                holder.userImage.setImageResource(R.drawable.default_user);
+            }
+        } catch (Exception e)
+        {
+
+        }
+        holder.itemView.setOnClickListener(new View.OnClickListener()
             {
                 @Override
                 public void onClick(View v)

@@ -1,6 +1,7 @@
 package com.unnamedsoftware.russesamfunnet;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -9,9 +10,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
 import android.widget.EditText;
 
 import com.facebook.AccessToken;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.unnamedsoftware.russesamfunnet.Entity.RussEntity;
 import com.unnamedsoftware.russesamfunnet.Entity.SchoolEntity;
 import com.unnamedsoftware.russesamfunnet.Search.SearchAddUserToGroupAdapter;
@@ -22,6 +25,7 @@ import org.json.JSONObject;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -33,6 +37,9 @@ public class AddUserToGroup extends AppCompatActivity
 private Long groupID;
     private List<RussEntity> russEntityList;
     private int view;
+    SearchAddUserToGroupAdapter searchAddUserToGroupAdapter;
+    private HashMap<String, Bitmap> images = new HashMap<>();
+    private HashMap<RussEntity, Bitmap> russMap = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -113,12 +120,11 @@ private Long groupID;
 
     private void buildList()
     {
-        SearchAddUserToGroupAdapter searchAddUserToGroupAdapter;
 
         RecyclerView recyclerView;
         if (!russEntityList.isEmpty())
         {
-            searchAddUserToGroupAdapter = new SearchAddUserToGroupAdapter(russEntityList,groupID,((Global) this.getApplication()).getAccessToken());
+            searchAddUserToGroupAdapter = new SearchAddUserToGroupAdapter(russEntityList,groupID,((Global) this.getApplication()).getAccessToken(), russMap);
             recyclerView = findViewById(R.id.saResults);
             if (recyclerView == null)
             {
@@ -138,7 +144,7 @@ private Long groupID;
 
     private void fillUserListSuggestions(JSONArray jsonArray)
     {
-        List<RussEntity> userSuggestions = new ArrayList<>();
+        russEntityList.clear();
         for (int i = 0; i < jsonArray.length(); i++)
         {
             try
@@ -167,15 +173,43 @@ private Long groupID;
 
                 if (!russ.getRussId().equals(((Global) this.getApplication()).getRussId()))
                 {
-                    userSuggestions.add(russ);
+                    russEntityList.add(russ);
+                    setProfilePicture(russ);
                 }
             } catch (Exception e)
             {
                 e.printStackTrace();
             }
         }
-        russEntityList.clear();
-        russEntityList = userSuggestions;
         buildList();
+    }
+
+    private void setProfilePicture(final RussEntity russEntity)
+    {
+        final String url = russEntity.getProfilePicture();
+        System.out.println(url);
+        String userImageURI = "http://158.38.101.162:8080/files/" + url;
+
+        if (!url.equals("null")) {
+            if(images.containsKey(url))
+            {
+                russMap.put(russEntity, images.get(url));
+                searchAddUserToGroupAdapter.notifyDataSetChanged();
+            }
+            ((Global) this.getApplication()).getImageLoader().loadImage(userImageURI, new SimpleImageLoadingListener() {
+                @Override
+                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                    System.out.println("TRUE");
+                    images.put(url, loadedImage);
+                    russMap.put(russEntity, loadedImage);
+                    searchAddUserToGroupAdapter.notifyDataSetChanged();
+                }
+            });
+        } else {
+            russMap.put(russEntity, null);
+            searchAddUserToGroupAdapter.notifyDataSetChanged();
+        }
+
+
     }
 }
