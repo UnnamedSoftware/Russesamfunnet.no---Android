@@ -242,6 +242,7 @@ public class Scoreboard extends AppCompatActivity
             });
         } else {
             userImage = null;
+            images.put(url,null);
             scoreboardMap.put(scoreboardEntity, userImage);
             scoreboardAdapter.notifyDataSetChanged();
         }

@@ -196,6 +196,7 @@ public class WitnessSelection extends AppCompatActivity
                 }
             });
         } else {
+            images.put(url,null);
             russMap.put(russEntity, null);
             searchWitnessAdapter.notifyDataSetChanged();
         }

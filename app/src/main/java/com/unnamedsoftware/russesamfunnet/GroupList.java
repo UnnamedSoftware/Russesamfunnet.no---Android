@@ -386,6 +386,7 @@ public class GroupList extends AppCompatActivity
                 try {
                     List<Bitmap> bitmap = scoreboardMap.get(groupEntity);
                     bitmap.add(userImage);
+                    images.put(url,null);
                     scoreboardMap.put(groupEntity, bitmap);
                     groupListAdapter.notifyDataSetChanged();
                 } catch (Exception e)

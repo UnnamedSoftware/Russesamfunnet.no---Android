@@ -434,6 +434,7 @@ public class GroupHub extends AppCompatActivity implements SwipeRefreshLayout.On
         } else {
             userImage = null;
             try {
+                images.put(url,null);
                 feedMap.put(feedEntity, userImage);
                 feedAdapter.notifyDataSetChanged();
             } catch (Exception e)

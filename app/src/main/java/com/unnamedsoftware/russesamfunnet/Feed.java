@@ -442,6 +442,7 @@ public class Feed extends AppCompatActivity implements SwipeRefreshLayout.OnRefr
                 });
             } else {
                 userImage = null;
+                images.put(url,null);
                     feedMap.put(feedEntity, userImage);
                     feedAdapter.notifyDataSetChanged();
             }
