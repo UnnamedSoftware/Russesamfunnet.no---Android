@@ -151,6 +151,8 @@ public class GroupHub extends AppCompatActivity implements SwipeRefreshLayout.On
         recyclerViewRuss.setItemAnimator(new DefaultItemAnimator());
         //recyclerViewRuss.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.HORIZONTAL));
         recyclerViewRuss.setAdapter(groupHubUserListAdapter);
+
+
         Long russId = ((Global)this.getApplication()).getRussId();
         System.out.println("--------------------------------------------------------" + russId);
         this.recyclerViewFeed = findViewById(R.id.recycler_view_feed);
@@ -405,7 +407,7 @@ public class GroupHub extends AppCompatActivity implements SwipeRefreshLayout.On
 
     private void setProfilePicture(final FeedEntity feedEntity)
     {
-        String url = feedEntity.getRussId().getProfilePicture();
+        final String url = feedEntity.getRussId().getProfilePicture();
         System.out.println(url);
         String userImageURI = "http://158.38.101.162:8080/files/" + url;
 
@@ -420,6 +422,7 @@ public class GroupHub extends AppCompatActivity implements SwipeRefreshLayout.On
                 public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
                     userImage = loadedImage;
                     try {
+                        images.put(url, loadedImage);
                         feedMap.put(feedEntity, userImage);
                         feedAdapter.notifyDataSetChanged();
                     } catch (Exception e)
@@ -552,6 +555,7 @@ public class GroupHub extends AppCompatActivity implements SwipeRefreshLayout.On
             });
         } else {
             userImage = null;
+            images.put(url, null);
             scoreboardMap.put(russEntity, userImage);
             groupHubUserListAdapter.notifyDataSetChanged();
         }

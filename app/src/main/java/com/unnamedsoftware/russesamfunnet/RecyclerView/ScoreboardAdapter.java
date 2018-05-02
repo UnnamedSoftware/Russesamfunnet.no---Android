@@ -90,6 +90,8 @@ public class ScoreboardAdapter extends RecyclerView.Adapter<ScoreboardAdapter.Vi
         System.out.println("----- " + listUser.getRussId().getRussId() + " & " + ((Global) context.getApplicationContext()).getRussId() + " -----");
         if (listUser.getRussId().getRussId().equals(((Global) context.getApplicationContext()).getRussId()))
         {
+            System.out.println(listUser.getRussId().getRussId());
+            System.out.println(((Global) context.getApplicationContext()).getRussId());
             holder.layout.setBackgroundResource((R.drawable.user_scoreboard_border));
         }
         holder.name.setText(listUser.getRussId().getFirstName());
