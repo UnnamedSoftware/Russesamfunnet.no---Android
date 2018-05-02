@@ -307,7 +307,8 @@ public class UserProfile extends AppCompatActivity
     {
         if (((Global) this.getApplication()).getRussId().equals(russ.getRussId()))
         {
-            startActivityForResult(new Intent(this, RussCardCamera.class), 1);
+            Intent intent = new Intent(this, RussCardCamera.class);
+            startActivityForResult(intent, 1);
         }
     }
 

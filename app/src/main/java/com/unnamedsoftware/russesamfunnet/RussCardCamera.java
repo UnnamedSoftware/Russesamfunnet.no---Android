@@ -11,7 +11,6 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
@@ -20,13 +19,19 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.facebook.AccessToken;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
+import org.json.JSONObject;
+
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,7 +43,9 @@ public class RussCardCamera extends AppCompatActivity
     private CropImageView cropImageView;
     private Uri cropImageUri;
     private Bitmap cropped;
-    private String currentPhotoPath;
+    private String url;
+    private File file;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -62,35 +69,6 @@ public class RussCardCamera extends AppCompatActivity
         if (cropped != null)
             cropImageView.setImageBitmap(cropped);
     }
-
-
-    /**
-     * Changes the image
-     *
-     * @param view
-     * @throws IOException
-     */
-    public void onApproveImage(View view) throws IOException
-    {
-        Bitmap bitmap = cropImageView.getCroppedImage();
-
-        FileOutputStream outStream = null;
-        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        storageDir.mkdirs();
-        String fileName = String.format("russesamfunnetRussCard.jpg", System.currentTimeMillis());
-        File outFile = new File(storageDir, fileName);
-        outStream = new FileOutputStream(outFile);
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outStream);
-        outStream.flush();
-        outStream.close();
-        System.out.println("------------------------------------------------------ " + outFile.toString() + " ------------------------------------------------------");
-        Toast.makeText(this, "Profile image changed!", Toast.LENGTH_SHORT).show();
-
-        Intent returnIntent = new Intent();
-        setResult(Activity.RESULT_CANCELED, returnIntent);
-        finish();
-    }
-
 
     /**
      * On load image button click, start pick  image chooser activity.
@@ -242,5 +220,84 @@ public class RussCardCamera extends AppCompatActivity
         {
         }
         return false;
+    }
+
+
+    /**
+     * Changes the image
+     *
+     * @param view
+     * @throws IOException
+     */
+    public void onApproveImage(View view) throws IOException
+    {
+        Bitmap bitmap = cropImageView.getCroppedImage();
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        byte[] bitmapdata = stream.toByteArray();
+
+        String filename = String.format(((Global) this.getApplication()).getRussId() + "russesamfunnetRussCard.jpg");
+
+        this.file = new File(this.getCacheDir(), filename);
+        try
+        {
+            file.createNewFile();
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+
+        try (FileOutputStream fos = new FileOutputStream(file))
+        {
+            fos.write(bitmapdata);
+            fos.flush();
+            fos.close();
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+
+        this.url = "http://158.38.101.162:8080/upload/";
+        try {
+            UploadImage uploadImage = new UploadImage(file, url);
+            uploadImage.execute();
+            setImageName();
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        Intent returnIntent = new Intent();
+        setResult(Activity.RESULT_CANCELED, returnIntent);
+        finish();
+    }
+
+
+    private void setImageName() throws IOException
+    {
+        String newUrl;
+        if (AccessToken.getCurrentAccessToken() != null)
+        {
+            System.out.println(AccessToken.getCurrentAccessToken().getToken());
+            newUrl = (getString(R.string.url) + "setRussCard?accessToken=" + AccessToken.getCurrentAccessToken().getToken() + "&type=facebook&pictureName=" + file.getName());
+        } else
+        {
+            System.out.println(((Global) this.getApplication()).getAccessToken());
+            newUrl = getString(R.string.url) + "setRussCard?accessToken=" + ((Global) this.getApplication()).getAccessToken() + "&type=russesamfunnet&pictureName=" + file.getName();
+        }
+        try
+        {
+            new JSONObjectParser(new JSONObjectParser.OnPostExecute()
+            {
+                @Override
+                public void onPostExecute(JSONObject jsonObject)
+                {
+
+                }
+            }).execute(new URL(newUrl));
+        } catch (MalformedURLException e)
+        {
+            e.printStackTrace();
+        }
     }
 }

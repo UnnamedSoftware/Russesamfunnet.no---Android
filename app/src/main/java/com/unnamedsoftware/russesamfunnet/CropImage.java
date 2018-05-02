@@ -275,23 +275,6 @@ public class CropImage extends AppCompatActivity
         Intent returnIntent = new Intent();
         setResult(Activity.RESULT_CANCELED, returnIntent);
         finish();
-
-
-
-        /*
-        try
-        {
-            URL url = new URL(string);
-            executePost(url,bs);
-        } catch (MalformedURLException e)
-        {
-            e.printStackTrace();
-        } catch (FileNotFoundException e)
-        {
-            e.printStackTrace();
-        }
-*/
-
     }
 
     private void setImageName() throws IOException
@@ -320,22 +303,5 @@ public class CropImage extends AppCompatActivity
         {
             e.printStackTrace();
         }
-    }
-
-    /*
-        private void executePost(URL url, InputStream is) throws MalformedURLException, FileNotFoundException
-        {
-            String fileName = String.format(((Global) this.getApplication()).getRussId() + "profilePicture" + ".jpg");
-            new UploadImage(status -> loadThumbnails()).execute(
-                    new UploadImage.PostData(url, is, "file", fileName)
-            );
-        }
-    */
-
-    private void loadThumbnails()
-    {
-        Intent returnIntent = new Intent();
-        setResult(Activity.RESULT_CANCELED, returnIntent);
-        finish();
     }
 }
