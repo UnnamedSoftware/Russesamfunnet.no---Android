@@ -137,7 +137,7 @@ public class UserProfile extends AppCompatActivity
                     completedURL = getString(R.string.url) + "completedKnots?accessToken=" + ((Global) this.getApplication()).getAccessToken() + "&type=russesamfunnet";
                 }
             }
-            if (russId != 0 && russId != ((Global) this.getApplication()).getRussId())
+            if ((russId != 0) && !(russId.equals(((Global) this.getApplication()).getRussId())))
             {
                 isOtherRuss = true;
                 if (AccessToken.getCurrentAccessToken() != null)
