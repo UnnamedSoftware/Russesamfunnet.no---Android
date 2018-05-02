@@ -165,9 +165,7 @@ public class Register extends AppCompatActivity
 
     private void checkIfEmailIsInUse()
     {
-        String urlSend;
-            urlSend = (getString(R.string.url) + "checkIfEmailIsInUse?email=" + email);
-
+        String urlSend = (getString(R.string.url) + "checkIfEmailIsInUse?email=" + email);
         try
         {
             new JSONObjectParser(new JSONObjectParser.OnPostExecute()
