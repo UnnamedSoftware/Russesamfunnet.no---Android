@@ -4,6 +4,7 @@ package com.unnamedsoftware.russesamfunnet.RecyclerView;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,7 +35,7 @@ public class ScoreboardAdapter extends RecyclerView.Adapter<ScoreboardAdapter.Vi
     public class ViewHolder extends RecyclerView.ViewHolder
     {
         private TextView name, position, points;
-        private RelativeLayout layout;
+        private ConstraintLayout layout;
         private CircularImageView userImage;
 
 
