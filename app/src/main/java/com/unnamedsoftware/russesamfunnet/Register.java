@@ -12,8 +12,16 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.facebook.AccessToken;
+
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 /**
  * Created by Alexander Eilert Berg on 22.01.2018.
@@ -148,19 +156,56 @@ public class Register extends AppCompatActivity
 
                                         } else
                                         {
-                                            setInputData();
-                                            Intent intent = new Intent(Register.this, BirthdayRegisterActivity.class);
-                                            intent.putExtra("firstName", firstName);
-                                            intent.putExtra("surname", surname);
-                                            intent.putExtra("email", email);
-                                           // String passwordSHA = org.apache.commons.codec.digest.DigestUtils.sha256Hex(password);
-                                            String hash = new String(Hex.encodeHex(DigestUtils.sha256(password)));
-                                            intent.putExtra("password", hash);
-                                            startActivity(intent);
+                                            checkIfEmailIsInUse();
                                         }
                                     }
                                 }
         );
+    }
+
+    private void checkIfEmailIsInUse()
+    {
+        String urlSend;
+            urlSend = (getString(R.string.url) + "checkIfEmailIsInUse?email=" + email);
+
+        try
+        {
+            new JSONObjectParser(new JSONObjectParser.OnPostExecute()
+            {
+                @Override
+                public void onPostExecute(JSONObject jsonObject)
+                {
+                    try {
+                        if (jsonObject.getString("response").equals("Email is not in use")) {
+                            moveToNextActivity();
+                        } else {
+                            Toast toast = Toast.makeText(Register.this, "Email is already in use", Toast.LENGTH_SHORT);
+                            toast.setGravity(Gravity.CENTER, 0, 0);
+                            toast.show();
+                        }
+                    } catch (Exception e)
+                    {
+                        e.printStackTrace();
+                    }
+                }
+            }).execute(new URL(urlSend));
+        } catch (MalformedURLException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    public void moveToNextActivity()
+    {
+        setInputData();
+        Intent intent = new Intent(Register.this, BirthdayRegisterActivity.class);
+        intent.putExtra("firstName", firstName);
+        intent.putExtra("surname", surname);
+        intent.putExtra("email", email);
+        // String passwordSHA = org.apache.commons.codec.digest.DigestUtils.sha256Hex(password);
+        String hash = new String(Hex.encodeHex(DigestUtils.sha256(password)));
+        intent.putExtra("password", hash);
+        startActivity(intent);
     }
 
 
