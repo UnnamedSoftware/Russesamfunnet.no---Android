@@ -112,7 +112,6 @@ public class GroupListAdapter extends RecyclerView.Adapter<GroupListAdapter.View
         final GroupEntity groupEntity = groupEntitiesList.get(position);
         final View view = holder.itemView;
         holder.groupName.setText(groupEntity.getSearchName());
-
         try {
             List<ScoreboardEntity> scoreboard = scoreboardMap.get(groupEntity);
             Iterator it = scoreboard.iterator();
@@ -125,20 +124,14 @@ public class GroupListAdapter extends RecyclerView.Adapter<GroupListAdapter.View
                     } else {
                         holder.userTopList.get(i).setImageResource(R.drawable.default_user);
                     }
-
                     i++;
                 } catch (Exception e) {
                     i++;
                 }
-
             }
         } catch (Exception e)
         {
-
         }
-
-
-
         holder.itemView.setOnClickListener(new View.OnClickListener()
         {
             @Override
