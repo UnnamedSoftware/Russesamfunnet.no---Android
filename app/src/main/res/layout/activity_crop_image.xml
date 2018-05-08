@@ -2,7 +2,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="#42000000">
 
     <LinearLayout
         android:id="@+id/linearLayout1"
@@ -18,6 +19,12 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+
+            android:background="@drawable/button"
+            android:layout_marginStart="1dp"
+            android:layout_marginEnd="1dp"
+            android:textColor="#FFF"
+
             android:onClick="onLoadImageClick"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
@@ -27,6 +34,12 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+
+            android:background="@drawable/button"
+            android:layout_marginStart="1dp"
+            android:layout_marginEnd="1dp"
+            android:textColor="#FFF"
+
             android:onClick="onCropImageClick"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
@@ -41,9 +54,17 @@
         android:layout_weight="1"
         app:scaleType="fitCenter" />
 
+
+
+
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginEnd="1dp"
+        android:background="@drawable/button"
+        android:textColor="#FFF"
         android:onClick="onApproveImage"
         android:text="Godkjenn" />
 
