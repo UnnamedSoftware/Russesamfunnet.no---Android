@@ -185,8 +185,10 @@ public class SchoolRegisterActivity extends AppCompatActivity
                     try {
                         if(jsonObject.getString("loginStatus").equals("Login success")) {
                             ((Global) getApplication()).setAccessToken(jsonObject.getString("accessToken"), "russesamfunnet");
+                            goToFeed();
                         }else if(jsonObject.getString("loginStatus").equals("User successfully registered")) {
                             ((Global) getApplication()).setAccessToken(jsonObject.getString("accessToken"), "russesamfunnet");
+                            goToFeed();
                         }
                     }catch (Exception e)
                     {
@@ -238,7 +240,6 @@ public class SchoolRegisterActivity extends AppCompatActivity
                     {
                         try {
                             registerRuss(dateString, school);
-                            goToFeed();
                         } catch (Exception e)
                         {
                             e.printStackTrace();

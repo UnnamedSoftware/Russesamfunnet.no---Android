@@ -77,7 +77,8 @@ public class KnotListAdapter extends RecyclerView.Adapter<KnotListAdapter.ViewHo
         {
             KnotEntity knotEntity = knotEntityList.get(pos);
             Intent intent = new Intent(v.getContext(), Knot.class);
-            intent.putExtra("knot_entity", new KnotEntity(knotEntity.getKnotId(), knotEntity.getDetails(), knotEntity.getTitle(),knotEntity.getCompleted()));
+            intent.putExtra("knot_entity", new KnotEntity(knotEntity.getKnotId(),
+                    knotEntity.getDetails(), knotEntity.getTitle(),knotEntity.getCompleted()));
             v.getContext().startActivity(intent);
         }
     });
