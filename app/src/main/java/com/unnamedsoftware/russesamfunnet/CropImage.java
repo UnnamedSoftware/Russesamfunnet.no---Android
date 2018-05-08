@@ -54,7 +54,6 @@ public class CropImage extends AppCompatActivity
         setContentView(R.layout.activity_crop_image);
         cropImageView = findViewById(R.id.CropImageView);
         startActivityForResult(getPickImageChooserIntent(), 200);
-
     }
 
     /**
