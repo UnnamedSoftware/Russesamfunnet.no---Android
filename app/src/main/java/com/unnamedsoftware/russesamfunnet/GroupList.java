@@ -240,19 +240,13 @@ public class GroupList extends AppCompatActivity
                     System.out.println(russId);
                     ScoreboardEntity user = new ScoreboardEntity(scoreboardId, points, position, russ);
                     result.add(user);
-                    setProfilePicture(user.getRussId(), groupEntity);
+                    setProfilePicture(user.getRussId());
                 }
                 }catch (Exception e) {
                     }
                 groupEntityList.add(groupEntity);
                 scoreboardMap.put(groupEntity, result);
                 Iterator it = result.iterator();
-     /**           while(it.hasNext())
-                {
-                    ScoreboardEntity scoreboardEntity = (ScoreboardEntity) it.next();
-                    setProfilePicture(scoreboardEntity.getRussId(), groupEntity);
-                }*/
-
             }
             this.groupListAdapter.notifyDataSetChanged();
             findViewById(R.id.loadingPanel).setVisibility(View.GONE);
@@ -261,95 +255,7 @@ public class GroupList extends AppCompatActivity
             e.printStackTrace();
         }
     }
-/**
-    public void top3Scoreboard()
-    {
-        Iterator it = groupEntityList.iterator();
-        while (it.hasNext())
-        {
-            GroupEntity groupEntity = (GroupEntity) it.next();
-            scoreboardMap.put(groupEntity, new ArrayList<Bitmap>());
-            getTop3(groupEntity.getGroupID(), groupEntity);
-        }
-    }
- */
-/**
-    public void getTop3(Long groupID, final GroupEntity groupEntity)
-    {
-        String url;
-
-
-        if (AccessToken.getCurrentAccessToken() != null)
-        {
-            System.out.println(AccessToken.getCurrentAccessToken().getToken());
-            url = (getString(R.string.url) + "scoreboardGroupTop3?accessToken=" + AccessToken.getCurrentAccessToken().getToken() + "&type=facebook&groupId=" + groupID);
-        } else
-        {
-            System.out.println(((Global) getApplicationContext()).getAccessToken());
-            url = (getString(R.string.url) + "scoreboardGroupTop3?accessToken=" + ((Global) getApplicationContext()).getAccessToken() + "&type=russesamfunnet&groupId=" + groupID);
-        }
-
-        try
-        {
-            new JSONParser(new JSONParser.OnPostExecute()
-            {
-                @Override
-                public void onPostExecute(JSONArray jsonArray) throws JSONException
-                {
-                    addToScoreboardMap(groupEntity, jsonArray);
-                }
-            }).execute(new URL(url));
-        } catch (MalformedURLException e)
-        {
-            e.printStackTrace();
-        }
-    }
- */
-/**
-    public void addToScoreboardMap(GroupEntity groupEntity, JSONArray jsonArray)
-    {
-        List<ScoreboardEntity> result = new ArrayList<>();
-        for(int i = 0; i <= jsonArray.length(); i++)
-        {
-            try {
-
-                JSONObject u = (JSONObject) jsonArray.get(i);
-                Integer scoreboardId = Integer.valueOf(u.getString("scoreboardId"));
-                Integer points = Integer.valueOf(u.getString("points"));
-                Integer position = Integer.valueOf(u.getString("position"));
-
-                JSONObject newRussObject = u.getJSONObject("russId");
-
-                Long russId = Long.valueOf(newRussObject.getString("russId"));
-                String russStatus = newRussObject.getString("russStatus");
-                String firstName = newRussObject.getString("firstName");
-                String lastName = newRussObject.getString("lastName");
-                String email = newRussObject.getString("email");
-                String russPassword = newRussObject.getString("russPassword");
-                String profilePicture = newRussObject.getString("profilePicture");
-                String russCard = newRussObject.getString("russCard");
-                String russRole = newRussObject.getString("russRole");
-                Integer russYear = Integer.valueOf(newRussObject.getString("russYear"));
-
-                RussEntity russ = new RussEntity(russId, russStatus, firstName, lastName, email, russPassword, russRole, russYear, profilePicture, russCard);
-                System.out.println(russId);
-                ScoreboardEntity user = new ScoreboardEntity(scoreboardId, points, position, russ);
-                result.add(user);
-
-
-
-
-            } catch (Exception e)
-            {
-
-            }
-
-        }
-        setProfilePicture(result, groupEntity);
-
-    }
-*/
-    private void setProfilePicture(RussEntity russEntity, final GroupEntity groupEntity)
+    private void setProfilePicture(RussEntity russEntity)
     {
             final String url = russEntity.getProfilePicture();
             System.out.println(url);
@@ -358,11 +264,6 @@ public class GroupList extends AppCompatActivity
             if (!url.equals("null")) {
                 if(images.containsKey(url))
                 {
-                    System.out.println("TRUE");
-                  //  List<Bitmap> bitmap = scoreboardMap.get(groupEntity);
-                   // bitmap.add(images.get(url));
-                   // scoreboardMap.put(groupEntity, bitmap);
-                   // groupListAdapter.notifyDataSetChanged();
                 } else {
                 ((Global) this.getApplication()).getImageLoader().loadImage(userImageURI, new SimpleImageLoadingListener() {
                     @Override
@@ -370,34 +271,18 @@ public class GroupList extends AppCompatActivity
                         userImage = loadedImage;
                         System.out.println("TRUE");
                         images.put(url, loadedImage);
-                        try {
-                    /**        List<Bitmap> bitmap = scoreboardMap.get(groupEntity);
-                            bitmap.add(userImage);
-                            scoreboardMap.put(groupEntity, bitmap);*/
-                            groupListAdapter.notifyDataSetChanged();
-                        } catch (Exception e)
-                        {
-                            e.printStackTrace();
-                        }
-
-
+                        groupListAdapter.notifyDataSetChanged();
                     }
                 });}
-
             } else {
                 userImage = null;
                 try {
-             //       List<Bitmap> bitmap = scoreboardMap.get(groupEntity);
-              //      bitmap.add(userImage);
                     images.put(url,null);
-              //      scoreboardMap.put(groupEntity, bitmap);
                     groupListAdapter.notifyDataSetChanged();
                 } catch (Exception e)
                 {
                 }
             }
-
-
     }
 
     private String removeUserUrl()

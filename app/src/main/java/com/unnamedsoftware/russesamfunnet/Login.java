@@ -45,13 +45,12 @@ public class Login extends AppCompatActivity
         setupUI(findViewById(R.id.loginParent));
 
         loginUser(findViewById(R.id.loginButton));
+        //Check if the user is logged in to the application.
         if (AccessToken.getCurrentAccessToken() != null)
         {
-            System.out.println(getString(R.string.url) + "facebookLogin?accessToken=" + AccessToken.getCurrentAccessToken().getToken());
             facebookLoginCheck(getString(R.string.url) + "facebookLogin?accessToken=" + AccessToken.getCurrentAccessToken().getToken());
         } else if(((Global) getApplication()).getAccessToken() != null)
         {
-           // Use for auto-login with our token
             russesamfunnLoginCheck(getString(R.string.url) + "russesamfunnLogin?accessToken=" + ((Global) getApplication()).getAccessToken());
         }
 
@@ -141,6 +140,7 @@ public class Login extends AppCompatActivity
     }
 
     //@RequiresApi(api = Build.VERSION_CODES.CUPCAKE)
+
     private void facebookLoginCheck(String url) {
             try
             {
@@ -149,16 +149,12 @@ public class Login extends AppCompatActivity
                 public void onPostExecute(JSONObject jsonObject) {
                     try {
                         if (jsonObject.getString("loginStatus").equals("Login success")) {
-                            System.out.println(jsonObject.get("loginStatus"));
                             ((Global) getApplication()).setRussId(jsonObject.getLong("userId"));
-                            System.out.println("russId has been set to: " + ((Global) getApplication()).getRussId());
                             finishServerCom();
                         } else if(jsonObject.getString("loginStatus").equals("User not in db")){
-                            System.out.println(jsonObject.get("loginStatus"));
                             Intent intent = new Intent(Login.this, SchoolRegisterActivity.class);
                             intent.putExtra("facebookToken", AccessToken.getCurrentAccessToken().getToken());
                             startActivity(intent);
-
                         } else{
                             System.out.println(jsonObject.getString("loginStatus"));
                             Toast.makeText(Login.this, "Login failed", Toast.LENGTH_LONG).show();

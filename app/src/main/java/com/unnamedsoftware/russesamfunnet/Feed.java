@@ -88,16 +88,14 @@ public class Feed extends AppCompatActivity implements SwipeRefreshLayout.OnRefr
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-
-
         setContentView(R.layout.activity_feed);
+
+        //Set the url for getting the feed.
         if (AccessToken.getCurrentAccessToken() != null)
         {
-            System.out.println(AccessToken.getCurrentAccessToken().getToken());
             url = (getString(R.string.url) + "schoolFeed?accessToken=" + AccessToken.getCurrentAccessToken().getToken() + "&type=facebook");
         } else
         {
-            System.out.println(((Global) this.getApplication()).getAccessToken());
             url = getString(R.string.url) + "schoolFeed?accessToken=" + ((Global) this.getApplication()).getAccessToken() + "&type=russesamfunnet";
         }
 
@@ -322,21 +320,17 @@ public class Feed extends AppCompatActivity implements SwipeRefreshLayout.OnRefr
                 startActivity(new Intent(this, GroupList.class));
                 break;
 
-         /*   case R.id.event:
-                startActivity(new Intent(this, Events.class));
-                break;
-*/
             case R.id.bugReport:
                 reportPost();
                 break;
 
             case R.id.logout:
                 LoginManager.getInstance().logOut();
+                ((Global) this.getApplication()).deleteCache("token");
+                ((Global) this.getApplication()).deleteCache("tokenType");
                 Intent i = getBaseContext().getPackageManager()
                         .getLaunchIntentForPackage(getBaseContext().getPackageName());
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                System.out.println(((Global) this.getApplication()).deleteCache("token"));
-                System.out.println(((Global) this.getApplication()).deleteCache("tokenType"));
                 finish();
                 startActivity(i);
                 break;
