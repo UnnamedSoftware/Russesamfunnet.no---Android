@@ -8,4 +8,6 @@
     <color name="colorKnotNotCompleted">#FE0000</color>
     <color name="colorKnotCompleted">#28AF37</color>
     <color name="colorBlack">#000000</color>
+    <color name="colorGrey">#42000000</color>
+    <color name="colorLighterGrey">#e7e7e7</color>
 </resources>

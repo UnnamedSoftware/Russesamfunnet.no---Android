@@ -29,7 +29,11 @@
         android:id="@+id/addNewGroupButton"
         android:layout_width="150dp"
         android:layout_height="40dp"
-        android:layout_marginEnd="8dp"
+
+        android:layout_margin="10dp"
+
+        android:background="@drawable/button"
+        android:textColor="@color/colorPrimaryBackground"
         android:text="Opprett Gruppe"
         app:layout_constraintBaseline_toBaselineOf="@+id/group"
         app:layout_constraintEnd_toEndOf="parent" />
