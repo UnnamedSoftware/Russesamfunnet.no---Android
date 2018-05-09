@@ -214,9 +214,9 @@ public class Knot extends AppCompatActivity
 
     public void setKnotPicture()
     {
-        final String url = knotEntity.getTitle() + ".png";
-        System.out.println(url);
-        String userImageURI = "http://158.38.101.162:8080/files/" + url;
+        final String turl = knotEntity.getDetails() + ".png";
+        System.out.println("url = " + turl);
+        String userImageURI = "http://158.38.101.162:8080/files/" + turl;
             ((Global) this.getApplication()).getImageLoader().loadImage(userImageURI, new SimpleImageLoadingListener() {
                 @Override
                 public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
