@@ -42,17 +42,16 @@
 
     <TextView
         android:id="@+id/rvUser"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_marginStart="12dp"
         android:layout_toEndOf="@+id/userProfilePicture"
+        android:maxLength="12"
         android:maxLines="1"
         android:textSize="24sp"
-        android:maxLength="12"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toRightOf="@+id/userProfilePicture"/>
+        app:layout_constraintLeft_toRightOf="@+id/userProfilePicture"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/rvPoints"
