@@ -109,6 +109,10 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="32dp"
         android:text="Neste"
+
+        android:background="@drawable/button"
+        android:textColor="@color/colorPrimaryBackground"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/registerConfirmPasswordInput" />

@@ -49,6 +49,10 @@
         android:layout_marginStart="162dp"
         android:layout_marginTop="175dp"
         android:text="Neste"
+
+        android:background="@drawable/button"
+        android:textColor="@color/colorPrimaryBackground"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
