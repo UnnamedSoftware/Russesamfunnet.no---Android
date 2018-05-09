@@ -41,7 +41,7 @@ public class Knot extends AppCompatActivity
 
     private CircularImageView witnessCircularImageView1;
     private CircularImageView witnessCircularImageView2;
-
+    private CircularImageView knotPicture;
     private Boolean knotCompleted = false;
 
 
@@ -90,10 +90,12 @@ public class Knot extends AppCompatActivity
                 setWitness(url);
             }
         }
+        setKnotPicture();
 
         checkIfCompleted();
         knotEntity.getKnotId();
         this.fillInData();
+        knotPicture = findViewById(R.id.knot_picture);
 
         this.completeFloatingActionButton = findViewById(R.id.complete_button);
         completeFloatingActionButton.setOnClickListener(new View.OnClickListener()
@@ -207,6 +209,23 @@ public class Knot extends AppCompatActivity
             }
         });
 */
+
+    }
+
+    public void setKnotPicture()
+    {
+        final String url = knotEntity.getTitle() + ".png";
+        System.out.println(url);
+        String userImageURI = "http://158.38.101.162:8080/files/" + url;
+            ((Global) this.getApplication()).getImageLoader().loadImage(userImageURI, new SimpleImageLoadingListener() {
+                @Override
+                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                    if (loadedImage != null){
+                        knotPicture.setImageBitmap(loadedImage);
+                    } else {
+                    }
+                }
+            });
 
     }
 
